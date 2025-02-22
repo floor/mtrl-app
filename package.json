@@ -10,20 +10,13 @@
   "main": "index.js",
   "version": "0.0.0",
   "scripts": {
-    "start": "bun run ./build.js & bun run ./server.ts",
-    "start:watch": "bun run ./build.js --watch & bun run ./server.ts",
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop mtrl-app",
+    "restart": "pm2 restart mtrl-app",
+    "logs": "pm2 logs mtrl-app",
+    "dev": "bun run ./build.js --watch & bun run ./server.ts",
     "test": "bun test",
     "serve": "bun --hot test/serve.ts",
-    "docs": "jsdoc src/core/**/*.js src/components/**/*.js -d docs -r",
-    "docs:dev": "jsdoc -c jsdoc.config.json -w",
-    "docs:clean": "rm -rf ./docs",
-    "pm2:start": "pm2 start ecosystem.config.js",
-    "pm2:stop": "pm2 stop ecosystem.config.js",
-    "pm2:restart": "pm2 restart ecosystem.config.js",
-    "pm2:delete": "pm2 delete ecosystem.config.js",
-    "pm2:logs": "pm2 logs",
-    "pm2:status": "pm2 status",
-    "pm2:prod": "pm2 start ecosystem.config.js --env production"
   },
   "dependencies": {
     "mtrl": "^0.0.0"
