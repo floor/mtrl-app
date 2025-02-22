@@ -16,7 +16,7 @@
     "logs": "pm2 logs mtrl-app",
     "dev": "bun run ./build.js --watch & bun run ./server.ts",
     "test": "bun test",
-    "serve": "bun --hot test/serve.ts",
+    "serve": "bun --hot test/serve.ts"
   },
   "dependencies": {
     "mtrl": "^0.0.0"
