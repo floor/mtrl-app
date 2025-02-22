@@ -1,0 +1,29 @@
+# artifacts
+dist/
+/build/
+.cache/
+.eslintcache
+.vscode/
+.idea/
+.DS_Store
+*.log
+*.gz
+node_modules
+/docs
+
+# environment
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# reports
+coverage/
+.nyc_output/
+
+# miscellaneous
+*.swp
+*.swo
+Thumbs.db
+tree.txt

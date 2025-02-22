@@ -1,0 +1,41 @@
+{
+  "name": "mtrlapp",
+  "description": "mtrl playground",
+  "keywords": [
+    "mtrl",
+    "component",
+    "functional",
+    "playground"
+  ],
+  "author": "floor",
+  "license": "MIT License",
+  "main": "index.js",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "bun run ./build.js & bun run ./server.ts",
+    "start:watch": "bun run ./build.js --watch & bun run ./server.ts",
+    "test": "bun test",
+    "serve": "bun --hot test/serve.ts",
+    "docs": "jsdoc src/core/**/*.js src/components/**/*.js -d docs -r",
+    "docs:dev": "jsdoc -c jsdoc.config.json -w",
+    "docs:clean": "rm -rf ./docs"
+  },
+  "dependencies": {
+    "bun-types": "latest",
+    "ejs": "^3.1.10"
+  },
+  "devDependencies": {
+    "sass": "^1.83.4",
+    "standard": "^17.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/floor/mtrl.git"
+  },
+  "standard": {
+    "globals": [
+      "Bun",
+      "log"
+    ]
+  }
+}
