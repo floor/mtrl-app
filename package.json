@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "bun-types": "latest",
-    "ejs": "^3.1.10"
+    "ejs": "^3.1.10",
+    "mtrl": "^0.0.0"
   },
   "devDependencies": {
     "sass": "^1.83.4",
