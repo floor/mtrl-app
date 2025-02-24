@@ -3,6 +3,7 @@ export const navigationConfig = {
   components: [
     { id: 'buttons', label: 'Buttons', path: '/components/buttons' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
+    { id: 'menus', label: 'Menus', path: '/components/menus' },
     { id: 'navigations', label: 'Navigations', path: '/components/navigations' },
     { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
     { id: 'switches', label: 'Switches', path: '/components/switches' },

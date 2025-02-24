@@ -3,6 +3,7 @@ import {
   createButtonsView,
   createCheckboxesView,
   createListsView,
+  createMenusView,
   createSnackbarsView,
   createSwitchesView,
   createTextfieldsView
@@ -15,6 +16,7 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/buttons', () => createButtonsView(ui.main))
   router.register('components/checkboxes', () => createCheckboxesView(ui.main))
   router.register('components/lists', () => createListsView(ui.main))
+  router.register('components/menus', () => createMenusView(ui.main))
   router.register('components/snackbars', () => createSnackbarsView(ui.main))
   router.register('components/switches', () => createSwitchesView(ui.main))
   router.register('components/textfields', () => createTextfieldsView(ui.main))
