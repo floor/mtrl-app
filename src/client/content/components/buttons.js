@@ -1,4 +1,8 @@
-// src/client/views/components/button.js
+// src/client/content/components/button.js
+
+import {
+  contentLayout
+} from '../../config'
 
 import {
   createElement,
@@ -16,8 +20,19 @@ const heartIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" x
 
 const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1)
 
-export const createButtonsContent = (container, components) => {
-  const ui = createLayout(createButtonsLayout(components), container).component
+export const createButtonsContent = (container) => {
+  log.info('createButtonsContent', container)
+  const info = {
+    title: 'Buttons',
+    description: 'Let users take action and make choices with one tap'
+  }
+  const layout = createLayout(contentLayout(info), container).component
+
+  console.log('layout', layout)
+
+  const ui = createLayout(createButtonsLayout(), layout.body).component
+
+  console.log('ui', ui)
   initButtonVariants(ui)
   initButtonVariantsDisabled(ui)
   initButtonSizes(ui)
@@ -26,8 +41,9 @@ export const createButtonsContent = (container, components) => {
 }
 
 export const initButtonVariants = (ui) => {
-  const container = ui.buttonVariants
-  console.log('initButtonVariants', container)
+  log.info('initButtonVariants', ui)
+  const container = ui.variants
+  log.info('initButtonVariants', container)
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {
     const text = capitalize(variant)
@@ -41,7 +57,7 @@ export const initButtonVariants = (ui) => {
 }
 
 export const initButtonVariantsDisabled = (ui) => {
-  const container = ui.buttonVariantsDisabled
+  const container = ui.variantsDisabled
   console.log('initButtonVariants', container)
 
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
@@ -58,7 +74,7 @@ export const initButtonVariantsDisabled = (ui) => {
 }
 
 export const initButtonSizes = (ui) => {
-  const container = ui.buttonSizes
+  const container = ui.sizes
   const sizes = ['small', 'medium', 'large']
   sizes.forEach(size => {
     const text = capitalize(size)
@@ -72,7 +88,7 @@ export const initButtonSizes = (ui) => {
 }
 
 export const initIconButtons = (ui) => {
-  const container = ui.buttonIcons
+  const container = ui.icons
   const states = ['enabled', 'disabled']
   states.forEach(state => {
     const disabled = state === 'enabled'
@@ -89,14 +105,7 @@ export const initIconButtons = (ui) => {
   })
 }
 
-export const createButtonsLayout = (components) => [
-  [createElement, 'header', { class: 'mtrl-content__header' },
-    [createElement, { tag: 'section', class: 'mtrl-content__box info' },
-      [createElement, 'h1', { class: 'mtrl-content__title', text: 'Buttons' }]
-    ],
-    [createElement, { tag: 'section', class: 'mtrl-content__box visual' }]
-  ],
-
+export const createButtonsLayout = () => [
   // Button Variants Section
   [createElement, { tag: 'section', class: 'mtrl-content__section' },
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Button Variants' }],
@@ -106,7 +115,7 @@ export const createButtonsLayout = (components) => [
   // Button Variants Section
   [createElement, 'section', { class: 'mtrl-content__section' },
     [createElement, 'h2', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Button Variants Disabled' }],
-    [createElement, 'buttonVariantsDisabled', { id: 'variants' }]
+    [createElement, { id: 'variantsDisabled' }]
   ],
 
   // Button Sizes Section
@@ -118,12 +127,12 @@ export const createButtonsLayout = (components) => [
   // Icon Buttons Section
   [createElement, { class: 'mtrl-content__section' },
     [createElement, { class: 'mtrl-content__section-title', text: 'Icon Buttons' }],
-    [createElement, 'buttonIcons', { id: 'iconButtons' }]
+    [createElement, 'buttonIcons', { id: 'icons' }]
   ],
 
   // Text with Icons Section
   [createElement, { class: 'mtrl-content__section' },
     [createElement, { class: 'mtrl-content__section-title', content: 'Text with Icons' }],
-    [createElement, 'buttonTextIcons', { id: 'textWithIcons' }]
+    [createElement, 'buttonTextIcons', { id: 'textIcons' }]
   ]
 ]

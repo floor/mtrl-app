@@ -1,9 +1,11 @@
-// src/client/view/components/switches.js
+// src/client/view/components/snackbars.js
+import {
+  contentLayout
+} from '../../config'
 
 import {
   createLayout,
   createElement,
-  createContainer,
   createSnackbar,
   createButton
 } from 'mtrl'
@@ -15,19 +17,23 @@ export const SNACKBAR_POSITIONS = {
 }
 
 export const createSnackbarsContent = (container, components) => {
-  const ui = createLayout(createSnackbarsLayout(), container).component
+  log.info('createButtonsContent', container)
+  const info = {
+    title: 'Snackbars',
+    description: 'Show short updates about app processes at the bottom of the screen'
+  }
+  const layout = createLayout(contentLayout(info), container).component
+
+  console.log('layout', layout)
+  const ui = createLayout(createSnackbarsLayout(), layout.body).component
   console.info('ui', ui)
 }
 
 export const createSnackbarsLayout = (components) => [
-  // Header
-  [createElement, 'header', { class: 'mtrl-content__header' },
-    [createElement, 'h1', { class: 'mtrl-content__title', content: 'mtrl snackbars' }]
-  ],
 
   // Basic Snackbars Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Basic Snackbars' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Basic Snackbars' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'basic',
@@ -71,7 +77,7 @@ export const createSnackbarsLayout = (components) => [
 
   // Positions Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Snackbar Positions' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Snackbar Positions' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'positions',
@@ -98,7 +104,7 @@ export const createSnackbarsLayout = (components) => [
 
   // Duration Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Duration Options' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Duration Options' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'duration',

@@ -37,6 +37,28 @@ export const layout = [
   [createButton, 'toggleDarkmode', { icon: iconDark, iconSize: 'medium', class: 'toggle-darkmode', variant: 'outlined' }]
 ]
 
+export const contentLayout = (info) => [
+  [createElement, 'header', { id: 'head', class: 'mtrl-content__header' },
+    [createElement, { tag: 'section', class: 'mtrl-content__box info' },
+      [createElement, 'h1', { id: 'title', class: 'mtrl-content__title', text: info.title }],
+      [createElement, 'p', { id: 'decription', class: 'mtrl-content__text', text: info.description }]
+    ],
+    [createElement, { tag: 'section', class: 'mtrl-content__box visual' }]
+  ],
+  [createElement, { id: 'body', class: 'mtrl-content__body' }],
+  [createElement, { id: 'foot', class: 'mtrl-content__footer' }]
+]
+
+export const themesMenu = [
+  { name: 'ocean', text: 'Ocean' },
+  { name: 'forest', text: 'Forest' },
+  { name: 'sunset', text: 'Sunset' },
+  { name: 'spring', text: 'Spring' },
+  { name: 'summer', text: 'Summer' },
+  { name: 'autumn', text: 'Autumn' },
+  { name: 'winter', text: 'Winter' }
+]
+
 export const navigation = {
   components: [
     { id: 'buttons', label: 'Buttons', path: '/components/buttons' },

@@ -1,27 +1,32 @@
 // src/client/content/components/textfields.js
 
 import {
+  contentLayout
+} from '../../config'
+
+import {
   createLayout,
   createElement,
-  createContainer,
   createTextfield,
   createButton
 } from 'mtrl'
 
 export const createTextfieldsContent = (container, components) => {
-  const ui = createLayout(createTextfieldsLayout(), container).component
+  log.info('createButtonsContent', container)
+  const info = {
+    title: 'Lists',
+    description: 'Lists are continuous, vertical indexes of text and images'
+  }
+  const layout = createLayout(contentLayout(info), container).component
+  const ui = createLayout(createTextfieldsLayout(), layout.body).component
   console.info('ui', ui)
 }
 
 export const createTextfieldsLayout = (components) => [
-  // Header1
-  [createElement, 'header', { class: 'mtrl-content__header' },
-    [createElement, 'h1', { class: 'mtrl-content__title', content: 'mtrl textfields' }]
-  ],
 
   // Textfield Variants Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Textfield Variants' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Textfield Variants' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'variants',
@@ -66,7 +71,7 @@ export const createTextfieldsLayout = (components) => [
 
   // States & Validation Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'States & Validation' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'States & Validation' }],
     [createElement, 'div', { class: 'mtrl-content__grid' },
       [createElement, 'div', {
         id: 'stateTest',
@@ -126,7 +131,7 @@ export const createTextfieldsLayout = (components) => [
 
   // Sizes Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Sizes' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Sizes' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'sizes',
@@ -147,7 +152,7 @@ export const createTextfieldsLayout = (components) => [
 
   // Multiline Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Multiline' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Multiline' }],
     [createElement, 'div', {
       id: 'multiline',
       onCreate: (el) => {
@@ -165,7 +170,7 @@ export const createTextfieldsLayout = (components) => [
 
   // Event Handling Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Event Handling' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Event Handling' }],
     [createElement, 'div', {
       id: 'eventTest',
       onCreate: (el) => {

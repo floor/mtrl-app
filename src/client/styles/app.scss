@@ -21,14 +21,14 @@ $app: '#{b.$prefix}-app';
     background-color: t.color('surface');
   }
 
-  .#{b.$prefix}-button.toggle-darkmode {
+  .#{b.$prefix}-button.more-menu {
     z-index: 10;
     position: absolute;
     left: 20px;
     bottom: 15px;
   }
 
-  .#{b.$prefix}-button.more-menu {
+  .#{b.$prefix}-button.toggle-darkmode {
     z-index: 10;
     position: absolute;
     left: 20px;
@@ -37,10 +37,17 @@ $app: '#{b.$prefix}-app';
 
   .#{b.$prefix}-nav--rail {
     z-index: 2;
+    .#{b.$prefix}-nav-item-label {
+      font-size: .8em;
+    }
+    
   }
 
   .#{b.$prefix}-nav--drawer {
     z-index: 1;
+    border-left: 1px solid rgba(0,0,0,.05);
+    border-bottom-right-radius: 16px;
+    border-top-right-radius: 16px;
   }
 
   @media (max-width: 960px) {

@@ -24,12 +24,19 @@ $content: '#{b.$prefix}-content';
       gap: 20px;
       background-color: t.color('surface-container');
       &.visual {
-        background-color: t.color('primary');
+        flex: none;
+        width: 100px;
+        background-color: t.color('secondary');
         margin-left: 24px;
       }
       &.info {
-        padding: 24px;
-
+        background-color: t.color('primary');
+        color: var(--mtrl-sys-color-on-primary);
+        padding: 18px 24px;
+        .#{$content}__title {
+          @include c.typography('headline-large');
+          margin: 0;
+        }
       }
     }
   }
@@ -42,12 +49,7 @@ $content: '#{b.$prefix}-content';
     justify-content: space-between;
   }
 
-  &__title {
-    @include c.typography('headline-large');
-    color: t.color('on-surface');
-    margin: 0;
-  }
-
+  
   &__section {
     background-color: t.color('surface-container');
     border-radius: f.get-shape('large');

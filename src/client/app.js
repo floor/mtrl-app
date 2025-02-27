@@ -1,7 +1,7 @@
 // src/client/app.js
 import { createRouter } from './core/router'
 import { createLayout, createMenu } from 'mtrl'
-import { navigation, layout } from './config'
+import { navigation, layout, themesMenu } from './config'
 import { createEventManager, setupErrorBoundary } from './core/events'
 import {
   updateDrawerItems,
@@ -98,11 +98,7 @@ const createApp = (options = {}) => {
 
     // Create the menu with proper configuration
     themeMenu = createMenu({
-      items: [
-        { name: 'ocean', text: 'Ocean' },
-        { name: 'forest', text: 'Forest' },
-        { name: 'sunset', text: 'Sunset' }
-      ],
+      items: themesMenu,
       openingButton: ui.moreMenu
     })
 
@@ -127,6 +123,7 @@ const createApp = (options = {}) => {
     themeMenu.on('select', ({ name }) => {
       console.log(`Selected theme: ${name}`)
       selectTheme(name)
+      themeMenu.hide()
     })
   }
 
@@ -331,7 +328,7 @@ try {
   })
 
   // Make app available globally
-  window.app = app
+  // window.app = app
 
   // Example of using the onReady API
   app.onReady(({ router, ui }) => {

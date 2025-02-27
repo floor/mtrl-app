@@ -1,4 +1,8 @@
-// src/client/views/components/switches.js
+// src/client/content/components/switches.js
+
+import {
+  contentLayout
+} from '../../config'
 
 import {
   createElement,
@@ -13,19 +17,22 @@ const CHECK_ICON = `
 </svg>`
 
 export const createSwitchesContent = (container, components) => {
-  const ui = createLayout(createSwitchesLayout(), container).component
+  log.info('createButtonsContent', container)
+  const info = {
+    title: 'Switches',
+    description: 'Switches toggle the selection of an item on or off'
+  }
+  const layout = createLayout(contentLayout(info), container).component
+  console.log('layout', layout)
+  const ui = createLayout(createSwitchesLayout(), layout.body).component
   console.info('ui', ui)
 }
 
 export const createSwitchesLayout = (components) => [
-  // Header
-  [createElement, 'header', { class: 'mtrl-content__header' },
-    [createElement, 'h1', { class: 'mtrl-content__title', text: 'Switches' }]
-  ],
 
   // Basic Switches Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Basic Switches' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Basic Switches' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'basic',
@@ -69,7 +76,7 @@ export const createSwitchesLayout = (components) => [
 
   // Switches with Icons Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Switches with Icons' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Switches with Icons' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'icons',
@@ -109,7 +116,7 @@ export const createSwitchesLayout = (components) => [
 
   // Label Position Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Label Positions' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Label Positions' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'labelPositions',
@@ -147,7 +154,7 @@ export const createSwitchesLayout = (components) => [
 
   // Interactive States Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Interactive States' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Interactive States' }],
     [createElement, 'div', { class: 'mtrl-content__grid' },
       [createElement, 'div', {
         id: 'stateTest',
@@ -175,7 +182,7 @@ export const createSwitchesLayout = (components) => [
 
   // With Values Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'With Custom Values' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'With Custom Values' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'values'
@@ -184,13 +191,13 @@ export const createSwitchesLayout = (components) => [
 
   // Required Switch Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Required Switch' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Required Switch' }],
     [createElement, 'div', { class: 'mtrl-content__grid', id: 'required' }]
   ],
 
   // Event Handling Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Event Handling' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Event Handling' }],
     [createElement, 'div', { id: 'eventTest' }],
     [createElement, 'div', { id: 'eventLog', class: 'mtrl-content__event-log' }]
   ]

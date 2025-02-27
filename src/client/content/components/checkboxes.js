@@ -1,9 +1,12 @@
-// src/client/views/components/switches.js
+// src/client/content/components/switches.js
+
+import {
+  contentLayout
+} from '../../config'
 
 import {
   createLayout,
   createElement,
-  createContainer,
   createCheckbox,
   createButton
 } from 'mtrl'
@@ -14,19 +17,20 @@ const CHECK_ICON = `
 </svg>`
 
 export const createCheckboxesContent = (container, components) => {
-  const ui = createLayout(createCheckboxesLayout(), container).component
+  log.info('createButtonsContent', container)
+  const info = {
+    title: 'Checkboxes',
+    description: 'Checkboxes let users select one or more items from a list, or turn an item on or off'
+  }
+  const layout = createLayout(contentLayout(info), container).component
+
+  console.log('layout', layout)
+
+  const ui = createLayout(createCheckboxesLayout(), layout.body).component
   console.info('ui', ui)
 }
 
 export const createCheckboxesLayout = (components) => [
-  // Header
-  [createElement, 'header', { class: 'mtrl-content__header' },
-    [createElement, { tag: 'section', class: 'mtrl-content__section info' },
-      [createElement, 'h1', { class: 'mtrl-content__title', text: 'Checkboxes' }]
-    ],
-    [createElement, { tag: 'section', class: 'mtrl-content__section visual' }]
-  ],
-
   // Basic Switches Section
   [createElement, 'section', { class: 'mtrl-content__section' },
     [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Basic Checkboxes' }],

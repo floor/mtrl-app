@@ -1,9 +1,11 @@
 // src/client/layout/lists.js
+import {
+  contentLayout
+} from '../../config'
 
 import {
   createLayout,
   createElement,
-  createContainer,
   createList,
   createButton
 } from 'mtrl'
@@ -20,19 +22,21 @@ const USER_ICON = `
 </svg>`
 
 export const createListsContent = (container, components) => {
-  const ui = createLayout(createListsLayout(), container).component
+  log.info('createButtonsContent', container)
+  const info = {
+    title: 'Lists',
+    description: 'Lists are continuous, vertical indexes of text and images'
+  }
+  const layout = createLayout(contentLayout(info), container).component
+
+  const ui = createLayout(createListsLayout(), layout.body).component
   log.info('ui', ui)
 }
 
 export const createListsLayout = (components) => [
-  // Header
-  [createElement, 'header', { class: 'mtrl-content__header' },
-    [createElement, 'h1', { class: 'mtrl-content__title', content: 'mtrl lists' }]
-  ],
-
   // Basic List Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Basic List' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Basic List' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'basic',
@@ -61,7 +65,7 @@ export const createListsLayout = (components) => [
 
   // List with Icons Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'List with Icons' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'List with Icons' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'withIcons',
@@ -82,7 +86,7 @@ export const createListsLayout = (components) => [
 
   // Single Select List Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Single Select List' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Single Select List' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'singleSelect',
@@ -107,7 +111,7 @@ export const createListsLayout = (components) => [
 
   // Multi Select List Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Multi Select List' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Multi Select List' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'multiSelect',
@@ -132,7 +136,7 @@ export const createListsLayout = (components) => [
 
   // Sectioned List
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Sectioned List' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Sectioned List' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'sectioned',
@@ -165,7 +169,7 @@ export const createListsLayout = (components) => [
 
   // Vertical Layout List
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Vertical Layout' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Vertical Layout' }],
     [createElement, 'div', {
       class: 'mtrl-content__grid',
       id: 'vertical',
@@ -196,7 +200,7 @@ export const createListsLayout = (components) => [
 
   // Interactive States Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Interactive States' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Interactive States' }],
     [createElement, 'div', { class: 'mtrl-content__grid' },
       [createElement, 'div', {
         id: 'stateTest',
@@ -252,7 +256,7 @@ export const createListsLayout = (components) => [
 
   // Event Handling Section
   [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Event Handling' }],
+    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Event Handling' }],
     [createElement, 'div', {
       id: 'eventTest',
       onCreate: (el) => {

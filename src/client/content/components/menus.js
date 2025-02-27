@@ -1,11 +1,14 @@
-// src/client/views/components/menu.js
+// src/client/content/components/menu.js
+
+import {
+  contentLayout
+} from '../../config'
 
 import {
   createElement,
   createLayout,
   createMenu,
-  createButton,
-  createContainer
+  createButton
 } from 'mtrl'
 
 const moreIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,7 +16,16 @@ const moreIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xm
 </svg>`
 
 export const createMenusContent = (container, components) => {
-  const ui = createLayout(createMenusLayout(components), container).component
+  log.info('createButtonsContent', container)
+  const info = {
+    title: 'Menus',
+    description: 'Display a list of choices on a temporary surface'
+  }
+  const layout = createLayout(contentLayout(info), container).component
+
+  console.log('layout', layout)
+
+  const ui = createLayout(createMenusLayout(components), layout.body).component
   initBasicMenu(ui)
   initNestedMenu(ui)
   initIconMenu(ui)
@@ -160,11 +172,6 @@ export const initCustomMenu = (ui) => {
 }
 
 export const createMenusLayout = (components) => [
-  // Header
-  [createElement, 'header', { class: 'mtrl-content__header' },
-    [createElement, 'h1', { class: 'mtrl-content__title', text: 'mtrl menus' }]
-  ],
-
   // Basic Menu Section
   [createElement, { tag: 'section', class: 'mtrl-content__section' },
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Basic Menu' }],
