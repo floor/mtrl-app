@@ -1,4 +1,3 @@
-// ecosystem.config.js
 module.exports = {
   apps: [{
     name: 'mtrl-app',
@@ -9,6 +8,9 @@ module.exports = {
     env: {
       NODE_ENV: 'development',
       PORT: 4000
-    }
+    },
+    min_uptime: 5000,
+    max_restarts: 5,
+    restart_delay: 4000
   }]
 }

@@ -1,30 +1,30 @@
 // src/client/core/navigation/routes.js
 import {
-  createButtonsView,
-  createCheckboxesView,
-  createListsView,
-  createMenusView,
-  createSnackbarsView,
-  createSwitchesView,
-  createTextfieldsView
+  createButtonsContent,
+  createCheckboxesContent,
+  createListsContent,
+  createMenusContent,
+  createSnackbarsContent,
+  createSwitchesContent,
+  createTextfieldsContent
+} from '../../content'
 
-} from '../../views'
 export const initializeRoutes = (router, ui) => {
   if (!router || !ui) return
 
   // Register route handlers
-  router.register('components/buttons', () => createButtonsView(ui.main))
-  router.register('components/checkboxes', () => createCheckboxesView(ui.main))
-  router.register('components/lists', () => createListsView(ui.main))
-  router.register('components/menus', () => createMenusView(ui.main))
-  router.register('components/snackbars', () => createSnackbarsView(ui.main))
-  router.register('components/switches', () => createSwitchesView(ui.main))
-  router.register('components/textfields', () => createTextfieldsView(ui.main))
+  router.register('components/buttons', () => createButtonsContent(ui.content))
+  router.register('components/checkboxes', () => createCheckboxesContent(ui.content))
+  router.register('components/lists', () => createListsContent(ui.content))
+  router.register('components/menus', () => createMenusContent(ui.content))
+  router.register('components/snackbars', () => createSnackbarsContent(ui.content))
+  router.register('components/switches', () => createSwitchesContent(ui.content))
+  router.register('components/textfields', () => createTextfieldsContent(ui.content))
 
   // Add navigation hooks
   router.beforeEach((route) => {
     log.debug('Navigation started:', route)
-    ui.main.innerHTML = ''
+    ui.content.innerHTML = ''
   })
 
   router.afterEach((route) => {

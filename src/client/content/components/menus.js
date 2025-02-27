@@ -12,7 +12,7 @@ const moreIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xm
   <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="currentColor"/>
 </svg>`
 
-export const createMenusView = (container, components) => {
+export const createMenusContent = (container, components) => {
   const ui = createLayout(createMenusLayout(components), container).component
   initBasicMenu(ui)
   initNestedMenu(ui)
@@ -35,7 +35,8 @@ export const initBasicMenu = (ui) => {
       { type: 'divider' },
       { name: 'save', text: 'Save' },
       { name: 'save-as', text: 'Save As...' }
-    ]
+    ],
+    openingButton: button // Pass the button reference to prevent closing issues
   })
 
   button.on('click', () => {
@@ -79,7 +80,8 @@ export const initNestedMenu = (ui) => {
       },
       { type: 'divider' },
       { name: 'find', text: 'Find and Replace...' }
-    ]
+    ],
+    openingButton: button // Pass the button reference
   })
 
   button.on('click', () => {
@@ -108,11 +110,12 @@ export const initIconMenu = (ui) => {
       { type: 'divider' },
       { name: 'keyboard', text: 'Keyboard shortcuts' },
       { name: 'help', text: 'Help' }
-    ]
+    ],
+    openingButton: button // Pass the button reference
   })
 
   button.on('click', () => {
-    menu.show().position(button.element, { align: 'right' })
+    menu.show().position(button.element)
   })
 
   menu.on('select', ({ name, text }) => {
@@ -137,7 +140,8 @@ export const initCustomMenu = (ui) => {
       { type: 'divider' },
       { name: 'rename', text: 'Rename' },
       { name: 'delete', text: 'Delete', disabled: true }
-    ]
+    ],
+    openingButton: button // Pass the button reference
   })
 
   button.on('click', () => {
@@ -156,34 +160,32 @@ export const initCustomMenu = (ui) => {
 }
 
 export const createMenusLayout = (components) => [
-  [createContainer, { class: 'mtrl-playground__container' },
-    // Header
-    [createElement, 'header', { class: 'mtrl-playground__header' },
-      [createElement, 'h1', { class: 'mtrl-playground__title', content: 'mtrl menus' }]
-    ],
+  // Header
+  [createElement, 'header', { class: 'mtrl-content__header' },
+    [createElement, 'h1', { class: 'mtrl-content__title', text: 'mtrl menus' }]
+  ],
 
-    // Basic Menu Section
-    [createElement, { tag: 'section', class: 'mtrl-playground__section' },
-      [createElement, { tag: 'h2', class: 'mtrl-playground__section-title', content: 'Basic Menu' }],
-      [createElement, 'basicMenu', { class: 'mtrl-playground__demo' }]
-    ],
+  // Basic Menu Section
+  [createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Basic Menu' }],
+    [createElement, 'basicMenu', { class: 'mtrl-content__demo' }]
+  ],
 
-    // Nested Menu Section
-    [createElement, { class: 'mtrl-playground__section' },
-      [createElement, { class: 'mtrl-playground__section-title', content: 'Nested Menu' }],
-      [createElement, 'nestedMenu', { class: 'mtrl-playground__demo' }]
-    ],
+  // Nested Menu Section
+  [createElement, { class: 'mtrl-content__section' },
+    [createElement, { class: 'mtrl-content__section-title', text: 'Nested Menu' }],
+    [createElement, 'nestedMenu', { class: 'mtrl-content__demo' }]
+  ],
 
-    // Icon Menu Section
-    [createElement, { class: 'mtrl-playground__section' },
-      [createElement, { class: 'mtrl-playground__section-title', content: 'Icon Menu' }],
-      [createElement, 'iconMenu', { class: 'mtrl-playground__demo' }]
-    ],
+  // Icon Menu Section
+  [createElement, { class: 'mtrl-content__section' },
+    [createElement, { class: 'mtrl-content__section-title', text: 'Icon Menu' }],
+    [createElement, 'iconMenu', { class: 'mtrl-content__demo' }]
+  ],
 
-    // Custom Menu Section
-    [createElement, { class: 'mtrl-playground__section' },
-      [createElement, { class: 'mtrl-playground__section-title', content: 'Custom Menu' }],
-      [createElement, 'customMenu', { class: 'mtrl-playground__demo' }]
-    ]
+  // Custom Menu Section
+  [createElement, { class: 'mtrl-content__section' },
+    [createElement, { class: 'mtrl-content__section-title', text: 'Custom Menu' }],
+    [createElement, 'customMenu', { class: 'mtrl-content__demo' }]
   ]
 ]

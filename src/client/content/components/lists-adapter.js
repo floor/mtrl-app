@@ -22,7 +22,7 @@ const HEADPHONE_ICON = `
 const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading }) => {
   const wrapper = createElement({
     tag: 'div',
-    className: 'mtrl-playground__navigation'
+    className: 'mtrl-content__navigation'
   })
 
   const prevButton = createButton({
@@ -35,7 +35,7 @@ const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading
 
   const loadingSpan = createElement({
     tag: 'span',
-    className: 'mtrl-playground__loading',
+    className: 'mtrl-content__loading',
     text: loading ? 'Loading...' : ''
   })
   wrapper.appendChild(loadingSpan)
@@ -54,17 +54,17 @@ const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading
 
 export const createListsLayout = (components) => {
   return [
-    [createContainer, { class: 'mtrl-playground__container' },
+    [createContainer, { class: 'mtrl-content__container' },
       // Header
-      [createElement, 'header', { class: 'mtrl-playground__header' },
-        [createElement, 'h1', { class: 'mtrl-playground__title', content: 'Radio Lists' }]
+      [createElement, 'header', { class: 'mtrl-content__header' },
+        [createElement, 'h1', { class: 'mtrl-content__title', content: 'Radio Lists' }]
       ],
 
       // Tracks Section
-      [createElement, 'section', { class: 'mtrl-playground__section' },
-        [createElement, 'h2', { class: 'mtrl-playground__section-title', content: 'Latest Tracks' }],
+      [createElement, 'section', { class: 'mtrl-content__section' },
+        [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Latest Tracks' }],
         [createElement, 'div', {
-          class: 'mtrl-playground__grid',
+          class: 'mtrl-content__grid',
           onCreate: async (el) => {
             const trackList = createList({
               type: 'single',
@@ -111,7 +111,7 @@ export const createListsLayout = (components) => {
                     log = createElement({
                       tag: 'div',
                       id: 'eventLog',
-                      className: 'mtrl-playground__event-log'
+                      className: 'mtrl-content__event-log'
                     })
                     el.appendChild(log)
                   }
@@ -122,7 +122,7 @@ export const createListsLayout = (components) => {
                 const log = ensureEventLog()
                 const entry = createElement({
                   tag: 'div',
-                  className: 'mtrl-playground__event-log-entry',
+                  className: 'mtrl-content__event-log-entry',
                   text: `${new Date().toLocaleTimeString()}: ${items.length ? `Loaded ${items.length} tracks` : 'No tracks to load'}`
                 })
                 console.insertBefore(entry, console.firstChild)
@@ -149,17 +149,17 @@ export const createListsLayout = (components) => {
       // Event Log
       [createElement, {
         tag: 'section',
-        className: 'mtrl-playground__section',
+        className: 'mtrl-content__section',
         children: [
           createElement({
             tag: 'h2',
-            className: 'mtrl-playground__section-title',
+            className: 'mtrl-content__section-title',
             text: 'Event Log'
           }),
           createElement({
             tag: 'div',
             id: 'eventLog',
-            className: 'mtrl-playground__event-log'
+            className: 'mtrl-content__event-log'
           })
         ]
       }]
@@ -170,7 +170,7 @@ export const createListsLayout = (components) => {
 // Add styles
 const style = document.createElement('style')
 style.textContent = `
-  .mtrl-playground__navigation {
+  .mtrl-content__navigation {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -179,12 +179,12 @@ style.textContent = `
     padding: 1rem;
   }
   
-  .mtrl-playground__loading {
+  .mtrl-content__loading {
     font-size: 0.875rem;
     color: #666;
   }
 
-  .mtrl-playground__grid {
+  .mtrl-content__grid {
     position: relative;
   }
 

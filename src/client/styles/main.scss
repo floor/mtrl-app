@@ -1,5 +1,6 @@
 // src/client/styles/main.scss
 @use 'sass:map';
+@use 'mtrl/src/styles/themes/baseline';
 @use 'mtrl/src/styles/themes/ocean';
 @use 'mtrl/src/styles/themes/sunset';
 @use 'mtrl/src/styles/themes/forest';
@@ -14,6 +15,7 @@
 @use 'mtrl/src/components/navigation/styles' as navigation;
 @use 'mtrl/src/components/list/styles' as list;
 @use './app';
+@use './content';
 
 // CSS Reset & Base Styles
 *,
@@ -34,71 +36,4 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   @include c.motion-transition(background-color, color);
-}
-// // Light Theme
-// :root {
-//   // Primary colors
-//   --mtrl-sys-color-primary: rgb(24, 116, 241);        // #1874f1 - Main brand color
-//   --mtrl-sys-color-on-primary: rgb(255, 255, 255);    // White for contrast on primary
-//   --mtrl-sys-color-primary-container: rgb(219, 234, 254); // Light blue container
-//   --mtrl-sys-color-on-primary-container: rgb(12, 58, 121); // Dark blue text for containers
-
-//   // Secondary colors
-//   --mtrl-sys-color-secondary: rgb(66, 133, 224);      // Slightly desaturated blue
-//   --mtrl-sys-color-on-secondary: rgb(255, 255, 255);  // White for contrast
-//   --mtrl-sys-color-secondary-container: rgb(231, 241, 254); // Very light blue container
-//   --mtrl-sys-color-on-secondary-container: rgb(20, 71, 148); // Dark blue for containers
-
-//   // Surface colors
-//   --mtrl-sys-color-surface: rgb(255, 255, 255);       // White surface
-//   --mtrl-sys-color-on-surface: rgb(28, 27, 31);       // Near black text
-//   --mtrl-sys-color-surface-container: rgb(241, 245, 249); // Light gray-blue container
-//   --mtrl-sys-color-surface-container-highest: rgb(231, 237, 245);
-//   --mtrl-sys-color-surface-container-high: rgb(236, 241, 247);
-//   --mtrl-sys-color-surface-container-low: rgb(245, 248, 251);
-//   --mtrl-sys-color-surface-container-lowest: rgb(255, 255, 255);
-
-//   // Outline colors
-//   --mtrl-sys-color-outline: rgb(121, 134, 154);       // Medium gray-blue outline
-//   --mtrl-sys-color-outline-variant: rgb(196, 204, 216); // Light gray-blue outline
-
-//   // Error colors (kept similar for consistency)
-//   --mtrl-sys-color-error: rgb(179, 38, 30);          
-//   --mtrl-sys-color-error-container: rgb(249, 222, 220);
-//   --mtrl-sys-color-on-error: rgb(255, 255, 255);
-//   --mtrl-sys-color-on-error-container: rgb(65, 14, 11);
-// }
-
-// Dark Theme
-[data-theme="dark"] {
-  // Primary colors
-  --mtrl-sys-color-primary: rgb(108, 171, 247);      // Lighter blue for dark theme
-  --mtrl-sys-color-on-primary: rgb(12, 58, 121);     // Dark blue for contrast
-  --mtrl-sys-color-primary-container: rgb(24, 116, 241); // Original blue as container
-  --mtrl-sys-color-on-primary-container: rgb(219, 234, 254); // Light blue text
-
-  // Secondary colors
-  --mtrl-sys-color-secondary: rgb(166, 200, 245);    // Light blue
-  --mtrl-sys-color-on-secondary: rgb(20, 71, 148);   // Dark blue
-  --mtrl-sys-color-secondary-container: rgb(66, 133, 224); // Medium blue container
-  --mtrl-sys-color-on-secondary-container: rgb(231, 241, 254); // Very light blue
-
-  // Surface colors
-  --mtrl-sys-color-surface: rgb(28, 27, 31);         // Dark surface
-  --mtrl-sys-color-on-surface: rgb(230, 230, 230);   // Light text
-  --mtrl-sys-color-surface-container: rgb(35, 35, 40);
-  --mtrl-sys-color-surface-container-highest: rgb(51, 51, 56);
-  --mtrl-sys-color-surface-container-high: rgb(45, 45, 50);
-  --mtrl-sys-color-surface-container-low: rgb(33, 33, 38);
-  --mtrl-sys-color-surface-container-lowest: rgb(15, 15, 20);
-
-  // Outline colors
-  --mtrl-sys-color-outline: rgb(147, 155, 167);      // Lighter outline for dark theme
-  --mtrl-sys-color-outline-variant: rgb(68, 75, 85); // Darker variant
-
-  // Error colors (kept similar for consistency)
-  --mtrl-sys-color-error: rgb(242, 184, 181);
-  --mtrl-sys-color-error-container: rgb(140, 29, 24);
-  --mtrl-sys-color-on-error: rgb(96, 20, 16);
-  --mtrl-sys-color-on-error-container: rgb(249, 222, 220);
 }

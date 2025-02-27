@@ -1,106 +1,60 @@
-// src/client/styles/playground.scss
+// src/client/styles/app.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
 @use 'mtrl/src/styles/abstract/config' as c;
 
-.#{c.$prefix}-playground {
+$app: '#{b.$prefix}-app';
+
+.#{b.$prefix}-app {
   @include c.typography('body-medium');
   display: flex;
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: var(--mtrl-sys-color-surface);
-  color: var(--mtrl-sys-color-on-surface);
+  background-color: t.color('surface');
+  color: t.color('on-surface');
 
-  .#{c.$prefix}-button.toggle-darkmode {
+  &[data-theme-mode=dark] {
+    background-color: t.color('surface');
+  }
+
+  .#{b.$prefix}-button.toggle-darkmode {
     z-index: 10;
     position: absolute;
-    left: 5px;
-    bottom: 5px;
+    left: 20px;
+    bottom: 15px;
   }
 
-
-  .#{c.$prefix}-main {
-    flex: 1;
-    min-height: 100vh;
-    background-color: white;
-    transition: background-color 200ms cubic-bezier(0.2, 0, 0, 1);
+  .#{b.$prefix}-button.more-menu {
+    z-index: 10;
+    position: absolute;
+    left: 20px;
+    bottom: 67px;
   }
 
-  .#{c.$prefix}-main__topbar {
-    height: 64px;
-    padding: 0 16px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    background-color: var(--mtrl-sys-color-surface);
-    border-bottom: 1px solid var(--mtrl-sys-color-outline-variant);
+  .#{b.$prefix}-nav--rail {
+    z-index: 2;
   }
 
-  .#{c.$prefix}-main__content {
-    padding: 24px;
-  }
-
-  .#{c.$prefix}-main__frame {
-    width: 100%;
-    height: calc(100vh - 64px);
-    border: none;
-  }
-
-  .#{c.$prefix}-nav--rail {
-    z-index: 2
-  }
-
-  .#{c.$prefix}-nav--drawer {
-    z-index: 1
+  .#{b.$prefix}-nav--drawer {
+    z-index: 1;
   }
 
   @media (max-width: 960px) {
-    .#{c.$prefix}-nav {
+    .#{b.$prefix}-nav {
       transform: translateX(-100%);      
     }
 
-    .#{c.$prefix}-nav--open {
+    .#{b.$prefix}-nav--open {
       transform: translateX(0);
     }
 
-    .#{c.$prefix}-main {
+    .#{b.$prefix}-main {
       margin-left: 0;
     }
-  }
-
-  &__container {
-    @include c.container;
-  }
-
-  &__header {
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__title {
-    @include c.typography('headline-large');
-    color: var(--mtrl-sys-color-on-surface);
-    margin: 0;
-  }
-
-  &__theme-switcher {
-    display: flex;
-    gap: 8px;
-  }
-
-  &__section {
-    background-color: var(--mtrl-sys-color-surface-container);
-    border-radius: c.get-shape('large');
-    padding: 24px;
-    margin-bottom: 24px;
-    @include c.elevation(1);
-  }
-
-  &__section-title {
-    @include c.typography('headline-small');
-    color: var(--mtrl-sys-color-on-surface);
-    margin: 0 0 16px;
   }
 
   &__grid {
@@ -118,27 +72,5 @@
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-  }
-
-  &__event-log {
-    background-color: var(--mtrl-sys-color-surface-container-lowest);
-    border: 1px solid var(--mtrl-sys-color-outline);
-    border-radius: c.get-shape('medium');
-    padding: 16px;
-    height: 200px;
-    overflow-y: auto;
-    font-family: monospace;
-    font-size: 14px;
-    @include c.motion-transition(background-color, border-color);
-    @include c.custom-scrollbar;
-  }
-
-  &__event-log-entry {
-    padding: 4px 0;
-    border-bottom: 1px solid var(--mtrl-sys-color-surface-container-highest);
-
-    &:first-child {
-      color: var(--mtrl-sys-color-primary);
-    }
   }
 }

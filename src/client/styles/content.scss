@@ -1,0 +1,94 @@
+// src/client/styles/playground.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/config' as c;
+
+$content: '#{b.$prefix}-content';
+
+.#{$content} {
+  flex: 1;
+  height: 100%;
+  overflow: scroll;
+  transition: background-color 200ms cubic-bezier(0.2, 0, 0, 1);
+  padding: 0 50px;
+
+  &__header {
+    margin-top: 12px;
+    .#{$content}__box {
+      flex: 1;
+      height: 100%;
+      border-radius: f.get-shape('large');
+      gap: 20px;
+      background-color: t.color('surface-container');
+      &.visual {
+        background-color: t.color('primary');
+        margin-left: 24px;
+      }
+      &.info {
+        padding: 24px;
+
+      }
+    }
+  }
+
+  &__header {
+    height: 100px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    @include c.typography('headline-large');
+    color: t.color('on-surface');
+    margin: 0;
+  }
+
+  &__section {
+    background-color: t.color('surface-container');
+    border-radius: f.get-shape('large');
+    padding: 24px;
+    margin-bottom: 24px;
+    // @include c.elevation(1);
+
+    .#{$content}-button {
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+
+    .#{$content}__demo {
+      display: flex;
+      
+      .#{$content}__spacer {
+        flex: 1;
+      }
+    }
+  }
+
+  &__section-title {
+    @include c.typography('headline-small');
+    color: t.color('on-surface');
+    margin: 0 0 16px;
+  }
+
+  &__grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    margin: 24px 0;
+    
+    @include c.breakpoint-down('sm') {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}

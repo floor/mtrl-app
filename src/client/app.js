@@ -1,8 +1,7 @@
 // src/client/app.js
 import { createRouter } from './core/router'
-import { createLayout } from 'mtrl'
-import { createMainView } from './views'
-import { navigationConfig } from './config'
+import { createLayout, createMenu } from 'mtrl'
+import { navigation, layout } from './config'
 import { createEventManager, setupErrorBoundary } from './core/events'
 import {
   updateDrawerItems,
@@ -31,19 +30,26 @@ const lightModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height
   <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
 </svg>`
 
-const toggleDarkMode = () => {
-  log.info('toggleDarkMode')
-  // Get current theme
-  const currentTheme = document.body.getAttribute('data-theme')
+const toggleDarkMode = (button) => {
+  console.log('toggleDarkMode')
+  const currentTheme = document.body.getAttribute('data-theme-mode')
   const isDarkMode = currentTheme !== 'dark'
   // Toggle theme
-  document.body.setAttribute('data-theme', isDarkMode ? 'dark' : 'light')
+  document.body.setAttribute('data-theme-mode', isDarkMode ? 'dark' : 'light')
   // Update icon based on current theme
-  const themeButton = document.querySelector('[data-id="theme-toggle"]')
-  if (themeButton) {
-    themeButton.innerHTML = isDarkMode ? lightModeIcon : darkModeIcon
-  }
+  const icon = isDarkMode ? lightModeIcon : darkModeIcon
+  button.setIcon(icon)
+
   return isDarkMode
+}
+
+const selectTheme = (theme) => {
+  // const currentTheme = document.body.getAttribute('data-theme')
+
+  // Toggle theme
+  document.body.setAttribute('data-theme', theme)
+
+  return theme
 }
 
 const createApp = (options = {}) => {
@@ -54,7 +60,7 @@ const createApp = (options = {}) => {
   const initializeLayout = () => {
     log.info('Starting layout initialization')
     try {
-      layoutInstance = createLayout(createMainView(), document.body)
+      layoutInstance = createLayout(layout, document.body)
       return layoutInstance
     } catch (error) {
       log.error('Failed to initialize layout:', error)
@@ -74,16 +80,41 @@ const createApp = (options = {}) => {
     return router
   }
 
-  const initializeEvents = (ui) => {
-    log.info('Initializing events')
-    eventManager = createEventManager()
+  const initInterface = (ui) => {
+    document.body.classList.add('mtrl-app')
+    selectTheme('ocean')
 
     ui.toggleDarkmode.on('click', () => {
       toggleDarkMode(ui.toggleDarkmode)
     })
 
+    const menu = createMenu({
+      items: [
+        { name: 'ocean', text: 'Ocean' },
+        { name: 'forest', text: 'Forest' },
+        { type: 'sunset', text: 'Sunset' }
+      ],
+      openingButton: ui.moreMenu
+    })
+
+    ui.moreMenu.on('click', () => {
+      document.body.appendChild(menu.element)
+
+      menu.show().position(ui.moreMenu)
+
+      menu.on('select', ({ name, text }) => {
+        console.log(`Selected: ${name} (${text})`)
+        menu.destroy()
+      })
+    })
+  }
+
+  const initializeEvents = (ui) => {
+    log.info('Initializing events')
+    eventManager = createEventManager(ui)
+
     // Setup rail navigation and store cleanup function
-    const cleanupRail = setupRailNavigation(ui.rail, ui.nav, router, navigationConfig)
+    const cleanupRail = setupRailNavigation(ui.rail, ui.nav, router, navigation)
     if (cleanupRail) {
       eventManager.addCleanup(() => {
         cleanupRail()
@@ -93,6 +124,8 @@ const createApp = (options = {}) => {
 
     // Initially hide drawer
     toggleDrawer(ui.nav, false)
+
+    initInterface(ui)
   }
 
   // Initialize in the correct order
@@ -119,8 +152,8 @@ const createApp = (options = {}) => {
       ui.rail?.setActive(route.section)
 
       // Show drawer with section items regardless of subsection
-      if (navigationConfig[route.section]) {
-        const items = navigationConfig[route.section].map(item => ({
+      if (navigation[route.section]) {
+        const items = navigation[route.section].map(item => ({
           ...item,
           section: route.section
         }))
