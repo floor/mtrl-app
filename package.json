@@ -3,12 +3,14 @@
   "description": "mtrl playground",
   "keywords": [
     "mtrl",
-    "playground"
+    "app",
+    "docs",
+    "demo"
   ],
   "author": "floor",
   "license": "MIT License",
   "main": "index.js",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "start": "pm2 start ecosystem.config.js",
     "stop": "pm2 stop mtrl-app",
