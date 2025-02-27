@@ -52,11 +52,18 @@ const selectTheme = (theme) => {
   return theme
 }
 
+/**
+ * Creates the application with proper lifecycle management
+ * @param {Object} options - Application configuration options
+ * @returns {Object} Application instance with lifecycle methods
+ */
 const createApp = (options = {}) => {
   let layoutInstance = null
   let eventManager = null
   let router = null
   let themeMenu = null // Store menu reference
+  let isInitialized = false
+  let readyCallbacks = []
 
   const initializeLayout = () => {
     log.info('Starting layout initialization')
@@ -90,14 +97,13 @@ const createApp = (options = {}) => {
     })
 
     // Create the menu with proper configuration
-    // Pass the ui.moreMenu directly, not ui.moreMenu.element
     themeMenu = createMenu({
       items: [
         { name: 'ocean', text: 'Ocean' },
         { name: 'forest', text: 'Forest' },
-        { name: 'sunset', text: 'Sunset' } // Fixed "type" to "name"
+        { name: 'sunset', text: 'Sunset' }
       ],
-      openingButton: ui.moreMenu // This is correct - API expects component, not element
+      openingButton: ui.moreMenu
     })
 
     document.body.appendChild(themeMenu.element)
@@ -151,21 +157,11 @@ const createApp = (options = {}) => {
     initInterface(ui)
   }
 
-  // Initialize in the correct order
-  try {
-    log.info('Starting initialization')
-    layoutInstance = initializeLayout()
-    const ui = layoutInstance.component
-
-    if (!ui) {
-      throw new Error('Layout initialization failed - UI component is undefined')
-    }
-
-    // Setup router before initializing events
-    router = setupRouter(ui)
-    initializeEvents(ui)
-    setupErrorBoundary()
-
+  /**
+   * Handles initial navigation based on URL
+   * @param {Object} ui - UI components
+   */
+  const handleInitialRoute = (ui) => {
     // Handle initial route
     const { pathname } = window.location
     const route = router.parsePath(pathname)
@@ -194,31 +190,153 @@ const createApp = (options = {}) => {
       // Navigate to initial route
       router.navigate(route.section, route.subsection, { noHistory: true })
     }
+  }
 
-    return {
-      destroy: () => {
-        eventManager?.cleanup()
-        router?.destroy()
-        layoutInstance?.destroy()
-        layoutInstance = null
-        router = null
-      },
-      getLayout: () => layoutInstance,
-      getComponent: (name) => layoutInstance?.get(name),
-      getRouter: () => router
+  /**
+   * Main initialization function that runs when DOM is ready
+   */
+  const initialize = () => {
+    if (isInitialized) return
+    isInitialized = true
+
+    try {
+      log.info('Starting initialization')
+      layoutInstance = initializeLayout()
+      const ui = layoutInstance.component
+
+      if (!ui) {
+        throw new Error('Layout initialization failed - UI component is undefined')
+      }
+
+      // Setup router before initializing events
+      router = setupRouter(ui)
+      initializeEvents(ui)
+      setupErrorBoundary()
+      handleInitialRoute(ui)
+
+      // Execute any callbacks registered before initialization
+      readyCallbacks.forEach(callback => {
+        try {
+          callback({
+            layout: layoutInstance,
+            router,
+            ui
+          })
+        } catch (error) {
+          log.error('Error in ready callback:', error)
+        }
+      })
+      readyCallbacks = [] // Clear the callbacks
+
+      log.info('App initialization complete')
+    } catch (error) {
+      log.error('Initialization failed:', error)
+      throw error
     }
-  } catch (error) {
-    log.error('Initialization failed:', error)
-    throw error
+  }
+
+  /**
+   * Checks if DOM is ready and initializes app
+   */
+  const initWhenReady = () => {
+    // If document is already complete, initialize immediately
+    if (document.readyState === 'complete') {
+      initialize()
+    } else {
+      // Otherwise wait for DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', initialize)
+
+      // Fallback for older browsers
+      window.addEventListener('load', () => {
+        if (!isInitialized) {
+          initialize()
+        }
+      })
+    }
+  }
+
+  // Start the initialization process
+  initWhenReady()
+
+  // Return the app interface
+  return {
+    /**
+     * Register a callback to be executed when app is ready
+     * @param {Function} callback - Function to call when ready
+     */
+    onReady (callback) {
+      if (typeof callback !== 'function') {
+        return
+      }
+
+      if (isInitialized) {
+        // If already initialized, execute immediately
+        callback({
+          layout: layoutInstance,
+          router,
+          ui: layoutInstance?.component
+        })
+      } else {
+        // Otherwise queue for later execution
+        readyCallbacks.push(callback)
+      }
+    },
+
+    /**
+     * Clean up all resources used by the app
+     */
+    destroy: () => {
+      eventManager?.cleanup()
+      router?.destroy()
+      layoutInstance?.destroy()
+      layoutInstance = null
+      router = null
+      isInitialized = false
+    },
+
+    /**
+     * Check if the app has been initialized
+     * @returns {boolean} Whether app is initialized
+     */
+    isInitialized: () => isInitialized,
+
+    /**
+     * Get the layout instance
+     * @returns {Object} Layout instance
+     */
+    getLayout: () => layoutInstance,
+
+    /**
+     * Get a component by name
+     * @param {string} name - Component name
+     * @returns {Object} The requested component
+     */
+    getComponent: (name) => layoutInstance?.get(name),
+
+    /**
+     * Get the router instance
+     * @returns {Object} Router instance
+     */
+    getRouter: () => router
   }
 }
 
-// Initialize app
+// Initialize app safely
+let app
 try {
-  window.app = createApp({
+  app = createApp({
     onError: (error) => {
       log.error('Application error:', error)
     }
+  })
+
+  // Make app available globally
+  window.app = app
+
+  // Example of using the onReady API
+  app.onReady(({ router, ui }) => {
+    log.info('App is ready, performing post-initialization tasks')
+    // Any additional setup that should happen after initialization
   })
 } catch (error) {
   log.error('Failed to create app:', error)
