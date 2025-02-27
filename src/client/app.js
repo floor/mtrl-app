@@ -56,6 +56,7 @@ const createApp = (options = {}) => {
   let layoutInstance = null
   let eventManager = null
   let router = null
+  let themeMenu = null // Store menu reference
 
   const initializeLayout = () => {
     log.info('Starting layout initialization')
@@ -88,24 +89,38 @@ const createApp = (options = {}) => {
       toggleDarkMode(ui.toggleDarkmode)
     })
 
-    const menu = createMenu({
+    // Create the menu with proper configuration
+    // Pass the ui.moreMenu directly, not ui.moreMenu.element
+    themeMenu = createMenu({
       items: [
         { name: 'ocean', text: 'Ocean' },
         { name: 'forest', text: 'Forest' },
-        { type: 'sunset', text: 'Sunset' }
+        { name: 'sunset', text: 'Sunset' } // Fixed "type" to "name"
       ],
-      openingButton: ui.moreMenu
+      openingButton: ui.moreMenu // This is correct - API expects component, not element
     })
 
+    document.body.appendChild(themeMenu.element)
+
+    // Set up the click event handler for the more menu button
     ui.moreMenu.on('click', () => {
-      document.body.appendChild(menu.element)
+      console.log('click', ui.moreMenu.element)
 
-      menu.show().position(ui.moreMenu)
+      // Show the menu first
+      themeMenu.show()
 
-      menu.on('select', ({ name, text }) => {
-        console.log(`Selected: ${name} (${text})`)
-        menu.destroy()
-      })
+      // Then position it using the DOM element
+      if (ui.moreMenu.element) {
+        themeMenu.position(ui.moreMenu.element)
+      } else {
+        log.error('Missing moreMenu element for positioning')
+      }
+    })
+
+    // Set up theme selection handler
+    themeMenu.on('select', ({ name }) => {
+      console.log(`Selected theme: ${name}`)
+      selectTheme(name)
     })
   }
 
@@ -121,6 +136,14 @@ const createApp = (options = {}) => {
         cleanupDrawer(ui.nav) // Add drawer cleanup
       })
     }
+
+    // Add cleanup for theme menu
+    eventManager.addCleanup(() => {
+      if (themeMenu) {
+        themeMenu.destroy()
+        themeMenu = null
+      }
+    })
 
     // Initially hide drawer
     toggleDrawer(ui.nav, false)

@@ -22,9 +22,9 @@ export const layout = [
     behavior: 'fixed',
     items: [
       { id: 'home', icon: iconMtrl, label: 'Home' },
-      // { id: 'getstarted', icon: iconGetstarted, label: 'Get Started' },
-      // { id: 'core', icon: iconCore, label: 'Core' },
-      // { id: 'styles', icon: iconStyles, label: 'Styles' },
+      { id: 'getstarted', icon: iconGetstarted, label: 'Get Started' },
+      { id: 'core', icon: iconCore, label: 'Core' },
+      { id: 'styles', icon: iconStyles, label: 'Styles' },
       { id: 'components', icon: iconComponents, label: 'Components' }
     ]
   }],
