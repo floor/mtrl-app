@@ -46,7 +46,8 @@ const server = Bun.serve({
 
       return new Response(file, {
         headers: {
-          'Content-Type': `${contentType}; charset=utf-8`
+          'Content-Type': `${contentType}; charset=utf-8`,
+          'Access-Control-Allow-Origin': '*'
         }
       });
     }
