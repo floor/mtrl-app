@@ -10,6 +10,10 @@ import {
   createButton
 } from 'mtrl'
 
+// Import the SCSS styles - this should be handled by your bundler
+// The styles would be imported in the main.scss file or similar
+// import '../../styles/content/colors.scss'
+
 export const createColorsContent = (container) => {
   const info = {
     title: 'Colors',
@@ -37,39 +41,66 @@ export const initColorPalettes = (ui) => {
   ]
 
   palettes.forEach(palette => {
-    const paletteContainer = createElement({
+    // Create a container for each palette
+    const paletteSection = createElement({
       tag: 'div',
-      class: 'color-palette'
+      class: 'palette-section'
     })
 
-    const paletteTitle = createElement({
+    // Add the palette label
+    const paletteHeading = createElement({
       tag: 'h3',
-      class: 'color-palette__title',
+      class: 'palette-heading',
       text: palette.label
     })
 
-    paletteContainer.appendChild(paletteTitle)
+    paletteSection.appendChild(paletteHeading)
 
-    palette.tones.forEach(tone => {
-      const swatch = createElement({
-        tag: 'div',
-        class: `color-swatch ${palette.name}-${tone}`,
-        attributes: {
-          'data-color': `${palette.name}-${tone}`
-        }
-      })
-
-      const swatchLabel = createElement({
-        tag: 'span',
-        class: 'color-swatch__label',
-        text: `${tone}`
-      })
-
-      swatch.appendChild(swatchLabel)
-      paletteContainer.appendChild(swatch)
+    // Create a row for the swatches
+    const swatchesRow = createElement({
+      tag: 'div',
+      class: 'palette-swatches-row'
     })
 
-    container.appendChild(paletteContainer)
+    // Create swatches for each tone
+    palette.tones.forEach(tone => {
+      // Create a swatch with system colors
+      let backgroundColor
+
+      // Use theme system colors based on the palette and tone
+      if (tone === 50) {
+        // Use the main system color for tone 50
+        backgroundColor = `var(--mtrl-sys-color-${palette.name})`
+      } else if (tone < 50) {
+        // For lighter tones, mix with surface color (simple approximation)
+        backgroundColor = `color-mix(in srgb, var(--mtrl-sys-color-${palette.name}) ${tone * 2}%, var(--mtrl-sys-color-surface))`
+      } else {
+        // For darker tones, mix with on-surface color (simple approximation)
+        backgroundColor = `color-mix(in srgb, var(--mtrl-sys-color-${palette.name}) ${100 - (tone - 50)}%, var(--mtrl-sys-color-on-surface))`
+      }
+
+      const swatch = createElement({
+        tag: 'div',
+        class: 'palette-swatch',
+        style: `background-color: ${backgroundColor};`
+      })
+
+      // Add tone label
+      const toneLabel = createElement({
+        tag: 'div',
+        class: 'palette-tone-label',
+        text: tone.toString()
+      })
+
+      // Determine text color based on tone value
+      toneLabel.style.color = tone < 50 ? 'var(--mtrl-sys-color-on-surface)' : 'var(--mtrl-sys-color-surface)'
+
+      swatch.appendChild(toneLabel)
+      swatchesRow.appendChild(swatch)
+    })
+
+    paletteSection.appendChild(swatchesRow)
+    container.appendChild(paletteSection)
   })
 }
 
@@ -78,120 +109,269 @@ export const initThemeColors = (ui) => {
 
   // Create semantic color tokens
   const semanticColors = [
-    { name: 'surface', label: 'Surface' },
-    { name: 'surface-container', label: 'Surface Container' },
-    { name: 'on-surface', label: 'On Surface' },
     { name: 'primary', label: 'Primary' },
     { name: 'on-primary', label: 'On Primary' },
     { name: 'secondary', label: 'Secondary' },
     { name: 'on-secondary', label: 'On Secondary' },
     { name: 'tertiary', label: 'Tertiary' },
     { name: 'on-tertiary', label: 'On Tertiary' },
+    { name: 'error', label: 'Error' },
+    { name: 'on-error', label: 'On Error' },
+    { name: 'surface', label: 'Surface' },
+    { name: 'on-surface', label: 'On Surface' },
+    { name: 'surface-container', label: 'Surface Container' },
     { name: 'outline', label: 'Outline' }
   ]
 
-  const themeRow = createElement({
+  // Create container for theme colors
+  const themeColorsContainer = createElement({
     tag: 'div',
-    class: 'color-theme-row'
+    class: 'theme-colors-container'
   })
 
   semanticColors.forEach(color => {
-    const swatch = createElement({
+    // Create a color box with the semantic color
+    const colorBox = createElement({
       tag: 'div',
-      class: `color-swatch color-${color.name}`,
-      attributes: {
-        'data-color': color.name
-      }
+      class: 'theme-color-box',
+      style: `background-color: var(--mtrl-sys-color-${color.name});`
     })
 
-    const swatchLabel = createElement({
-      tag: 'span',
-      class: 'color-swatch__label',
+    // Determine appropriate text color
+    // For "on-" colors we reverse the background
+    if (color.name.startsWith('on-')) {
+      const baseColor = color.name.substring(3)
+      colorBox.style.backgroundColor = `var(--mtrl-sys-color-${baseColor})`
+      colorBox.style.color = `var(--mtrl-sys-color-${color.name})`
+    } else {
+      // For regular colors, use the matching "on-" color if exists
+      const hasMatchingOnColor = semanticColors.some(c => c.name === `on-${color.name}`)
+      if (hasMatchingOnColor) {
+        colorBox.style.color = `var(--mtrl-sys-color-on-${color.name})`
+      } else {
+        // Fallback to a contrasting color
+        colorBox.style.color = color.name === 'surface' || color.name === 'surface-container'
+          ? 'var(--mtrl-sys-color-on-surface)'
+          : '#fff'
+      }
+    }
+
+    // Add the color name
+    const colorName = createElement({
+      tag: 'div',
+      class: 'theme-color-name',
       text: color.label
     })
 
-    swatch.appendChild(swatchLabel)
-    themeRow.appendChild(swatch)
+    colorBox.appendChild(colorName)
+    themeColorsContainer.appendChild(colorBox)
   })
 
-  container.appendChild(themeRow)
+  container.appendChild(themeColorsContainer)
 }
 
 export const initColorState = (ui) => {
   const container = ui.stateColors
 
-  // Create state color tokens
+  // Create state color tokens with visual examples
   const stateColors = [
-    { name: 'primary-hover', label: 'Hover' },
-    { name: 'primary-focus', label: 'Focus' },
-    { name: 'primary-active', label: 'Active' },
-    { name: 'primary-disabled', label: 'Disabled' }
+    { name: 'hover', label: 'Hover', cssVar: '--mtrl-sys-state-primary-hover' },
+    { name: 'focus', label: 'Focus', cssVar: '--mtrl-sys-state-primary-focus' },
+    { name: 'active', label: 'Active', cssVar: '--mtrl-sys-state-primary-active' },
+    { name: 'disabled', label: 'Disabled', cssVar: '--mtrl-sys-state-disabled' }
   ]
 
-  const stateRow = createElement({
+  // Create state colors container
+  const stateColorsContainer = createElement({
     tag: 'div',
-    class: 'color-state-row'
+    class: 'state-colors-container'
   })
 
-  stateColors.forEach(color => {
-    const swatch = createElement({
+  stateColors.forEach(state => {
+    // Create a state example card
+    const stateCard = createElement({
       tag: 'div',
-      class: `color-swatch state-${color.name}`,
-      attributes: {
-        'data-color': color.name
-      }
+      class: 'state-color-card'
     })
 
-    const swatchLabel = createElement({
-      tag: 'span',
-      class: 'color-swatch__label',
-      text: color.label
+    // Create a button to demonstrate the state
+    const stateButton = createElement({
+      tag: 'button',
+      class: `state-demo-button state-${state.name}`,
+      text: state.label
     })
 
-    swatch.appendChild(swatchLabel)
-    stateRow.appendChild(swatch)
+    // Style the button to show the state color
+    if (state.name === 'hover') {
+      stateButton.style.backgroundColor = `var(${state.cssVar})`
+    } else if (state.name === 'focus') {
+      stateButton.style.backgroundColor = 'var(--mtrl-sys-color-primary)'
+      stateButton.style.outline = '2px solid var(--mtrl-sys-color-outline)'
+    } else if (state.name === 'active') {
+      stateButton.style.backgroundColor = `var(${state.cssVar})`
+      stateButton.style.transform = 'scale(0.98)'
+    } else if (state.name === 'disabled') {
+      stateButton.style.backgroundColor = `var(${state.cssVar})`
+      stateButton.style.color = 'var(--mtrl-sys-color-on-disabled)'
+      stateButton.style.opacity = '0.7'
+      stateButton.disabled = true
+    }
+
+    // Add a label
+    const stateLabel = createElement({
+      tag: 'div',
+      class: 'state-color-label',
+      text: `${state.label} State`
+    })
+
+    stateCard.appendChild(stateButton)
+    stateCard.appendChild(stateLabel)
+    stateColorsContainer.appendChild(stateCard)
   })
 
-  container.appendChild(stateRow)
+  container.appendChild(stateColorsContainer)
+
+  // Add interactive demo
+  const interactiveDemo = createElement({
+    tag: 'div',
+    class: 'interactive-state-demo'
+  })
+
+  const demoLabel = createElement({
+    tag: 'div',
+    class: 'interactive-demo-label',
+    text: 'Try it yourself:'
+  })
+
+  const demoButton = createElement({
+    tag: 'button',
+    class: 'interactive-button',
+    text: 'Interactive Button'
+  })
+
+  const demoInstructions = createElement({
+    tag: 'div',
+    class: 'demo-instructions',
+    text: 'Hover, focus, or click to see the different states'
+  })
+
+  interactiveDemo.appendChild(demoLabel)
+  interactiveDemo.appendChild(demoButton)
+  interactiveDemo.appendChild(demoInstructions)
+
+  container.appendChild(interactiveDemo)
 }
 
 export const initDynamicTheme = (ui) => {
   const container = ui.themeDemo
 
-  const themeButtons = [
+  // Create theme preview
+  const themePreview = createElement({
+    tag: 'div',
+    class: 'theme-preview'
+  })
+
+  const themeTitle = createElement({
+    tag: 'h3',
+    class: 'theme-preview-title',
+    text: 'Current Theme: Ocean'
+  })
+
+  // Show theme color samples
+  const themeSamples = createElement({
+    tag: 'div',
+    class: 'theme-samples'
+  })
+
+  // Primary color
+  const primarySample = createElement({
+    tag: 'div',
+    class: 'theme-sample',
+    text: 'Primary',
+    style: 'background-color: var(--mtrl-sys-color-primary); color: var(--mtrl-sys-color-on-primary);'
+  })
+
+  // Secondary color
+  const secondarySample = createElement({
+    tag: 'div',
+    class: 'theme-sample',
+    text: 'Secondary',
+    style: 'background-color: var(--mtrl-sys-color-secondary); color: var(--mtrl-sys-color-on-secondary);'
+  })
+
+  // Tertiary color
+  const tertiarySample = createElement({
+    tag: 'div',
+    class: 'theme-sample',
+    text: 'Tertiary',
+    style: 'background-color: var(--mtrl-sys-color-tertiary); color: var(--mtrl-sys-color-on-tertiary);'
+  })
+
+  themeSamples.appendChild(primarySample)
+  themeSamples.appendChild(secondarySample)
+  themeSamples.appendChild(tertiarySample)
+
+  themePreview.appendChild(themeTitle)
+  themePreview.appendChild(themeSamples)
+
+  container.appendChild(themePreview)
+
+  // Theme buttons
+  const themeButtons = createElement({
+    tag: 'div',
+    class: 'theme-buttons'
+  })
+
+  const themes = [
     { name: 'ocean', label: 'Ocean Theme' },
     { name: 'forest', label: 'Forest Theme' },
     { name: 'sunset', label: 'Sunset Theme' },
     { name: 'spring', label: 'Spring Theme' }
   ]
 
-  themeButtons.forEach(theme => {
+  themes.forEach(theme => {
     const button = createButton({
       text: theme.label,
-      variant: 'filled',
-      class: `theme-button theme-${theme.name}`
+      variant: 'filled'
     })
 
     button.on('click', () => {
       document.body.setAttribute('data-theme', theme.name)
+      themeTitle.textContent = `Current Theme: ${theme.label.split(' ')[0]}`
     })
 
-    container.appendChild(button.element)
+    themeButtons.appendChild(button.element)
   })
 
-  // Add dark mode toggle
+  container.appendChild(themeButtons)
+
+  // Dark mode toggle
+  const themeMode = createElement({
+    tag: 'div',
+    class: 'theme-mode-toggle'
+  })
+
+  const themeModeLabel = createElement({
+    tag: 'span',
+    text: 'Dark Mode:'
+  })
+
   const darkModeButton = createButton({
     text: 'Toggle Dark Mode',
-    variant: 'outlined',
-    class: 'dark-mode-toggle'
+    variant: 'outlined'
   })
 
   darkModeButton.on('click', () => {
-    const currentTheme = document.body.getAttribute('data-theme-mode')
-    document.body.setAttribute('data-theme-mode', currentTheme === 'dark' ? 'light' : 'dark')
+    const currentMode = document.body.getAttribute('data-theme-mode')
+    const newMode = currentMode === 'dark' ? 'light' : 'dark'
+    document.body.setAttribute('data-theme-mode', newMode)
+    darkModeButton.setText(newMode === 'dark' ? 'Switch to Light' : 'Switch to Dark')
   })
 
-  container.appendChild(darkModeButton.element)
+  themeMode.appendChild(themeModeLabel)
+  themeMode.appendChild(darkModeButton.element)
+
+  container.appendChild(themeMode)
 }
 
 export const createColorsLayout = () => [
@@ -255,114 +435,182 @@ document.body.setAttribute('data-theme-mode',
   ]
 ]
 
-// Add custom styles for the color documentation
-const addColorStyles = () => {
+// Add this to the end of your file for now
+// In production, this would be moved to SCSS files
+function addColorStyles () {
   const style = document.createElement('style')
   style.textContent = `
-    .color-palettes {
+    /* Color palettes */
+    .palette-section {
+      margin-bottom: 2rem;
+    }
+    
+    .palette-heading {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .palette-swatches-row {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 24px;
-      margin-top: 24px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
     }
     
-    .color-palette__title {
-      margin-bottom: 12px;
-      font-size: 1rem;
-    }
-    
-    .color-swatch {
+    .palette-swatch {
+      height: 60px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 60px;
-      margin-bottom: 8px;
-      border-radius: 8px;
-      position: relative;
-      transition: transform 0.2s ease;
-      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
-    .color-swatch:hover {
-      transform: scale(1.02);
+    .palette-tone-label {
+      font-weight: bold;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
     
-    .color-swatch__label {
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 4px 8px;
-      border-radius: 4px;
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    .theme-colors, .state-colors {
+    /* Theme colors styling */
+    .theme-colors-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
+      gap: 1rem;
+      margin-top: 1.5rem;
     }
     
-    .theme-demo {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 24px;
-    }
-    
-    .code-block {
-      background-color: var(--mtrl-sys-color-surface-container);
-      padding: 16px;
+    .theme-color-box {
+      height: 80px;
       border-radius: 8px;
-      overflow: auto;
-      font-family: monospace;
-      margin: 12px 0 24px 0;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
-    /* Dynamic color classes */
-    .color-primary { background-color: var(--mtrl-sys-color-primary); color: var(--mtrl-sys-color-on-primary); }
-    .color-secondary { background-color: var(--mtrl-sys-color-secondary); color: var(--mtrl-sys-color-on-secondary); }
-    .color-tertiary { background-color: var(--mtrl-sys-color-tertiary); color: var(--mtrl-sys-color-on-tertiary); }
-    .color-error { background-color: var(--mtrl-sys-color-error); color: var(--mtrl-sys-color-on-error); }
-    .color-surface { background-color: var(--mtrl-sys-color-surface); color: var(--mtrl-sys-color-on-surface); }
-    .color-surface-container { background-color: var(--mtrl-sys-color-surface-container); color: var(--mtrl-sys-color-on-surface); }
-    .color-on-surface { background-color: var(--mtrl-sys-color-on-surface); color: var(--mtrl-sys-color-surface); }
-    .color-on-primary { background-color: var(--mtrl-sys-color-on-primary); color: var(--mtrl-sys-color-primary); }
-    .color-on-secondary { background-color: var(--mtrl-sys-color-on-secondary); color: var(--mtrl-sys-color-secondary); }
-    .color-on-tertiary { background-color: var(--mtrl-sys-color-on-tertiary); color: var(--mtrl-sys-color-tertiary); }
-    .color-outline { background-color: var(--mtrl-sys-color-outline); color: var(--mtrl-sys-color-on-surface); }
-    
-    .primary-10 { background-color: var(--mtrl-ref-palette-primary10); color: var(--mtrl-ref-palette-primary90); }
-    .primary-30 { background-color: var(--mtrl-ref-palette-primary30); color: var(--mtrl-ref-palette-primary90); }
-    .primary-50 { background-color: var(--mtrl-ref-palette-primary50); color: var(--mtrl-ref-palette-primary90); }
-    .primary-70 { background-color: var(--mtrl-ref-palette-primary70); color: var(--mtrl-ref-palette-primary10); }
-    .primary-90 { background-color: var(--mtrl-ref-palette-primary90); color: var(--mtrl-ref-palette-primary10); }
-    
-    .secondary-10 { background-color: var(--mtrl-ref-palette-secondary10); color: var(--mtrl-ref-palette-secondary90); }
-    .secondary-30 { background-color: var(--mtrl-ref-palette-secondary30); color: var(--mtrl-ref-palette-secondary90); }
-    .secondary-50 { background-color: var(--mtrl-ref-palette-secondary50); color: var(--mtrl-ref-palette-secondary90); }
-    .secondary-70 { background-color: var(--mtrl-ref-palette-secondary70); color: var(--mtrl-ref-palette-secondary10); }
-    .secondary-90 { background-color: var(--mtrl-ref-palette-secondary90); color: var(--mtrl-ref-palette-secondary10); }
-    
-    .tertiary-10 { background-color: var(--mtrl-ref-palette-tertiary10); color: var(--mtrl-ref-palette-tertiary90); }
-    .tertiary-30 { background-color: var(--mtrl-ref-palette-tertiary30); color: var(--mtrl-ref-palette-tertiary90); }
-    .tertiary-50 { background-color: var(--mtrl-ref-palette-tertiary50); color: var(--mtrl-ref-palette-tertiary90); }
-    .tertiary-70 { background-color: var(--mtrl-ref-palette-tertiary70); color: var(--mtrl-ref-palette-tertiary10); }
-    .tertiary-90 { background-color: var(--mtrl-ref-palette-tertiary90); color: var(--mtrl-ref-palette-tertiary10); }
-    
-    .error-10 { background-color: var(--mtrl-ref-palette-error10); color: var(--mtrl-ref-palette-error90); }
-    .error-30 { background-color: var(--mtrl-ref-palette-error30); color: var(--mtrl-ref-palette-error90); }
-    .error-50 { background-color: var(--mtrl-ref-palette-error50); color: var(--mtrl-ref-palette-error90); }
-    .error-70 { background-color: var(--mtrl-ref-palette-error70); color: var(--mtrl-ref-palette-error10); }
-    .error-90 { background-color: var(--mtrl-ref-palette-error90); color: var(--mtrl-ref-palette-error10); }
+    .theme-color-name {
+      font-weight: bold;
+    }
     
     /* State colors */
-    .state-primary-hover { background-color: var(--mtrl-sys-state-primary-hover); color: var(--mtrl-sys-color-on-primary); }
-    .state-primary-focus { background-color: var(--mtrl-sys-state-primary-focus); color: var(--mtrl-sys-color-on-primary); }
-    .state-primary-active { background-color: var(--mtrl-sys-state-primary-active); color: var(--mtrl-sys-color-on-primary); }
-    .state-primary-disabled { background-color: var(--mtrl-sys-state-disabled); color: var(--mtrl-sys-color-on-disabled); }
+    .state-colors-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .state-color-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+      border-radius: 8px;
+      background-color: #f5f5f5;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .state-demo-button {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 4px;
+      border: none;
+      background-color: var(--mtrl-sys-color-primary);
+      color: white;
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+    }
+    
+    .state-color-label {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .interactive-state-demo {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem;
+      border-radius: 8px;
+      background-color: #f5f5f5;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .interactive-demo-label {
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    
+    .interactive-button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      border: none;
+      background-color: var(--mtrl-sys-color-primary);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .interactive-button:hover {
+      background-color: var(--mtrl-sys-state-primary-hover);
+    }
+    
+    .interactive-button:focus {
+      outline: 2px solid var(--mtrl-sys-color-outline);
+      outline-offset: 2px;
+    }
+    
+    .interactive-button:active {
+      background-color: var(--mtrl-sys-state-primary-active);
+      transform: scale(0.98);
+    }
+    
+    .demo-instructions {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* Theme preview */
+    .theme-preview {
+      padding: 1.5rem;
+      border-radius: 8px;
+      background-color: var(--mtrl-sys-color-surface);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 1.5rem;
+    }
+    
+    .theme-samples {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    
+    .theme-sample {
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    
+    .theme-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.5rem 0;
+    }
+    
+    .theme-mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
   `
   document.head.appendChild(style)
 }
 
-// Call this function when the module loads
+// Call the function to add styles
 addColorStyles()
