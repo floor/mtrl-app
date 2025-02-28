@@ -62,6 +62,7 @@ export const themesMenu = [
 export const navigation = {
   components: [
     { id: 'buttons', label: 'Buttons', path: '/components/buttons' },
+    { id: 'cards', label: 'Cards', path: '/components/cards' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
     { id: 'menus', label: 'Menus', path: '/components/menus' },
     { id: 'navigations', label: 'Navigations', path: '/components/navigations' },

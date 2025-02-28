@@ -9,40 +9,75 @@
 $content: '#{b.$prefix}-content';
 
 .#{$content} {
-  // Color palettes
+  // Common styles for sections
+  &__description {
+    color: t.color('on-surface-variant');
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  
+ // Color palettes - improved styling
   .color-palettes {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 32px;
+    gap: 24px;
     margin-top: 24px;
   }
-  
+
   .color-palette {
     border-radius: f.get-shape('medium');
     overflow: hidden;
     @include c.elevation(1);
     background-color: t.color('surface');
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      @include c.elevation(2);
+    }
   }
-  
+
   .color-palette__title {
     padding: 16px;
     margin: 0;
     font-size: 1.1rem;
     background-color: t.color('surface-container');
     color: t.color('on-surface');
+    font-weight: 500;
   }
-  
+
   .color-swatch {
-    height: 70px;
+    min-height: 60px;
     display: flex;
-    align-items: center;
-    padding: 0 16px;
+    flex-direction: column;
+    padding: 12px 16px;
     position: relative;
-    transition: transform 0.2s ease;
+    justify-content: center;
+    gap: 4px;
     
-    &:hover {
-      transform: translateY(-2px);
+    // Add subtle separator
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.05);
     }
+  }
+
+  .color-swatch__tone {
+    font-weight: 500;
+    font-size: 1rem;
+  }
+
+  .color-swatch__value {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   
   .color-swatch__info {
@@ -74,7 +109,7 @@ $content: '#{b.$prefix}-content';
     height: 100px;
     padding: 16px;
     @include c.elevation(1);
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     
     &:hover {
       transform: translateY(-2px);
@@ -99,23 +134,28 @@ $content: '#{b.$prefix}-content';
     opacity: 0.8;
   }
   
-  // State colors
+  // State colors - updated to better display state examples
   .color-state-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 24px;
     margin-top: 24px;
   }
   
   .state-color-container {
-    border-radius: f.get-shape('small');
+    border-radius: f.get-shape('medium');
     padding: 16px;
     background-color: t.color('surface-container-low');
     @include c.elevation(1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+    &:hover {
+      @include c.elevation(2);
+    }
   }
   
   .state-color-example {
-    height: 44px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -128,84 +168,42 @@ $content: '#{b.$prefix}-content';
     color: t.color('on-primary');
     
     &.state-hover {
-      background-color: var(--mtrl-sys-state-primary-hover);
-      
-      &:hover {
-        transform: scale(1.02);
-      }
+      background-color: var(--mtrl-sys-state-primary-hover, color-mix(in srgb, var(--mtrl-sys-color-primary) 92%, white));
     }
     
     &.state-focus {
-      background-color: var(--mtrl-sys-state-primary-focus);
+      background-color: t.color('primary');
       outline: 2px solid t.color('outline');
       outline-offset: 2px;
     }
     
     &.state-active {
-      background-color: var(--mtrl-sys-state-primary-active);
+      background-color: var(--mtrl-sys-state-primary-active, color-mix(in srgb, var(--mtrl-sys-color-primary) 88%, white));
       transform: scale(0.98);
     }
     
     &.state-disabled {
-      background-color: var(--mtrl-sys-state-disabled);
-      color: var(--mtrl-sys-color-on-disabled);
+      background-color: var(--mtrl-sys-state-disabled, rgba(0, 0, 0, 0.12));
+      color: var(--mtrl-sys-color-on-disabled, rgba(0, 0, 0, 0.38));
       cursor: not-allowed;
       opacity: 0.7;
     }
   }
   
   .state-color-info {
-    margin-top: 8px;
+    margin-top: 12px;
   }
   
   .state-color-label {
     font-weight: 500;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    color: t.color('on-surface');
   }
   
   .state-color-value {
     font-size: 0.85rem;
     color: t.color('on-surface-variant');
-  }
-  
-  .state-transition-container {
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .interactive-state-demo {
-    padding: 12px 24px;
-    border-radius: f.get-shape('full');
-    background-color: t.color('primary');
-    color: t.color('on-primary');
-    border: none;
-    font-size: 1rem;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      background-color: var(--mtrl-sys-state-primary-hover);
-    }
-    
-    &:focus {
-      background-color: var(--mtrl-sys-state-primary-focus);
-      outline: 2px solid t.color('outline');
-      outline-offset: 2px;
-    }
-    
-    &:active {
-      background-color: var(--mtrl-sys-state-primary-active);
-      transform: scale(0.98);
-    }
-  }
-  
-  .state-instructions {
-    margin-top: 12px;
-    font-size: 0.9rem;
-    color: t.color('on-surface-variant');
+    line-height: 1.4;
   }
   
   // Theme preview
@@ -219,6 +217,7 @@ $content: '#{b.$prefix}-content';
     padding: 24px;
     background-color: t.color('surface-container');
     @include c.elevation(1);
+    transition: background-color 0.3s ease;
   }
   
   .theme-preview-title {
@@ -259,6 +258,7 @@ $content: '#{b.$prefix}-content';
     background-color: t.color('surface');
     border-radius: f.get-shape('small');
     padding: 16px;
+    transition: background-color 0.3s ease;
   }
   
   .theme-demo-heading {
@@ -333,7 +333,7 @@ $content: '#{b.$prefix}-content';
     display: flex;
     align-items: center;
     gap: 16px;
-    margin-top: 8px;
+    margin-top: 16px;
   }
   
   .dark-mode-label {
@@ -341,12 +341,27 @@ $content: '#{b.$prefix}-content';
   }
   
   // Code examples
+  .code-examples {
+    h3 {
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-size: 1.1rem;
+    }
+  }
+  
   .code-block {
-    background-color: t.color('surface-container');
+    background-color: t.color('surface-container-high');
     padding: 16px;
     border-radius: f.get-shape('small');
     overflow: auto;
     font-family: monospace;
     margin: 12px 0 24px 0;
+    line-height: 1.5;
+    color: t.color('on-surface');
+    font-size: 0.9rem;
+    
+    [data-theme-mode="dark"] & {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
   }
 }

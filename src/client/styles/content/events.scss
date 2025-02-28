@@ -1,0 +1,252 @@
+// src/client/styles/content/core/events.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/config' as c;
+
+// Event examples
+.event-explanation {
+  margin-bottom: 24px;
+}
+
+.event-explanation__text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: t.color('on-surface-variant');
+}
+
+.event-example {
+  background-color: t.color('surface-container-low');
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.event-example__title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.event-example__code {
+  background-color: t.color('surface-container');
+  padding: 16px;
+  border-radius: 8px;
+  font-family: monospace;
+  overflow-x: auto;
+  margin-bottom: 24px;
+}
+
+.event-example__demo {
+  background-color: t.color('surface-container-high');
+  border-radius: 8px;
+  padding: 16px;
+}
+
+// Event log styles
+.event-log {
+  margin-top: 16px;
+  background-color: t.color('surface');
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.event-log__title {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.event-log__entry {
+  font-family: monospace;
+  padding: 4px 0;
+  border-bottom: 1px solid t.color('outline-variant');
+}
+
+// Event bus demo
+.event-bus-demo {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.event-bus-sender,
+.event-bus-receiver {
+  flex: 1;
+  background-color: t.color('surface');
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.event-bus-title {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.event-bus-content {
+  margin-top: 16px;
+  padding: 16px;
+  background-color: t.color('surface-container');
+  border-radius: 4px;
+  min-height: 32px;
+}
+
+// Touch gestures demo
+.gesture-area {
+  background-color: t.color('primary-container');
+  color: t.color('on-primary-container');
+  padding: 32px;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+
+  &:active {
+    background-color: t.color('primary');
+    color: t.color('on-primary');
+  }
+}
+
+.gesture-log {
+  margin-top: 16px;
+  background-color: t.color('surface');
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.gesture-log__title {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.gesture-log__entry {
+  font-family: monospace;
+  padding: 4px 0;
+  border-bottom: 1px solid t.color('outline-variant');
+}
+
+// Event delegation demo
+.delegation-container {
+  margin-bottom: 16px;
+}
+
+.delegation-title {
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.delegation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  background-color: t.color('surface');
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.delegation-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid t.color('outline-variant');
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: t.color('surface-variant');
+  }
+}
+
+.delegation-log {
+  margin-top: 16px;
+  background-color: t.color('surface');
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.delegation-log__title {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.delegation-log__entry {
+  font-family: monospace;
+  padding: 4px 0;
+  border-bottom: 1px solid t.color('outline-variant');
+}
+
+// Performance utilities demo
+.perf-demo {
+  margin-top: 16px;
+}
+
+.search-container {
+  background-color: t.color('surface');
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.search-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid t.color('outline');
+  border-radius: 4px;
+  background-color: t.color('surface');
+  color: t.color('on-surface');
+  margin-bottom: 16px;
+}
+
+.search-results {
+  padding: 12px;
+  background-color: t.color('surface-container');
+  border-radius: 4px;
+  min-height: 48px;
+  font-style: italic;
+  color: t.color('on-surface-variant');
+}
+
+// Best practices
+.best-practices-list {
+  padding-left: 16px;
+
+  li {
+    margin-bottom: 8px;
+    color: t.color('on-surface-variant');
+  }
+}
+
+// Code examples
+.code-block {
+  background-color: t.color('surface-container');
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: monospace;
+  margin: 12px 0 24px 0;
+}
+
+// Responsive adjustments
+@include c.breakpoint-down('md') {
+  .event-bus-demo {
+    flex-direction: column;
+  }
+  
+  .event-bus-sender,
+  .event-bus-receiver {
+    margin-bottom: 16px;
+  }
+  
+  .event-example__code {
+    font-size: 0.85rem;
+  }
+}

@@ -3,6 +3,7 @@ import { createRouter } from './core/router'
 import { createLayout, createMenu } from 'mtrl'
 import { navigation, layout, themesMenu } from './config'
 import { createEventManager, setupErrorBoundary } from './core/events'
+import themeService from './core/theme'
 import {
   updateDrawerItems,
   toggleDrawer,
@@ -13,43 +14,6 @@ import {
 
 // Ensure console.log is available even if window.log isn't
 window.log = window.log || console
-
-// SVG icons remain the same
-const darkModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-</svg>`
-
-const lightModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="12" cy="12" r="5"/>
-  <line x1="12" y1="1" x2="12" y2="3"/>
-  <line x1="12" y1="21" x2="12" y2="23"/>
-  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-  <line x1="1" y1="12" x2="3" y2="12"/>
-  <line x1="21" y1="12" x2="23" y2="12"/>
-  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-</svg>`
-
-const toggleDarkMode = (button) => {
-  console.log('toggleDarkMode')
-  const currentTheme = document.body.getAttribute('data-theme-mode')
-  const isDarkMode = currentTheme !== 'dark'
-  // Toggle theme
-  document.body.setAttribute('data-theme-mode', isDarkMode ? 'dark' : 'light')
-  // Update icon based on current theme
-  const icon = isDarkMode ? lightModeIcon : darkModeIcon
-  if (button && typeof button.setIcon === 'function') {
-    button.setIcon(icon)
-  }
-
-  return isDarkMode
-}
-
-const selectTheme = (theme) => {
-  document.body.setAttribute('data-theme', theme || 'ocean')
-  return theme
-}
 
 /**
  * Creates the application with proper lifecycle management
@@ -99,12 +63,17 @@ const createApp = (options = {}) => {
     }
 
     document.body.classList.add('mtrl-app')
-    selectTheme('ocean')
+
+    // Initialize theme service
+    themeService.init()
 
     // Check if ui.toggleDarkmode exists before using it
     if (ui.toggleDarkmode && typeof ui.toggleDarkmode.on === 'function') {
+      // Set the correct icon based on current mode
+      ui.toggleDarkmode.setIcon(themeService.getThemeModeIcon())
+
       ui.toggleDarkmode.on('click', () => {
-        toggleDarkMode(ui.toggleDarkmode)
+        themeService.toggleDarkMode(ui.toggleDarkmode)
       })
     } else {
       log.warn('toggleDarkmode component not available')
@@ -138,9 +107,15 @@ const createApp = (options = {}) => {
       // Set up theme selection handler
       themeMenu.on('select', ({ name }) => {
         console.log(`Selected theme: ${name}`)
-        selectTheme(name)
+        themeService.setTheme(name)
         themeMenu.hide()
       })
+
+      // Set the currently selected theme if possible
+      const { themeName } = themeService.getSettings()
+      if (themeMenu.setSelected && themeName) {
+        themeMenu.setSelected(themeName)
+      }
     } else {
       log.warn('moreMenu component not available')
     }
@@ -365,7 +340,13 @@ const createApp = (options = {}) => {
      * Get the router instance
      * @returns {Object} Router instance
      */
-    getRouter: () => router
+    getRouter: () => router,
+
+    /**
+     * Get theme service
+     * @returns {Object} Theme service instance
+     */
+    getThemeService: () => themeService
   }
 }
 
@@ -381,7 +362,6 @@ try {
   // Example of using the onReady API
   app.onReady(({ router, ui }) => {
     console.log('App is ready, performing post-initialization tasks')
-    // Any additional setup that should happen after initialization
   })
 } catch (error) {
   console.error('Failed to create app:', error)

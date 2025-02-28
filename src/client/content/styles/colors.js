@@ -10,10 +10,6 @@ import {
   createButton
 } from 'mtrl'
 
-// Import the SCSS styles - this should be handled by your bundler
-// The styles would be imported in the main.scss file or similar
-// import '../../styles/content/colors.scss'
-
 export const createColorsContent = (container) => {
   const info = {
     title: 'Colors',
@@ -41,66 +37,69 @@ export const initColorPalettes = (ui) => {
   ]
 
   palettes.forEach(palette => {
-    // Create a container for each palette
-    const paletteSection = createElement({
+    // Create a palette container
+    const colorPalette = createElement({
       tag: 'div',
-      class: 'palette-section'
+      class: 'color-palette'
     })
 
-    // Add the palette label
-    const paletteHeading = createElement({
+    // Add palette title
+    const paletteTitle = createElement({
       tag: 'h3',
-      class: 'palette-heading',
+      class: 'color-palette__title',
       text: palette.label
     })
-
-    paletteSection.appendChild(paletteHeading)
-
-    // Create a row for the swatches
-    const swatchesRow = createElement({
-      tag: 'div',
-      class: 'palette-swatches-row'
-    })
+    colorPalette.appendChild(paletteTitle)
 
     // Create swatches for each tone
     palette.tones.forEach(tone => {
-      // Create a swatch with system colors
-      let backgroundColor
+      // Determine color value based on tone
+      let backgroundColor, variableName
 
-      // Use theme system colors based on the palette and tone
       if (tone === 50) {
-        // Use the main system color for tone 50
         backgroundColor = `var(--mtrl-sys-color-${palette.name})`
+        variableName = `var(--mtrl-sys-color-${palette.name})`
       } else if (tone < 50) {
-        // For lighter tones, mix with surface color (simple approximation)
+        // For lighter tones
         backgroundColor = `color-mix(in srgb, var(--mtrl-sys-color-${palette.name}) ${tone * 2}%, var(--mtrl-sys-color-surface))`
+        variableName = `${palette.name}-${tone}`
       } else {
-        // For darker tones, mix with on-surface color (simple approximation)
+        // For darker tones
         backgroundColor = `color-mix(in srgb, var(--mtrl-sys-color-${palette.name}) ${100 - (tone - 50)}%, var(--mtrl-sys-color-on-surface))`
+        variableName = `${palette.name}-${tone}`
       }
 
       const swatch = createElement({
         tag: 'div',
-        class: 'palette-swatch',
+        class: 'color-swatch',
         style: `background-color: ${backgroundColor};`
       })
 
-      // Add tone label
-      const toneLabel = createElement({
+      // Add tone label with better contrast
+      const toneName = createElement({
         tag: 'div',
-        class: 'palette-tone-label',
-        text: tone.toString()
+        class: 'color-swatch__tone',
+        text: `${palette.name}-${tone}`
       })
 
-      // Determine text color based on tone value
-      toneLabel.style.color = tone < 50 ? 'var(--mtrl-sys-color-on-surface)' : 'var(--mtrl-sys-color-surface)'
+      // Determine text color based on tone for better contrast
+      const textColor = tone < 50 ? 'var(--mtrl-sys-color-on-surface)' : 'var(--mtrl-sys-color-surface)'
+      toneName.style.color = textColor
 
-      swatch.appendChild(toneLabel)
-      swatchesRow.appendChild(swatch)
+      // Add abbreviated color value for cleaner display
+      const toneValue = createElement({
+        tag: 'div',
+        class: 'color-swatch__value',
+        text: variableName
+      })
+      toneValue.style.color = textColor
+
+      swatch.appendChild(toneName)
+      swatch.appendChild(toneValue)
+      colorPalette.appendChild(swatch)
     })
 
-    paletteSection.appendChild(swatchesRow)
-    container.appendChild(paletteSection)
+    container.appendChild(colorPalette)
   })
 }
 
@@ -124,50 +123,64 @@ export const initThemeColors = (ui) => {
   ]
 
   // Create container for theme colors
-  const themeColorsContainer = createElement({
+  const themeColorsGrid = createElement({
     tag: 'div',
-    class: 'theme-colors-container'
+    class: 'color-theme-grid'
   })
 
   semanticColors.forEach(color => {
     // Create a color box with the semantic color
-    const colorBox = createElement({
+    const colorSwatch = createElement({
       tag: 'div',
-      class: 'theme-color-box',
+      class: 'theme-color-swatch',
       style: `background-color: var(--mtrl-sys-color-${color.name});`
     })
 
-    // Determine appropriate text color
-    // For "on-" colors we reverse the background
-    if (color.name.startsWith('on-')) {
-      const baseColor = color.name.substring(3)
-      colorBox.style.backgroundColor = `var(--mtrl-sys-color-${baseColor})`
-      colorBox.style.color = `var(--mtrl-sys-color-${color.name})`
-    } else {
-      // For regular colors, use the matching "on-" color if exists
-      const hasMatchingOnColor = semanticColors.some(c => c.name === `on-${color.name}`)
-      if (hasMatchingOnColor) {
-        colorBox.style.color = `var(--mtrl-sys-color-on-${color.name})`
-      } else {
-        // Fallback to a contrasting color
-        colorBox.style.color = color.name === 'surface' || color.name === 'surface-container'
-          ? 'var(--mtrl-sys-color-on-surface)'
-          : '#fff'
-      }
-    }
-
-    // Add the color name
-    const colorName = createElement({
+    // Create color info container
+    const colorInfo = createElement({
       tag: 'div',
-      class: 'theme-color-name',
+      class: 'theme-color__info'
+    })
+
+    // Color label
+    const colorLabel = createElement({
+      tag: 'span',
+      class: 'theme-color__label',
       text: color.label
     })
 
-    colorBox.appendChild(colorName)
-    themeColorsContainer.appendChild(colorBox)
+    // Color value
+    const colorValue = createElement({
+      tag: 'span',
+      class: 'theme-color__value',
+      text: `var(--mtrl-sys-color-${color.name})`
+    })
+
+    // Determine appropriate text color
+    let textColor
+    if (color.name.startsWith('on-')) {
+      const baseColor = color.name.substring(3)
+      colorSwatch.style.backgroundColor = `var(--mtrl-sys-color-${baseColor})`
+      textColor = `var(--mtrl-sys-color-${color.name})`
+    } else {
+      const hasMatchingOnColor = semanticColors.some(c => c.name === `on-${color.name}`)
+      if (hasMatchingOnColor) {
+        textColor = `var(--mtrl-sys-color-on-${color.name})`
+      } else {
+        textColor = color.name === 'surface' || color.name === 'surface-container' ? 'var(--mtrl-sys-color-on-surface)' : '#fff'
+      }
+    }
+
+    colorLabel.style.color = textColor
+    colorValue.style.color = textColor
+
+    colorInfo.appendChild(colorLabel)
+    colorInfo.appendChild(colorValue)
+    colorSwatch.appendChild(colorInfo)
+    themeColorsGrid.appendChild(colorSwatch)
   })
 
-  container.appendChild(themeColorsContainer)
+  container.appendChild(themeColorsGrid)
 }
 
 export const initColorState = (ui) => {
@@ -175,100 +188,74 @@ export const initColorState = (ui) => {
 
   // Create state color tokens with visual examples
   const stateColors = [
-    { name: 'hover', label: 'Hover', cssVar: '--mtrl-sys-state-primary-hover' },
-    { name: 'focus', label: 'Focus', cssVar: '--mtrl-sys-state-primary-focus' },
-    { name: 'active', label: 'Active', cssVar: '--mtrl-sys-state-primary-active' },
-    { name: 'disabled', label: 'Disabled', cssVar: '--mtrl-sys-state-disabled' }
+    { name: 'hover', label: 'Hover', desc: 'Applied when the cursor hovers over an interactive element.' },
+    { name: 'focus', label: 'Focus', desc: 'Applied when an element receives keyboard focus.' },
+    { name: 'active', label: 'Active', desc: 'Applied during the active/pressed state of an element.' },
+    { name: 'disabled', label: 'Disabled', desc: 'Applied to elements that are currently not interactive.' }
   ]
 
   // Create state colors container
-  const stateColorsContainer = createElement({
+  const stateColorsGrid = createElement({
     tag: 'div',
-    class: 'state-colors-container'
+    class: 'color-state-grid'
   })
 
   stateColors.forEach(state => {
-    // Create a state example card
-    const stateCard = createElement({
+    // Create state container
+    const stateContainer = createElement({
       tag: 'div',
-      class: 'state-color-card'
+      class: 'state-color-container'
     })
 
-    // Create a button to demonstrate the state
-    const stateButton = createElement({
-      tag: 'button',
-      class: `state-demo-button state-${state.name}`,
+    // Create state example
+    const stateExample = createElement({
+      tag: 'div',
+      class: `state-color-example state-${state.name}`,
       text: state.label
     })
 
-    // Style the button to show the state color
-    if (state.name === 'hover') {
-      stateButton.style.backgroundColor = `var(${state.cssVar})`
-    } else if (state.name === 'focus') {
-      stateButton.style.backgroundColor = 'var(--mtrl-sys-color-primary)'
-      stateButton.style.outline = '2px solid var(--mtrl-sys-color-outline)'
-    } else if (state.name === 'active') {
-      stateButton.style.backgroundColor = `var(${state.cssVar})`
-      stateButton.style.transform = 'scale(0.98)'
-    } else if (state.name === 'disabled') {
-      stateButton.style.backgroundColor = `var(${state.cssVar})`
-      stateButton.style.color = 'var(--mtrl-sys-color-on-disabled)'
-      stateButton.style.opacity = '0.7'
-      stateButton.disabled = true
-    }
+    // Create state info
+    const stateInfo = createElement({
+      tag: 'div',
+      class: 'state-color-info'
+    })
 
-    // Add a label
+    // State label
     const stateLabel = createElement({
       tag: 'div',
       class: 'state-color-label',
       text: `${state.label} State`
     })
 
-    stateCard.appendChild(stateButton)
-    stateCard.appendChild(stateLabel)
-    stateColorsContainer.appendChild(stateCard)
+    // State description
+    const stateDesc = createElement({
+      tag: 'div',
+      class: 'state-color-value',
+      text: state.desc
+    })
+
+    stateInfo.appendChild(stateLabel)
+    stateInfo.appendChild(stateDesc)
+    stateContainer.appendChild(stateExample)
+    stateContainer.appendChild(stateInfo)
+    stateColorsGrid.appendChild(stateContainer)
   })
 
-  container.appendChild(stateColorsContainer)
-
-  // Add interactive demo
-  const interactiveDemo = createElement({
-    tag: 'div',
-    class: 'interactive-state-demo'
-  })
-
-  const demoLabel = createElement({
-    tag: 'div',
-    class: 'interactive-demo-label',
-    text: 'Try it yourself:'
-  })
-
-  const demoButton = createElement({
-    tag: 'button',
-    class: 'interactive-button',
-    text: 'Interactive Button'
-  })
-
-  const demoInstructions = createElement({
-    tag: 'div',
-    class: 'demo-instructions',
-    text: 'Hover, focus, or click to see the different states'
-  })
-
-  interactiveDemo.appendChild(demoLabel)
-  interactiveDemo.appendChild(demoButton)
-  interactiveDemo.appendChild(demoInstructions)
-
-  container.appendChild(interactiveDemo)
+  container.appendChild(stateColorsGrid)
 }
 
 export const initDynamicTheme = (ui) => {
   const container = ui.themeDemo
 
   // Create theme preview
-  const themePreview = createElement({
+  const themePreviewContainer = createElement({
     tag: 'div',
-    class: 'theme-preview'
+    class: 'theme-preview-container'
+  })
+
+  const themePreviewCard = createElement({
+    tag: 'div',
+    class: 'theme-preview-card'
   })
 
   const themeTitle = createElement({
@@ -278,48 +265,73 @@ export const initDynamicTheme = (ui) => {
   })
 
   // Show theme color samples
-  const themeSamples = createElement({
+  const themeColorChips = createElement({
     tag: 'div',
-    class: 'theme-samples'
+    class: 'theme-color-chips'
   })
 
   // Primary color
-  const primarySample = createElement({
+  const primaryChip = createElement({
     tag: 'div',
-    class: 'theme-sample',
-    text: 'Primary',
-    style: 'background-color: var(--mtrl-sys-color-primary); color: var(--mtrl-sys-color-on-primary);'
+    class: 'theme-color-chip primary-chip',
+    text: 'Primary'
   })
 
   // Secondary color
-  const secondarySample = createElement({
+  const secondaryChip = createElement({
     tag: 'div',
-    class: 'theme-sample',
-    text: 'Secondary',
-    style: 'background-color: var(--mtrl-sys-color-secondary); color: var(--mtrl-sys-color-on-secondary);'
+    class: 'theme-color-chip secondary-chip',
+    text: 'Secondary'
   })
 
   // Tertiary color
-  const tertiarySample = createElement({
+  const tertiaryChip = createElement({
     tag: 'div',
-    class: 'theme-sample',
-    text: 'Tertiary',
-    style: 'background-color: var(--mtrl-sys-color-tertiary); color: var(--mtrl-sys-color-on-tertiary);'
+    class: 'theme-color-chip tertiary-chip',
+    text: 'Tertiary'
   })
 
-  themeSamples.appendChild(primarySample)
-  themeSamples.appendChild(secondarySample)
-  themeSamples.appendChild(tertiarySample)
+  themeColorChips.appendChild(primaryChip)
+  themeColorChips.appendChild(secondaryChip)
+  themeColorChips.appendChild(tertiaryChip)
 
-  themePreview.appendChild(themeTitle)
-  themePreview.appendChild(themeSamples)
-
-  container.appendChild(themePreview)
-
-  // Theme buttons
-  const themeButtons = createElement({
+  // Demo content
+  const demoContent = createElement({
     tag: 'div',
-    class: 'theme-buttons'
+    class: 'theme-demo-content'
+  })
+
+  const demoHeading = createElement({
+    tag: 'div',
+    class: 'theme-demo-heading',
+    text: 'Sample UI Elements'
+  })
+
+  const demoButton = createElement({
+    tag: 'button',
+    class: 'theme-demo-button',
+    text: 'Button'
+  })
+
+  const demoInput = createElement({
+    tag: 'input',
+    class: 'theme-demo-input',
+    placeholder: 'Text input'
+  })
+
+  demoContent.appendChild(demoHeading)
+  demoContent.appendChild(demoButton)
+  demoContent.appendChild(demoInput)
+
+  themePreviewCard.appendChild(themeTitle)
+  themePreviewCard.appendChild(themeColorChips)
+  themePreviewCard.appendChild(demoContent)
+  themePreviewContainer.appendChild(themePreviewCard)
+
+  // Theme switchers
+  const themeSwitchers = createElement({
+    tag: 'div',
+    class: 'theme-switchers'
   })
 
   const themes = [
@@ -332,27 +344,35 @@ export const initDynamicTheme = (ui) => {
   themes.forEach(theme => {
     const button = createButton({
       text: theme.label,
-      variant: 'filled'
+      variant: 'filled',
+      class: `theme-button theme-${theme.name} ${theme.name === 'ocean' ? 'active-theme' : ''}`
     })
 
     button.on('click', () => {
+      // Remove active class from all buttons
+      const allButtons = themeSwitchers.querySelectorAll('.theme-button')
+      allButtons.forEach(btn => btn.classList.remove('active-theme'))
+
+      // Add active class to clicked button
+      button.element.classList.add('active-theme')
+
+      // Change theme
       document.body.setAttribute('data-theme', theme.name)
-      themeTitle.textContent = `Current Theme: ${theme.label.split(' ')[0]}`
+      themeTitle.textContent = `Current Theme: ${theme.name.charAt(0).toUpperCase() + theme.name.slice(1)}`
     })
 
-    themeButtons.appendChild(button.element)
+    themeSwitchers.appendChild(button.element)
   })
-
-  container.appendChild(themeButtons)
 
   // Dark mode toggle
-  const themeMode = createElement({
+  const darkModeContainer = createElement({
     tag: 'div',
-    class: 'theme-mode-toggle'
+    class: 'dark-mode-container'
   })
 
-  const themeModeLabel = createElement({
+  const darkModeLabel = createElement({
     tag: 'span',
+    class: 'dark-mode-label',
     text: 'Dark Mode:'
   })
 
@@ -368,10 +388,12 @@ export const initDynamicTheme = (ui) => {
     darkModeButton.setText(newMode === 'dark' ? 'Switch to Light' : 'Switch to Dark')
   })
 
-  themeMode.appendChild(themeModeLabel)
-  themeMode.appendChild(darkModeButton.element)
+  darkModeContainer.appendChild(darkModeLabel)
+  darkModeContainer.appendChild(darkModeButton.element)
 
-  container.appendChild(themeMode)
+  container.appendChild(themePreviewContainer)
+  container.appendChild(themeSwitchers)
+  container.appendChild(darkModeContainer)
 }
 
 export const createColorsLayout = () => [
@@ -434,183 +456,3 @@ document.body.setAttribute('data-theme-mode',
     ]
   ]
 ]
-
-// Add this to the end of your file for now
-// In production, this would be moved to SCSS files
-function addColorStyles () {
-  const style = document.createElement('style')
-  style.textContent = `
-    /* Color palettes */
-    .palette-section {
-      margin-bottom: 2rem;
-    }
-    
-    .palette-heading {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-    }
-    
-    .palette-swatches-row {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0.5rem;
-    }
-    
-    .palette-swatch {
-      height: 60px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .palette-tone-label {
-      font-weight: bold;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
-    
-    /* Theme colors styling */
-    .theme-colors-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    
-    .theme-color-box {
-      height: 80px;
-      border-radius: 8px;
-      padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .theme-color-name {
-      font-weight: bold;
-    }
-    
-    /* State colors */
-    .state-colors-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    
-    .state-color-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      border-radius: 8px;
-      background-color: #f5f5f5;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .state-demo-button {
-      width: 100%;
-      padding: 0.75rem;
-      border-radius: 4px;
-      border: none;
-      background-color: var(--mtrl-sys-color-primary);
-      color: white;
-      font-weight: bold;
-      margin-bottom: 0.75rem;
-    }
-    
-    .state-color-label {
-      font-size: 0.9rem;
-      color: #666;
-    }
-    
-    .interactive-state-demo {
-      margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1.5rem;
-      border-radius: 8px;
-      background-color: #f5f5f5;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .interactive-demo-label {
-      font-weight: bold;
-      margin-bottom: 1rem;
-    }
-    
-    .interactive-button {
-      padding: 0.75rem 1.5rem;
-      border-radius: 4px;
-      border: none;
-      background-color: var(--mtrl-sys-color-primary);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .interactive-button:hover {
-      background-color: var(--mtrl-sys-state-primary-hover);
-    }
-    
-    .interactive-button:focus {
-      outline: 2px solid var(--mtrl-sys-color-outline);
-      outline-offset: 2px;
-    }
-    
-    .interactive-button:active {
-      background-color: var(--mtrl-sys-state-primary-active);
-      transform: scale(0.98);
-    }
-    
-    .demo-instructions {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: #666;
-    }
-    
-    /* Theme preview */
-    .theme-preview {
-      padding: 1.5rem;
-      border-radius: 8px;
-      background-color: var(--mtrl-sys-color-surface);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin-bottom: 1.5rem;
-    }
-    
-    .theme-samples {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-    
-    .theme-sample {
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      font-weight: bold;
-    }
-    
-    .theme-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin: 1.5rem 0;
-    }
-    
-    .theme-mode-toggle {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-  `
-  document.head.appendChild(style)
-}
-
-// Call the function to add styles
-addColorStyles()

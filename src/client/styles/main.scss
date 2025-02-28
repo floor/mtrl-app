@@ -9,6 +9,7 @@
 @use 'mtrl/src/styles/themes/autumn';
 @use 'mtrl/src/styles/themes/winter';
 @use 'mtrl/src/styles/abstract/config' as c;
+@use 'mtrl/src/components/card/styles' as card;
 @use 'mtrl/src/components/button/styles' as button;
 @use 'mtrl/src/components/textfield/styles' as textfield;
 @use 'mtrl/src/components/menu/styles' as menu;
@@ -21,6 +22,10 @@
 @use './app';
 @use './content';
 @use './content/colors';
+@use './content/layout';
+@use './content/events';
+@use './content/state';
+@use './content/composition';
 // CSS Reset & Base Styles
 *,
 *::before,

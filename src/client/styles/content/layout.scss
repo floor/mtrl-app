@@ -1,0 +1,357 @@
+// src/client/styles/content/layout.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/config' as c;
+
+$content: '#{b.$prefix}-content';
+
+// Layout Demo Styles
+.layout-demo {
+  margin: 20px 0;
+  border-radius: f.get-shape('medium');
+  overflow: hidden;
+  
+  // Basic Layout Styles
+  &.basic-layout {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    
+    .layout-demo__header {
+      height: 60px;
+      background-color: t.color('primary');
+      color: t.color('on-primary');
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+    
+    .layout-demo__main {
+      display: flex;
+      flex: 1;
+      
+      .layout-demo__sidebar {
+        width: 100px;
+        background-color: t.color('primary-container');
+        color: t.color('on-primary-container');
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      
+      .layout-demo__content {
+        flex: 1;
+        background-color: t.color('surface-container-high');
+        color: t.color('on-surface');
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+    }
+    
+    .layout-demo__footer {
+      height: 50px;
+      background-color: t.color('secondary');
+      color: t.color('on-secondary');
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  
+  // Responsive Layout Styles
+  &.responsive-layout {
+    display: flex;
+    flex-wrap: wrap;
+    
+    &.stack {
+      flex-direction: column;
+    }
+    
+    &.row {
+      flex-direction: row;
+    }
+    
+    &.grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .layout-demo__box {
+      min-height: 80px;
+      background-color: t.color('secondary-container');
+      color: t.color('on-secondary-container');
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 5px;
+      padding: 10px;
+      border-radius: f.get-shape('small');
+      flex: 1;
+      min-width: 100px;
+      
+      .stack & {
+        min-width: 100%;
+      }
+    }
+  }
+  
+  // Grid Layout Styles
+  &.grid-layout {
+    display: grid;
+    gap: 10px;
+    
+    &.columns-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    &.columns-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    &.dense {
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-flow: dense;
+      
+      .layout-demo__grid-item:nth-child(3n) {
+        grid-column: span 2;
+      }
+      
+      .layout-demo__grid-item:nth-child(5n) {
+        grid-row: span 2;
+      }
+    }
+    
+    &.auto-fit {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+    
+    .layout-demo__grid-item {
+      background-color: t.color('tertiary-container');
+      color: t.color('on-tertiary-container');
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80px;
+      border-radius: f.get-shape('small');
+      font-weight: 500;
+    }
+  }
+  
+  // Card Layout Styles
+  &.card-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    
+    &.equal-height {
+      .layout-demo__card {
+        height: 200px;
+      }
+    }
+    
+    &.auto-height {
+      .layout-demo__card {
+        height: auto;
+      }
+    }
+    
+    &.masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: minmax(100px, auto);
+      gap: 15px;
+      
+      .layout-demo__card:nth-child(2) {
+        grid-row: span 2;
+      }
+    }
+    
+    .layout-demo__card {
+      background-color: t.color('surface-container');
+      border-radius: f.get-shape('medium');
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      min-width: 200px;
+      
+      .layout-demo__card-header {
+        padding: 16px;
+        background-color: t.color('primary');
+        color: t.color('on-primary');
+        font-weight: 500;
+      }
+      
+      .layout-demo__card-content {
+        padding: 16px;
+        color: t.color('on-surface');
+      }
+    }
+  }
+  
+  // Split Layout Styles
+  &.split-layout {
+    display: flex;
+    height: 300px;
+    
+    &.split-50-50 {
+      .layout-demo__panel--left,
+      .layout-demo__panel--right {
+        flex: 1;
+      }
+    }
+    
+    &.split-30-70 {
+      .layout-demo__panel--left {
+        flex: 3;
+      }
+      
+      .layout-demo__panel--right {
+        flex: 7;
+      }
+    }
+    
+    &.split-70-30 {
+      .layout-demo__panel--left {
+        flex: 7;
+      }
+      
+      .layout-demo__panel--right {
+        flex: 3;
+      }
+    }
+    
+    &.split-stack {
+      flex-direction: column;
+      
+      .layout-demo__panel {
+        flex: 1;
+      }
+    }
+    
+    .layout-demo__panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      
+      &--left {
+        background-color: t.color('primary-container');
+        color: t.color('on-primary-container');
+      }
+      
+      &--right {
+        background-color: t.color('secondary-container');
+        color: t.color('on-secondary-container');
+      }
+    }
+  }
+  
+  // Control buttons for demos
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+}
+
+// Make sure layout demo descriptions are styled properly
+.#{$content}__description {
+  margin-bottom: 16px;
+  color: t.color('on-surface-variant');
+  @include c.typography('body-medium');
+}
+
+// Custom animations for layout demos
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+// Style for expanded items
+.layout-demo {
+  &__grid-item.expanded {
+    background-color: t.color('tertiary');
+    color: t.color('on-tertiary');
+    z-index: 1;
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  &__card.hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  &__card.expanded {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    
+    .layout-demo__card-content {
+      max-height: none;
+    }
+  }
+}
+
+// Viewport size indicator for responsive demo
+.viewport-size-indicator {
+  background-color: t.color('surface-container-highest');
+  color: t.color('on-surface');
+  padding: 8px 12px;
+  border-radius: f.get-shape('small');
+  margin: 12px 0;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+// Responsive adjustments
+@include c.breakpoint-down('sm') {
+  .layout-demo {
+    &.basic-layout {
+      .layout-demo__main {
+        flex-direction: column;
+        
+        .layout-demo__sidebar {
+          width: 100%;
+          height: 60px;
+        }
+      }
+    }
+    
+    &.card-layout {
+      &.masonry {
+        grid-template-columns: 1fr;
+        
+        .layout-demo__card:nth-child(2) {
+          grid-row: auto;
+        }
+      }
+    }
+    
+    &.split-layout:not(.split-stack) {
+      flex-direction: column;
+    }
+    
+    &.grid-layout {
+      &.columns-3,
+      &.dense {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  }
+}

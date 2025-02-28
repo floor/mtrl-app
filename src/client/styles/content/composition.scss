@@ -1,0 +1,358 @@
+// src/client/styles/content/core/composition.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/config' as c;
+
+// Composition examples
+.composition-explanation {
+  margin-bottom: 24px;
+}
+
+.composition-explanation__text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: t.color('on-surface-variant');
+}
+
+.composition-example {
+  background-color: t.color('surface-container-low');
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.composition-example__title {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.composition-example__code {
+  background-color: t.color('surface-container');
+  padding: 16px;
+  border-radius: 8px;
+  font-family: monospace;
+  overflow-x: auto;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.composition-example__demo {
+  background-color: t.color('surface-container-high');
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.composition-demo__title {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+// Function composition diagram
+.composition-diagram {
+  margin-top: 32px;
+}
+
+.composition-diagram__title {
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.composition-diagram__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background-color: t.color('surface');
+  border-radius: 8px;
+  
+  @include c.breakpoint-down('md') {
+    flex-direction: column;
+  }
+}
+
+.composition-box {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: t.color('surface-container');
+  border: 1px solid t.color('outline-variant');
+  min-width: 120px;
+  text-align: center;
+  
+  &--base {
+    background-color: t.color('primary-container');
+    color: t.color('on-primary-container');
+    border-color: t.color('primary');
+  }
+  
+  &--features {
+    background-color: t.color('secondary-container');
+    color: t.color('on-secondary-container');
+    border-color: t.color('secondary');
+  }
+  
+  &--result {
+    background-color: t.color('tertiary-container');
+    color: t.color('on-tertiary-container');
+    border-color: t.color('tertiary');
+  }
+}
+
+.composition-box__label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.composition-box__description {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.composition-arrow {
+  font-size: 24px;
+  color: t.color('on-surface-variant');
+  
+  @include c.breakpoint-down('md') {
+    transform: rotate(90deg);
+  }
+}
+
+// Pipe function demo
+.pipe-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  background-color: t.color('surface');
+  border-radius: 8px;
+}
+
+.pipe-input-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pipe-input-label {
+  font-weight: 500;
+  min-width: 100px;
+}
+
+.pipe-input-number {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid t.color('outline');
+  background-color: t.color('surface');
+  color: t.color('on-surface');
+  width: 80px;
+  font-size: 1rem;
+}
+
+.pipe-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pipe-step {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: t.color('surface-container-low');
+  
+  &:nth-child(1) {
+    border-left: 4px solid t.color('primary');
+  }
+  
+  &:nth-child(2) {
+    border-left: 4px solid t.color('secondary');
+  }
+  
+  &:nth-child(3) {
+    border-left: 4px solid t.color('tertiary');
+  }
+}
+
+.pipe-step__label {
+  flex: 1;
+  font-weight: 500;
+}
+
+.pipe-step__result {
+  font-family: monospace;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.pipe-result-container {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: t.color('primary-container');
+  color: t.color('on-primary-container');
+}
+
+.pipe-result-label {
+  flex: 1;
+  font-weight: 500;
+}
+
+.pipe-result-value {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+// Features visualization
+.feature-visualization {
+  margin-top: 32px;
+}
+
+.feature-visualization__title {
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.feature-card {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: t.color('surface');
+  border: 1px solid t.color('outline-variant');
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: t.color('surface-container');
+  }
+}
+
+.feature-card__icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.feature-card__name {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: t.color('primary');
+}
+
+.feature-card__description {
+  font-size: 0.85rem;
+  color: t.color('on-surface-variant');
+}
+
+// Custom toggle demo
+.toggle-demo {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+}
+
+.custom-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  
+  &__track {
+    position: relative;
+    width: 36px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: t.color('outline');
+    margin-right: 12px;
+    transition: background-color 0.2s ease;
+  }
+  
+  &__thumb {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: t.color('surface-container-highest');
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  
+  &__text {
+    font-weight: 500;
+  }
+  
+  &--checked {
+    .custom-toggle__track {
+      background-color: rgba(t.color('primary'), 0.5);
+    }
+    
+    .custom-toggle__thumb {
+      transform: translateX(16px);
+      background-color: t.color('primary');
+    }
+  }
+  
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.toggle-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+// Best practices
+.best-practices-list {
+  padding-left: 24px;
+  
+  li {
+    margin-bottom: 16px;
+    color: t.color('on-surface-variant');
+    
+    strong {
+      color: t.color('on-surface');
+    }
+  }
+}
+
+// Responsive adjustments
+@include c.breakpoint-down('sm') {
+  .composition-example__code {
+    font-size: 0.8rem;
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .toggle-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

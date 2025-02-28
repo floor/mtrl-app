@@ -90,7 +90,7 @@ const buildApp = async () => {
 
 const setupWatchers = () => {
   const jsWatchPaths = [
-    join(__dirname, 'node_modules/mtrl/src/components'),
+    join(__dirname, 'node_modules/mtrl/src'),
     join(__dirname, 'src/client'),
     join(__dirname, 'src/server')
   ]
