@@ -21,7 +21,7 @@
     "serve": "bun --hot test/serve.ts"
   },
   "dependencies": {
-    "mtrl": "^0.1.2"
+    "mtrl": "^0.1.3"
   },
   "devDependencies": {
     "bun-types": "latest",
