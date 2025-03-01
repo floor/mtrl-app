@@ -11,6 +11,7 @@ import {
   createButtonsContent,
   createCardsContent,
   createCheckboxesContent,
+  createChipsContent,
   createListsContent,
   createNavigationsContent,
   createMenusContent,
@@ -36,6 +37,7 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/buttons', () => createButtonsContent(ui.content))
   router.register('components/cards', () => createCardsContent(ui.content))
   router.register('components/checkboxes', () => createCheckboxesContent(ui.content))
+  router.register('components/chips', () => createChipsContent(ui.content))
   router.register('components/lists', () => createListsContent(ui.content))
   router.register('components/menus', () => createMenusContent(ui.content))
   router.register('components/navigations', () => createNavigationsContent(ui.content))
@@ -44,11 +46,11 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/textfields', () => createTextfieldsContent(ui.content))
   // Add navigation hooks
   router.beforeEach((route) => {
-    log.debug('Navigation started:', route)
+    // log.debug('Navigation started:', route)
     ui.content.innerHTML = ''
   })
 
   router.afterEach((route) => {
-    log.debug('Navigation completed:', route)
+    // log.debug('Navigation completed:', route)
   })
 }

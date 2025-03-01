@@ -10,8 +10,7 @@ import { setupGridInteractions, setupResponsiveDemo, setupCardInteractions } fro
 import {
   createLayout,
   createElement,
-  createButton,
-  createContainer
+  createButton
 } from 'mtrl'
 
 // Function to initialize interactive layout examples
@@ -70,7 +69,7 @@ export const createLayoutContent = (container) => {
 }
 
 const initBasicLayoutExample = (container) => {
-  const basicLayoutContainer = createContainer({
+  const basicLayoutContainer = createElement({
     class: 'layout-demo basic-layout'
   })
 
@@ -118,7 +117,7 @@ const initBasicLayoutExample = (container) => {
 }
 
 const initResponsiveLayoutExample = (container) => {
-  const responsiveContainer = createContainer({
+  const responsiveContainer = createElement({
     class: 'layout-demo responsive-layout'
   })
 
@@ -168,7 +167,7 @@ const initResponsiveLayoutExample = (container) => {
 }
 
 const initGridLayoutExample = (container) => {
-  const gridContainer = createContainer({
+  const gridContainer = createElement({
     class: 'layout-demo grid-layout'
   })
 
@@ -219,7 +218,7 @@ const initGridLayoutExample = (container) => {
 }
 
 const initCardLayoutExample = (container) => {
-  const cardContainer = createContainer({
+  const cardContainer = createElement({
     class: 'layout-demo card-layout'
   })
 
@@ -298,7 +297,7 @@ const initCardLayoutExample = (container) => {
 }
 
 const initSplitLayoutExample = (container) => {
-  const splitContainer = createContainer({
+  const splitContainer = createElement({
     class: 'layout-demo split-layout'
   })
 

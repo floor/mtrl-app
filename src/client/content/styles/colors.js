@@ -19,8 +19,8 @@ export const createColorsContent = (container) => {
 
   const ui = createLayout(createColorsLayout(), layout.body).component
 
-  initColorPalettes(ui)
   initThemeColors(ui)
+  initColorPalettes(ui)
   initColorState(ui)
   initDynamicTheme(ui)
 }
@@ -247,17 +247,6 @@ export const initColorState = (ui) => {
 export const initDynamicTheme = (ui) => {
   const container = ui.themeDemo
 
-  // Create theme preview
-  const themePreviewContainer = createElement({
-    tag: 'div',
-    class: 'theme-preview-container'
-  })
-
-  const themePreviewCard = createElement({
-    tag: 'div',
-    class: 'theme-preview-card'
-  })
-
   const themeTitle = createElement({
     tag: 'h3',
     class: 'theme-preview-title',
@@ -295,39 +284,6 @@ export const initDynamicTheme = (ui) => {
   themeColorChips.appendChild(secondaryChip)
   themeColorChips.appendChild(tertiaryChip)
 
-  // Demo content
-  const demoContent = createElement({
-    tag: 'div',
-    class: 'theme-demo-content'
-  })
-
-  const demoHeading = createElement({
-    tag: 'div',
-    class: 'theme-demo-heading',
-    text: 'Sample UI Elements'
-  })
-
-  const demoButton = createElement({
-    tag: 'button',
-    class: 'theme-demo-button',
-    text: 'Button'
-  })
-
-  const demoInput = createElement({
-    tag: 'input',
-    class: 'theme-demo-input',
-    placeholder: 'Text input'
-  })
-
-  demoContent.appendChild(demoHeading)
-  demoContent.appendChild(demoButton)
-  demoContent.appendChild(demoInput)
-
-  themePreviewCard.appendChild(themeTitle)
-  themePreviewCard.appendChild(themeColorChips)
-  themePreviewCard.appendChild(demoContent)
-  themePreviewContainer.appendChild(themePreviewCard)
-
   // Theme switchers
   const themeSwitchers = createElement({
     tag: 'div',
@@ -338,13 +294,17 @@ export const initDynamicTheme = (ui) => {
     { name: 'ocean', label: 'Ocean Theme' },
     { name: 'forest', label: 'Forest Theme' },
     { name: 'sunset', label: 'Sunset Theme' },
-    { name: 'spring', label: 'Spring Theme' }
+    { name: 'spring', label: 'Spring Theme' },
+    { name: 'summer', label: 'Summer Theme' },
+    { name: 'autumn', label: 'Autumn Theme' },
+    { name: 'winter', label: 'Winter Theme' }
   ]
 
   themes.forEach(theme => {
     const button = createButton({
       text: theme.label,
       variant: 'filled',
+      size: 'small',
       class: `theme-button theme-${theme.name} ${theme.name === 'ocean' ? 'active-theme' : ''}`
     })
 
@@ -364,22 +324,13 @@ export const initDynamicTheme = (ui) => {
     themeSwitchers.appendChild(button.element)
   })
 
-  // Dark mode toggle
-  const darkModeContainer = createElement({
-    tag: 'div',
-    class: 'dark-mode-container'
-  })
-
-  const darkModeLabel = createElement({
-    tag: 'span',
-    class: 'dark-mode-label',
-    text: 'Dark Mode:'
-  })
-
   const darkModeButton = createButton({
     text: 'Toggle Dark Mode',
-    variant: 'outlined'
+    variant: 'outlined',
+    size: 'small'
   })
+
+  themeSwitchers.appendChild(darkModeButton.element)
 
   darkModeButton.on('click', () => {
     const currentMode = document.body.getAttribute('data-theme-mode')
@@ -388,15 +339,18 @@ export const initDynamicTheme = (ui) => {
     darkModeButton.setText(newMode === 'dark' ? 'Switch to Light' : 'Switch to Dark')
   })
 
-  darkModeContainer.appendChild(darkModeLabel)
-  darkModeContainer.appendChild(darkModeButton.element)
-
-  container.appendChild(themePreviewContainer)
   container.appendChild(themeSwitchers)
-  container.appendChild(darkModeContainer)
 }
 
 export const createColorsLayout = () => [
+
+  // Colors in Components Section
+  [createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Theme Switcher' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Try different themes to see how color tokens adapt to maintain consistency across themes and color modes.' }],
+    [createElement, 'themeDemo', { id: 'themeDemo', class: 'theme-demo' }]
+  ],
+
   // Color Palettes Section
   [createElement, { tag: 'section', class: 'mtrl-content__section' },
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Color Palettes' }],
@@ -416,13 +370,6 @@ export const createColorsLayout = () => [
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'State Colors' }],
     [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'State colors communicate the status of components and provide visual feedback for interactions.' }],
     [createElement, 'stateColors', { id: 'stateColors', class: 'state-colors' }]
-  ],
-
-  // Colors in Components Section
-  [createElement, { tag: 'section', class: 'mtrl-content__section' },
-    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Theme Demo' }],
-    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Try different themes to see how color tokens adapt to maintain consistency across themes and color modes.' }],
-    [createElement, 'themeDemo', { id: 'themeDemo', class: 'theme-demo' }]
   ],
 
   // CSS Variables and Usage Section

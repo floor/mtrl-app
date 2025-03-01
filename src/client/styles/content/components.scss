@@ -1,0 +1,32 @@
+// src/client/styles/playground.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/config' as c;
+
+$content: '#{b.$prefix}-content';
+
+.#{$content}.components {
+  .#{$content}__section {
+    padding: 0;
+    &-head {
+      padding: 24px;
+    }
+    &-title {
+      margin-bottom: 0
+    }
+    &-body {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 24px;
+      background-color: t.color('surface');
+      background-image: url(/public/img/grid.png);
+      border-left: 1px solid rgba(0,0,0,.05);
+      border-right: 1px solid rgba(0,0,0,.05);
+
+    }
+  }
+}

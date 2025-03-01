@@ -1,4 +1,15 @@
-// src/client/content/components/card.js
+// src/client/content/components/cards.js
+
+import {
+  contentLayout,
+  createComponentsSectionLayout
+} from '../../config'
+
+import {
+  createLayout,
+  createButton
+} from 'mtrl'
+
 import createCard, {
   createCardHeader,
   createCardContent,
@@ -7,38 +18,29 @@ import createCard, {
   CARD_VARIANTS
 } from 'mtrl/src/components/card'
 
-import {
-  contentLayout
-} from '../../config'
-
-import {
-  createElement,
-  createLayout,
-  createButton
-} from 'mtrl'
-
 export const createCardsContent = (container) => {
-  log.info('createButtonsContent', container)
   const info = {
     title: 'Cards',
     description: 'Display content and actions about a single subject'
   }
+
+  container.classList.add('components')
+
   const layout = createLayout(contentLayout(info), container).component
 
-  const ui = createLayout(createButtonsLayout(), layout.body).component
-  initSimpleCard(ui)
-  initMediaCard(ui)
-  initOutlinedCard(ui)
-  initDynamicCard(ui)
-  initLoadingCard(ui)
-  initCustomCard(ui)
+  initSimpleCard(layout.body)
+  initMediaCard(layout.body)
+  initOutlinedCard(layout.body)
+  initDynamicCard(layout.body)
+  initLoadingCard(layout.body)
+  initCustomCard(layout.body)
 }
 
-export const initSimpleCard = (ui) => {
-  // Create the main card component
-  //
-  const container = ui.simple
+export const initSimpleCard = (container) => {
+  const title = 'Simple Card'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
+  // Create the main card component
   const card = createCard({
     variant: CARD_VARIANTS.ELEVATED,
     interactive: true
@@ -51,15 +53,14 @@ export const initSimpleCard = (ui) => {
 
   card.addContent(content)
 
-  container.appendChild(card.element)
-  container.appendChild(card.element)
-  container.appendChild(card.element)
+  layout.body.appendChild(card.element.cloneNode(true))
+  layout.body.appendChild(card.element.cloneNode(true))
+  layout.body.appendChild(card.element)
 }
 
-export const initMediaCard = (ui) => {
-  // Create the main card component
-  //
-  const container = ui.media
+export const initMediaCard = (container) => {
+  const title = 'Media Card'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create the main card component
   const card = createCard({
@@ -69,7 +70,7 @@ export const initMediaCard = (ui) => {
 
   // Create card media
   const media = createCardMedia({
-    src: 'https://example.com/image.jpg',
+    src: '/public/img/pictures/FzLKYa_WYAMBy0w.jpg',
     alt: 'Example image',
     aspectRatio: '16:9'
   })
@@ -108,13 +109,12 @@ export const initMediaCard = (ui) => {
   card.addContent(content)
   card.setActions(actions)
 
-  container.appendChild(card.element)
+  layout.body.appendChild(card.element)
 }
 
-export const initOutlinedCard = (ui) => {
-  // Create the main card component
-  //
-  const container = ui.outlined
+export const initOutlinedCard = (container) => {
+  const title = 'Outlined Card'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create the main card component
   const card = createCard({
@@ -142,13 +142,12 @@ export const initOutlinedCard = (ui) => {
   card.setHeader(header)
   card.addContent(content)
 
-  container.appendChild(card.element)
+  layout.body.appendChild(card.element)
 }
 
-export const initDynamicCard = (ui) => {
-  // Create the main card component
-  //
-  const container = ui.dynamic
+export const initDynamicCard = (container) => {
+  const title = 'Dynamic Card'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create the main card component
   const card = createCard({
@@ -176,20 +175,19 @@ export const initDynamicCard = (ui) => {
 
     // Also add new media
     const media = createCardMedia({
-      src: 'https://example.com/updated-image.jpg',
+      src: '/public/img/pictures/GBf16D7aUAApCLt.jpg',
       aspectRatio: '4:3'
     })
 
     card.addMedia(media)
   }, 3000)
 
-  container.appendChild(card.element)
+  layout.body.appendChild(card.element)
 }
 
-export const initLoadingCard = async (ui) => {
-  // Create the main card component
-  //
-  const container = ui.loading
+export const initLoadingCard = async (container) => {
+  const title = 'Loading Card'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Import the withLoading enhancer
   const { withLoading } = await import('mtrl/src/components/card/features.js')
@@ -215,13 +213,12 @@ export const initLoadingCard = async (ui) => {
     card.addContent(content)
   }, 2000)
 
-  container.appendChild(card.element)
+  layout.body.appendChild(card.element)
 }
 
-export const initCustomCard = async (ui) => {
-  // Create the main card component
-  //
-  const container = ui.custom
+export const initCustomCard = async (container) => {
+  const title = 'Custom Card'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const card = createCard({
     variant: CARD_VARIANTS.ELEVATED,
@@ -247,43 +244,5 @@ export const initCustomCard = async (ui) => {
   // Add inline styles for demonstration
   card.element.style.setProperty('--custom-card-color', '#6200ee')
 
-  container.appendChild(card.element)
+  layout.body.appendChild(card.element)
 }
-
-export const createButtonsLayout = () => [
-  // Button Variants Section
-  [createElement, { tag: 'section', class: 'mtrl-content__section' },
-    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Simple Card' }],
-    [createElement, { id: 'simple' }]
-  ],
-
-  // Button Variants Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { tag: 'h2', class: 'mtrl-content__section-title', text: 'media Card' }],
-    [createElement, { id: 'media' }]
-  ],
-
-  // Button Sizes Section
-  [createElement, { class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-title', text: 'Outlined card' }],
-    [createElement, { id: 'outlined' }]
-  ],
-
-  // Icon Buttons Section
-  [createElement, { class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-title', text: 'Dynamic Card' }],
-    [createElement, { id: 'dynamic' }]
-  ],
-
-  // Text with Icons Section
-  [createElement, { class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-title', content: 'Loading Card' }],
-    [createElement, { id: 'loading' }]
-  ],
-
-  // Text with Icons Section
-  [createElement, { class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-title', content: 'Custom Card' }],
-    [createElement, { id: 'custom' }]
-  ]
-]

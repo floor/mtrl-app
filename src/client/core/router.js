@@ -42,7 +42,7 @@ export const createRouter = (options = {}) => {
   const navigate = async (section, subsection = '', options = {}) => {
     try {
       const path = generatePath(section, subsection)
-      log.debug('Router navigating to:', { section, subsection, path })
+      // log.debug('Router navigating to:', { section, subsection, path })
 
       const route = { section, subsection, path }
 
@@ -50,7 +50,7 @@ export const createRouter = (options = {}) => {
       for (const hook of beforeHooks) {
         const result = await hook(route)
         if (result === false) {
-          log.debug('Navigation cancelled by hook')
+          // log.debug('Navigation cancelled by hook')
           return
         }
       }
@@ -58,7 +58,7 @@ export const createRouter = (options = {}) => {
       // Update URL first
       if (!options.noHistory) {
         const newPath = route.path
-        log.debug('Updating URL to:', newPath)
+        // log.debug('Updating URL to:', newPath)
         window.history.pushState(route, '', newPath)
       }
 
@@ -69,7 +69,7 @@ export const createRouter = (options = {}) => {
       }
 
       if (handler) {
-        log.debug('Executing handler for route:', route)
+        // log.debug('Executing handler for route:', route)
         await handler(route)
       }
 
@@ -89,7 +89,7 @@ export const createRouter = (options = {}) => {
         await hook(route)
       }
 
-      log.debug('Navigation completed:', route)
+      // log.debug('Navigation completed:', route)
     } catch (error) {
       log.error('Navigation error:', error)
       errorHandler(error)

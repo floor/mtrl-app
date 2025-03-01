@@ -1,40 +1,43 @@
-// src/client/content/components/menu.js
+// src/client/content/components/menus.js
 
 import {
-  contentLayout
+  contentLayout,
+  createComponentsSectionLayout
 } from '../../config'
 
 import {
-  createElement,
   createLayout,
   createMenu,
-  createButton
+  createButton,
+  createElement
 } from 'mtrl'
 
 const moreIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="currentColor"/>
 </svg>`
 
-export const createMenusContent = (container, components) => {
-  log.info('createButtonsContent', container)
+export const createMenusContent = (container) => {
   const info = {
     title: 'Menus',
     description: 'Display a list of choices on a temporary surface'
   }
+
+  container.classList.add('components')
+
   const layout = createLayout(contentLayout(info), container).component
 
-  console.log('layout', layout)
-
-  const ui = createLayout(createMenusLayout(components), layout.body).component
-  initBasicMenu(ui)
-  initNestedMenu(ui)
-  initIconMenu(ui)
-  initCustomMenu(ui)
+  initBasicMenu(layout.body)
+  initNestedMenu(layout.body)
+  initIconMenu(layout.body)
+  initCustomMenu(layout.body)
 }
 
-// Basic menu example
-export const initBasicMenu = (ui) => {
-  const container = ui.basicMenu
+export const initBasicMenu = (container) => {
+  const title = 'Basic Menu'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const demoContainer = createElement({ class: 'mtrl-content__demo' })
+
   const button = createButton({
     text: 'Show Basic Menu',
     variant: 'filled'
@@ -48,7 +51,7 @@ export const initBasicMenu = (ui) => {
       { name: 'save', text: 'Save' },
       { name: 'save-as', text: 'Save As...' }
     ],
-    openingButton: button // Pass the button reference to prevent closing issues
+    openingButton: button
   })
 
   button.on('click', () => {
@@ -59,12 +62,16 @@ export const initBasicMenu = (ui) => {
     console.log(`Selected: ${name} (${text})`)
   })
 
-  container.appendChild(button.element)
+  demoContainer.appendChild(button.element)
+  layout.body.appendChild(demoContainer)
 }
 
-// Nested menu example
-export const initNestedMenu = (ui) => {
-  const container = ui.nestedMenu
+export const initNestedMenu = (container) => {
+  const title = 'Nested Menu'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const demoContainer = createElement({ class: 'mtrl-content__demo' })
+
   const button = createButton({
     text: 'Show Nested Menu',
     variant: 'tonal'
@@ -93,7 +100,7 @@ export const initNestedMenu = (ui) => {
       { type: 'divider' },
       { name: 'find', text: 'Find and Replace...' }
     ],
-    openingButton: button // Pass the button reference
+    openingButton: button
   })
 
   button.on('click', () => {
@@ -104,12 +111,16 @@ export const initNestedMenu = (ui) => {
     console.log(`Selected nested item: ${name} (${text})`)
   })
 
-  container.appendChild(button.element)
+  demoContainer.appendChild(button.element)
+  layout.body.appendChild(demoContainer)
 }
 
-// Icon menu example
-export const initIconMenu = (ui) => {
-  const container = ui.iconMenu
+export const initIconMenu = (container) => {
+  const title = 'Icon Menu'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const demoContainer = createElement({ class: 'mtrl-content__demo' })
+
   const button = createButton({
     icon: moreIcon,
     variant: 'outlined'
@@ -123,7 +134,7 @@ export const initIconMenu = (ui) => {
       { name: 'keyboard', text: 'Keyboard shortcuts' },
       { name: 'help', text: 'Help' }
     ],
-    openingButton: button // Pass the button reference
+    openingButton: button
   })
 
   button.on('click', () => {
@@ -134,12 +145,16 @@ export const initIconMenu = (ui) => {
     console.log(`Selected from icon menu: ${name} (${text})`)
   })
 
-  container.appendChild(button.element)
+  demoContainer.appendChild(button.element)
+  layout.body.appendChild(demoContainer)
 }
 
-// Custom menu with disabled items and different alignments
-export const initCustomMenu = (ui) => {
-  const container = ui.customMenu
+export const initCustomMenu = (container) => {
+  const title = 'Custom Menu'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const demoContainer = createElement({ class: 'mtrl-content__demo' })
+
   const button = createButton({
     text: 'Show Custom Menu',
     variant: 'elevated'
@@ -153,11 +168,10 @@ export const initCustomMenu = (ui) => {
       { name: 'rename', text: 'Rename' },
       { name: 'delete', text: 'Delete', disabled: true }
     ],
-    openingButton: button // Pass the button reference
+    openingButton: button
   })
 
   button.on('click', () => {
-    console.log('click')
     menu.show().position(button.element, {
       align: 'center',
       vAlign: 'bottom'
@@ -168,31 +182,6 @@ export const initCustomMenu = (ui) => {
     console.log(`Selected from custom menu: ${name} (${text})`)
   })
 
-  container.appendChild(button.element)
+  demoContainer.appendChild(button.element)
+  layout.body.appendChild(demoContainer)
 }
-
-export const createMenusLayout = (components) => [
-  // Basic Menu Section
-  [createElement, { tag: 'section', class: 'mtrl-content__section' },
-    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Basic Menu' }],
-    [createElement, 'basicMenu', { class: 'mtrl-content__demo' }]
-  ],
-
-  // Nested Menu Section
-  [createElement, { class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-title', text: 'Nested Menu' }],
-    [createElement, 'nestedMenu', { class: 'mtrl-content__demo' }]
-  ],
-
-  // Icon Menu Section
-  [createElement, { class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-title', text: 'Icon Menu' }],
-    [createElement, 'iconMenu', { class: 'mtrl-content__demo' }]
-  ],
-
-  // Custom Menu Section
-  [createElement, { class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-title', text: 'Custom Menu' }],
-    [createElement, 'customMenu', { class: 'mtrl-content__demo' }]
-  ]
-]

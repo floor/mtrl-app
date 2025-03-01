@@ -49,6 +49,15 @@ export const contentLayout = (info) => [
   [createElement, { id: 'foot', class: 'mtrl-content__footer' }]
 ]
 
+export const createComponentsSectionLayout = (info) => [
+  [createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { class: 'mtrl-content__section-head' },
+      [createElement, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }]
+    ],
+    [createElement, 'div', { id: 'body', class: 'mtrl-content__section-body' }]
+  ]
+]
+
 export const themesMenu = [
   { name: 'ocean', text: 'Ocean' },
   { name: 'forest', text: 'Forest' },
@@ -64,6 +73,7 @@ export const navigation = {
     { id: 'buttons', label: 'Buttons', path: '/components/buttons' },
     { id: 'cards', label: 'Cards', path: '/components/cards' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
+    { id: 'chips', label: 'Chips', path: '/components/chips' },
     { id: 'menus', label: 'Menus', path: '/components/menus' },
     { id: 'navigations', label: 'Navigations', path: '/components/navigations' },
     { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },

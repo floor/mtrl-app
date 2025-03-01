@@ -309,22 +309,32 @@ $content: '#{b.$prefix}-content';
     
     // Theme-specific button styles
     &.theme-ocean {
-      background-color: #006783;
+      background-color: #006493;
       color: white;
     }
     
     &.theme-forest {
-      background-color: #386A20;
+      background-color: #3f4f2f;
       color: white;
     }
     
     &.theme-sunset {
-      background-color: #B3261E;
+      background-color: #b34700;
       color: white;
     }
     
     &.theme-spring {
-      background-color: #6750A4;
+      background-color: #006e2b;
+      color: white;
+    }
+
+    &.theme-summer {
+      background-color: #4196cb;
+      color: white;
+    }
+
+    &.theme-autumn {
+      background-color: #795548;
       color: white;
     }
   }

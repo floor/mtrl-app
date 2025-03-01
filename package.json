@@ -10,7 +10,7 @@
   "author": "floor",
   "license": "MIT License",
   "main": "index.js",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "scripts": {
     "start": "pm2 start ecosystem.config.js",
     "stop": "pm2 stop mtrl-app",

@@ -16,7 +16,15 @@ $content: '#{b.$prefix}-content';
   padding: 0 50px;
 
   &__header {
+    height: 100px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 12px;
+    &__section {
+      padding: 24px;
+    }
     .#{$content}__box {
       flex: 1;
       height: 100%;
@@ -40,15 +48,6 @@ $content: '#{b.$prefix}-content';
       }
     }
   }
-
-  &__header {
-    height: 100px;
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
   
   &__section {
     background-color: t.color('surface-container');
@@ -74,7 +73,7 @@ $content: '#{b.$prefix}-content';
   &__section-title {
     @include c.typography('headline-small');
     color: t.color('on-surface');
-    margin: 0 0 16px;
+    margin: 0 0 16px; 
   }
 
   &__grid {

@@ -9,6 +9,7 @@ import { createLayoutContent } from './styles/layout'
 import { createButtonsContent } from './components/buttons'
 import { createCardsContent } from './components/cards'
 import { createCheckboxesContent } from './components/checkboxes'
+import { createChipsContent } from './components/chips'
 import { createListsContent } from './components/lists'
 import { createMenusContent } from './components/menus'
 import { createNavigationsContent } from './components/navigations'
@@ -28,6 +29,7 @@ export {
   createButtonsContent,
   createCardsContent,
   createCheckboxesContent,
+  createChipsContent,
   createListsContent,
   createMenusContent,
   createNavigationsContent,

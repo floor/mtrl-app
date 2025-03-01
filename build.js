@@ -104,7 +104,7 @@ const setupWatchers = () => {
   const watchJsFiles = () => {
     jsWatchPaths.forEach(path => {
       watch(path, { recursive: true }, async (_, filename) => {
-        if (filename?.endsWith('.js')) {
+        if (filename?.endsWith('.ts')) {
           console.log(`\nSource change detected: ${filename}`)
           await buildApp()
         }

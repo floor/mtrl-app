@@ -1,205 +1,195 @@
-// src/client/content/components/switches.js
+// src/client/content/components/checkboxes.js
+import { capitalize } from '../../core/utils'
 
 import {
-  contentLayout
+  contentLayout,
+  createComponentsSectionLayout
 } from '../../config'
 
 import {
   createLayout,
-  createElement,
   createCheckbox,
-  createButton
+  createButton,
+  createElement
 } from 'mtrl'
 
-const CHECK_ICON = `
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <polyline points="20 6 9 17 4 12"></polyline>
-</svg>`
-
-export const createCheckboxesContent = (container, components) => {
-  log.info('createButtonsContent', container)
+export const createCheckboxesContent = (container) => {
   const info = {
     title: 'Checkboxes',
     description: 'Checkboxes let users select one or more items from a list, or turn an item on or off'
   }
+
+  container.classList.add('components')
+
   const layout = createLayout(contentLayout(info), container).component
 
-  console.log('layout', layout)
-
-  const ui = createLayout(createCheckboxesLayout(), layout.body).component
-  console.info('ui', ui)
+  initBasicCheckboxes(layout.body)
+  initLabelPositions(layout.body)
+  initIndeterminateCheckboxes(layout.body)
 }
 
-export const createCheckboxesLayout = (components) => [
-  // Basic Switches Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Basic Checkboxes' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'basic',
-      onCreate: (el) => {
-        // Default switch
-        const defaultSwitch = createCheckbox({
-          label: 'Default Switch'
-        })
-        // defaultSwitch.on('change', (checked) =>
-        //   components.logEvent(`Default switch ${checked ? 'checked' : 'unchecked'}`)
-        // )
-        el.appendChild(defaultSwitch.element)
+export const initBasicCheckboxes = (container) => {
+  const title = 'Basic Checkboxes'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-        // Checked switch
-        const checkedSwitch = createCheckbox({
-          label: 'Initially Checked',
-          checked: true
-        })
-        // checkedSwitch.on('change', (checked) =>
-        //   components.logEvent(`Checked switch ${checked ? 'checked' : 'unchecked'}`)
-        // )
-        el.appendChild(checkedSwitch.element)
+  // Default checkbox
+  const defaultCheckbox = createCheckbox({
+    label: 'Default'
+  })
+  layout.body.appendChild(defaultCheckbox.element)
 
-        // Disabled switch
-        const disabledSwitch = createCheckbox({
-          label: 'Disabled Switch',
-          disabled: true
-        })
-        el.appendChild(disabledSwitch.element)
+  // Checked checkbox
+  const checkedCheckbox = createCheckbox({
+    label: 'Checked',
+    checked: true
+  })
+  layout.body.appendChild(checkedCheckbox.element)
 
-        // Disabled and checked switch
-        const disabledCheckedSwitch = createCheckbox({
-          label: 'Disabled Checked',
-          disabled: true,
-          checked: true
-        })
-        el.appendChild(disabledCheckedSwitch.element)
-      }
-    }]
-  ],
+  // Disabled checkbox
+  const disabledCheckbox = createCheckbox({
+    label: 'Disabled',
+    disabled: true
+  })
+  layout.body.appendChild(disabledCheckbox.element)
 
-  // Switches with Icons Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Switches with Icons' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'icons',
-      onCreate: (el) => {
-        // Switch with icon and end label
-        const endIconSwitch = createCheckbox({
-          label: 'Icon with End Label',
-          icon: CHECK_ICON,
-          labelPosition: 'end'
-        })
-        // endIconSwitch.on('change', (checked) =>
-        //   components.logEvent(`Icon switch (end) ${checked ? 'checked' : 'unchecked'}`)
-        // )
-        el.appendChild(endIconSwitch.element)
+  // Disabled and checked checkbox
+  const disabledCheckedCheckbox = createCheckbox({
+    label: 'Disabled',
+    disabled: true,
+    checked: true
+  })
+  layout.body.appendChild(disabledCheckedCheckbox.element)
+}
 
-        // Switch with icon and start label
-        const startIconSwitch = createCheckbox({
-          label: 'Icon with Start Label',
-          icon: CHECK_ICON,
-          labelPosition: 'start'
-        })
-        // startIconSwitch.on('change', (checked) =>
-        //   components.logEvent(`Icon switch (start) ${checked ? 'checked' : 'unchecked'}`)
-        // )
-        el.appendChild(startIconSwitch.element)
+export const initLabelPositions = (container) => {
+  const title = 'Label Positions'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-        // Disabled switch with icon
-        const disabledIconSwitch = createCheckbox({
-          label: 'Disabled with Icon',
-          icon: CHECK_ICON,
-          disabled: true
-        })
-        el.appendChild(disabledIconSwitch.element)
-      }
-    }]
-  ],
+  // Create a description element
+  // const description = createElement({ tag: 'p', class: 'section-description' })
+  // description.textContent = 'Checkbox labels can be positioned either at the start or end of the checkbox.'
+  // description.style.marginBottom = '16px'
+  // layout.body.appendChild(description)
 
-  // Label Position Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Label Positions' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'labelPositions',
-      onCreate: (el) => {
-        // Label at end (default)
-        const endLabelSwitch = createCheckbox({
-          label: 'Label at End (Default)',
-          labelPosition: 'end'
-        })
-        // endLabelSwitch.on('change', (checked) =>
-        //   components.logEvent(`End label switch ${checked ? 'checked' : 'unchecked'}`)
-        // )
-        el.appendChild(endLabelSwitch.element)
+  // Label at end (default)
+  const endLabelCheckbox = createCheckbox({
+    label: 'Label at End (Default)',
+    labelPosition: 'end'
+  })
+  layout.body.appendChild(endLabelCheckbox.element)
 
-        // Label at start
-        const startLabelSwitch = createCheckbox({
-          label: 'Label at Start',
-          labelPosition: 'start'
-        })
-        // startLabelSwitch.on('change', (checked) =>
-        //   components.logEvent(`Start label switch ${checked ? 'checked' : 'unchecked'}`)
-        // )
-        el.appendChild(startLabelSwitch.element)
+  // Label at start
+  const startLabelCheckbox = createCheckbox({
+    label: 'Label at Start',
+    labelPosition: 'start'
+  })
+  layout.body.appendChild(startLabelCheckbox.element)
 
-        // Disabled with start label
-        const disabledStartLabelSwitch = createCheckbox({
-          label: 'Disabled with Start Label',
-          labelPosition: 'start',
-          disabled: true
-        })
-        el.appendChild(disabledStartLabelSwitch.element)
-      }
-    }]
-  ],
+  // Disabled with start label
+  const disabledStartLabelCheckbox = createCheckbox({
+    label: 'Disabled with Start Label',
+    labelPosition: 'start',
+    disabled: true
+  })
+  layout.body.appendChild(disabledStartLabelCheckbox.element)
+}
 
-  // Interactive States Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Interactive States' }],
-    [createElement, 'div', { class: 'mtrl-content__grid' },
-      [createElement, 'div', {
-        id: 'stateTest',
-        onCreate: (el) => {
-          const switchComponent = createCheckbox({
-            label: 'Interactive Switch'
-          })
-          el.appendChild(switchComponent.element)
-        }
-      }],
-      [createElement, 'div', { class: 'mtrl-content__controls' },
-        [createButton, null, {
-          text: 'Toggle Disabled'
-        }],
-        [createButton, null, {
-          text: 'Toggle Checked'
-        }],
-        [createButton, null, {
-          text: 'Toggle Label Position'
-        }],
-        [createButton, null, { text: 'Update Label' }]
-      ]
-    ]
-  ],
+export const initIndeterminateCheckboxes = (container) => {
+  const title = 'Indeterminate State'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  // With Values Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'With Custom Values' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'values'
-    }]
-  ],
+  // Create a wrapper for the demo
+  const demoWrapper = createElement({ class: 'indeterminate-checkbox-demo' })
 
-  // Required Switch Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Required Switch' }],
-    [createElement, 'div', { class: 'mtrl-content__grid', id: 'required' }]
-  ],
+  // Parent checkbox (will control indeterminate state)
+  const parentCheckbox = createCheckbox({
+    label: 'Select All Items',
+    indeterminate: true
+  })
+  demoWrapper.appendChild(parentCheckbox.element)
 
-  // Event Handling Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', content: 'Event Handling' }],
-    [createElement, 'div', { id: 'eventTest' }],
-    [createElement, 'div', { id: 'eventLog', class: 'mtrl-content__event-log' }]
+  // Child checkboxes container
+  const childrenContainer = createElement({ class: 'checkbox-children' })
+  childrenContainer.style.marginLeft = '24px'
+  childrenContainer.style.marginTop = '8px'
+
+  // Child checkboxes
+  const childCheckboxes = [
+    createCheckbox({ label: 'Item 1' }),
+    createCheckbox({ label: 'Item 2' }),
+    createCheckbox({ label: 'Item 3' })
   ]
-]
+
+  // Add child checkboxes to container
+  childCheckboxes.forEach(checkbox => {
+    childrenContainer.appendChild(checkbox.element)
+  })
+
+  // Update parent state based on children
+  const updateParentState = () => {
+    const checkedCount = childCheckboxes.filter(cb => cb.isChecked()).length
+
+    if (checkedCount === 0) {
+      parentCheckbox.uncheck()
+      parentCheckbox.setIndeterminate(false)
+    } else if (checkedCount === childCheckboxes.length) {
+      parentCheckbox.check()
+      parentCheckbox.setIndeterminate(false)
+    } else {
+      parentCheckbox.setIndeterminate(true)
+    }
+  }
+
+  // Add event listeners to child checkboxes
+  childCheckboxes.forEach(checkbox => {
+    checkbox.on('change', () => {
+      updateParentState()
+    })
+  })
+
+  // Handle parent checkbox changes
+  parentCheckbox.on('change', () => {
+    const isChecked = parentCheckbox.isChecked()
+    parentCheckbox.setIndeterminate(false)
+
+    // Update all child checkboxes
+    childCheckboxes.forEach(checkbox => {
+      if (isChecked) {
+        checkbox.check()
+      } else {
+        checkbox.uncheck()
+      }
+    })
+  })
+
+  // Add description text
+  const description = createElement({ tag: 'p', class: 'demo-description' })
+  description.textContent = 'The parent checkbox shows an indeterminate state when some but not all child items are selected.'
+  description.style.marginTop = '16px'
+  description.style.fontSize = '14px'
+  description.style.color = 'var(--mtrl-sys-color-on-surface-variant)'
+
+  // Add manual controls
+  const controlsWrapper = createElement({ class: 'demo-controls' })
+  controlsWrapper.style.marginTop = '16px'
+  controlsWrapper.style.display = 'flex'
+  controlsWrapper.style.gap = '8px'
+
+  const setIndeterminateBtn = createButton({
+    text: 'Set Indeterminate',
+    variant: 'outlined',
+    size: 'small'
+  })
+
+  setIndeterminateBtn.on('click', () => {
+    parentCheckbox.setIndeterminate(true)
+  })
+
+  controlsWrapper.appendChild(setIndeterminateBtn.element)
+
+  // Assemble the demo
+  demoWrapper.appendChild(childrenContainer)
+  demoWrapper.appendChild(description)
+  demoWrapper.appendChild(controlsWrapper)
+  layout.body.appendChild(demoWrapper)
+}

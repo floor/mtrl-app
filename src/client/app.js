@@ -29,7 +29,7 @@ const createApp = (options = {}) => {
   let readyCallbacks = []
 
   const initializeLayout = () => {
-    log.info('Starting layout initialization')
+    // log.info('Starting layout initialization')
     try {
       layoutInstance = createLayout(layout, document.body)
       return layoutInstance
@@ -127,7 +127,7 @@ const createApp = (options = {}) => {
       return
     }
 
-    log.info('Initializing events')
+    // log.info('Initializing events')
     eventManager = createEventManager(ui)
 
     // Setup rail navigation if components exist
@@ -212,7 +212,7 @@ const createApp = (options = {}) => {
     if (isInitialized) return
 
     try {
-      log.info('Starting initialization')
+      // log.info('Starting initialization')
       layoutInstance = initializeLayout()
 
       if (!layoutInstance) {
@@ -251,7 +251,7 @@ const createApp = (options = {}) => {
       }
 
       isInitialized = true
-      log.info('App initialization complete')
+      // log.info('App initialization complete')
     } catch (error) {
       log.error('Initialization failed:', error)
       isInitialized = false // Reset initialization flag on error
@@ -361,7 +361,7 @@ try {
 
   // Example of using the onReady API
   app.onReady(({ router, ui }) => {
-    console.log('App is ready, performing post-initialization tasks')
+    // console.log('App is ready, performing post-initialization tasks')
   })
 } catch (error) {
   console.error('Failed to create app:', error)

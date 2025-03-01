@@ -40,11 +40,11 @@ export const updateDrawerItems = (drawer, items, router) => {
       const selectedItem = event.item
       if (!selectedItem) return
 
-      log.debug('Drawer item selected:', {
-        id: selectedItem.config.id,
-        section: selectedItem.config.data.section,
-        path: selectedItem.config.data.path
-      })
+      // log.debug('Drawer item selected:', {
+      //   id: selectedItem.config.id,
+      //   section: selectedItem.config.data.section,
+      //   path: selectedItem.config.data.path
+      // })
 
       if (router) {
         const route = router.parsePath(selectedItem.config.data.path)
