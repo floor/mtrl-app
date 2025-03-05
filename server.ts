@@ -4,6 +4,7 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { renderFile } from 'ejs';
 import { TemplateData } from './src/server/types';
+import { existsSync } from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -30,8 +31,20 @@ const contentTypeMap = {
   'wav': 'audio/wav'
 };
 
+// Helper function to find the correct file path
+async function findFile(basePaths, relativePath) {
+  for (const basePath of basePaths) {
+    const fullPath = join(basePath, relativePath);
+    const file = Bun.file(fullPath);
+    if (await file.exists()) {
+      return { path: fullPath, file };
+    }
+  }
+  return null;
+}
+
 const server = Bun.serve({
-  port: 4000,
+  port: process.env.PORT ? parseInt(process.env.PORT) : 4000,
   async fetch(req) {
     const url = new URL(req.url);
     const pathname = url.pathname;
@@ -64,41 +77,53 @@ const server = Bun.serve({
       });
     }
     
-    // Handle static files (both /dist/ and direct paths for CSS/JS)
+    // Handle static files from dist directory
     if (pathname.startsWith('/dist/') || pathname.endsWith('.css') || pathname.endsWith('.js')) {
-      // Determine the correct file path
-      let filePath;
+      // Determine possible file locations
+      const possiblePaths = [
+        __dirname, // /dist/app.js -> {__dirname}/dist/app.js
+        join(__dirname, 'src'), // /dist/app.js -> {__dirname}/src/dist/app.js
+      ];
+      
+      let fullPath = '';
+      let fileToServe = null;
       
       if (pathname.startsWith('/dist/')) {
-        // For dist paths, look in src/dist or dist
-        filePath = join(__dirname, 'src', pathname);
+        // Try to find the file in possible locations
+        const result = await findFile(possiblePaths, pathname);
         
-        // Fallback to a direct dist folder if the src/dist path doesn't exist
-        if (!await Bun.file(filePath).exists()) {
-          filePath = join(__dirname, pathname);
+        if (result) {
+          fullPath = result.path;
+          fileToServe = result.file;
         }
       } else {
-        // For direct file requests like main.css or app.js
-        filePath = join(__dirname, 'src/dist', pathname);
+        // For direct CSS or JS requests, check in the dist folder
+        const distPath = join(__dirname, 'dist', pathname);
+        const file = Bun.file(distPath);
+        
+        if (await file.exists()) {
+          fullPath = distPath;
+          fileToServe = file;
+        }
       }
       
-      console.log(`Trying to serve: ${filePath}`);
-      const file = Bun.file(filePath);
-      const exists = await file.exists();
-      
-      if (!exists) {
-        console.error('Static file not found:', filePath);
-        return new Response('File Not Found', { status: 404 });
+      // If we couldn't find the file
+      if (!fileToServe) {
+        console.error(`Static file not found: ${pathname}`);
+        console.error(`Tried paths: ${possiblePaths.map(p => join(p, pathname)).join(', ')}`);
+        return new Response(`File Not Found: ${pathname}`, { status: 404 });
       }
       
-      // Set appropriate content type based on file extension
+      console.log(`Serving static file: ${fullPath}`);
+      
+      // Set content type based on file extension
       const ext = pathname.split('.').pop()?.toLowerCase();
-      const contentType = contentTypeMap[ext] || 'text/plain';
+      const contentType = contentTypeMap[ext] || 'application/octet-stream';
 
-      return new Response(file, {
+      return new Response(fileToServe, {
         headers: {
-          'Content-Type': `${contentType}; charset=utf-8`,
-          'Cache-Control': 'max-age=60',
+          'Content-Type': `${contentType}`,
+          'Cache-Control': 'no-cache, no-store, must-revalidate', // During development
           'Access-Control-Allow-Origin': '*'
         }
       });
@@ -106,7 +131,16 @@ const server = Bun.serve({
 
     // For all other routes, serve the main HTML
     try {
-      const templatePath = join(__dirname, 'src/server/templates', 'app.ejs');
+      // Try to find the template in expected locations
+      let templatePath = join(__dirname, 'src/server/templates', 'app.ejs');
+      
+      // If not found there, try another common location
+      if (!existsSync(templatePath)) {
+        templatePath = join(__dirname, 'app.ejs');
+      }
+      
+      console.log(`Using template: ${templatePath}`);
+      
       const data: TemplateData = { title: 'MTRL Playground' };
       const html = await renderFile(templatePath, data);
       
@@ -115,9 +149,9 @@ const server = Bun.serve({
       });
     } catch (error) {
       console.error('Template rendering error:', error);
-      return new Response('Server Error', { status: 500 });
+      return new Response(`Server Error: ${error.message}`, { status: 500 });
     }
   }
 });
 
-console.log(`Server running on port ${server.port}`);
+console.log(`Server running at http://localhost:${server.port}`);
