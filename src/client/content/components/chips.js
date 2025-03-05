@@ -8,7 +8,8 @@ import {
 
 import {
   createLayout,
-  createButton
+  createButton,
+  createTextfield
 } from 'mtrl'
 
 import createChip, { CHIP_VARIANTS, CHIP_SIZES } from 'mtrl/src/components/chip'
@@ -35,6 +36,10 @@ const locationIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none
   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="currentColor"/>
 </svg>`
 
+/**
+ * Creates the main Chips content showcase
+ * @param {HTMLElement} container - The container element to append content to
+ */
 export const createChipsContent = (container) => {
   const info = {
     title: 'Chips',
@@ -55,6 +60,10 @@ export const createChipsContent = (container) => {
   initInteractiveChipExample(layout.body)
 }
 
+/**
+ * Initializes the chip variants section
+ * @param {HTMLElement} container - Container element
+ */
 export const initChipVariants = (container) => {
   const title = 'Chip Variants'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
@@ -71,6 +80,10 @@ export const initChipVariants = (container) => {
   })
 }
 
+/**
+ * Initializes chips with icons section
+ * @param {HTMLElement} container - Container element
+ */
 export const initChipWithIcons = (container) => {
   const title = 'Chips with Icons'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
@@ -111,6 +124,10 @@ export const initChipWithIcons = (container) => {
   layout.body.appendChild(iconOnlyChip.element)
 }
 
+/**
+ * Initializes chip sizes section
+ * @param {HTMLElement} container - Container element
+ */
 export const initChipSizes = (container) => {
   const title = 'Chip Sizes'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
@@ -138,6 +155,10 @@ export const initChipSizes = (container) => {
   })
 }
 
+/**
+ * Initializes selectable chips section
+ * @param {HTMLElement} container - Container element
+ */
 export const initSelectableChips = (container) => {
   const title = 'Selectable Chips'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
@@ -163,16 +184,16 @@ export const initSelectableChips = (container) => {
       leadingIcon: variant === CHIP_VARIANTS.FILTER ? checkIcon : null
     })
 
-    // Add click handler to toggle selection
-    chip.element.addEventListener('click', () => {
+    // Add click handler to toggle selection using component API
+    chip.on('click', () => {
       chip.toggleSelected()
 
       // Update icon for filter chips
       if (variant === CHIP_VARIANTS.FILTER) {
         if (chip.isSelected()) {
-          chip.setIcon(checkIcon)
+          chip.setLeadingIcon(checkIcon)
         } else {
-          chip.setIcon('')
+          chip.setLeadingIcon('')
         }
       }
     })
@@ -181,45 +202,95 @@ export const initSelectableChips = (container) => {
   })
 }
 
+/**
+ * Initializes chip set section
+ * @param {HTMLElement} container - Container element
+ */
 export const initChipSet = (container) => {
   const title = 'Chip Set'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const subtitle = 'Scrollable horizontal chip set'
 
-  // Create scrollable chip set
-  const scrollableSet = createChipSet({
-    scrollable: true,
-    chips: [
-      { text: 'JavaScript', variant: CHIP_VARIANTS.FILLED, value: 'js' },
-      { text: 'TypeScript', variant: CHIP_VARIANTS.FILLED, value: 'ts' },
-      { text: 'HTML', variant: CHIP_VARIANTS.FILLED, value: 'html' },
-      { text: 'CSS', variant: CHIP_VARIANTS.FILLED, value: 'css' },
-      { text: 'React', variant: CHIP_VARIANTS.FILLED, value: 'react' },
-      { text: 'Vue', variant: CHIP_VARIANTS.FILLED, value: 'vue' },
-      { text: 'Angular', variant: CHIP_VARIANTS.FILLED, value: 'angular' },
-      { text: 'Svelte', variant: CHIP_VARIANTS.FILLED, value: 'svelte' },
-      { text: 'Node.js', variant: CHIP_VARIANTS.FILLED, value: 'node' }
-    ],
-    multiSelect: true,
-    onChange: (selectedChips) => {
-      console.log('Selected technologies:', selectedChips.map(chip => chip.getValue()))
-    }
+  const layout = createLayout(createComponentsSectionLayout({
+    title,
+    subtitle
+  }), container).component
+
+  // Define chips with unique values
+  const chipConfigs = [
+    { text: 'JavaScript', variant: CHIP_VARIANTS.FILLED, value: 'js' },
+    { text: 'TypeScript', variant: CHIP_VARIANTS.FILLED, value: 'ts' },
+    { text: 'HTML', variant: CHIP_VARIANTS.FILLED, value: 'html' },
+    { text: 'CSS', variant: CHIP_VARIANTS.FILLED, value: 'css' },
+    { text: 'React', variant: CHIP_VARIANTS.FILLED, value: 'react' },
+    { text: 'Vue', variant: CHIP_VARIANTS.FILLED, value: 'vue' },
+    { text: 'Angular', variant: CHIP_VARIANTS.FILLED, value: 'angular' },
+    { text: 'Svelte', variant: CHIP_VARIANTS.FILLED, value: 'svelte' },
+    { text: 'Node.js', variant: CHIP_VARIANTS.FILLED, value: 'node' }
+  ]
+
+  // Create a scrollable chip set container
+  const chipSetContainer = document.createElement('div')
+  chipSetContainer.className = `${PREFIX}-chip-set ${PREFIX}-chip-set--scrollable`
+  chipSetContainer.style.display = 'flex'
+  chipSetContainer.style.flexWrap = 'nowrap'
+  chipSetContainer.style.overflowX = 'auto'
+  chipSetContainer.style.gap = '8px'
+  chipSetContainer.style.paddingBottom = '8px'
+  chipSetContainer.style.marginBottom = '-8px'
+  chipSetContainer.style.WebkitOverflowScrolling = 'touch'
+
+  // Add chips to the set
+  const chipInstances = []
+  chipConfigs.forEach(config => {
+    const chip = createChip(config)
+    chipSetContainer.appendChild(chip.element)
+    chipInstances.push(chip)
+
+    // Add click handler for selection using component API
+    chip.on('click', () => {
+      chip.toggleSelected()
+      // Log the selected values
+      const selectedChips = chipInstances.filter(c => c.isSelected())
+      console.log('Selected technologies:', selectedChips.map(c => c.getValue()))
+    })
   })
 
-  layout.body.appendChild(scrollableSet.element)
+  layout.body.appendChild(chipSetContainer)
 
-  // Create vertical chip set
-  const verticalSet = createChipSet({
-    vertical: true,
-    chips: [
-      { text: 'Option 1', variant: CHIP_VARIANTS.OUTLINED, value: '1' },
-      { text: 'Option 2', variant: CHIP_VARIANTS.OUTLINED, value: '2' },
-      { text: 'Option 3', variant: CHIP_VARIANTS.OUTLINED, value: '3' }
-    ]
+  // Add a vertical chip set example
+  const verticalTitle = document.createElement('p')
+  verticalTitle.textContent = 'Vertical chip set'
+  verticalTitle.style.marginTop = '24px'
+  verticalTitle.style.marginBottom = '8px'
+  layout.body.appendChild(verticalTitle)
+
+  // Create a vertical chip set container
+  const verticalChipSetContainer = document.createElement('div')
+  verticalChipSetContainer.className = `${PREFIX}-chip-set ${PREFIX}-chip-set--vertical`
+  verticalChipSetContainer.style.display = 'flex'
+  verticalChipSetContainer.style.flexDirection = 'column'
+  verticalChipSetContainer.style.alignItems = 'flex-start'
+  verticalChipSetContainer.style.gap = '8px'
+
+  // Add vertical chips
+  const verticalChipConfigs = [
+    { text: 'Option 1', variant: CHIP_VARIANTS.OUTLINED, value: '1' },
+    { text: 'Option 2', variant: CHIP_VARIANTS.OUTLINED, value: '2' },
+    { text: 'Option 3', variant: CHIP_VARIANTS.OUTLINED, value: '3' }
+  ]
+
+  verticalChipConfigs.forEach(config => {
+    const chip = createChip(config)
+    verticalChipSetContainer.appendChild(chip.element)
   })
 
-  layout.body.appendChild(verticalSet.element)
+  layout.body.appendChild(verticalChipSetContainer)
 }
 
+/**
+ * Initializes filter chip set section
+ * @param {HTMLElement} container - Container element
+ */
 export const initFilterChipSet = (container) => {
   const title = 'Filter Chip Set'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
@@ -229,50 +300,45 @@ export const initFilterChipSet = (container) => {
   label.textContent = 'Filter by:'
   layout.body.appendChild(label)
 
-  // Create filter chip set
-  const filterSet = createChipSet({
-    chips: [
-      {
-        text: 'Paid',
-        variant: CHIP_VARIANTS.FILTER,
-        value: 'paid',
-        leadingIcon: '' // Empty initially
-      },
-      {
-        text: 'Free',
-        variant: CHIP_VARIANTS.FILTER,
-        value: 'free',
-        leadingIcon: ''
-      },
-      {
-        text: 'Trial',
-        variant: CHIP_VARIANTS.FILTER,
-        value: 'trial',
-        leadingIcon: ''
-      },
-      {
-        text: 'Subscription',
-        variant: CHIP_VARIANTS.FILTER,
-        value: 'subscription',
-        leadingIcon: ''
+  // Create the filter chip set container
+  const filterSetContainer = document.createElement('div')
+  filterSetContainer.className = `${PREFIX}-chip-set`
+  filterSetContainer.style.display = 'flex'
+  filterSetContainer.style.flexWrap = 'wrap'
+  filterSetContainer.style.gap = '8px'
+  layout.body.appendChild(filterSetContainer)
+
+  // Filter chip configurations
+  const filterChipConfigs = [
+    { text: 'Paid', variant: CHIP_VARIANTS.FILTER, value: 'paid' },
+    { text: 'Free', variant: CHIP_VARIANTS.FILTER, value: 'free' },
+    { text: 'Trial', variant: CHIP_VARIANTS.FILTER, value: 'trial' },
+    { text: 'Subscription', variant: CHIP_VARIANTS.FILTER, value: 'subscription' }
+  ]
+
+  // Create and add chips to the set
+  const filterChips = []
+  filterChipConfigs.forEach(config => {
+    const chip = createChip(config)
+    filterSetContainer.appendChild(chip.element)
+    filterChips.push(chip)
+
+    // Add click handler for selection with icon toggle using component API
+    chip.on('click', () => {
+      chip.toggleSelected()
+
+      // Update the checkmark icon based on selection state
+      if (chip.isSelected()) {
+        chip.setLeadingIcon(checkIcon)
+      } else {
+        chip.setLeadingIcon('')
       }
-    ],
-    multiSelect: true,
-    onChange: (selectedChips) => {
-      console.log('Filters applied:', selectedChips.map(chip => chip.getValue()))
 
-      // Update icons for all chips
-      filterSet.getChips().forEach(chip => {
-        if (chip.isSelected()) {
-          chip.setIcon(checkIcon)
-        } else {
-          chip.setIcon('')
-        }
-      })
-    }
+      // Log the selected filters
+      const selectedChips = filterChips.filter(c => c.isSelected())
+      console.log('Filters applied:', selectedChips.map(c => c.getValue()))
+    })
   })
-
-  layout.body.appendChild(filterSet.element)
 
   // Add a button to clear all filters
   const clearButton = createButton({
@@ -282,108 +348,131 @@ export const initFilterChipSet = (container) => {
   })
 
   clearButton.element.addEventListener('click', () => {
-    filterSet.clearSelection()
-    // Update icons
-    filterSet.getChips().forEach(chip => chip.setIcon(''))
+    // Clear all chip selections
+    filterChips.forEach(chip => {
+      chip.setSelected(false)
+      chip.setLeadingIcon('')
+    })
   })
 
+  // Add some spacing before the clear button
   layout.body.appendChild(clearButton.element)
 }
 
+/**
+ * Initializes input chips section with a textfield integration
+ * @param {HTMLElement} container - Container element
+ */
 export const initInputChips = (container) => {
   const title = 'Input Chips'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const subtitle = 'Use with Textfield for tag/recipient input'
+  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
-  // Create input chips example (like tags or recipients)
-  const inputChipsSet = createChipSet({
-    chips: [
-      {
-        text: 'john@example.com',
-        variant: CHIP_VARIANTS.INPUT,
-        leadingIcon: faceIcon,
-        trailingIcon: closeIcon,
-        value: 'john@example.com'
-      },
-      {
-        text: 'jane@example.com',
-        variant: CHIP_VARIANTS.INPUT,
-        leadingIcon: faceIcon,
-        trailingIcon: closeIcon,
-        value: 'jane@example.com'
-      },
-      {
-        text: 'team@example.com',
-        variant: CHIP_VARIANTS.INPUT,
-        leadingIcon: faceIcon,
-        trailingIcon: closeIcon,
-        value: 'team@example.com'
-      }
-    ]
-  })
+  // Create a container for the input chips
+  const inputChipSetContainer = document.createElement('div')
+  inputChipSetContainer.className = `${PREFIX}-chip-set`
+  inputChipSetContainer.style.display = 'flex'
+  inputChipSetContainer.style.flexWrap = 'wrap'
+  inputChipSetContainer.style.gap = '8px'
+  inputChipSetContainer.style.marginBottom = '16px'
+  layout.body.appendChild(inputChipSetContainer)
 
-  // Add click handler for the trailing icons
-  inputChipsSet.getChips().forEach(chip => {
-    const trailingIcon = chip.element.querySelector('.mtrl-chip-trailing-icon')
-    if (trailingIcon) {
-      trailingIcon.addEventListener('click', (e) => {
+  // Initial email chips
+  const initialEmails = [
+    'john@example.com',
+    'jane@example.com',
+    'team@example.com'
+  ]
+
+  // Keep track of chip instances
+  const emailChips = []
+
+  // Function to create and add a new email chip
+  const addEmailChip = (email) => {
+    if (!email) return null
+
+    const chip = createChip({
+      text: email,
+      variant: CHIP_VARIANTS.INPUT,
+      leadingIcon: faceIcon,
+      trailingIcon: closeIcon,
+      value: email
+    })
+
+    // Add click handler for the trailing icon (close button)
+    const trailingIconEl = chip.element.querySelector(`.${PREFIX}-chip-trailing-icon`)
+    if (trailingIconEl) {
+      trailingIconEl.addEventListener('click', (e) => {
         e.stopPropagation() // Prevent chip selection
-        inputChipsSet.removeChip(chip)
+
+        // Remove the chip from the DOM and array
+        chip.element.remove()
+        const index = emailChips.indexOf(chip)
+        if (index > -1) {
+          emailChips.splice(index, 1)
+        }
       })
     }
-  })
 
-  layout.body.appendChild(inputChipsSet.element)
+    // Add the chip to the container and array
+    inputChipSetContainer.appendChild(chip.element)
+    emailChips.push(chip)
+    return chip
+  }
 
-  // Add an input field and button to add new chips
+  // Add initial email chips
+  initialEmails.forEach(email => addEmailChip(email))
+
+  // Create a container for the textfield and add button
   const inputGroup = document.createElement('div')
   inputGroup.style.display = 'flex'
   inputGroup.style.gap = '8px'
-  inputGroup.style.marginTop = '16px'
 
-  const input = document.createElement('input')
-  input.type = 'text'
-  input.placeholder = 'Add email address'
-  input.style.padding = '8px'
-  input.style.borderRadius = '4px'
-  input.style.border = '1px solid #ccc'
+  // Create a textfield for entering new emails
+  const emailInput = createTextfield({
+    label: 'Add email address',
+    variant: 'outlined'
+  })
 
+  // Create an add button
   const addButton = createButton({
     text: 'Add',
     variant: 'filled',
     size: 'small'
   })
 
-  addButton.element.addEventListener('click', () => {
-    if (input.value) {
-      const newChip = inputChipsSet.addChip({
-        text: input.value,
-        variant: CHIP_VARIANTS.INPUT,
-        leadingIcon: faceIcon,
-        trailingIcon: closeIcon,
-        value: input.value
-      })
+  // Handle adding a new email chip
+  const handleAddEmail = () => {
+    const email = emailInput.getValue().trim()
+    if (email) {
+      addEmailChip(email)
+      emailInput.setValue('') // Clear the input
+    }
+  }
 
-      // Add click handler for the new chip's trailing icon
-      const trailingIcon = newChip.element.querySelector('.mtrl-chip-trailing-icon')
-      if (trailingIcon) {
-        trailingIcon.addEventListener('click', (e) => {
-          e.stopPropagation()
-          inputChipsSet.removeChip(newChip)
-        })
-      }
-
-      input.value = ''
+  // Add event listeners
+  addButton.element.addEventListener('click', handleAddEmail)
+  emailInput.element.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleAddEmail()
     }
   })
 
-  inputGroup.appendChild(input)
+  // Add elements to the layout
+  inputGroup.appendChild(emailInput.element)
   inputGroup.appendChild(addButton.element)
   layout.body.appendChild(inputGroup)
 }
 
+/**
+ * Initializes an interactive chip example with city selection
+ * @param {HTMLElement} container - Container element
+ */
 export const initInteractiveChipExample = (container) => {
   const title = 'Interactive Chip Example'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const subtitle = 'City selection with feedback'
+  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the example
   const demoContainer = document.createElement('div')
@@ -395,55 +484,151 @@ export const initInteractiveChipExample = (container) => {
   const label = document.createElement('p')
   label.textContent = 'Select your city:'
 
-  // Create a chip set for city selection
-  const cityChipSet = createChipSet({
-    chips: [
-      {
-        text: 'New York',
-        variant: CHIP_VARIANTS.ASSIST,
-        leadingIcon: locationIcon,
-        value: 'new-york'
-      },
-      {
-        text: 'Los Angeles',
-        variant: CHIP_VARIANTS.ASSIST,
-        leadingIcon: locationIcon,
-        value: 'los-angeles'
-      },
-      {
-        text: 'Chicago',
-        variant: CHIP_VARIANTS.ASSIST,
-        leadingIcon: locationIcon,
-        value: 'chicago'
-      },
-      {
-        text: 'San Francisco',
-        variant: CHIP_VARIANTS.ASSIST,
-        leadingIcon: locationIcon,
-        value: 'san-francisco'
-      }
-    ],
-    onChange: (selectedChips, changedChip) => {
-      // Update the result text
-      if (selectedChips.length > 0) {
-        resultText.textContent = `You selected: ${changedChip.getText()}`
-      } else {
-        resultText.textContent = 'Please select a city'
-      }
-    }
-  })
+  // Create a container for the city chips
+  const cityChipsContainer = document.createElement('div')
+  cityChipsContainer.className = `${PREFIX}-chip-set`
+  cityChipsContainer.style.display = 'flex'
+  cityChipsContainer.style.flexWrap = 'wrap'
+  cityChipsContainer.style.gap = '8px'
 
-  // Create a result display
+  // City chip configurations
+  const cityConfigs = [
+    { text: 'New York', value: 'new-york' },
+    { text: 'Los Angeles', value: 'los-angeles' },
+    { text: 'Chicago', value: 'chicago' },
+    { text: 'San Francisco', value: 'san-francisco' }
+  ]
+
+  // Result display
   const resultText = document.createElement('p')
   resultText.textContent = 'Please select a city'
   resultText.style.padding = '8px'
   resultText.style.backgroundColor = '#f5f5f5'
   resultText.style.borderRadius = '4px'
 
+  // Create and add city chips
+  const cityChips = []
+  cityConfigs.forEach(config => {
+    const chip = createChip({
+      text: config.text,
+      variant: CHIP_VARIANTS.ASSIST,
+      leadingIcon: locationIcon,
+      value: config.value
+    })
+
+    cityChipsContainer.appendChild(chip.element)
+    cityChips.push(chip)
+
+    // Add click handler for selection using component API
+    chip.on('click', () => {
+      // Deselect all other chips first (single selection)
+      cityChips.forEach(c => {
+        if (c !== chip && c.isSelected()) {
+          c.setSelected(false)
+        }
+      })
+
+      // Toggle this chip and update the result
+      chip.toggleSelected()
+
+      if (chip.isSelected()) {
+        resultText.textContent = `You selected: ${chip.getText()}`
+        resultText.style.backgroundColor = '#e3f2fd' // Light blue background
+      } else {
+        resultText.textContent = 'Please select a city'
+        resultText.style.backgroundColor = '#f5f5f5' // Default gray background
+      }
+    })
+  })
+
+  // Add a textfield for custom city input
+  const customCityContainer = document.createElement('div')
+  customCityContainer.style.display = 'flex'
+  customCityContainer.style.flexDirection = 'column'
+  customCityContainer.style.gap = '8px'
+  customCityContainer.style.marginTop = '16px'
+
+  const customCityLabel = document.createElement('p')
+  customCityLabel.textContent = 'Or enter your own city:'
+
+  const customCityInput = createTextfield({
+    label: 'Custom city',
+    variant: 'outlined'
+  })
+
+  const addCustomCityButton = createButton({
+    text: 'Add City',
+    variant: 'outlined',
+    size: 'small'
+  })
+
+  // Add event listener for adding custom city
+  addCustomCityButton.element.addEventListener('click', () => {
+    const cityName = customCityInput.getValue().trim()
+    if (cityName) {
+      // Deselect all existing chips
+      cityChips.forEach(c => c.setSelected(false))
+
+      // Add the new city chip
+      const customChip = createChip({
+        text: cityName,
+        variant: CHIP_VARIANTS.ASSIST,
+        leadingIcon: locationIcon,
+        value: cityName.toLowerCase().replace(/\s+/g, '-'),
+        selected: true
+      })
+
+      // Add click handler for the new chip using component API
+      customChip.on('click', () => {
+        // Deselect all other chips
+        cityChips.forEach(c => c.setSelected(false))
+
+        // Toggle this chip and update the result
+        customChip.toggleSelected()
+
+        if (customChip.isSelected()) {
+          resultText.textContent = `You selected: ${customChip.getText()}`
+          resultText.style.backgroundColor = '#e3f2fd' // Light blue background
+        } else {
+          resultText.textContent = 'Please select a city'
+          resultText.style.backgroundColor = '#f5f5f5' // Default gray background
+        }
+      })
+
+      // Add the new chip to the container and array
+      cityChipsContainer.appendChild(customChip.element)
+      cityChips.push(customChip)
+
+      // Update the result text
+      resultText.textContent = `You selected: ${cityName}`
+      resultText.style.backgroundColor = '#e3f2fd' // Light blue background
+
+      // Clear the input
+      customCityInput.setValue('')
+    }
+  })
+
+  // Handle Enter key press
+  customCityInput.element.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      addCustomCityButton.element.click()
+    }
+  })
+
+  // Add elements to containers
+  customCityContainer.appendChild(customCityLabel)
+  customCityContainer.appendChild(customCityInput.element)
+  customCityContainer.appendChild(addCustomCityButton.element)
+
   // Add all elements to the demo container
   demoContainer.appendChild(label)
-  demoContainer.appendChild(cityChipSet.element)
+  demoContainer.appendChild(cityChipsContainer)
   demoContainer.appendChild(resultText)
+  demoContainer.appendChild(customCityContainer)
 
   layout.body.appendChild(demoContainer)
 }
+
+// Add a consistent PREFIX constant for class naming
+const PREFIX = 'mtrl'

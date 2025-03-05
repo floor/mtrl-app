@@ -71,11 +71,15 @@ export const themesMenu = [
 export const navigation = {
   components: [
     { id: 'buttons', label: 'Buttons', path: '/components/buttons' },
-    { id: 'cards', label: 'Cards', path: '/components/cards' },
+    // { id: 'cards', label: 'Cards', path: '/components/cards' },
+    // { id: 'carousel', label: 'Carousel', path: '/components/carousel' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
     { id: 'chips', label: 'Chips', path: '/components/chips' },
     { id: 'menus', label: 'Menus', path: '/components/menus' },
-    { id: 'navigations', label: 'Navigations', path: '/components/navigations' },
+    // { id: 'navigations', label: 'Navigations', path: '/components/navigations' },
+    { id: 'progress', label: 'Progress', path: '/components/progress' },
+    { id: 'radios', label: 'Radio Buttons', path: '/components/radios' },
+    { id: 'sliders', label: 'Sliders', path: '/components/sliders' },
     { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
     { id: 'switches', label: 'Switches', path: '/components/switches' },
     { id: 'textfields', label: 'Textfields', path: '/components/textfields' },

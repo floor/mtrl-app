@@ -1,6 +1,7 @@
 // src/client/layout/lists.js
 import {
-  contentLayout
+  contentLayout,
+  createComponentsSectionLayout
 } from '../../config'
 
 import {
@@ -22,117 +23,179 @@ const USER_ICON = `
 </svg>`
 
 export const createListsContent = (container, components) => {
-  log.info('createButtonsContent', container)
   const info = {
     title: 'Lists',
     description: 'Lists are continuous, vertical indexes of text and images'
   }
+
+  container.classList.add('components')
+
   const layout = createLayout(contentLayout(info), container).component
 
-  const ui = createLayout(createListsLayout(), layout.body).component
-  log.info('ui', ui)
+  initBasicList(layout.body)
+  initSingleSelectList(layout.body)
+  initMultiSelectList(layout.body)
+  initSectionedList(layout.body)
+  initVerticalLayout(layout.body)
+}
+
+const initBasicList = (container) => {
+  const title = 'Basic List'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const basicList = createList({
+    items: [
+      { id: '1', headline: 'List Item 1' },
+      { id: '2', headline: 'List Item 2' },
+      { id: '3', headline: 'List Item 3' },
+      { divider: true },
+      { id: '4', headline: 'List Item 4' },
+      { id: '5', headline: 'List Item 5' }
+    ]
+  })
+  layout.body.appendChild(basicList.element)
+
+  basicList.element.addEventListener('click', (event) => {
+    const item = event.target.closest('.mtrl-list-item')
+    if (item) {
+      log.info(item)
+    }
+  })
+}
+
+const initSingleSelectList = (container) => {
+  const title = 'Single Select List'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const list = createList({
+    type: 'single',
+    items: [
+      { id: '1', headline: 'Option 1' },
+      { id: '2', headline: 'Option 2', selected: true },
+      { id: '3', headline: 'Option 3' },
+      { id: '4', headline: 'Option 4' }
+    ]
+  })
+
+  list.on('selectionChange', (event) => {
+    log.info('selectionChange', event)
+  })
+
+  layout.body.appendChild(list.element)
+
+  list.element.addEventListener('click', (event) => {
+    const item = event.target.closest('.mtrl-list-item')
+    if (item) {
+      log.info(item)
+    }
+  })
+}
+
+const initMultiSelectList = (container) => {
+  const title = 'Multi Select List'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const list = createList({
+    type: 'multi',
+    items: [
+      { id: '1', headline: 'Option 1', selected: true },
+      { id: '2', headline: 'Option 2' },
+      { id: '3', headline: 'Option 3', selected: true },
+      { id: '4', headline: 'Option 4' }
+    ]
+  })
+
+  list.on('selectionChange', (event) => {
+    log.info('selectionChange', event)
+  })
+
+  layout.body.appendChild(list.element)
+
+  list.element.addEventListener('click', (event) => {
+    const item = event.target.closest('.mtrl-list-item')
+    if (item) {
+      log.info(item)
+    }
+  })
+}
+
+const initSectionedList = (container) => {
+  const title = 'Sectioned List'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const list = createList({
+    sections: [
+      {
+        id: 'section1',
+        title: 'Section 1',
+        items: [
+          { id: '1', headline: 'Item 1.1' },
+          { id: '2', headline: 'Item 1.2' }
+        ]
+      },
+      {
+        id: 'section2',
+        title: 'Section 2',
+        items: [
+          { id: '3', headline: 'Item 2.1' },
+          { id: '4', headline: 'Item 2.2' }
+        ]
+      }
+    ]
+  })
+
+  list.on('selectionChange', (event) => {
+    log.info('selectionChange', event)
+  })
+
+  layout.body.appendChild(list.element)
+
+  list.element.addEventListener('click', (event) => {
+    const item = event.target.closest('.mtrl-list-item')
+    if (item) {
+      log.info(item)
+    }
+  })
+}
+
+const initVerticalLayout = (container) => {
+  const title = 'Vertical Layout'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const list = createList({
+    layout: 'vertical',
+    items: [
+      {
+        id: '1',
+        headline: 'Primary Text',
+        supportingText: 'Secondary text that provides more details',
+        leading: USER_ICON
+      },
+      {
+        id: '2',
+        headline: 'Another Item',
+        supportingText: 'With supporting text and metadata',
+        leading: STAR_ICON,
+        meta: 'Meta'
+      }
+    ]
+  })
+
+  list.on('selectionChange', (event) => {
+    log.info('selectionChange', event)
+  })
+
+  layout.body.appendChild(list.element)
+
+  list.element.addEventListener('click', (event) => {
+    const item = event.target.closest('.mtrl-list-item')
+    if (item) {
+      log.info(item)
+    }
+  })
 }
 
 export const createListsLayout = (components) => [
-  // Basic List Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Basic List' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'basic',
-      onCreate: (el) => {
-        const basicList = createList({
-          items: [
-            { id: '1', headline: 'List Item 1' },
-            { id: '2', headline: 'List Item 2' },
-            { id: '3', headline: 'List Item 3' },
-            { divider: true },
-            { id: '4', headline: 'List Item 4' },
-            { id: '5', headline: 'List Item 5' }
-          ]
-        })
-        el.appendChild(basicList.element)
-
-        basicList.element.addEventListener('click', (event) => {
-          const item = event.target.closest('.mtrl-list-item')
-          if (item) {
-            log.info(item)
-          }
-        })
-      }
-    }]
-  ],
-
-  // List with Icons Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'List with Icons' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'withIcons',
-      onCreate: (el) => {
-        const iconList = createList({
-          items: [
-            { id: '1', headline: 'Starred Item', leading: STAR_ICON },
-            { id: '2', headline: 'User Profile', leading: USER_ICON },
-            { id: '3', headline: 'Important', leading: STAR_ICON, trailing: '99+' },
-            { divider: true },
-            { id: '4', headline: 'Settings', leading: USER_ICON, trailing: '>' }
-          ]
-        })
-        el.appendChild(iconList.element)
-      }
-    }]
-  ],
-
-  // Single Select List Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Single Select List' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'singleSelect',
-      onCreate: (el) => {
-        const singleSelectList = createList({
-          type: 'single',
-          items: [
-            { id: '1', headline: 'Option 1' },
-            { id: '2', headline: 'Option 2', selected: true },
-            { id: '3', headline: 'Option 3' },
-            { id: '4', headline: 'Option 4' }
-          ]
-        })
-
-        singleSelectList.on('selectionChange', (event) => {
-        })
-
-        el.appendChild(singleSelectList.element)
-      }
-    }]
-  ],
-
-  // Multi Select List Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Multi Select List' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'multiSelect',
-      onCreate: (el) => {
-        const multiSelectList = createList({
-          type: 'multi',
-          items: [
-            { id: '1', headline: 'Option 1', selected: true },
-            { id: '2', headline: 'Option 2' },
-            { id: '3', headline: 'Option 3', selected: true },
-            { id: '4', headline: 'Option 4' }
-          ]
-        })
-
-        multiSelectList.on('selectionChange', (event) => {
-        })
-
-        el.appendChild(multiSelectList.element)
-      }
-    }]
-  ],
 
   // Sectioned List
   [createElement, 'section', { class: 'mtrl-content__section' },

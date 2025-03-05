@@ -10,12 +10,16 @@
 @use 'mtrl/src/styles/themes/winter';
 @use 'mtrl/src/styles/abstract/config' as c;
 @use 'mtrl/src/components/card/styles' as card;
+@use 'mtrl/src/components/carousel/styles' as carousel;
 @use 'mtrl/src/components/button/styles' as button;
 @use 'mtrl/src/components/chip/styles' as chip;
 @use 'mtrl/src/components/textfield/styles' as textfield;
 @use 'mtrl/src/components/menu/styles' as menu;
+@use 'mtrl/src/components/progress/styles';
 @use 'mtrl/src/components/switch/styles' as switch;
 @use 'mtrl/src/components/checkbox/styles' as checkbox;
+@use 'mtrl/src/components/radios/styles' as radios;
+@use 'mtrl/src/components/slider/styles' as slider;
 @use 'mtrl/src/components/snackbar/styles' as snackbar;
 @use 'mtrl/src/components/navigation/styles' as navigation;
 @use 'mtrl/src/components/list/styles' as list;
@@ -24,6 +28,7 @@
 @use './content/components';
 @use './content/colors';
 @use './content/layout';
+@use './content/progress';
 @use './content/events';
 @use './content/state';
 @use './content/composition';

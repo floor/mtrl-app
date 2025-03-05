@@ -17,14 +17,12 @@ export const SNACKBAR_POSITIONS = {
 }
 
 export const createSnackbarsContent = (container, components) => {
-  log.info('createButtonsContent', container)
   const info = {
     title: 'Snackbars',
     description: 'Show short updates about app processes at the bottom of the screen'
   }
   const layout = createLayout(contentLayout(info), container).component
 
-  console.log('layout', layout)
   const ui = createLayout(createSnackbarsLayout(), layout.body).component
   console.info('ui', ui)
 }

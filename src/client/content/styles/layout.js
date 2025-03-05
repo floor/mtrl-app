@@ -1,7 +1,8 @@
 // src/client/content/styles/layout.js
 
 import {
-  contentLayout
+  contentLayout,
+  createComponentsSectionLayout
 } from '../../config'
 
 // Import utility functions for layout examples
@@ -14,35 +15,23 @@ import {
 } from 'mtrl'
 
 // Function to initialize interactive layout examples
-const initializeInteractiveLayouts = (ui) => {
-  if (ui.gridLayout) {
-    const gridContainer = ui.gridLayout.querySelector('.grid-layout')
-    if (gridContainer) {
-      // Setup grid interaction if the utils are loaded
-      if (typeof setupGridInteractions === 'function') {
-        setupGridInteractions(gridContainer)
-      }
-    }
+const initializeInteractiveLayouts = (container) => {
+  // Setup grid interaction if the container has gridLayout section and utils are loaded
+  const gridContainer = container.querySelector('.grid-layout')
+  if (gridContainer && typeof setupGridInteractions === 'function') {
+    setupGridInteractions(gridContainer)
   }
 
-  if (ui.responsiveLayout) {
-    const responsiveContainer = ui.responsiveLayout.querySelector('.responsive-layout')
-    if (responsiveContainer) {
-      // Setup responsive demo if the utils are loaded
-      if (typeof setupResponsiveDemo === 'function') {
-        setupResponsiveDemo(responsiveContainer)
-      }
-    }
+  // Setup responsive demo if the container has responsiveLayout section and utils are loaded
+  const responsiveContainer = container.querySelector('.responsive-layout')
+  if (responsiveContainer && typeof setupResponsiveDemo === 'function') {
+    setupResponsiveDemo(responsiveContainer)
   }
 
-  if (ui.cardLayout) {
-    const cardContainer = ui.cardLayout.querySelector('.card-layout')
-    if (cardContainer) {
-      // Setup card interactions if the utils are loaded
-      if (typeof setupCardInteractions === 'function') {
-        setupCardInteractions(cardContainer)
-      }
-    }
+  // Setup card interactions if the container has cardLayout section and utils are loaded
+  const cardContainer = container.querySelector('.card-layout')
+  if (cardContainer && typeof setupCardInteractions === 'function') {
+    setupCardInteractions(cardContainer)
   }
 }
 
@@ -55,20 +44,29 @@ export const createLayoutContent = (container) => {
   const layout = createLayout(contentLayout(info), container).component
 
   console.log('layout', layout)
-  const ui = createLayout(createLayoutsLayout(), layout.body).component
-  console.info('ui', ui)
 
-  initBasicLayoutExample(ui.basicLayout)
-  initResponsiveLayoutExample(ui.responsiveLayout)
-  initGridLayoutExample(ui.gridLayout)
-  initCardLayoutExample(ui.cardLayout)
-  initSplitLayoutExample(ui.splitLayout)
+  initBasicLayoutExample(layout.body)
+  initResponsiveLayoutExample(layout.body)
+  initGridLayoutExample(layout.body)
+  initCardLayoutExample(layout.body)
+  initSplitLayoutExample(layout.body)
 
   // Initialize interactive elements after creating all layout components
-  initializeInteractiveLayouts(ui)
+  initializeInteractiveLayouts(container)
 }
 
 const initBasicLayoutExample = (container) => {
+  const title = 'Basic Layout Structure'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  // Add description
+  const description = createElement({
+    tag: 'p',
+    class: 'mtrl-content__description',
+    text: 'A standard layout with header, sidebar, main content, and footer.'
+  })
+  layout.body.appendChild(description.element)
+
   const basicLayoutContainer = createElement({
     class: 'layout-demo basic-layout'
   })
@@ -113,10 +111,21 @@ const initBasicLayoutExample = (container) => {
   basicLayoutContainer.element.appendChild(main)
   basicLayoutContainer.element.appendChild(footer)
 
-  container.appendChild(basicLayoutContainer.element)
+  layout.body.appendChild(basicLayoutContainer.element)
 }
 
 const initResponsiveLayoutExample = (container) => {
+  const title = 'Responsive Layout'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  // Add description
+  const description = createElement({
+    tag: 'p',
+    class: 'mtrl-content__description',
+    text: 'Layout that adapts to different screen sizes. Use the buttons to toggle between different layouts.'
+  })
+  layout.body.appendChild(description.element)
+
   const responsiveContainer = createElement({
     class: 'layout-demo responsive-layout'
   })
@@ -162,11 +171,22 @@ const initResponsiveLayoutExample = (container) => {
   // Default to stack layout
   responsiveContainer.element.classList.add('stack')
 
-  container.appendChild(responsiveContainer.element)
-  container.appendChild(controls)
+  layout.body.appendChild(responsiveContainer.element)
+  layout.body.appendChild(controls.element)
 }
 
 const initGridLayoutExample = (container) => {
+  const title = 'Grid Layout'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  // Add description
+  const description = createElement({
+    tag: 'p',
+    class: 'mtrl-content__description',
+    text: 'CSS Grid-based layout with various configurations.'
+  })
+  layout.body.appendChild(description.element)
+
   const gridContainer = createElement({
     class: 'layout-demo grid-layout'
   })
@@ -213,11 +233,22 @@ const initGridLayoutExample = (container) => {
   // Default to 3-column grid
   gridContainer.element.classList.add('columns-3')
 
-  container.appendChild(gridContainer.element)
-  container.appendChild(controls)
+  layout.body.appendChild(gridContainer.element)
+  layout.body.appendChild(controls.element)
 }
 
 const initCardLayoutExample = (container) => {
+  const title = 'Card Layout'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  // Add description
+  const description = createElement({
+    tag: 'p',
+    class: 'mtrl-content__description',
+    text: 'Layout for displaying card-based content with different options for handling card heights.'
+  })
+  layout.body.appendChild(description.element)
+
   const cardContainer = createElement({
     class: 'layout-demo card-layout'
   })
@@ -292,11 +323,22 @@ const initCardLayoutExample = (container) => {
   // Default to equal height
   cardContainer.element.classList.add('equal-height')
 
-  container.appendChild(cardContainer.element)
-  container.appendChild(controls)
+  layout.body.appendChild(cardContainer.element)
+  layout.body.appendChild(controls.element)
 }
 
 const initSplitLayoutExample = (container) => {
+  const title = 'Split Layout'
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  // Add description
+  const description = createElement({
+    tag: 'p',
+    class: 'mtrl-content__description',
+    text: 'Two-panel layout with adjustable split ratios.'
+  })
+  layout.body.appendChild(description.element)
+
   const splitContainer = createElement({
     class: 'layout-demo split-layout'
   })
@@ -350,43 +392,6 @@ const initSplitLayoutExample = (container) => {
   // Default to 50/50 split
   splitContainer.element.classList.add('split-50-50')
 
-  container.appendChild(splitContainer.element)
-  container.appendChild(controls)
+  layout.body.appendChild(splitContainer.element)
+  layout.body.appendChild(controls.element)
 }
-
-export const createLayoutsLayout = () => [
-  // Basic Layout Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Basic Layout Structure' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'A standard layout with header, sidebar, main content, and footer.' }],
-    [createElement, 'basicLayout', { id: 'basicLayout' }]
-  ],
-
-  // Responsive Layout Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Responsive Layout' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'Layout that adapts to different screen sizes. Use the buttons to toggle between different layouts.' }],
-    [createElement, 'responsiveLayout', { id: 'responsiveLayout' }]
-  ],
-
-  // Grid Layout Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Grid Layout' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'CSS Grid-based layout with various configurations.' }],
-    [createElement, 'gridLayout', { id: 'gridLayout' }]
-  ],
-
-  // Card Layout Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Card Layout' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'Layout for displaying card-based content with different options for handling card heights.' }],
-    [createElement, 'cardLayout', { id: 'cardLayout' }]
-  ],
-
-  // Split Layout Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Split Layout' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'Two-panel layout with adjustable split ratios.' }],
-    [createElement, 'splitLayout', { id: 'splitLayout' }]
-  ]
-]

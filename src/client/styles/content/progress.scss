@@ -1,0 +1,84 @@
+/* progress.scss - Add this to your styles folder */
+.components {
+  .linear-progress-demo > * {
+    margin-bottom: 20px;
+  }
+  
+  .circular-progress-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  .indeterminate-progress-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .progress-group {
+    margin-bottom: 24px;
+  }
+  
+  .progress-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .progress-item.circular {
+    flex-direction: column;
+    align-items: center;
+    margin-right: 24px;
+  }
+  
+  .circular-items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .size-label {
+    min-width: 100px;
+    margin-right: 16px;
+  }
+  
+  .progress-item.circular .size-label {
+    margin-bottom: 8px;
+    margin-right: 0;
+  }
+  
+  .mtrl-content__subsection-title {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--mtrl-sys-color-on-surface-variant);
+  }
+  
+  .progress-indicators {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 24px;
+  }
+  
+  .progress-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 400px;
+  }
+  
+  .buttons-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .note {
+    padding: 10px;
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    margin: 10px 0;
+    color: #856404;
+    border-radius: 4px;
+  }
+}

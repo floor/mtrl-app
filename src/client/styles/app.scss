@@ -21,14 +21,14 @@ $app: '#{b.$prefix}-app';
     background-color: t.color('surface');
   }
 
-  .#{b.$prefix}-button.more-menu {
+  .#{b.$prefix}-button.toggle-darkmode {
     z-index: 10;
     position: absolute;
     left: 20px;
     bottom: 15px;
   }
 
-  .#{b.$prefix}-button.toggle-darkmode {
+  .#{b.$prefix}-button.more-menu {
     z-index: 10;
     position: absolute;
     left: 20px;
