@@ -60,11 +60,11 @@ const buildApp = async () => {
     const jsResult = await Bun.build({
       entrypoints: [join(__dirname, 'src/client/app.js')],
       outdir: join(__dirname, 'dist'),
-      minify: false,
+      minify: true,
       minifyWhitespace: true,
       minifyIdentifiers: true,
       minifySyntax: true,
-      sourcemap: 'inline',
+      sourcemap: 'external',
       format: 'esm',
       target: 'browser',
       naming: {
