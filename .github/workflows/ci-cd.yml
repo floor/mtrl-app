@@ -1,0 +1,230 @@
+name: MTRL App CI/CD
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+  pull_request:
+    branches: [main, master]
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      
+      - name: Install Dependencies
+        run: bun install
+      
+      - name: Run Tests
+        run: bun test
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      
+      - name: Install Dependencies
+        run: bun install
+      
+      - name: Run Standard JS
+        run: bun run standard
+
+  build:
+    name: Build
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      
+      - name: Install Dependencies
+        run: bun install
+      
+      - name: Build Project
+        run: bun run ./build.js
+      
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: ./dist
+          retention-days: 7
+
+  deploy-staging:
+    name: Deploy to Staging
+    needs: build
+    runs-on: ubuntu-latest
+    # Only run on push to main/master branch, not on PRs
+    if: github.event_name == 'push'
+    environment:
+      name: staging
+      url: https://staging.mtrl.app
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./dist
+      
+      - name: Setup SSH Key for Deployment
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+      
+      - name: Add SSH Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Deploy to Staging Server
+        run: |
+          # Ensure scripts directory exists
+          mkdir -p scripts
+          
+          # Create deploy script
+          cat > scripts/deploy.js << 'EOL'
+          #!/usr/bin/env bun
+          import { exec } from 'child_process';
+          import { promisify } from 'util';
+          const execAsync = promisify(exec);
+          
+          const env = process.argv[2] || 'staging';
+          const host = process.env.DEPLOY_HOST;
+          const user = process.env.DEPLOY_USER;
+          const path = process.env.DEPLOY_PATH;
+          
+          console.log(`Deploying to ${env} environment at ${user}@${host}:${path}`);
+          
+          // Deploy files
+          try {
+            // Sync dist folder
+            console.log('Syncing dist folder...');
+            await execAsync(`rsync -avz --delete ./dist/ ${user}@${host}:${path}/dist/`, { stdio: 'inherit' });
+            
+            // Sync server files
+            console.log('Syncing server files...');
+            await execAsync(`rsync -avz ./package.json ./server.ts ./ecosystem.config.js ${user}@${host}:${path}/`, { stdio: 'inherit' });
+            
+            // Install dependencies and restart
+            console.log('Installing dependencies and restarting...');
+            await execAsync(`ssh ${user}@${host} "cd ${path} && bun install && npx pm2 restart mtrl-app"`, { stdio: 'inherit' });
+            
+            console.log('Deployment completed successfully');
+          } catch (error) {
+            console.error('Deployment failed:', error);
+            process.exit(1);
+          }
+          EOL
+          
+          # Make script executable
+          chmod +x scripts/deploy.js
+          
+          # Run deployment
+          DEPLOY_HOST=${{ secrets.DEPLOY_HOST }} DEPLOY_USER=${{ secrets.DEPLOY_USER }} DEPLOY_PATH=${{ secrets.DEPLOY_PATH_STAGING }} bun run scripts/deploy.js staging
+
+  deploy-production:
+    name: Deploy to Production
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    # Require manual approval for production deployment
+    environment:
+      name: production
+      url: https://mtrl.app
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./dist
+      
+      - name: Setup SSH Key for Deployment
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+      
+      - name: Add SSH Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Deploy to Production Server
+        run: |
+          # Ensure scripts directory exists
+          mkdir -p scripts
+          
+          # Create deploy script
+          cat > scripts/deploy.js << 'EOL'
+          #!/usr/bin/env bun
+          import { exec } from 'child_process';
+          import { promisify } from 'util';
+          const execAsync = promisify(exec);
+          
+          const env = process.argv[2] || 'production';
+          const host = process.env.DEPLOY_HOST;
+          const user = process.env.DEPLOY_USER;
+          const path = process.env.DEPLOY_PATH;
+          
+          console.log(`Deploying to ${env} environment at ${user}@${host}:${path}`);
+          
+          // Deploy files
+          try {
+            // Sync dist folder
+            console.log('Syncing dist folder...');
+            await execAsync(`rsync -avz --delete ./dist/ ${user}@${host}:${path}/dist/`, { stdio: 'inherit' });
+            
+            // Sync server files
+            console.log('Syncing server files...');
+            await execAsync(`rsync -avz ./package.json ./server.ts ./ecosystem.config.js ${user}@${host}:${path}/`, { stdio: 'inherit' });
+            
+            // Install dependencies and restart
+            console.log('Installing dependencies and restarting...');
+            await execAsync(`ssh ${user}@${host} "cd ${path} && bun install && npx pm2 restart mtrl-app"`, { stdio: 'inherit' });
+            
+            console.log('Deployment completed successfully');
+          } catch (error) {
+            console.error('Deployment failed:', error);
+            process.exit(1);
+          }
+          EOL
+          
+          # Make script executable
+          chmod +x scripts/deploy.js
+          
+          # Run deployment
+          DEPLOY_HOST=${{ secrets.DEPLOY_HOST }} DEPLOY_USER=${{ secrets.DEPLOY_USER }} DEPLOY_PATH=${{ secrets.DEPLOY_PATH_PRODUCTION }} bun run scripts/deploy.js production

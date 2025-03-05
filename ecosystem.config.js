@@ -1,16 +1,20 @@
+// ecosystem.config.js
 module.exports = {
   apps: [{
     name: 'mtrl-app',
-    script: 'server.ts',
+    script: './server.ts',
     interpreter: 'bun',
-    watch: ['server.ts', 'src/server'],
-    ignore_watch: ['node_modules', 'dist'],
+    instances: 1,
+    autorestart: true,
+    watch: false,
+    max_memory_restart: '512M',
     env: {
-      NODE_ENV: 'development',
+      NODE_ENV: 'production',
       PORT: 4000
     },
-    min_uptime: 5000,
-    max_restarts: 5,
-    restart_delay: 4000
+    env_staging: {
+      NODE_ENV: 'staging',
+      PORT: 4001
+    }
   }]
 }
