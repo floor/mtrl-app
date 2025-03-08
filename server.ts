@@ -1,157 +1,127 @@
-// server.ts
-import { Server } from 'bun';
-import { join, dirname } from 'path';
+// server.js
+import express from 'express';
+import path from 'path';
 import { fileURLToPath } from 'url';
-import { renderFile } from 'ejs';
-import { TemplateData } from './src/server/types';
-import { existsSync } from 'fs';
+import fs from 'fs';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// Get directory name in ESM
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Map file extensions to content types
-const contentTypeMap = {
-  'css': 'text/css',
-  'js': 'application/javascript',
-  'json': 'application/json',
-  'png': 'image/png',
-  'jpg': 'image/jpeg',
-  'jpeg': 'image/jpeg',
-  'gif': 'image/gif',
-  'svg': 'image/svg+xml',
-  'ttf': 'font/ttf',
-  'woff': 'font/woff',
-  'woff2': 'font/woff2',
-  'eot': 'application/vnd.ms-fontobject',
-  'otf': 'font/otf',
-  'ico': 'image/x-icon',
-  'pdf': 'application/pdf',
-  'mp4': 'video/mp4',
-  'webm': 'video/webm',
-  'mp3': 'audio/mpeg',
-  'wav': 'audio/wav'
-};
+const app = express();
+const PORT = process.env.PORT || 4000;
 
-// Helper function to find the correct file path
-async function findFile(basePaths, relativePath) {
-  for (const basePath of basePaths) {
-    const fullPath = join(basePath, relativePath);
-    const file = Bun.file(fullPath);
-    if (await file.exists()) {
-      return { path: fullPath, file };
-    }
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'src', 'server', 'templates'));
+
+// Logger middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
+// CSS files with caching
+app.use('/dist/styles', express.static(path.join(__dirname, 'dist', 'styles'), {
+  maxAge: '1h',
+  setHeaders: (res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
   }
-  return null;
-}
+}));
 
-const server = Bun.serve({
-  port: process.env.PORT ? parseInt(process.env.PORT) : 4000,
-  async fetch(req) {
-    const url = new URL(req.url);
-    const pathname = url.pathname;
-    
-    console.log(`Requested path: ${pathname}`);
-    
-    // Handle public assets
-    if (pathname.startsWith('/public/')) {
-      const publicPath = join(__dirname, pathname);
-      console.log(`Serving public file: ${publicPath}`);
-      
-      const file = Bun.file(publicPath);
-      const exists = await file.exists();
-      
-      if (!exists) {
-        console.error('Public file not found:', publicPath);
-        return new Response('File Not Found', { status: 404 });
-      }
-      
-      // Set appropriate content type based on file extension
-      const ext = pathname.split('.').pop()?.toLowerCase();
-      const contentType = contentTypeMap[ext] || 'application/octet-stream';
-
-      return new Response(file, {
-        headers: {
-          'Content-Type': contentType,
-          'Cache-Control': 'max-age=3600',
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+// JS files with no caching for development
+app.use('/dist', express.static(path.join(__dirname, 'dist'), {
+  setHeaders: (res, filePath) => {
+    if (path.extname(filePath) === '.js') {
+      // No cache for JavaScript files
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
     }
     
-    // Handle static files from dist directory
-    if (pathname.startsWith('/dist/') || pathname.endsWith('.css') || pathname.endsWith('.js')) {
-      // Determine possible file locations
-      const possiblePaths = [
-        __dirname, // /dist/app.js -> {__dirname}/dist/app.js
-        join(__dirname, 'src'), // /dist/app.js -> {__dirname}/src/dist/app.js
-      ];
-      
-      let fullPath = '';
-      let fileToServe = null;
-      
-      if (pathname.startsWith('/dist/')) {
-        // Try to find the file in possible locations
-        const result = await findFile(possiblePaths, pathname);
-        
-        if (result) {
-          fullPath = result.path;
-          fileToServe = result.file;
-        }
-      } else {
-        // For direct CSS or JS requests, check in the dist folder
-        const distPath = join(__dirname, 'dist', pathname);
-        const file = Bun.file(distPath);
-        
-        if (await file.exists()) {
-          fullPath = distPath;
-          fileToServe = file;
-        }
-      }
-      
-      // If we couldn't find the file
-      if (!fileToServe) {
-        console.error(`Static file not found: ${pathname}`);
-        console.error(`Tried paths: ${possiblePaths.map(p => join(p, pathname)).join(', ')}`);
-        return new Response(`File Not Found: ${pathname}`, { status: 404 });
-      }
-      
-      console.log(`Serving static file: ${fullPath}`);
-      
-      // Set content type based on file extension
-      const ext = pathname.split('.').pop()?.toLowerCase();
-      const contentType = contentTypeMap[ext] || 'application/octet-stream';
+    // Always set CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+}));
 
-      return new Response(fileToServe, {
-        headers: {
-          'Content-Type': `${contentType}`,
-          'Cache-Control': 'no-cache, no-store, must-revalidate', // During development
-          'Access-Control-Allow-Origin': '*'
-        }
-      });
+// Fallback for static files in src/dist
+app.use('/dist', (req, res, next) => {
+  const srcPath = path.join(__dirname, 'src', req.path);
+  
+  // Check if file exists in src path
+  if (fs.existsSync(srcPath)) {
+    const ext = path.extname(srcPath);
+    
+    // Set appropriate headers based on file type
+    if (ext === '.js') {
+      res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+    } else if (ext === '.css') {
+      res.setHeader('Content-Type', 'text/css; charset=utf-8');
     }
+    
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return res.sendFile(srcPath);
+  }
+  
+  next();
+});
 
-    // For all other routes, serve the main HTML
-    try {
-      // Try to find the template in expected locations
-      let templatePath = join(__dirname, 'src/server/templates', 'app.ejs');
-      
-      // If not found there, try another common location
-      if (!existsSync(templatePath)) {
-        templatePath = join(__dirname, 'app.ejs');
-      }
-      
-      console.log(`Using template: ${templatePath}`);
-      
-      const data: TemplateData = { title: 'MTRL Playground' };
-      const html = await renderFile(templatePath, data);
-      
-      return new Response(html, {
-        headers: { 'Content-Type': 'text/html' },
-      });
-    } catch (error) {
-      console.error('Template rendering error:', error);
-      return new Response(`Server Error: ${error.message}`, { status: 500 });
-    }
+// Serve public files if they exist
+app.use('/public', express.static(path.join(__dirname, 'public'), {
+  maxAge: '1d',
+  setHeaders: (res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+}));
+
+// Handle sourcemaps specifically
+app.get('*.map', (req, res) => {
+  const mapPath = path.join(__dirname, req.path);
+  
+  if (fs.existsSync(mapPath)) {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.sendFile(mapPath);
+  } else {
+    res.status(404).send('Source map not found');
   }
 });
 
-console.log(`Server running at http://localhost:${server.port}`);
+// For all other routes, serve the main app
+app.get('*', (req, res) => {
+  const timestamp = Date.now(); // For cache busting
+  res.render('app', { 
+    title: 'MTRL Playground',
+    timestamp 
+  });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).send(`
+    <html>
+      <head>
+        <title>Server Error</title>
+        <style>
+          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 2rem; }
+          .error { color: #e53935; }
+          .container { max-width: 800px; margin: 0 auto; }
+          pre { background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow: auto; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h1 class="error">Server Error</h1>
+          <p>The server encountered an error while processing your request.</p>
+          <pre>${err.stack || err.message || 'Unknown error'}</pre>
+        </div>
+      </body>
+    </html>
+  `);
+});
+
+// Start the server with Express directly
+app.listen(PORT, () => {
+  console.log(`Express server running at http://localhost:${PORT}`);
+});
