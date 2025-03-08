@@ -1,6 +1,6 @@
 // build.js
 import { mkdir } from 'fs/promises'
-import { watch } from 'fs'
+import { existsSync, watch } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import * as sass from 'sass'
@@ -8,15 +8,21 @@ import * as sass from 'sass'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const isWatch = process.argv.includes('--watch')
 
+// Define consistent output paths
+const DIST_DIR = join(__dirname, 'dist')
+const STYLES_DIR = join(DIST_DIR, 'styles')
+const JS_OUTPUT = join(DIST_DIR, 'app.js')
+const CSS_OUTPUT = join(STYLES_DIR, 'main.css')
+
 const compileSass = async () => {
   try {
     const inputFile = join(__dirname, 'src/client/styles/main.scss')
-    const outputFile = join(__dirname, 'dist/styles/main.css')
+    const outputFile = CSS_OUTPUT
 
-    // console.log('Compiling SASS:', {
-    //   input: inputFile,
-    //   output: outputFile
-    // })
+    console.log('Compiling SASS:', {
+      input: inputFile,
+      output: outputFile
+    })
 
     const result = await sass.compileAsync(inputFile, {
       loadPaths: [
@@ -46,7 +52,7 @@ const compileSass = async () => {
       await Bun.write(`${outputFile}.map`, JSON.stringify(result.sourceMap))
     }
 
-    console.log('SASS compilation successful')
+    console.log('SASS compilation successful:', outputFile)
   } catch (error) {
     console.error('SASS compilation failed:', error)
     if (error.span) {
@@ -59,11 +65,8 @@ const buildApp = async () => {
   try {
     const jsResult = await Bun.build({
       entrypoints: [join(__dirname, 'src/client/app.js')],
-      outdir: join(__dirname, 'dist'),
-      minify: true,
-      minifyWhitespace: true,
-      minifyIdentifiers: true,
-      minifySyntax: true,
+      outdir: DIST_DIR,
+      minify: true, // During development, set to true for production
       sourcemap: 'external',
       format: 'esm',
       target: 'browser',
@@ -80,7 +83,7 @@ const buildApp = async () => {
       return false
     }
 
-    console.log('App built successfully')
+    console.log('App built successfully:', JS_OUTPUT)
     return true
   } catch (error) {
     console.error('Error building app:', error)
@@ -103,23 +106,31 @@ const setupWatchers = () => {
 
   const watchJsFiles = () => {
     jsWatchPaths.forEach(path => {
-      watch(path, { recursive: true }, async (_, filename) => {
-        if (filename?.endsWith('.ts')) {
-          console.log(`\nSource change detected: ${filename}`)
-          await buildApp()
-        }
-      })
+      if (existsSync(path)) {
+        watch(path, { recursive: true }, async (_, filename) => {
+          if (filename?.endsWith('.js') || filename?.endsWith('.ts')) {
+            console.log(`\nSource change detected: ${filename}`)
+            await buildApp()
+          }
+        })
+      } else {
+        console.warn(`Watch path does not exist: ${path}`)
+      }
     })
   }
 
   const watchScssFiles = () => {
     scssWatchPaths.forEach(path => {
-      watch(path, { recursive: true }, async (_, filename) => {
-        if (filename?.endsWith('.scss')) {
-          console.log(`\nStyle change detected: ${filename}`)
-          await compileSass()
-        }
-      })
+      if (existsSync(path)) {
+        watch(path, { recursive: true }, async (_, filename) => {
+          if (filename?.endsWith('.scss')) {
+            console.log(`\nStyle change detected: ${filename}`)
+            await compileSass()
+          }
+        })
+      } else {
+        console.warn(`Watch path does not exist: ${path}`)
+      }
     })
   }
 
@@ -129,13 +140,39 @@ const setupWatchers = () => {
   }
 }
 
+const verifyOutput = async () => {
+  // Check if output files exist
+  const jsExists = existsSync(JS_OUTPUT)
+  const cssExists = existsSync(CSS_OUTPUT)
+
+  console.log('Output verification:')
+  console.log(`- JS file (${JS_OUTPUT}): ${jsExists ? 'Exists' : 'Missing'}`)
+  console.log(`- CSS file (${CSS_OUTPUT}): ${cssExists ? 'Exists' : 'Missing'}`)
+
+  return jsExists && cssExists
+}
+
 const build = async () => {
   try {
-    await mkdir(join(__dirname, 'dist'), { recursive: true })
-    await mkdir(join(__dirname, 'dist/styles'), { recursive: true })
+    console.log('Building application...')
+    console.log(`- Output directory: ${DIST_DIR}`)
+    console.log(`- JS output: ${JS_OUTPUT}`)
+    console.log(`- CSS output: ${CSS_OUTPUT}`)
 
-    await buildApp()
+    // Create output directories
+    await mkdir(DIST_DIR, { recursive: true })
+    await mkdir(STYLES_DIR, { recursive: true })
+
+    // Build JavaScript
+    console.log('\nBuilding JavaScript...')
+    const jsSuccess = await buildApp()
+
+    // Compile SASS to CSS
+    console.log('\nCompiling SASS...')
     await compileSass()
+
+    // Verify output
+    await verifyOutput()
 
     if (isWatch) {
       console.log('\nWatching for changes...')
@@ -143,6 +180,8 @@ const build = async () => {
       watchJsFiles()
       watchScssFiles()
     }
+
+    console.log('\nBuild complete!')
   } catch (error) {
     console.error('Build error:', error)
     process.exit(1)

@@ -262,11 +262,11 @@ const createApp = (options = {}) => {
    * Checks if DOM is ready and initializes app
    */
   const initWhenReady = () => {
-    // If document is already complete, initialize immediately
+  // If document is already complete, initialize immediately
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
       setTimeout(initialize, 0) // Use timeout to ensure DOM is fully ready
     } else {
-      // Otherwise wait for DOMContentLoaded
+    // Otherwise wait for DOMContentLoaded
       document.addEventListener('DOMContentLoaded', initialize)
 
       // Fallback for older browsers
@@ -361,7 +361,7 @@ try {
 
   // Example of using the onReady API
   app.onReady(({ router, ui }) => {
-    // console.log('App is ready, performing post-initialization tasks')
+    console.log('App is ready, performing post-initialization tasks')
   })
 } catch (error) {
   console.error('Failed to create app:', error)
