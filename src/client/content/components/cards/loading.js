@@ -1,8 +1,15 @@
 // src/client/content/components/cards/loading.js
 
-import { createCardSection, createCardGrid } from './helpers'
+import {
+  createComponentsSectionLayout
+} from '../../../config'
+
+import {
+  createLayout,
+  createElement
+} from 'mtrl'
+
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import { createElement } from 'mtrl'
 import createCard, {
   createCardHeader,
   createCardContent,
@@ -19,8 +26,7 @@ export const initLoadingCard = async (container) => {
   const title = 'Loading Cards'
   const description = 'Cards with loading state and placeholder content'
 
-  const section = createCardSection(title, description)
-  const grid = createCardGrid()
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create two cards - one loading, one showing loaded content
   const artwork = artworks[1] // The Starry Night
@@ -125,9 +131,6 @@ export const initLoadingCard = async (container) => {
   }, 3000)
 
   // Add both cards to the grid
-  grid.appendChild(loadingCard.element)
-  grid.appendChild(transitionCard.element)
-
-  section.appendChild(grid)
-  container.appendChild(section)
+  layout.body.appendChild(loadingCard.element)
+  layout.body.appendChild(transitionCard.element)
 }

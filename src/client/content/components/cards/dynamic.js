@@ -1,8 +1,16 @@
 // src/client/content/components/cards/dynamic.js
 
-import { createCardSection, createCardGrid } from './helpers'
+import {
+  createComponentsSectionLayout
+} from '../../../config'
+
+import {
+  createLayout,
+  createButton
+  , createElement
+} from 'mtrl'
+
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import { createElement, createButton } from 'mtrl'
 import createCard, {
   createCardHeader,
   createCardContent,
@@ -16,8 +24,7 @@ export const initDynamicCard = (container) => {
   const title = 'Dynamic Cards'
   const description = 'Cards with content that updates dynamically'
 
-  const section = createCardSection(title, description)
-  const grid = createCardGrid()
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create dynamic card
   const artwork = artworks[2] // The Persistence of Memory
@@ -159,9 +166,6 @@ export const initDynamicCard = (container) => {
   updateCycleCard()
 
   // Add cards to the grid
-  grid.appendChild(card.element)
-  grid.appendChild(cycleCard.element)
-
-  section.appendChild(grid)
-  container.appendChild(section)
+  layout.body.appendChild(card.element)
+  layout.body.appendChild(cycleCard.element)
 }

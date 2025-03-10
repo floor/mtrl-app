@@ -12,11 +12,22 @@ import { initFilledCards } from './filled'
 import { initOutlinedCards } from './outlined'
 import { initMediaCards } from './media'
 import { initActionCards } from './actions'
-import { initHorizontalCards } from './horizontal'
+import { initInteractiveCards } from './interactive'
+import { initAccessibleCards } from './accessible'
+// import { initHorizontalCards } from './horizontal'
 import { initLoadingCard } from './loading'
 import { initDynamicCard } from './dynamic'
+import { initExpandableCards } from './expandable'
+import { initSwipeableCard } from './swipeable'
 
-// Main cards content creator
+/**
+ * Main cards content creator
+ *
+ * Initializes all card types and features based on
+ * Material Design 3 specifications
+ *
+ * @param {HTMLElement} container - The container element
+ */
 export const createCardsContent = (container) => {
   const info = {
     title: 'Cards',
@@ -37,9 +48,13 @@ export const createCardsContent = (container) => {
   initOutlinedCards(layout.body)
   initMediaCards(layout.body)
   initActionCards(layout.body)
+  initInteractiveCards(layout.body)
+  initAccessibleCards(layout.body)
   initLoadingCard(layout.body)
   initDynamicCard(layout.body)
-  initHorizontalCards(layout.body)
+  initExpandableCards(layout.body)
+  initSwipeableCard(layout.body)
+  // initHorizontalCards(layout.body)
 }
 
 export { artworks }

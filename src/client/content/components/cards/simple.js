@@ -1,42 +1,62 @@
 // src/client/content/components/cards/simple.js
 
-import { createCardSection, createCardGrid } from './helpers'
+import {
+  createComponentsSectionLayout
+} from '../../../config'
+
+import {
+  createLayout,
+  createCard
+} from 'mtrl'
+
 import { artworks } from './artwork-data'
-import createCard, {
+import {
   createCardHeader,
   createCardContent,
   CARD_VARIANTS
 } from 'mtrl/src/components/card'
 
-// Simple cards with minimal content
+/**
+ * Initialize simple cards with minimal content
+ * Demonstrates basic card structure with header and content
+ *
+ * @param {HTMLElement} container - The container element
+ */
 export const initSimpleCards = (container) => {
   const title = 'Simple Cards'
-  const description = 'Basic cards with title and text content'
+  const description = 'Basic cards with title and text content following MD3 specifications'
 
-  const section = createCardSection(title, description)
-  const grid = createCardGrid()
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create simple cards using the first three artworks
   artworks.slice(0, 3).forEach(artwork => {
+    // Create card with proper aria attributes
     const card = createCard({
-      variant: CARD_VARIANTS.ELEVATED
+      variant: CARD_VARIANTS.FILLED,
+      aria: {
+        role: 'region',
+        label: `Information about ${artwork.title}`
+      }
     })
 
+    // Create header with accessible tags
     const header = createCardHeader({
       title: artwork.title,
       subtitle: artwork.artist
     })
 
+    // Create content with HTML instead of text
+    // This is the key fix - using HTML instead of text
     const content = createCardContent({
-      text: artwork.description
+      html: `<p>${artwork.description}</p>`,
+      padding: true
     })
 
+    // Assemble card
     card.setHeader(header)
     card.addContent(content)
 
-    grid.appendChild(card.element)
+    // Add to the grid
+    layout.body.appendChild(card.element)
   })
-
-  section.appendChild(grid)
-  container.appendChild(section)
 }

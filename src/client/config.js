@@ -52,7 +52,8 @@ export const contentLayout = (info) => [
 export const createComponentsSectionLayout = (info) => [
   [e, { tag: 'section', class: 'mtrl-content__section' },
     [e, { class: 'mtrl-content__section-head' },
-      [e, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }]
+      [e, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }],
+      [e, { id: 'title', tag: 'div', class: 'mtrl-content__section-description', text: info.description }]
     ],
     [e, 'div', { id: 'body', class: 'mtrl-content__section-body' },
       [e, 'div', { id: 'showcase', class: 'mtrl-content__section-showcase' }]
@@ -85,7 +86,7 @@ export const themesMenu = [
 export const navigation = {
   components: [
     { id: 'buttons', label: 'Buttons', path: '/components/buttons' },
-    // { id: 'cards', label: 'Cards', path: '/components/cards' },
+    { id: 'cards', label: 'Cards', path: '/components/cards' },
     // { id: 'carousel', label: 'Carousel', path: '/components/carousel' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
     { id: 'chips', label: 'Chips', path: '/components/chips' },

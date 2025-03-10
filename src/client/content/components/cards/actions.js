@@ -1,8 +1,15 @@
 // src/client/content/components/cards/actions.js
 
-import { createCardSection, createCardGrid } from './helpers'
+import {
+  createComponentsSectionLayout
+} from '../../../config'
+
+import {
+  createLayout,
+  createButton
+} from 'mtrl'
+
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import { createButton } from 'mtrl'
 import createCard, {
   createCardHeader,
   createCardContent,
@@ -16,8 +23,7 @@ export const initActionCards = (container) => {
   const title = 'Action Cards'
   const description = 'Cards with interactive buttons'
 
-  const section = createCardSection(title, description)
-  const grid = createCardGrid()
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create action cards
   artworks.slice(3, 6).forEach(artwork => {
@@ -63,9 +69,6 @@ export const initActionCards = (container) => {
     card.addContent(content)
     card.setActions(actions)
 
-    grid.appendChild(card.element)
+    layout.body.appendChild(card.element)
   })
-
-  section.appendChild(grid)
-  container.appendChild(section)
 }

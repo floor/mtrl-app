@@ -1,10 +1,9 @@
 // src/client/content/components/progress.js
-import { capitalize } from '../../core/utils'
 
 import {
   contentLayout,
   createComponentsSectionLayout
-} from '../../config'
+} from '../../../config'
 
 import {
   createLayout,
