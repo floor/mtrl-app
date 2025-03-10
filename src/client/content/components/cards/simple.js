@@ -5,12 +5,11 @@ import {
 } from '../../../config'
 
 import {
-  createLayout,
-  createCard
+  createLayout
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
-import {
+import createCard, {
   createCardHeader,
   createCardContent,
   CARD_VARIANTS
