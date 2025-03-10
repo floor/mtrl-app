@@ -1,0 +1,24 @@
+// src/client/styles/base.scss
+@use 'mtrl/src/styles/abstract/config' as c;
+
+// CSS Reset & Base Styles
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @include c.motion-transition(background-color, color);
+}

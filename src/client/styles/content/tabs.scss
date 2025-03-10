@@ -1,0 +1,161 @@
+// src/client/styles/content/tabs.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/config' as c;
+
+$content: '#{b.$prefix}-content';
+
+.#{$content} {
+  // Tab content container
+  &__tab-content {
+    padding: 24px;
+    // border: 1px solid t.color('outline-variant');
+    border-radius: 0 0 8px 8px;
+    margin-top: -1px;
+    background-color: t.color('surface');
+  }
+
+  // Tab panels
+  &__tab-panel {
+    min-height: 100px;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  // Secondary tabs info text
+  &__secondary-info {
+    margin-top: 16px;
+    color: t.color('on-surface-variant');
+    font-size: 14px;
+  }
+
+  // Subsection labels
+  &__subsection-label {
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: t.color('on-surface-variant');
+    font-size: 14px;
+  }
+
+  // Scrollable description
+  &__scrollable-description {
+    margin-top: 16px;
+    color: t.color('on-surface-variant');
+    font-size: 14px;
+  }
+
+  // Tab controls
+  &__tab-controls {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  // Tab status display
+  &__tab-status {
+    margin: 16px 0;
+    padding: 12px;
+    background-color: t.color('surface-variant');
+    border-radius: 8px;
+  }
+
+  // Dynamic content 
+  &__tab-dynamic-content {
+    padding: 24px;
+    // border: 1px solid t.color('outline-variant');
+    border-radius: 0 0 8px 8px;
+    margin-top: -1px;
+    min-height: 200px;
+    background-color: t.color('surface');
+    
+    h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: t.color('on-surface');
+    }
+  }
+
+  // API controls
+  &__api-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  // Event log
+  &__event-log {
+    background-color: t.color('surface-variant');
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    
+    h4 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: t.color('on-surface');
+    }
+    
+    .log-entries {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    
+    .log-entry {
+      padding: 8px 0;
+      border-bottom: 1px solid t.color('outline-variant');
+    }
+    
+    .log-time {
+      color: t.color('primary');
+      font-family: monospace;
+      margin-right: 8px;
+    }
+  }
+}
+
+// Settings form styles
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+  .setting-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    select {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid t.color('outline');
+      background-color: t.color('surface');
+      color: t.color('on-surface');
+    }
+  }
+}
+
+// History list styles
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  
+  .history-item {
+    padding: 12px;
+    background-color: t.color('surface-variant');
+    border-radius: 4px;
+    
+    .history-time {
+      font-size: 12px;
+      color: t.color('on-surface-variant');
+      margin-bottom: 4px;
+    }
+  }
+}

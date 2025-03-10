@@ -8,9 +8,9 @@
 @use 'mtrl/src/styles/themes/summer';
 @use 'mtrl/src/styles/themes/autumn';
 @use 'mtrl/src/styles/themes/winter';
-@use 'mtrl/src/styles/abstract/config' as c;
 @use 'mtrl/src/components/card/styles' as card;
 @use 'mtrl/src/components/carousel/styles' as carousel;
+@use 'mtrl/src/components/badge/styles' as badge;
 @use 'mtrl/src/components/button/styles' as button;
 @use 'mtrl/src/components/chip/styles' as chip;
 @use 'mtrl/src/components/textfield/styles' as textfield;
@@ -23,6 +23,9 @@
 @use 'mtrl/src/components/snackbar/styles' as snackbar;
 @use 'mtrl/src/components/navigation/styles' as navigation;
 @use 'mtrl/src/components/list/styles' as list;
+@use 'mtrl/src/components/tabs/styles' as tabs;
+
+@use './base';
 @use './app';
 @use './content';
 @use './content/components';
@@ -32,23 +35,4 @@
 @use './content/events';
 @use './content/state';
 @use './content/composition';
-// CSS Reset & Base Styles
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  font-family: system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  @include c.motion-transition(background-color, color);
-}
+@use './content/tabs' as t;

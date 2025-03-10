@@ -12,7 +12,7 @@ import {
   createTextfield
 } from 'mtrl'
 
-import createChip, { CHIP_VARIANTS, CHIP_SIZES } from 'mtrl/src/components/chip'
+import createChip, { CHIP_VARIANTS } from 'mtrl/src/components/chip'
 import createChipSet from 'mtrl/src/components/chip/chip-set'
 
 // Icons for chip examples
@@ -52,7 +52,6 @@ export const createChipsContent = (container) => {
 
   initChipVariants(layout.body)
   initChipWithIcons(layout.body)
-  initChipSizes(layout.body)
   initSelectableChips(layout.body)
   initChipSet(layout.body)
   initFilterChipSet(layout.body)
@@ -122,37 +121,6 @@ export const initChipWithIcons = (container) => {
     variant: CHIP_VARIANTS.ELEVATED
   })
   layout.body.appendChild(iconOnlyChip.element)
-}
-
-/**
- * Initializes chip sizes section
- * @param {HTMLElement} container - Container element
- */
-export const initChipSizes = (container) => {
-  const title = 'Chip Sizes'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-
-  const sizes = Object.values(CHIP_SIZES)
-  sizes.forEach(size => {
-    const text = capitalize(size)
-    const chip = createChip({
-      text: `${text} Chip`,
-      size,
-      variant: CHIP_VARIANTS.FILLED
-    })
-    layout.body.appendChild(chip.element)
-  })
-
-  // Add chips with icons in different sizes
-  sizes.forEach(size => {
-    const chip = createChip({
-      text: size,
-      size,
-      leadingIcon: faceIcon,
-      variant: CHIP_VARIANTS.OUTLINED
-    })
-    layout.body.appendChild(chip.element)
-  })
 }
 
 /**

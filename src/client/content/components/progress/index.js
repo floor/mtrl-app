@@ -13,7 +13,7 @@ import {
   createTextfield
 } from 'mtrl'
 
-import createProgress, { PROGRESS_VARIANTS, PROGRESS_SIZES } from 'mtrl/src/components/progress'
+import createProgress, { PROGRESS_VARIANTS } from 'mtrl/src/components/progress'
 
 /**
  * Creates the main Progress component showcase
@@ -32,7 +32,6 @@ export const createProgressContent = (container) => {
   initLinearProgress(layout.body)
   initCircularProgress(layout.body)
   initIndeterminateProgress(layout.body)
-  initProgressSizes(layout.body)
   initBufferProgress(layout.body)
   initInteractiveProgress(layout.body)
 }
@@ -87,37 +86,30 @@ export const initCircularProgress = (container) => {
   const title = 'Circular Progress'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  // With the fix in place, we can now use circular progress indicators
-  const circularContainer = createElement({
-    tag: 'div',
-    class: 'circular-indicators'
-  })
-  layout.body.appendChild(circularContainer)
-
   // Create determinate circular progress indicators
   const progress25 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 25
   })
-  circularContainer.appendChild(progress25.element)
+  layout.body.appendChild(progress25.element)
 
   const progress50 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 50
   })
-  circularContainer.appendChild(progress50.element)
+  layout.body.appendChild(progress50.element)
 
   const progress75 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 75
   })
-  circularContainer.appendChild(progress75.element)
+  layout.body.appendChild(progress75.element)
 
   const progress100 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 100
   })
-  circularContainer.appendChild(progress100.element)
+  layout.body.appendChild(progress100.element)
 }
 
 /**
@@ -128,13 +120,6 @@ export const initIndeterminateProgress = (container) => {
   const title = 'Indeterminate Progress'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  // Create indeterminate linear progress
-  const indeterminateLinear = createProgress({
-    variant: PROGRESS_VARIANTS.LINEAR,
-    indeterminate: true
-  })
-  layout.body.appendChild(indeterminateLinear.element)
-
   // Create indeterminate circular progress
   const indeterminateCircular = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
@@ -142,113 +127,12 @@ export const initIndeterminateProgress = (container) => {
   })
   layout.body.appendChild(indeterminateCircular.element)
 
-  // Create disabled indeterminate linear progress
-  const disabledLinear = createProgress({
+  // Create indeterminate linear progress
+  const indeterminateLinear = createProgress({
     variant: PROGRESS_VARIANTS.LINEAR,
-    indeterminate: true,
-    disabled: true
+    indeterminate: true
   })
-  layout.body.appendChild(disabledLinear.element)
-
-  // Create disabled indeterminate circular progress
-  const disabledCircular = createProgress({
-    variant: PROGRESS_VARIANTS.CIRCULAR,
-    indeterminate: true,
-    disabled: true
-  })
-  layout.body.appendChild(disabledCircular.element)
-}
-
-/**
- * Initializes the progress sizes section
- * @param {HTMLElement} container - Container element
- */
-export const initProgressSizes = (container) => {
-  const title = 'Progress Sizes'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-
-  // Linear progress in different sizes
-  const sizes = Object.values(PROGRESS_SIZES)
-
-  const linearContainer = createElement({
-    tag: 'div',
-    class: 'progress-group'
-  })
-  layout.body.appendChild(linearContainer)
-
-  const linearHeader = createElement({
-    tag: 'h3',
-    class: 'mtrl-content__subsection-title',
-    text: 'Linear Progress Sizes'
-  })
-  linearContainer.appendChild(linearHeader)
-
-  sizes.forEach(size => {
-    const progress = createProgress({
-      variant: PROGRESS_VARIANTS.LINEAR,
-      size,
-      value: 60
-    })
-
-    const label = createElement({
-      tag: 'div',
-      class: 'size-label',
-      text: capitalize(size)
-    })
-
-    const wrapper = createElement({
-      tag: 'div',
-      class: 'progress-item'
-    })
-
-    wrapper.appendChild(label)
-    wrapper.appendChild(progress.element)
-    linearContainer.appendChild(wrapper)
-  })
-
-  // Circular progress in different sizes
-  const circularContainer = createElement({
-    tag: 'div',
-    class: 'progress-group'
-  })
-  layout.body.appendChild(circularContainer)
-
-  const circularHeader = createElement({
-    tag: 'h3',
-    class: 'mtrl-content__subsection-title',
-    text: 'Circular Progress Sizes'
-  })
-  circularContainer.appendChild(circularHeader)
-
-  // Create a flex container for circular progress items
-  const circularItemsContainer = createElement({
-    tag: 'div',
-    class: 'circular-items'
-  })
-  circularContainer.appendChild(circularItemsContainer)
-
-  sizes.forEach(size => {
-    const progress = createProgress({
-      variant: PROGRESS_VARIANTS.CIRCULAR,
-      size,
-      value: 75
-    })
-
-    const label = createElement({
-      tag: 'div',
-      class: 'size-label',
-      text: capitalize(size)
-    })
-
-    const wrapper = createElement({
-      tag: 'div',
-      class: 'progress-item circular'
-    })
-
-    wrapper.appendChild(label)
-    wrapper.appendChild(progress.element)
-    circularItemsContainer.appendChild(wrapper)
-  })
+  layout.body.appendChild(indeterminateLinear.element)
 }
 
 /**

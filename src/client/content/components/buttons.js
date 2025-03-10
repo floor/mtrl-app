@@ -27,7 +27,6 @@ export const createButtonsContent = (container) => {
 
   initButtonVariants(layout.body)
   initButtonVariantsDisabled(layout.body)
-  initButtonSizes(layout.body)
   initIconButtons(layout.body)
 }
 
@@ -60,22 +59,6 @@ export const initButtonVariantsDisabled = (container) => {
       text: `${text} Button`,
       variant,
       disabled: true
-    })
-    // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-    layout.body.appendChild(btn.element)
-  })
-}
-
-export const initButtonSizes = (container) => {
-  const title = 'Buttons Sizes'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-
-  const sizes = ['medium', 'small', 'large']
-  sizes.forEach(size => {
-    const text = capitalize(size)
-    const btn = createButton({
-      text: `${text} Button`,
-      size
     })
     // btn.on('click', () => components.logEvent(`${variant} button clicked`))
     layout.body.appendChild(btn.element)

@@ -23,8 +23,6 @@ export const createTextfieldsContent = (container) => {
   const layout = createLayout(contentLayout(info), container).component
 
   initTextfieldVariants(layout.body)
-  initOutlinedTextfieldSizes(layout.body)
-  initFilledTextfieldSizes(layout.body)
   initMultilineTextfield(layout.body)
 }
 
@@ -61,31 +59,9 @@ export const initTextfieldVariants = (container) => {
   layout.body.appendChild(outlinedWrapper)
 }
 
-export const initOutlinedTextfieldSizes = (container) => {
-  const title = 'Outlined Textfield Sizes'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-
-  const box = createElement({ tag: 'div', class: 'mtrl-components__section-box' })
-
-  layout.body.appendChild(box)
-
-  const sizes = ['small', 'default', 'large']
-
-  sizes.forEach(size => {
-    const textfield = createTextfield({
-      label: `${capitalize(size)} Textfield`,
-      placeholder: 'Type here...',
-      variant: 'outlined',
-      size
-    })
-    box.appendChild(textfield.element)
-  })
-}
-
 export const initFilledTextfieldSizes = (container) => {
   const title = 'Filled Textfield Sizes'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-  const box = createElement({ tag: 'div', class: 'mtrl-components__section-box' })
 
   layout.body.appendChild(box)
 

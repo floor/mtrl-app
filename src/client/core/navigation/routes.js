@@ -22,7 +22,8 @@ import {
   createSlidersContent,
   createSnackbarsContent,
   createSwitchesContent,
-  createTextfieldsContent
+  createTextfieldsContent,
+  createTabsContent
 } from '../../content'
 
 export const initializeRoutes = (router, ui) => {
@@ -53,6 +54,7 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/snackbars', () => createSnackbarsContent(ui.content))
   router.register('components/switches', () => createSwitchesContent(ui.content))
   router.register('components/textfields', () => createTextfieldsContent(ui.content))
+  router.register('components/tabs', () => createTabsContent(ui.content))
   // Add navigation hooks
   router.beforeEach((route) => {
     // log.debug('Navigation started:', route)

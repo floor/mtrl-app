@@ -11,7 +11,7 @@ import {
 } from './icons'
 
 import {
-  createElement,
+  createElement as e,
   createNavigation,
   createButton
 } from 'mtrl'
@@ -32,29 +32,43 @@ export const layout = [
     variant: 'drawer',
     items: []
   }],
-  [createElement, 'content', { class: 'mtrl-content' }],
+  [e, 'content', { class: 'mtrl-content' }],
   [createButton, 'moreMenu', { icon: iconMore, iconSize: 'medium', class: 'more-menu', variant: 'outlined' }],
   [createButton, 'toggleDarkmode', { icon: iconDark, iconSize: 'medium', class: 'toggle-darkmode', variant: 'outlined' }]
 ]
 
 export const contentLayout = (info) => [
-  [createElement, 'header', { id: 'head', class: 'mtrl-content__header' },
-    [createElement, { tag: 'section', class: 'mtrl-content__box info' },
-      [createElement, 'h1', { id: 'title', class: 'mtrl-content__title', text: info.title }],
-      [createElement, 'p', { id: 'decription', class: 'mtrl-content__text', text: info.description }]
+  [e, 'header', { id: 'head', class: 'mtrl-content__header' },
+    [e, { tag: 'section', class: 'mtrl-content__box info' },
+      [e, 'h1', { id: 'title', class: 'mtrl-content__title', text: info.title }],
+      [e, 'p', { id: 'decription', class: 'mtrl-content__text', text: info.description }]
     ],
-    [createElement, { tag: 'section', class: 'mtrl-content__box visual' }]
+    [e, { tag: 'section', class: 'mtrl-content__box visual' }]
   ],
-  [createElement, { id: 'body', class: 'mtrl-content__body' }],
-  [createElement, { id: 'foot', class: 'mtrl-content__footer' }]
+  [e, { id: 'body', class: 'mtrl-content__body' }],
+  [e, { id: 'foot', class: 'mtrl-content__footer' }]
 ]
 
 export const createComponentsSectionLayout = (info) => [
-  [createElement, { tag: 'section', class: 'mtrl-content__section' },
-    [createElement, { class: 'mtrl-content__section-head' },
-      [createElement, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }]
+  [e, { tag: 'section', class: 'mtrl-content__section' },
+    [e, { class: 'mtrl-content__section-head' },
+      [e, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }]
     ],
-    [createElement, 'div', { id: 'body', class: 'mtrl-content__section-body' }]
+    [e, 'div', { id: 'body', class: 'mtrl-content__section-body' },
+      [e, 'div', { id: 'showcase', class: 'mtrl-content__section-showcase' }]
+    ]
+  ]
+]
+
+export const createComponentsSectionLayoutInfo = (info) => [
+  [e, { tag: 'section', class: 'mtrl-content__section mtrl-content__section' },
+    [e, { class: 'mtrl-content__section-head' },
+      [e, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }]
+    ],
+    [e, 'div', { id: 'body', class: 'mtrl-content__section-body' },
+      [e, 'div', { id: 'showcase', class: 'mtrl-content__section-showcase' }],
+      [e, 'div', { id: 'info', class: 'mtrl-content__section-info' }]
+    ]
   ]
 ]
 
@@ -75,6 +89,7 @@ export const navigation = {
     // { id: 'carousel', label: 'Carousel', path: '/components/carousel' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
     { id: 'chips', label: 'Chips', path: '/components/chips' },
+    { id: 'lists', label: 'Lists', path: '/components/lists' },
     { id: 'menus', label: 'Menus', path: '/components/menus' },
     // { id: 'navigations', label: 'Navigations', path: '/components/navigations' },
     { id: 'progress', label: 'Progress', path: '/components/progress' },
@@ -82,8 +97,8 @@ export const navigation = {
     { id: 'sliders', label: 'Sliders', path: '/components/sliders' },
     { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
     { id: 'switches', label: 'Switches', path: '/components/switches' },
-    { id: 'textfields', label: 'Textfields', path: '/components/textfields' },
-    { id: 'lists', label: 'Lists', path: '/components/lists' }
+    { id: 'tabs', label: 'Tabs', path: '/components/tabs' },
+    { id: 'textfields', label: 'Textfields', path: '/components/textfields' }
   ],
   core: [
     { id: 'events', label: 'Events', path: '/core/events' },

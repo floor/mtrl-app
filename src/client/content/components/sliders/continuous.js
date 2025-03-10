@@ -8,7 +8,7 @@ import {
 } from 'mtrl'
 
 export const initContinuous = (container) => {
-  const title = 'Continous Slider: max 10'
+  const title = 'Continuous Slider: max 10'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const slider = createSlider({
@@ -21,7 +21,7 @@ export const initContinuous = (container) => {
 }
 
 export const initContinuous1000 = (container) => {
-  const title = 'Continous Slider: max 1000'
+  const title = 'Continuous Slider: max 1000'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const slider = createSlider({

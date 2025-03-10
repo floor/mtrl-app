@@ -20,6 +20,7 @@ import { createRadiosContent } from './components/radios'
 import { createSlidersContent } from './components/sliders'
 import { createSnackbarsContent } from './components/snackbars'
 import { createSwitchesContent } from './components/switches'
+import { createTabsContent } from './components/tabs'
 import { createTextfieldsContent } from './components/textfields'
 
 export {
@@ -45,5 +46,6 @@ export {
   createSlidersContent,
   createSnackbarsContent,
   createSwitchesContent,
-  createTextfieldsContent
+  createTextfieldsContent,
+  createTabsContent
 }
