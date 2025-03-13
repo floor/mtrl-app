@@ -7,11 +7,14 @@ import { createColorsContent } from './styles/colors'
 import { createTypographyContent } from './styles/typography'
 import { createElevationContent } from './styles/elevation'
 import { createLayoutContent } from './styles/layout'
+import { createComponentsContent } from './components'
+import { createBadgesContent } from './components/badges'
 import { createButtonsContent } from './components/buttons'
 import { createCardsContent } from './components/cards'
 import { createCarouselContent } from './components/carousel'
 import { createCheckboxesContent } from './components/checkboxes'
 import { createChipsContent } from './components/chips'
+import { createDialogsContent } from './components/dialogs'
 import { createListsContent } from './components/lists'
 import { createMenusContent } from './components/menus'
 import { createNavigationsContent } from './components/navigations'
@@ -33,11 +36,14 @@ export {
   createTypographyContent,
   createElevationContent,
   createLayoutContent,
+  createComponentsContent,
+  createBadgesContent,
   createButtonsContent,
   createCardsContent,
   createCarouselContent,
   createCheckboxesContent,
   createChipsContent,
+  createDialogsContent,
   createListsContent,
   createMenusContent,
   createNavigationsContent,

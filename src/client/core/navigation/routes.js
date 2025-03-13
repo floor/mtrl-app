@@ -9,11 +9,14 @@ import {
   createTypographyContent,
   createElevationContent,
   createLayoutContent,
+  createComponentsContent,
+  createBadgesContent,
   createButtonsContent,
   createCardsContent,
   createCarouselContent,
   createCheckboxesContent,
   createChipsContent,
+  createDialogsContent,
   createListsContent,
   createNavigationsContent,
   createMenusContent,
@@ -40,11 +43,14 @@ export const initializeRoutes = (router, ui) => {
   router.register('styles/typography', () => createTypographyContent(ui.content))
   router.register('styles/elevation', () => createElevationContent(ui.content))
   router.register('styles/layout', () => createLayoutContent(ui.content))
+  router.register('components', () => createComponentsContent(ui.content))
+  router.register('components/badges', () => createBadgesContent(ui.content))
   router.register('components/buttons', () => createButtonsContent(ui.content))
   router.register('components/cards', () => createCardsContent(ui.content))
   router.register('components/carousel', () => createCarouselContent(ui.content))
   router.register('components/checkboxes', () => createCheckboxesContent(ui.content))
   router.register('components/chips', () => createChipsContent(ui.content))
+  router.register('components/dialogs', () => createDialogsContent(ui.content))
   router.register('components/lists', () => createListsContent(ui.content))
   router.register('components/menus', () => createMenusContent(ui.content))
   router.register('components/navigations', () => createNavigationsContent(ui.content))

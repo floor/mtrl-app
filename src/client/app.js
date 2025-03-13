@@ -1,4 +1,5 @@
 // src/client/app.js
+
 import { createRouter } from './core/router'
 import { createLayout, createMenu } from 'mtrl'
 import { navigation, layout, themesMenu } from './config'

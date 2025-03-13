@@ -70,6 +70,21 @@ $content: '#{b.$prefix}-content';
     }
   }
 
+  &__section-showcase {
+    transform: scale(.7);
+    @include c.typography('headline-small');
+    color: t.color('on-surface');
+    margin: 0 0 16px; 
+  }
+
+  &__section-info {
+    min-width: 300px;
+    @include c.typography('headline-small');
+    color: t.color('on-surface');
+    margin: 0 0 16px; 
+    background-color: white;
+  }
+
   &__section-title {
     @include c.typography('headline-small');
     color: t.color('on-surface');

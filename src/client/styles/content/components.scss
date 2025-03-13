@@ -29,12 +29,18 @@ $content: '#{b.$prefix}-content';
       border-left: 1px solid rgba(0,0,0,.05);
       border-right: 1px solid rgba(0,0,0,.05);
       border-bottom: 1px solid rgba(0,0,0,.05);
+      .#{$content}__section-info {
+
+      }
+      &.noflex {
+        display: inline-block;
+      }
     }
     &-box {
       // gap: 20px;
       padding: 24px;
       background-color: t.color('surface');
-      background-image: url(/public/img/grid.png);
+      background-image: url(/public/img/grid-light.png);
       background-position: center;
       border-radius: 16px;
       border-left: 1px solid rgba(0,0,0,.05);

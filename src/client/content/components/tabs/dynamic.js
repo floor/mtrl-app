@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentsSectionLayoutBox
 } from '../../../config'
 
 import {
@@ -10,7 +10,7 @@ import {
 
 export const initDynamicTabs = (container) => {
   const title = 'Dynamic Tabs'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with an initial set of tabs
   const tabs = createTabs({

@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentsSectionLayoutBox
 } from '../../../config'
 
 import {
@@ -10,7 +10,7 @@ import {
 
 export const initEventsAPI = (container) => {
   const title = 'Events & API Methods'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with callback handlers
   const tabs = createTabs({

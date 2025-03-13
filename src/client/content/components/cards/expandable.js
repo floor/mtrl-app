@@ -6,10 +6,9 @@ import {
 
 import {
   createLayout,
-  createButton,
   createElement
 } from 'mtrl'
-import { createCardSection, createCardGrid } from './helpers'
+
 import { artworks } from './artwork-data'
 import createCard, {
   createCardHeader,

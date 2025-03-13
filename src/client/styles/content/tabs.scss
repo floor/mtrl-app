@@ -21,7 +21,11 @@ $content: '#{b.$prefix}-content';
   // Tab panels
   &__tab-panel {
     min-height: 100px;
-
+    padding: 24px;
+    // border: 1px solid t.color('outline-variant');
+    border-radius: 0 0 8px 8px;
+    margin-top: -1px;
+    background-color: t.color('surface');
     &.hidden {
       display: none;
     }

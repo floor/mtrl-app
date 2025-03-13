@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentsSectionLayoutBox
 } from '../../../config'
 
 import {
@@ -9,7 +9,7 @@ import {
 
 export const initScrollableTabs = (container) => {
   const title = 'Scrollable Tabs'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with many items to demonstrate scrolling
   const tabs = createTabs({

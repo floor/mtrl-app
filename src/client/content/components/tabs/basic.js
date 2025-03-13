@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentsSectionLayoutBox
 } from '../../../config'
 
 import {
@@ -10,7 +10,8 @@ import {
 
 export const initBasicTabs = (container) => {
   const title = 'Basic Tabs'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   const box = createElement({ tag: 'div', class: 'mtrl-components__section-box' })
 
