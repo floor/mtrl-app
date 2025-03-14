@@ -1,6 +1,6 @@
 // src/client/view/components/snackbars.js
 import {
-  contentLayout
+  componentsLayout
 } from '../../config'
 
 import {
@@ -21,7 +21,7 @@ export const createSnackbarsContent = (container, components) => {
     title: 'Snackbars',
     description: 'Show short updates about app processes at the bottom of the screen'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   const ui = createLayout(createSnackbarsLayout(), layout.body).component
   console.info('ui', ui)

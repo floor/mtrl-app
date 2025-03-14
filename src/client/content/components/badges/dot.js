@@ -43,6 +43,7 @@ export const initDot = (container) => {
     const label = document.createElement('span')
     label.textContent = color
     label.style.fontSize = '12px'
+    label.style.marginTop = '20px'
 
     wrapper.appendChild(badge.element)
     wrapper.appendChild(label)

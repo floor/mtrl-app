@@ -28,7 +28,7 @@ export const initSimpleCards = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create simple cards using the first three artworks
-  artworks.slice(0, 3).forEach(artwork => {
+  artworks.slice(0, 2).forEach(artwork => {
     // Create card with proper aria attributes
     const card = createCard({
       variant: CARD_VARIANTS.FILLED,
@@ -56,6 +56,6 @@ export const initSimpleCards = (container) => {
     card.addContent(content)
 
     // Add to the grid
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

@@ -8,8 +8,6 @@ export const updateDrawerItems = (drawer, items, router) => {
     return
   }
 
-  // log.drawerUpdate(drawer, items)
-
   try {
     // Remove existing handler if any
     if (currentHandler) {
@@ -23,32 +21,60 @@ export const updateDrawerItems = (drawer, items, router) => {
       drawer.removeItem(item.config.id)
     })
 
-    // Add new items
+    // Add new items with support for nested structure
     items.forEach(item => {
-      drawer.addItem({
+      const itemConfig = {
         id: item.id,
         label: item.label,
         data: {
           section: item.section,
           path: item.path
         }
-      })
+      }
+
+      // If item has nested items, include them in the config
+      if (item.items && item.items.length > 0) {
+        // Transform nested items
+        itemConfig.items = item.items.map(nestedItem => ({
+          id: nestedItem.id,
+          label: nestedItem.label,
+          data: {
+            section: item.section,
+            path: nestedItem.path
+          }
+        }))
+      }
+
+      drawer.addItem(itemConfig)
     })
 
     // Create and store new handler
     currentHandler = (event) => {
       const selectedItem = event.item
-      if (!selectedItem) return
+      if (!selectedItem || !selectedItem.config) return
 
-      // log.debug('Drawer item selected:', {
-      //   id: selectedItem.config.id,
-      //   section: selectedItem.config.data.section,
-      //   path: selectedItem.config.data.path
-      // })
+      // Get the item data
+      const itemConfig = selectedItem.config
 
       if (router) {
-        const route = router.parsePath(selectedItem.config.data.path)
-        router.navigate(route.section, route.subsection, { replace: true })
+        // Always navigate to the path, even for parent items with children
+        const path = itemConfig.data.path
+
+        if (path) {
+          // Use the router's parsePath to extract section and subsection
+          const route = router.parsePath(path)
+
+          console.log('Navigating to:', {
+            path,
+            section: route.section,
+            subsection: route.subsection
+          })
+
+          // Navigate using the parsed route info
+          router.navigate(route.section, route.subsection, { replace: true })
+        } else {
+          log.error('No path found in selected item', selectedItem)
+        }
       } else {
         log.error('Router not initialized')
       }

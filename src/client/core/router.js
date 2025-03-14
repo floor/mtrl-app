@@ -27,7 +27,7 @@ export const createRouter = (options = {}) => {
 
     return {
       section: parts[0] || 'home',
-      subsection: parts[1] || '',
+      subsection: parts.slice(1).join('/') || '', // Join all remaining parts for multi-level subsections
       path: cleanPath ? `/${cleanPath}` : '/'
     }
   }

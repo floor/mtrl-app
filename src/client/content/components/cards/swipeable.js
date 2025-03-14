@@ -153,5 +153,5 @@ export const initSwipeableCard = (container) => {
   card.addContent(content)
 
   // Add card to grid
-  layout.body.appendChild(card.element)
+  layout.showcase.appendChild(card.element)
 }

@@ -2,7 +2,7 @@
 import { capitalize } from '../../core/utils'
 
 import {
-  contentLayout,
+  componentsLayout,
   createComponentsSectionLayout
 } from '../../config'
 
@@ -19,9 +19,7 @@ export const createCheckboxesContent = (container) => {
     description: 'Checkboxes let users select one or more items from a list, or turn an item on or off'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicCheckboxes(layout.body)
   initLabelPositions(layout.body)
@@ -112,6 +110,8 @@ export const initIndeterminateCheckboxes = (container) => {
   const childrenContainer = createElement({ class: 'checkbox-children' })
   childrenContainer.style.marginLeft = '24px'
   childrenContainer.style.marginTop = '8px'
+  childrenContainer.style.display = 'flex'
+  childrenContainer.style.flexDirection = 'column'
 
   // Child checkboxes
   const childCheckboxes = [

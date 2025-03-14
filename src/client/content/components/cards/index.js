@@ -1,6 +1,6 @@
 // src/client/content/components/cards/index.js
 
-import { contentLayout } from '../../../config'
+import { componentsLayout } from '../../../config'
 import { createLayout } from 'mtrl'
 import { addCardStyles } from './styles'
 import { artworks } from './artwork-data'
@@ -34,20 +34,18 @@ export const createCardsContent = (container) => {
     description: 'Display content and actions about a single subject'
   }
 
-  container.classList.add('components')
-
   // Initialize styles
   addCardStyles()
 
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   // Initialize all card sections
   initSimpleCards(layout.body)
+  initActionCards(layout.body)
   initElevatedCards(layout.body)
   initFilledCards(layout.body)
   initOutlinedCards(layout.body)
   initMediaCards(layout.body)
-  initActionCards(layout.body)
   initInteractiveCards(layout.body)
   initAccessibleCards(layout.body)
   initLoadingCard(layout.body)

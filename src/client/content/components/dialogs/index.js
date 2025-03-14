@@ -1,6 +1,6 @@
 // src/client/content/components/dialogs/index.js
 
-import { contentLayout } from '../../../config'
+import { componentsLayout } from '../../../config'
 import { createLayout } from 'mtrl'
 import { initBasic } from './basic'
 import { initSizes } from './sizes'
@@ -17,9 +17,7 @@ export const createDialogsContent = (container) => {
     description: 'Display a popup dialog for focused user interactions'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasic(layout.body)
   initSizes(layout.body)

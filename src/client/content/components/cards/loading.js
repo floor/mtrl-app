@@ -131,6 +131,6 @@ export const initLoadingCard = async (container) => {
   }, 3000)
 
   // Add both cards to the grid
-  layout.body.appendChild(loadingCard.element)
-  layout.body.appendChild(transitionCard.element)
+  layout.showcase.appendChild(loadingCard.element)
+  layout.showcase.appendChild(transitionCard.element)
 }

@@ -1,7 +1,7 @@
 // src/client/content/components/menus.js
 
 import {
-  contentLayout,
+  componentsLayout,
   createComponentsSectionLayout
 } from '../../config'
 
@@ -22,9 +22,7 @@ export const createMenusContent = (container) => {
     description: 'Display a list of choices on a temporary surface'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicMenu(layout.body)
   initNestedMenu(layout.body)

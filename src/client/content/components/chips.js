@@ -2,7 +2,7 @@
 import { capitalize } from '../../core/utils'
 
 import {
-  contentLayout,
+  componentsLayout,
   createComponentsSectionLayout
 } from '../../config'
 
@@ -46,9 +46,7 @@ export const createChipsContent = (container) => {
     description: 'Compact elements that represent an input, attribute, or action'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initChipVariants(layout.body)
   initChipWithIcons(layout.body)

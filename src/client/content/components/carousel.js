@@ -3,7 +3,7 @@
 import { CAROUSEL_LAYOUTS, CAROUSEL_SCROLL_BEHAVIORS } from 'mtrl/src/components/carousel'
 
 import {
-  contentLayout,
+  componentsLayout,
   createComponentsSectionLayout
 } from '../../config'
 
@@ -100,9 +100,7 @@ export const createCarouselContent = (container) => {
     description: 'Carousels show a collection of items that can be scrolled on and off the screen'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   createMultiBrowseCarousel(layout.body)
   createUncontainedCarousel(layout.body)

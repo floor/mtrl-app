@@ -10,8 +10,13 @@ import {
   createElevationContent,
   createLayoutContent,
   createComponentsContent,
+  createBottomAppBarsContent,
+  createTopAppBarsContent,
   createBadgesContent,
   createButtonsContent,
+  createFabContent,
+  createExtendedFabContent,
+  createSegmentedButtonsContent,
   createCardsContent,
   createCarouselContent,
   createCheckboxesContent,
@@ -45,7 +50,12 @@ export const initializeRoutes = (router, ui) => {
   router.register('styles/layout', () => createLayoutContent(ui.content))
   router.register('components', () => createComponentsContent(ui.content))
   router.register('components/badges', () => createBadgesContent(ui.content))
-  router.register('components/buttons', () => createButtonsContent(ui.content))
+  router.register('components/app-bars/bottom', () => createBottomAppBarsContent(ui.content))
+  router.register('components/app-bars/top', () => createTopAppBarsContent(ui.content))
+  router.register('components/buttons/common', () => createButtonsContent(ui.content))
+  router.register('components/buttons/fab', () => createFabContent(ui.content))
+  router.register('components/buttons/extended-fab', () => createExtendedFabContent(ui.content))
+  router.register('components/buttons/segmented-buttons', () => createSegmentedButtonsContent(ui.content))
   router.register('components/cards', () => createCardsContent(ui.content))
   router.register('components/carousel', () => createCarouselContent(ui.content))
   router.register('components/checkboxes', () => createCheckboxesContent(ui.content))

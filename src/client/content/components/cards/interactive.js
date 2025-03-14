@@ -32,8 +32,8 @@ export const initInteractiveCards = (container) => {
   // Card interaction types to showcase
   const interactionTypes = [
     { interactive: true, clickable: false, label: 'Interactive (hover effects)' },
-    { interactive: true, clickable: true, label: 'Clickable (with ripple)' },
-    { interactive: false, clickable: false, label: 'Non-interactive' }
+    { interactive: true, clickable: true, label: 'Clickable (with ripple)' }
+    // { interactive: false, clickable: false, label: 'Non-interactive' }
   ]
 
   // Create interactive cards with different behavior
@@ -111,6 +111,6 @@ export const initInteractiveCards = (container) => {
     card.setHeader(header)
     card.addContent(content)
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

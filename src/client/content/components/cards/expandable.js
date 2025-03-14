@@ -113,7 +113,7 @@ export const initExpandableCards = (container) => {
     card.addContent(content)
 
     // Add to grid
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }
 

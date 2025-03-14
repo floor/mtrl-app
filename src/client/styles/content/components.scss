@@ -6,11 +6,49 @@
 @use 'mtrl/src/styles/abstract/theme' as t;
 @use 'mtrl/src/styles/abstract/config' as c;
 
-$content: '#{b.$prefix}-content';
+$components: '#{b.$prefix}-components';
 
-.#{$content}.components {
-  .#{$content}__section {
+.#{$components} {
+  
+  &__header {
+    height: 100px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
+    &__section {
+      padding: 24px;
+    }
+    .#{$components}__box {
+      flex: 1;
+      height: 100%;
+      border-radius: f.get-shape('large');
+      gap: 20px;
+      background-color: t.color('surface-container');
+      &.visual {
+        flex: none;
+        width: 100px;
+        background-color: t.color('secondary');
+        margin-left: 24px;
+      }
+      &.info {
+        background-color: t.color('primary');
+        color: var(--mtrl-sys-color-on-primary);
+        padding: 18px 24px;
+        .#{$components}__title {
+          @include c.typography('headline-large');
+          margin: 0;
+        }
+      }
+    }
+  }
+  
+  &__section {
     padding: 0;
+    background-color: t.color('surface-container');
+    border-radius: f.get-shape('large');
+    margin-bottom: 24px;
     &-head {
       padding: 24px;
     }
@@ -29,12 +67,24 @@ $content: '#{b.$prefix}-content';
       border-left: 1px solid rgba(0,0,0,.05);
       border-right: 1px solid rgba(0,0,0,.05);
       border-bottom: 1px solid rgba(0,0,0,.05);
-      .#{$content}__section-info {
+      .#{$components}__section-info {
 
       }
       &.noflex {
         display: inline-block;
       }
+    }
+
+    &-showcase {
+      display: flex;
+      // grid-template-columns: repeat(3, 1fr);
+      // justify-items: start; // Ensure proper alignment
+      align-items: start; // Prevents grid items from stretching
+      gap: 20px;
+      // transform: scale(.85);
+      @include c.typography('headline-small');
+      color: t.color('on-surface');
+      margin: 0 0 16px; 
     }
     &-box {
       // gap: 20px;
@@ -54,8 +104,8 @@ $content: '#{b.$prefix}-content';
 }
 
 body[data-theme-mode=dark] {
-  .#{$content}.components {
-    .#{$content}__section {
+  .#{$components}.components {
+    .#{$components}__section {
       &-body, &-box {
         border-left: 1px solid rgba(255,255,255,.03);
         border-right: 1px solid rgba(255,255,255,.03);

@@ -31,7 +31,7 @@ export const initFilledCards = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create filled cards
-  artworks.slice(6, 9).forEach(artwork => {
+  artworks.slice(7, 9).forEach(artwork => {
     const card = createCard({
       variant: CARD_VARIANTS.FILLED,
       interactive: true,
@@ -74,6 +74,6 @@ export const initFilledCards = (container) => {
     card.addContent(content)
     card.setActions(actions)
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

@@ -51,6 +51,7 @@ export const initMax = (container) => {
     label.textContent = example.description
     label.style.fontSize = '12px'
     label.style.textAlign = 'center'
+    label.style.marginTop = '20px'
 
     wrapper.appendChild(badge.element)
     wrapper.appendChild(label)
@@ -91,6 +92,7 @@ export const initMax = (container) => {
     label.textContent = example.description
     label.style.fontSize = '12px'
     label.style.textAlign = 'center'
+    label.style.marginTop = '20px'
 
     wrapper.appendChild(badge.element)
     wrapper.appendChild(label)

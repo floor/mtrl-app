@@ -42,6 +42,9 @@ export const initEventsAPI = (container) => {
     standalone: true
   })
 
+  badge.element.style.position = 'relative'
+  badge.element.style.transform = 'scale(2)'
+
   badgeDisplay.appendChild(badge.element)
 
   // Create controls

@@ -1,7 +1,7 @@
 // src/client/content/components/switches.js
 
 import {
-  contentLayout,
+  componentsLayout,
   createComponentsSectionLayout
 } from '../../config'
 
@@ -21,9 +21,7 @@ export const createSwitchesContent = (container) => {
     description: 'Switches toggle the selection of an item on or off'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicSwitches(layout.body)
   initLabelPositions(layout.body)

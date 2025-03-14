@@ -26,6 +26,8 @@ export const initStandard = (container) => {
   // Create badges with different colors
   const colors = Object.values(BADGE_COLORS)
 
+  let count = 1
+
   colors.forEach(color => {
     const wrapper = document.createElement('div')
     wrapper.style.position = 'relative'
@@ -36,19 +38,22 @@ export const initStandard = (container) => {
 
     const badge = createBadge({
       variant: BADGE_VARIANTS.LARGE,
-      label: '1',
+      label: count,
       color,
       standalone: true
     })
 
+    count++
+
     const label = document.createElement('span')
     label.textContent = color
     label.style.fontSize = '12px'
+    label.style.marginTop = '20px'
 
     wrapper.appendChild(badge.element)
     wrapper.appendChild(label)
     badgeContainer.appendChild(wrapper)
   })
 
-  layout.body.appendChild(badgeContainer)
+  layout.showcase.appendChild(badgeContainer)
 }

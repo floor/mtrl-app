@@ -51,6 +51,6 @@ export const initContinuous1000 = (container) => {
   // slider.setLabel('Phone volume 2')
   // slider.setIcon(callVolume)
 
-  layout.showcase.appendChild(sliderCallVolume.element)
-  layout.showcase.appendChild(sliderAlarmVolume.element)
+  layout.body.appendChild(sliderCallVolume.element)
+  layout.body.appendChild(sliderAlarmVolume.element)
 }

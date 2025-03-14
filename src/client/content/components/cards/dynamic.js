@@ -166,6 +166,6 @@ export const initDynamicCard = (container) => {
   updateCycleCard()
 
   // Add cards to the grid
-  layout.body.appendChild(card.element)
-  layout.body.appendChild(cycleCard.element)
+  layout.showcase.appendChild(card.element)
+  layout.showcase.appendChild(cycleCard.element)
 }

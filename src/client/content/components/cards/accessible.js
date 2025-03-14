@@ -31,7 +31,7 @@ export const initAccessibleCards = (container) => {
 
   // Create accessible card examples
   const accessibilityFeatures = [
-    { feature: 'Screen Reader Support', description: 'This card has proper ARIA attributes for screen readers' },
+    // { feature: 'Screen Reader Support', description: 'This card has proper ARIA attributes for screen readers' },
     { feature: 'Keyboard Navigation', description: 'This card can be navigated and activated with keyboard' },
     { feature: 'Focus Visibility', description: 'This card has enhanced focus indicators for visibility' }
   ]
@@ -106,6 +106,6 @@ export const initAccessibleCards = (container) => {
     card.setHeader(header)
     card.addContent(content)
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

@@ -30,7 +30,7 @@ export const initElevatedCards = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create elevated cards with increasing elevation levels
-  ;[1, 2, 3].forEach((elevation, index) => {
+  ;[1, 2].forEach((elevation, index) => {
     const artwork = artworks[index + 3] // Use different artworks
 
     const card = createCard({
@@ -98,6 +98,6 @@ export const initElevatedCards = (container) => {
       content.appendChild(dragNote)
     }
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

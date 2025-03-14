@@ -29,7 +29,7 @@ export const initOutlinedCards = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create outlined cards
-  artworks.slice(0, 3).forEach((artwork, index) => {
+  artworks.slice(10, 11).forEach((artwork, index) => {
     const card = createCard({
       variant: CARD_VARIANTS.OUTLINED,
       interactive: index === 1, // Make the middle card interactive
@@ -74,6 +74,6 @@ export const initOutlinedCards = (container) => {
     card.setHeader(header)
     card.addContent(content)
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

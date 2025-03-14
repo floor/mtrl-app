@@ -8,8 +8,13 @@ import { createTypographyContent } from './styles/typography'
 import { createElevationContent } from './styles/elevation'
 import { createLayoutContent } from './styles/layout'
 import { createComponentsContent } from './components'
+import { createBottomAppBarsContent } from './components/app-bars/bottom'
+import { createTopAppBarsContent } from './components/app-bars/top'
 import { createBadgesContent } from './components/badges'
-import { createButtonsContent } from './components/buttons'
+import { createButtonsContent } from './components/buttons/common'
+import { createFabContent } from './components/buttons/fab'
+import { createExtendedFabContent } from './components/buttons/extended-fab'
+import { createSegmentedButtonsContent } from './components/buttons/segmented-buttons'
 import { createCardsContent } from './components/cards'
 import { createCarouselContent } from './components/carousel'
 import { createCheckboxesContent } from './components/checkboxes'
@@ -37,8 +42,13 @@ export {
   createElevationContent,
   createLayoutContent,
   createComponentsContent,
+  createBottomAppBarsContent,
+  createTopAppBarsContent,
   createBadgesContent,
   createButtonsContent,
+  createFabContent,
+  createExtendedFabContent,
+  createSegmentedButtonsContent,
   createCardsContent,
   createCarouselContent,
   createCheckboxesContent,

@@ -129,6 +129,6 @@ export const initHorizontalCards = (container) => {
     }
 
     // Add to list
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

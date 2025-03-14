@@ -337,6 +337,33 @@ $content: '#{b.$prefix}-content';
       background-color: #795548;
       color: white;
     }
+
+    &.theme-bluekhaki {
+      background-color: #232c44;
+      color: white;
+    }
+
+    &.theme-brownbeige {
+      background-color: #3e2723;
+      color: white;
+    }
+
+    &.theme-tealcaramel {
+      background-color: #2b4d56;
+      color: white;
+    }
+
+    &.theme-greenbeige {
+      background-color: #5d6e57;
+      color: white;
+    }
+
+    &.theme-sageivory {
+      background-color: #7d8c73;
+      color: white;
+    }
+
+    
   }
   
   .dark-mode-container {

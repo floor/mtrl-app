@@ -1,6 +1,6 @@
 // src/client/content/components/tabs/index.js
 
-import { contentLayout } from '../../../config'
+import { componentsLayout } from '../../../config'
 import { createLayout } from 'mtrl'
 import { initBasicTabs } from './basic'
 import { initSecondaryTabs } from './secondary'
@@ -17,9 +17,9 @@ export const createTabsContent = (container) => {
     description: 'Organize content into separate views where only one view can be visible at a time'
   }
 
-  container.classList.add('components')
+  container.classList.add('mtrl-components-tabs')
 
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicTabs(layout.body)
   initSecondaryTabs(layout.body)

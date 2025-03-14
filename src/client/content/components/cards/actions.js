@@ -26,7 +26,7 @@ export const initActionCards = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create action cards
-  artworks.slice(3, 6).forEach(artwork => {
+  artworks.slice(4, 6).forEach(artwork => {
     const card = createCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: true
@@ -69,6 +69,6 @@ export const initActionCards = (container) => {
     card.addContent(content)
     card.setActions(actions)
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

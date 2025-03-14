@@ -8,10 +8,22 @@
 @use 'mtrl/src/styles/themes/summer';
 @use 'mtrl/src/styles/themes/autumn';
 @use 'mtrl/src/styles/themes/winter';
-@use 'mtrl/src/components/card/styles' as card;
-@use 'mtrl/src/components/carousel/styles' as carousel;
+@use 'mtrl/src/styles/themes/bluekhaki';
+@use 'mtrl/src/styles/themes/brownbeige';
+@use 'mtrl/src/styles/themes/tealcaramel';
+@use 'mtrl/src/styles/themes/greenbeige';
+@use 'mtrl/src/styles/themes/sageivory';
+@use 'mtrl/src/styles/themes/browngreen';
+@use 'mtrl/src/core/build/ripple' as ripple;
+@use 'mtrl/src/components/bottom-app-bar/styles' as bottom-app-bar;
+// @use 'mtrl/src/components/top-app-bar/styles' as top-app-bar;
 @use 'mtrl/src/components/badge/styles' as badge;
 @use 'mtrl/src/components/button/styles' as button;
+@use 'mtrl/src/components/fab/styles' as fab;
+@use 'mtrl/src/components/extended-fab/styles' as extended-fab;
+@use 'mtrl/src/components/segmented-button/styles' as segmented-button;
+@use 'mtrl/src/components/card/styles' as card;
+@use 'mtrl/src/components/carousel/styles' as carousel;
 @use 'mtrl/src/components/checkbox/styles' as checkbox;
 @use 'mtrl/src/components/chip/styles' as chip;
 @use 'mtrl/src/components/dialog/styles' as dialog;
@@ -28,7 +40,7 @@
 
 @use './base';
 @use './app';
-@use './content';
+@use './content/content';
 @use './content/components';
 @use './content/colors';
 @use './content/layout';

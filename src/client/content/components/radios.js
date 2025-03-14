@@ -1,7 +1,7 @@
 // src/client/content/components/radios.js
 
 import {
-  contentLayout,
+  componentsLayout,
   createComponentsSectionLayout
 } from '../../config'
 
@@ -20,9 +20,7 @@ export const createRadiosContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initRadiosSizes(layout.body)
 }

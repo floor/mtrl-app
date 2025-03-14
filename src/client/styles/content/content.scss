@@ -16,7 +16,7 @@ $content: '#{b.$prefix}-content';
   padding: 0 50px;
 
   &__header {
-    height: 100px;
+    height: 200px;
     margin-bottom: 32px;
     display: flex;
     align-items: center;
@@ -33,7 +33,7 @@ $content: '#{b.$prefix}-content';
       background-color: t.color('surface-container');
       &.visual {
         flex: none;
-        width: 100px;
+        width: 200px;
         background-color: t.color('secondary');
         margin-left: 24px;
       }
@@ -68,13 +68,6 @@ $content: '#{b.$prefix}-content';
         flex: 1;
       }
     }
-  }
-
-  &__section-showcase {
-    transform: scale(.7);
-    @include c.typography('headline-small');
-    color: t.color('on-surface');
-    margin: 0 0 16px; 
   }
 
   &__section-info {

@@ -2,7 +2,7 @@
 import { capitalize } from '../../core/utils'
 
 import {
-  contentLayout,
+  componentsLayout,
   createComponentsSectionLayout
 } from '../../config'
 
@@ -18,9 +18,7 @@ export const createTextfieldsContent = (container) => {
     description: 'Text fields let users enter and edit text'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initTextfieldVariants(layout.body)
   initMultilineTextfield(layout.body)

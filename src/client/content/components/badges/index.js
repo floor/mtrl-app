@@ -1,6 +1,6 @@
 // src/client/content/components/badges/index.js
 
-import { contentLayout } from '../../../config'
+import { componentsLayout } from '../../../config'
 import { createLayout } from 'mtrl'
 import { initStandard } from './standard'
 import { initDot } from './dot'
@@ -15,9 +15,7 @@ export const createBadgesContent = (container) => {
     description: 'Small status descriptors for UI elements according to Material Design 3 guidelines'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   // Introduction to the badges
   const introContainer = document.createElement('div')

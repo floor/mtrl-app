@@ -34,8 +34,8 @@ export const initMediaCards = (container) => {
   // Select artworks that work well with different aspect ratios
   const artworksByRatio = [
     { artwork: artworks[7], ratio: '16:9' }, // The Kiss - works well in 16:9
-    { artwork: artworks[8], ratio: '4:3' }, // American Gothic - works well in 4:3
-    { artwork: artworks[6], ratio: '1:1' } // Girl with a Pearl Earring - works well in 1:1
+    { artwork: artworks[8], ratio: '4:3' } // American Gothic - works well in 4:3
+    // { artwork: artworks[6], ratio: '1:1' } // Girl with a Pearl Earring - works well in 1:1
   ]
 
   // Create media cards with different aspect ratios
@@ -83,7 +83,7 @@ export const initMediaCards = (container) => {
     card.setHeader(header)
     card.addContent(content)
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }
 
@@ -183,6 +183,6 @@ export const initActionCards = (container) => {
     card.addContent(content)
     card.setActions(actions)
 
-    layout.body.appendChild(card.element)
+    layout.showcase.appendChild(card.element)
   })
 }

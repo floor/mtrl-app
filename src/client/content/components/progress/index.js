@@ -1,8 +1,8 @@
 // src/client/content/components/progress.js
 
 import {
-  contentLayout,
-  createComponentsSectionLayout
+  componentsLayout,
+  createComponentsSectionLayoutInfo
 } from '../../../config'
 
 import {
@@ -24,9 +24,7 @@ export const createProgressContent = (container) => {
     description: 'Progress indicators express an unspecified wait time or display the length of a process'
   }
 
-  container.classList.add('components')
-
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initLinearProgress(layout.body)
   initCircularProgress(layout.body)
@@ -41,7 +39,7 @@ export const createProgressContent = (container) => {
  */
 export const initLinearProgress = (container) => {
   const title = 'Linear Progress'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
   // Create determinate linear progress
   const progress25 = createProgress({
@@ -66,15 +64,7 @@ export const initLinearProgress = (container) => {
     variant: PROGRESS_VARIANTS.LINEAR,
     value: 100
   })
-  layout.body.appendChild(progress100.element)
-
-  // Create a progress with label
-  const progressWithLabel = createProgress({
-    variant: PROGRESS_VARIANTS.LINEAR,
-    value: 42,
-    showLabel: true
-  })
-  layout.body.appendChild(progressWithLabel.element)
+  layout.showcase.appendChild(progress100.element)
 }
 
 /**
@@ -83,32 +73,32 @@ export const initLinearProgress = (container) => {
  */
 export const initCircularProgress = (container) => {
   const title = 'Circular Progress'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
   // Create determinate circular progress indicators
   const progress25 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 25
   })
-  layout.body.appendChild(progress25.element)
+  layout.showcase.appendChild(progress25.element)
 
   const progress50 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 50
   })
-  layout.body.appendChild(progress50.element)
+  layout.showcase.appendChild(progress50.element)
 
   const progress75 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 75
   })
-  layout.body.appendChild(progress75.element)
+  layout.showcase.appendChild(progress75.element)
 
   const progress100 = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     value: 100
   })
-  layout.body.appendChild(progress100.element)
+  layout.showcase.appendChild(progress100.element)
 }
 
 /**
@@ -117,21 +107,21 @@ export const initCircularProgress = (container) => {
  */
 export const initIndeterminateProgress = (container) => {
   const title = 'Indeterminate Progress'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
   // Create indeterminate circular progress
   const indeterminateCircular = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
     indeterminate: true
   })
-  layout.body.appendChild(indeterminateCircular.element)
+  layout.showcase.appendChild(indeterminateCircular.element)
 
   // Create indeterminate linear progress
   const indeterminateLinear = createProgress({
     variant: PROGRESS_VARIANTS.LINEAR,
     indeterminate: true
   })
-  layout.body.appendChild(indeterminateLinear.element)
+  layout.showcase.appendChild(indeterminateLinear.element)
 }
 
 /**
@@ -140,7 +130,7 @@ export const initIndeterminateProgress = (container) => {
  */
 export const initBufferProgress = (container) => {
   const title = 'Buffer Progress'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
   // Create progress with buffer indicator
   const progress = createProgress({
@@ -166,7 +156,7 @@ export const initBufferProgress = (container) => {
  */
 export const initInteractiveProgress = (container) => {
   const title = 'Interactive Progress Demo'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
   // Create linear and circular progress indicators for interaction
   const linearProgress = createProgress({
@@ -221,45 +211,45 @@ export const initInteractiveProgress = (container) => {
   })
   controls.appendChild(buttonsContainer)
 
-  // Preset buttons
-  const createPresetButton = (value) => {
-    const button = createButton({
-      text: `${value}%`,
-      variant: 'outlined'
-    })
+  // // Preset buttons
+  // const createPresetButton = (value) => {
+  //   const button = createButton({
+  //     text: `${value}%`,
+  //     variant: 'outlined'
+  //   })
 
-    button.on('click', () => {
-      linearProgress.setValue(value)
-      circularProgress.setValue(value)
-      valueInput.setValue(value.toString())
-    })
+  //   button.on('click', () => {
+  //     linearProgress.setValue(value)
+  //     circularProgress.setValue(value)
+  //     valueInput.setValue(value.toString())
+  //   })
 
-    buttonsContainer.appendChild(button.element)
-  }
+  //   buttonsContainer.appendChild(button.element)
+  // }
 
-  [0, 25, 50, 75, 100].forEach(createPresetButton)
+  // [0, 25, 50, 75, 100].forEach(createPresetButton)
 
-  // Toggle determiniate/indeterminate
-  const toggleButton = createButton({
-    text: 'Toggle Indeterminate',
-    variant: 'filled'
-  })
+  // // Toggle determiniate/indeterminate
+  // const toggleButton = createButton({
+  //   text: 'Toggle Indeterminate',
+  //   variant: 'filled'
+  // })
 
-  toggleButton.on('click', () => {
-    const isIndeterminate = linearProgress.isIndeterminate()
-    linearProgress.setIndeterminate(!isIndeterminate)
-    circularProgress.setIndeterminate(!isIndeterminate)
+  // toggleButton.on('click', () => {
+  //   const isIndeterminate = linearProgress.isIndeterminate()
+  //   linearProgress.setIndeterminate(!isIndeterminate)
+  //   circularProgress.setIndeterminate(!isIndeterminate)
 
-    toggleButton.setText(isIndeterminate ? 'Toggle Indeterminate' : 'Switch to Determinate')
+  //   toggleButton.setText(isIndeterminate ? 'Toggle Indeterminate' : 'Switch to Determinate')
 
-    // Enable/disable value controls based on state
-    valueInput.element.disabled = !isIndeterminate
-    document.querySelectorAll('.buttons-container button').forEach(
-      btn => { btn.disabled = !isIndeterminate }
-    )
-  })
+  //   // Enable/disable value controls based on state
+  //   valueInput.element.disabled = !isIndeterminate
+  //   document.querySelectorAll('.buttons-container button').forEach(
+  //     btn => { btn.disabled = !isIndeterminate }
+  //   )
+  // })
 
-  controls.appendChild(toggleButton.element)
+  // controls.appendChild(toggleButton.element)
 
   // Toggle disabled state
   const disableButton = createButton({

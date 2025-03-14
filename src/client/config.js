@@ -49,56 +49,120 @@ export const contentLayout = (info) => [
   [e, { id: 'foot', class: 'mtrl-content__footer' }]
 ]
 
-export const createComponentsSectionLayout = (info) => [
-  [e, { tag: 'section', class: 'mtrl-content__section' },
-    [e, { class: `mtrl-content__section-head ${info.class}` },
-      [e, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }],
-      [e, { id: 'title', tag: 'div', class: 'mtrl-content__section-description', text: info.description }]
+export const componentsLayout = (info) => [
+  [e, 'container', { id: 'container', class: 'mtrl-components' },
+    [e, 'header', { id: 'head', class: 'mtrl-components__header' },
+      [e, { tag: 'section', class: 'mtrl-components__box info' },
+        [e, 'h1', { id: 'title', class: 'mtrl-components__title', text: info.title }],
+        [e, 'p', { id: 'decription', class: 'mtrl-components__text', text: info.description }]
+      ],
+      [e, { tag: 'section', class: 'mtrl-components__box visual' }]
     ],
-    [e, 'div', { id: 'body', class: 'mtrl-content__section-body' },
-      [e, 'div', { id: 'showcase', class: 'mtrl-content__section-showcase' }]
+    [e, { id: 'body', class: 'mtrl-components__body' }],
+    [e, { id: 'foot', class: 'mtrl-components__footer' }]
+  ]
+]
+
+export const createComponentsSectionLayout = (info) => [
+  [e, { tag: 'section', class: 'mtrl-components__section' },
+    [e, { class: `mtrl-components__section-head ${info.class}` },
+      [e, { id: 'title', tag: 'h2', class: 'mtrl-components__section-title', text: info.title }],
+      [e, { id: 'title', tag: 'div', class: 'mtrl-components__section-description', text: info.description }]
+    ],
+    [e, 'div', { id: 'body', class: 'mtrl-components__section-body' },
+      [e, 'div', { id: 'showcase', class: 'mtrl-components__section-showcase' }]
     ]
   ]
 ]
 
 export const createComponentsSectionLayoutBox = (info) => [
-  [e, { tag: 'section', class: 'mtrl-content__section' },
-    [e, { class: `mtrl-content__section-head ${info.class}` },
-      [e, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }],
-      [e, { id: 'title', tag: 'div', class: 'mtrl-content__section-description', text: info.description }]
+  [e, { tag: 'section', class: 'mtrl-components__section' },
+    [e, { class: `mtrl-components__section-head ${info.class}` },
+      [e, { id: 'title', tag: 'h2', class: 'mtrl-components__section-title', text: info.title }],
+      [e, { id: 'title', tag: 'div', class: 'mtrl-components__section-description', text: info.description }]
     ],
-    [e, 'div', { id: 'body', class: 'mtrl-content__section-box' },
-      [e, 'div', { id: 'showcase', class: 'mtrl-content__section-showcase' }]
+    [e, 'div', { id: 'body', class: 'mtrl-components__section-box' },
+      [e, 'div', { id: 'showcase', class: 'mtrl-components__section-showcase' }]
     ]
   ]
 ]
 
 export const createComponentsSectionLayoutInfo = (info) => [
-  [e, { tag: 'section', class: 'mtrl-content__section mtrl-content__section' },
-    [e, { class: 'mtrl-content__section-head' },
-      [e, { id: 'title', tag: 'h2', class: 'mtrl-content__section-title', text: info.title }]
+  [e, { tag: 'section', class: 'mtrl-components__section mtrl-components__section' },
+    [e, { class: 'mtrl-components__section-head' },
+      [e, { id: 'title', tag: 'h2', class: 'mtrl-components__section-title', text: info.title }]
     ],
-    [e, 'div', { id: 'body', class: 'mtrl-content__section-body' },
-      [e, 'div', { id: 'showcase', class: 'mtrl-content__section-showcase' }],
-      [e, 'div', { id: 'info', class: 'mtrl-content__section-info' }]
+    [e, 'div', { id: 'body', class: 'mtrl-components__section-body' },
+      [e, 'div', { id: 'showcase', class: 'mtrl-components__section-showcase' }],
+      [e, 'div', { id: 'info', class: 'mtrl-components__section-info' }]
     ]
   ]
 ]
 
+// export const themesMenu = [
+//   {
+//     name: 'colors',
+//     text: 'Color',
+//     items: [
+
+//       { name: 'bluekhaki', text: 'Blue Khaki' },
+//       { name: 'brownbeige', text: 'Brown Beige' },
+//       { name: 'tealcaramel', text: 'Teal Caramel' },
+//       { name: 'greenbeige', text: 'Green Beige' },
+//       { name: 'sageivory', text: 'Sage Ivory' },
+//       { name: 'browngreen', text: 'Brown Green' }
+//     ]
+//   },
+//   {
+//     name: 'seasons',
+//     text: 'Seasons',
+//     items: [
+//       { name: 'spring', text: 'Spring' },
+//       { name: 'summer', text: 'Summer' },
+//       { name: 'autumn', text: 'Autumn' },
+//       { name: 'winter', text: 'Winter' }
+//     ]
+
+//   },
+//   { name: 'ocean', text: 'Ocean' },
+//   { name: 'forest', text: 'Forest' },
+//   { name: 'sunset', text: 'Sunset' }
+// ]
+
 export const themesMenu = [
-  { name: 'ocean', text: 'Ocean' },
-  { name: 'forest', text: 'Forest' },
-  { name: 'sunset', text: 'Sunset' },
   { name: 'spring', text: 'Spring' },
   { name: 'summer', text: 'Summer' },
   { name: 'autumn', text: 'Autumn' },
-  { name: 'winter', text: 'Winter' }
+  { name: 'winter', text: 'Winter' },
+  { name: 'ocean', text: 'Ocean' },
+  { name: 'forest', text: 'Forest' },
+  { name: 'sunset', text: 'Sunset' },
+  { name: 'bluekhaki', text: 'Blue Khaki' },
+  { name: 'brownbeige', text: 'Brown Beige' },
+  { name: 'tealcaramel', text: 'Teal Caramel' }
 ]
 
 export const navigation = {
   components: [
     { id: 'badges', label: 'Badges', path: '/components/badges' },
-    { id: 'buttons', label: 'Buttons', path: '/components/buttons' },
+    {
+      id: 'appbars',
+      label: 'App bars',
+      items: [
+        { id: 'bottomappbars', label: 'Bottom app bar', path: '/components/app-bars/bottom' },
+        { id: 'topappbars', label: 'Top app bar', path: '/components/app-bars/top' }
+      ]
+    },
+    {
+      id: 'buttons',
+      label: 'Buttons',
+      items: [
+        { id: 'common', label: 'Common', path: '/components/buttons/common' },
+        { id: 'fab', label: 'FAB', path: '/components/buttons/fab' },
+        { id: 'extended-fab', label: 'Extended FAB', path: '/components/buttons/extended-fab' },
+        { id: 'segmented-buttons', label: 'Segemented Buttons', path: '/components/buttons/segmented-buttons' }
+      ]
+    },
     { id: 'cards', label: 'Cards', path: '/components/cards' },
     // { id: 'carousel', label: 'Carousel', path: '/components/carousel' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
