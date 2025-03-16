@@ -15,6 +15,20 @@ $components: '#{b.$prefix}-components';
 
 .#{$components} {
   
+
+  &-grid__container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: start;
+    gap: 20px;
+  }
+
+  &-flex__container {
+    display: flex;
+    justify-items: start;
+    gap: 20px;
+  }
+
   &__header {
     height: 100px;
     margin-bottom: 32px;

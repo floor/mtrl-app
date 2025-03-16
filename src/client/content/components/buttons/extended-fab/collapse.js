@@ -1,7 +1,7 @@
 // src/client/content/components/extended-fab/collapse.js
 import {
   createComponentsSectionLayout
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout

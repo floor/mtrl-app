@@ -1,7 +1,7 @@
 // src/client/content/components/app-bars/bottom/events-api.js
 import {
   createComponentsSectionLayoutBox
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   FAB_VARIANTS

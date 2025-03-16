@@ -1,6 +1,6 @@
 // src/client/content/components/tabs/index.js
 
-import { componentsLayout } from '../../../config'
+import { componentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasicTabs } from './basic'
 import { initSecondaryTabs } from './secondary'

@@ -26,6 +26,7 @@ import { createMenusContent } from './components/menus'
 import { createNavigationsContent } from './components/navigations'
 import { createProgressContent } from './components/progress'
 import { createRadiosContent } from './components/radios'
+import { createSearchContent } from './components/search'
 import { createSlidersContent } from './components/sliders'
 import { createSnackbarsContent } from './components/snackbars'
 import { createSwitchesContent } from './components/switches'
@@ -62,6 +63,7 @@ export {
   createNavigationsContent,
   createProgressContent,
   createRadiosContent,
+  createSearchContent,
   createSlidersContent,
   createSnackbarsContent,
   createSwitchesContent,

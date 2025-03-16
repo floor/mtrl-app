@@ -2,7 +2,7 @@
 
 import {
   contentLayout
-} from '../../config'
+} from '../../layout'
 
 import {
   createLayout,

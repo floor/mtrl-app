@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/top/index.js
 
-import { componentsLayout } from '../../../../config'
+import { componentsLayout } from '../../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasicTopAppBar } from './basic'
 import { initTypesTopAppBar } from './types'

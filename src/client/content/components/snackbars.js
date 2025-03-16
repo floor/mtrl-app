@@ -1,7 +1,7 @@
 // src/client/view/components/snackbars.js
 import {
   componentsLayout
-} from '../../config'
+} from '../../layout'
 
 import {
   createLayout,

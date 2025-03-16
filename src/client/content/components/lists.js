@@ -2,7 +2,7 @@
 import {
   componentsLayout,
   createComponentsSectionLayout
-} from '../../config'
+} from '../../layout'
 
 import {
   createLayout,

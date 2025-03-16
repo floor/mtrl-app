@@ -2,7 +2,7 @@
 
 import {
   createComponentsSectionLayout
-} from '../../../config'
+} from '../../../layout'
 
 import {
   TIME_FORMAT

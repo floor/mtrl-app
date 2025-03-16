@@ -1,6 +1,6 @@
 // src/client/content/components/dialogs/index.js
 
-import { componentsLayout } from '../../../config'
+import { componentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasic } from './basic'
 import { initSizes } from './sizes'

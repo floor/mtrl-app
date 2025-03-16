@@ -1,104 +1,5 @@
 // src/client/config.js
 
-import {
-  iconMtrl,
-  iconComponents,
-  iconGetstarted,
-  iconStyles,
-  iconCore,
-  iconMore,
-  iconDark
-} from './icons'
-
-import {
-  createElement as e,
-  createNavigation,
-  createButton
-} from 'mtrl'
-
-export const layout = [
-  [createNavigation, 'rail', {
-    variant: 'rail',
-    behavior: 'fixed',
-    items: [
-      { id: 'home', icon: iconMtrl, label: 'Home' },
-      { id: 'getstarted', icon: iconGetstarted, label: 'Get Started' },
-      { id: 'core', icon: iconCore, label: 'Core' },
-      { id: 'styles', icon: iconStyles, label: 'Styles' },
-      { id: 'components', icon: iconComponents, label: 'Components' }
-    ]
-  }],
-  [createNavigation, 'nav', {
-    variant: 'drawer',
-    items: []
-  }],
-  [e, 'content', { class: 'mtrl-content' }],
-  [createButton, 'moreMenu', { icon: iconMore, iconSize: 'medium', class: 'more-menu', variant: 'outlined' }],
-  [createButton, 'toggleDarkmode', { icon: iconDark, iconSize: 'medium', class: 'toggle-darkmode', variant: 'outlined' }]
-]
-
-export const contentLayout = (info) => [
-  [e, 'header', { id: 'head', class: 'mtrl-content__header' },
-    [e, { tag: 'section', class: 'mtrl-content__box info' },
-      [e, 'h1', { id: 'title', class: 'mtrl-content__title', text: info.title }],
-      [e, 'p', { id: 'decription', class: 'mtrl-content__text', text: info.description }]
-    ],
-    [e, { tag: 'section', class: 'mtrl-content__box visual' }]
-  ],
-  [e, { id: 'body', class: 'mtrl-content__body' }],
-  [e, { id: 'foot', class: 'mtrl-content__footer' }]
-]
-
-export const componentsLayout = (info) => [
-  [e, 'container', { id: 'container', class: 'mtrl-components' },
-    [e, 'header', { id: 'head', class: 'mtrl-components__header' },
-      [e, { tag: 'section', class: 'mtrl-components__box info' },
-        [e, 'h1', { id: 'title', class: 'mtrl-components__title', text: info.title }],
-        [e, 'p', { id: 'decription', class: 'mtrl-components__text', text: info.description }]
-      ],
-      [e, { tag: 'section', class: 'mtrl-components__box visual' }]
-    ],
-    [e, { id: 'body', class: 'mtrl-components__body' }],
-    [e, { id: 'foot', class: 'mtrl-components__footer' }]
-  ]
-]
-
-export const createComponentsSectionLayout = (info) => [
-  [e, { tag: 'section', class: 'mtrl-components__section' },
-    [e, { class: 'mtrl-components__section-head' },
-      [e, { id: 'title', tag: 'h2', class: 'mtrl-components__section-title', text: info.title }],
-      [e, { id: 'title', tag: 'div', class: 'mtrl-components__section-description', text: info.description }]
-    ],
-    [e, 'div', { id: 'body', class: 'mtrl-components__section-body' },
-      [e, 'div', { id: 'showcase', class: `mtrl-components__section-showcase ${info.class}` }]
-    ]
-  ]
-]
-
-export const createComponentsSectionLayoutBox = (info) => [
-  [e, { tag: 'section', class: 'mtrl-components__section' },
-    [e, { class: `mtrl-components__section-head ${info.class}` },
-      [e, { id: 'title', tag: 'h2', class: 'mtrl-components__section-title', text: info.title }],
-      [e, { id: 'title', tag: 'div', class: 'mtrl-components__section-description', text: info.description }]
-    ],
-    [e, 'div', { id: 'body', class: 'mtrl-components__section-box' },
-      [e, 'div', { id: 'showcase', class: 'mtrl-components__section-showcase' }]
-    ]
-  ]
-]
-
-export const createComponentsSectionLayoutInfo = (info) => [
-  [e, { tag: 'section', class: 'mtrl-components__section mtrl-components__section' },
-    [e, { class: 'mtrl-components__section-head' },
-      [e, { id: 'title', tag: 'h2', class: 'mtrl-components__section-title', text: info.title }]
-    ],
-    [e, 'div', { id: 'body', class: 'mtrl-components__section-body' },
-      [e, 'div', { id: 'showcase', class: 'mtrl-components__section-showcase' }],
-      [e, 'div', { id: 'info', class: 'mtrl-components__section-info' }]
-    ]
-  ]
-]
-
 // export const themesMenu = [
 //   {
 //     name: 'colors',
@@ -185,6 +86,7 @@ export const navigation = {
     // { id: 'navigations', label: 'Navigations', path: '/components/navigations' },
     { id: 'progress', label: 'Progress', path: '/components/progress' },
     { id: 'radios', label: 'Radio Buttons', path: '/components/radios' },
+    { id: 'search', label: 'Search', path: '/components/search' },
     { id: 'sliders', label: 'Sliders', path: '/components/sliders' },
     { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
     { id: 'switches', label: 'Switches', path: '/components/switches' },

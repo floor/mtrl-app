@@ -1,6 +1,6 @@
 // src/client/content/components/sliders/index.js
 
-import { componentsLayout } from '../../../config'
+import { componentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initContinuous, initContinuous1000 } from './continuous'
 import { initCentered } from './centered'

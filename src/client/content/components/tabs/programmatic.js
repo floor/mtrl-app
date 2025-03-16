@@ -1,6 +1,6 @@
 import {
   createComponentsSectionLayoutBox
-} from '../../../config'
+} from '../../../layout'
 
 import {
   createLayout,

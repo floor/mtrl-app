@@ -1,7 +1,7 @@
 // src/client/content/components/fab/interaction.js
 import {
   createComponentsSectionLayout
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout,

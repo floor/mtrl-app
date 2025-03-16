@@ -75,6 +75,10 @@ app.use('/public', express.static(path.join(__dirname, 'public'), {
   }
 }));
 
+app.get('/robots.txt', (req, res) => {
+  res.setHeader('Content-Type', 'text/plain')
+  res.send('User-agent: *\nDisallow:')
+})
 // Handle sourcemaps specifically
 app.get('*.map', (req, res) => {
   const mapPath = path.join(__dirname, req.path);

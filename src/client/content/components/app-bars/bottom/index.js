@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/bottom/index.js
 
-import { componentsLayout } from '../../../../config'
+import { componentsLayout } from '../../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasicBottomAppBar } from './basic'
 import { initWithFabBottomAppBar } from './with-fab'

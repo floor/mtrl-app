@@ -5,7 +5,7 @@ import { CAROUSEL_LAYOUTS, CAROUSEL_SCROLL_BEHAVIORS } from 'mtrl/src/components
 import {
   componentsLayout,
   createComponentsSectionLayout
-} from '../../config'
+} from '../../layout'
 
 import {
   createLayout,

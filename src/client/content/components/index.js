@@ -1,4 +1,4 @@
-import { contentLayout } from '../../config'
+import { contentLayout } from '../../layout'
 import { createLayout, createElement, createButton } from 'mtrl'
 
 import { componentsList } from './components-list'
@@ -10,13 +10,6 @@ import createCard, {
   CARD_VARIANTS,
   withExpandable
 } from 'mtrl/src/components/card'
-
-// Import icons (you can replace these with your actual icon imports)
-import {
-  iconComponents,
-  iconCore,
-  iconStyles
-} from '../../icons'
 
 /**
  * Creates the main Components showcase content
@@ -46,7 +39,7 @@ const initComponentsGrid = (container) => {
   // Create section
   const section = createElement({
     tag: 'section',
-    class: 'mtrl-content__section components-grid'
+    class: 'mtrl-content__section mtrl-components-grid'
   })
 
   // Add section title
@@ -68,7 +61,7 @@ const initComponentsGrid = (container) => {
   // Create the grid container
   const grid = createElement({
     tag: 'div',
-    class: 'components-grid__container'
+    class: 'mtrl-components-grid__container'
   })
   section.appendChild(grid)
 

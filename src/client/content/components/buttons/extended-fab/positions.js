@@ -1,7 +1,7 @@
 // src/client/content/components/extended-fab/positions.js
 import {
   createComponentsSectionLayoutInfo
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout

@@ -1,6 +1,6 @@
 // src/client/content/components/cards/index.js
 
-import { componentsLayout } from '../../../config'
+import { componentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { addCardStyles } from './styles'
 import { artworks } from './artwork-data'

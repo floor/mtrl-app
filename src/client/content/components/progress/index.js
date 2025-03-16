@@ -3,7 +3,7 @@
 import {
   componentsLayout,
   createComponentsSectionLayoutInfo
-} from '../../../config'
+} from '../../../layout'
 
 import {
   createLayout,

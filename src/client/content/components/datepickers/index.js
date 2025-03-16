@@ -1,6 +1,6 @@
 // src/client/content/components/datepickers/index.js
 
-import { componentsLayout } from '../../../config'
+import { componentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasic } from './basic'
 import { initRange } from './range'

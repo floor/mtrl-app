@@ -2,7 +2,7 @@
 
 import {
   createComponentsSectionLayout
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout,
@@ -24,7 +24,8 @@ export const initIcons = (container) => {
 
     const btn = createButton({
       icon: heartIcon,
-      iconSize: 'medium'
+      iconSize: 'medium',
+      ariaLabel: 'Like'
     })
 
     if (!disabled) btn.disable()

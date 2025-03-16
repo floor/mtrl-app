@@ -2,7 +2,7 @@ import { capitalize } from '../../../../core/utils'
 
 import {
   createComponentsSectionLayout
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout

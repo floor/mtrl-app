@@ -1,7 +1,7 @@
 // src/client/content/components/segmented-buttons/variants.js
 import {
   createComponentsSectionLayout
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout

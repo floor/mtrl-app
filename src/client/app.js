@@ -2,7 +2,8 @@
 
 import { createRouter } from './core/router'
 import { createLayout, createMenu } from 'mtrl'
-import { navigation, layout, themesMenu } from './config'
+import { navigation, themesMenu } from './config'
+import { mainLayout } from './layout'
 import { createEventManager, setupErrorBoundary } from './core/events'
 import themeService from './core/theme'
 import {
@@ -32,7 +33,7 @@ const createApp = (options = {}) => {
   // Initialize layout and return component
   const initializeLayout = () => {
     try {
-      layoutInstance = createLayout(layout, document.body)
+      layoutInstance = createLayout(mainLayout, document.body)
       return layoutInstance
     } catch (error) {
       console.error('Failed to initialize layout:', error)

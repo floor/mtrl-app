@@ -2,7 +2,7 @@
 
 import {
   contentLayout
-} from '../../config'
+} from '../../layout'
 
 import {
   createLayout,
@@ -310,31 +310,6 @@ export const initDynamicTheme = (ui) => {
     class: 'theme-color-chips'
   })
 
-  // Primary color
-  const primaryChip = createElement({
-    tag: 'div',
-    class: 'theme-color-chip primary-chip',
-    text: 'Primary'
-  })
-
-  // Secondary color
-  const secondaryChip = createElement({
-    tag: 'div',
-    class: 'theme-color-chip secondary-chip',
-    text: 'Secondary'
-  })
-
-  // Tertiary color
-  const tertiaryChip = createElement({
-    tag: 'div',
-    class: 'theme-color-chip tertiary-chip',
-    text: 'Tertiary'
-  })
-
-  themeColorChips.appendChild(primaryChip)
-  themeColorChips.appendChild(secondaryChip)
-  themeColorChips.appendChild(tertiaryChip)
-
   // Theme switchers
   const themeSwitchers = createElement({
     tag: 'div',
@@ -400,28 +375,6 @@ export const initDynamicTheme = (ui) => {
   container.appendChild(themeTitle)
   container.appendChild(themeColorChips)
   container.appendChild(themeSwitchers)
-
-  // Add explanation for neutrals
-  const neutralsExplanation = createElement({
-    tag: 'div',
-    class: 'neutrals-explanation'
-  })
-
-  const neutralsTitle = createElement({
-    tag: 'h4',
-    text: 'Material Design Surface System',
-    class: 'neutrals-explanation-title'
-  })
-
-  const neutralsDescription = createElement({
-    tag: 'p',
-    text: 'The Material Design system uses a range of surface and container tones to create hierarchy and depth. From Surface Bright to Surface Container Highest, each level has specific use cases for different UI elements and provides consistent elevation throughout the interface.',
-    class: 'neutrals-explanation-text'
-  })
-
-  neutralsExplanation.appendChild(neutralsTitle)
-  neutralsExplanation.appendChild(neutralsDescription)
-  container.appendChild(neutralsExplanation)
 }
 
 export const createColorsLayout = () => [

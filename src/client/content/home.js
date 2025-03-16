@@ -1,9 +1,8 @@
 // src/client/content/home.js
 
 import {
-  contentLayout,
-  createComponentsSectionLayout
-} from '../config'
+  contentLayout
+} from '../layout'
 
 import {
   createLayout

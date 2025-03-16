@@ -1,7 +1,7 @@
 // src/client/content/components/segmented-button/form-integration.js
 import {
   createComponentsSectionLayout
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout,

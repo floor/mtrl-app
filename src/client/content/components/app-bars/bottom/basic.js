@@ -1,7 +1,7 @@
 // src/client/content/components/app-bars/bottom/basic.js
 import {
   createComponentsSectionLayoutBox
-} from '../../../../config'
+} from '../../../../layout'
 
 import {
   createLayout,

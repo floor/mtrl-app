@@ -1,6 +1,6 @@
 // src/client/content/components/badges/index.js
 
-import { componentsLayout } from '../../../config'
+import { componentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initStandard } from './standard'
 import { initDot } from './dot'

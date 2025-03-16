@@ -28,6 +28,7 @@ import {
   createMenusContent,
   createProgressContent,
   createRadiosContent,
+  createSearchContent,
   createSlidersContent,
   createSnackbarsContent,
   createSwitchesContent,
@@ -69,6 +70,7 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/navigations', () => createNavigationsContent(ui.content))
   router.register('components/progress', () => createProgressContent(ui.content))
   router.register('components/radios', () => createRadiosContent(ui.content))
+  router.register('components/search', () => createSearchContent(ui.content))
   router.register('components/sliders', () => createSlidersContent(ui.content))
   router.register('components/snackbars', () => createSnackbarsContent(ui.content))
   router.register('components/switches', () => createSwitchesContent(ui.content))

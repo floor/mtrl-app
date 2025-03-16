@@ -3,7 +3,7 @@
 import {
   contentLayout,
   createComponentsSectionLayout
-} from '../../config'
+} from '../../layout'
 
 // Import utility functions for layout examples
 import { setupGridInteractions, setupResponsiveDemo, setupCardInteractions } from './layout-utils'

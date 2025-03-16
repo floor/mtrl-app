@@ -1,7 +1,7 @@
 // src/client/content/components/app-bars/bottom/with-fab.js
 import {
-  createComponentsSectionLayoutInfo
-} from '../../../../config'
+  createSectionShowcase
+} from '../../../../layout'
 
 import {
   FAB_VARIANTS,
@@ -18,7 +18,7 @@ import {
 export const initWithFabBottomAppBar = (container) => {
   const title = 'Bottom App Bar with FAB'
 
-  const layout = createLayout(createComponentsSectionLayoutInfo({
+  const layout = createLayout(createSectionShowcase({
     title,
     class: 'noflex'
   }), container).component

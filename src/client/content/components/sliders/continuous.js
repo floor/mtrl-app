@@ -1,6 +1,6 @@
 import {
   createComponentsSectionLayoutInfo
-} from '../../../config'
+} from '../../../layout'
 
 import {
   createLayout,
@@ -19,7 +19,7 @@ export const initContinuous = (container) => {
     label: 'Brightness',
     min: 0,
     max: 100,
-    value: 250,
+    value: 50,
     step: 1
   })
   layout.body.appendChild(slider.element)
