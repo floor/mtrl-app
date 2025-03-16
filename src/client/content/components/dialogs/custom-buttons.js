@@ -12,25 +12,7 @@ import {
   BUTTON_VARIANTS
 } from 'mtrl/src/components/button'
 
-export const initCustomButtons = (container) => {
-  const title = 'Dialog with Custom Buttons'
-  const description = 'Dialogs can have custom buttons with different variants and behaviors'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
-
-  // Create button to open dialog
-  const openButton = createButton({
-    text: 'Dialog with Custom Buttons',
-    variant: 'filled'
-  })
-
-  // Status message element
-  const statusMessage = document.createElement('div')
-  statusMessage.classList.add('status-message')
-  statusMessage.style.marginTop = '16px'
-  statusMessage.style.padding = '8px'
-  statusMessage.style.borderRadius = '4px'
-
-  // Create dialog with custom buttons
+const createButtonsDialog = (statusMessage) => {
   const dialog = createDialog({
     title: 'Save Changes?',
     content: '<p>Your changes will be lost if you don\'t save them.</p>',
@@ -64,10 +46,32 @@ export const initCustomButtons = (container) => {
       }
     ]
   })
+  dialog.open()
+}
+
+export const initCustomButtons = (container) => {
+  const title = 'Dialog with Custom Buttons'
+  const description = 'Dialogs can have custom buttons with different variants and behaviors'
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+
+  // Create button to open dialog
+  const openButton = createButton({
+    text: 'Dialog with Custom Buttons',
+    variant: 'filled'
+  })
+
+  // Status message element
+  const statusMessage = document.createElement('div')
+  statusMessage.classList.add('status-message')
+  statusMessage.style.marginTop = '16px'
+  statusMessage.style.padding = '8px'
+  statusMessage.style.borderRadius = '4px'
+
+  // Create dialog with custom buttons
 
   // Open dialog when button is clicked
   openButton.on('click', () => {
-    dialog.open()
+    createButtonsDialog(statusMessage)
   })
 
   // Add button and status message to layout

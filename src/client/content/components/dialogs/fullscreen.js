@@ -12,18 +12,7 @@ import {
   DIALOG_SIZES
 } from 'mtrl/src/components/dialog'
 
-export const initFullscreen = (container) => {
-  const title = 'Fullscreen Dialog'
-  const description = 'A fullscreen dialog for immersive experiences or mobile interfaces'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
-
-  // Create button to open dialog
-  const openButton = createButton({
-    text: 'Open Fullscreen Dialog',
-    variant: 'filled'
-  })
-
-  // Create a fullscreen dialog
+const createFullscreenDialog = (size) => {
   const dialog = createDialog({
     title: 'Fullscreen Dialog',
     content: `
@@ -48,10 +37,25 @@ export const initFullscreen = (container) => {
       }
     ]
   })
+  dialog.open()
+}
+
+export const initFullscreen = (container) => {
+  const title = 'Fullscreen Dialog'
+  const description = 'A fullscreen dialog for immersive experiences or mobile interfaces'
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+
+  // Create button to open dialog
+  const openButton = createButton({
+    text: 'Open Fullscreen Dialog',
+    variant: 'filled'
+  })
+
+  // Create a fullscreen dialog
 
   // Open dialog when button is clicked
   openButton.on('click', () => {
-    dialog.open()
+    createFullscreenDialog()
   })
 
   // Add button to layout

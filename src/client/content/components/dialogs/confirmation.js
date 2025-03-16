@@ -28,10 +28,10 @@ export const initConfirmation = (container) => {
   resultDisplay.style.minHeight = '36px'
 
   // Create the base dialog
-  const dialog = createDialog()
 
   // Open confirmation when button is clicked
   confirmButton.on('click', async () => {
+    const dialog = createDialog()
     const result = await dialog.confirm({
       title: 'Delete Item',
       message: 'Are you sure you want to delete this item? This action cannot be undone.',

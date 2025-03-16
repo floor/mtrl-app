@@ -1,0 +1,174 @@
+// Add this to your src/client/styles/content/styles.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/config' as c;
+
+.usage-guide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+  
+  .mtrl-card {
+    height: 100%;
+    width: 100% !important; // Override default card width
+    
+    // Make sure the code examples display properly
+    .mtrl-card-content {
+      code {
+        white-space: pre;
+        overflow-x: auto;
+        display: block;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  }
+  
+  .usage-note {
+    margin-top: 16px;
+    font-size: 0.875rem;
+    color: t.color('on-surface-variant');
+    font-style: italic;
+  }
+  
+  // Properly style code blocks inside cards
+  .code-block {
+    background-color: t.color('surface-container-high');
+    border-radius: f.get-shape('small');
+    padding: 16px;
+    margin: 16px 0;
+    overflow-x: auto;
+    
+    code {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: t.color('on-surface');
+      
+      // Comment styles
+      .comment {
+        color: t.alpha('on-surface-variant', 0.8);
+      }
+    }
+    
+    // Dark mode adjustments
+    [data-theme-mode="dark"] & {
+      background-color: t.alpha('surface-bright', 0.05);
+    }
+  }
+}
+
+// Surface demos
+.surface-demo {
+  margin-top: 24px;
+  
+  .mtrl-card {
+    width: 100% !important;
+  }
+  
+  .surface-container-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  
+  .surface-sample {
+    height: 100px;
+    border-radius: f.get-shape('medium');
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include m.elevation(1);
+    
+    // Surface types
+    &--surface {
+      background-color: t.color('surface');
+    }
+    
+    &--container-lowest {
+      background-color: t.color('surface-container-lowest');
+    }
+    
+    &--container-low {
+      background-color: t.color('surface-container-low');
+    }
+    
+    &--container {
+      background-color: t.color('surface-container');
+    }
+    
+    &--container-high {
+      background-color: t.color('surface-container-high');
+    }
+    
+    &--container-highest {
+      background-color: t.color('surface-container-highest');
+    }
+    
+    .surface-name {
+      font-weight: 500;
+      color: t.color('on-surface');
+    }
+    
+    .surface-desc {
+      font-size: 0.75rem;
+      color: t.color('on-surface-variant');
+    }
+  }
+}
+
+// Theme showcase updates
+.theme-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+  
+  &__sample {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: f.get-shape('medium');
+    font-weight: 500;
+    color: white;
+    @include m.elevation(1);
+    
+    // Theme colors
+    &--material {
+      background-color: #6442d6;
+    }
+    
+    &--ocean {
+      background-color: #006493;
+    }
+    
+    &--forest {
+      background-color: #3f4f2f;
+    }
+    
+    &--sunset {
+      background-color: #b34700;
+    }
+    
+    &--spring {
+      background-color: #006e2b;
+    }
+  }
+}
+
+// Responsive adjustments
+@include m.breakpoint-down('md') {
+  .usage-guide {
+    grid-template-columns: 1fr;
+  }
+  
+  .surface-container-demo {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+}

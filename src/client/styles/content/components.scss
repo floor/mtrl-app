@@ -8,6 +8,11 @@
 
 $components: '#{b.$prefix}-components';
 
+.card-loading-content {
+  padding: 16px;
+}
+
+
 .#{$components} {
   
   &__header {

@@ -17,13 +17,9 @@ export const initFormIntegration = (container) => {
   const title = 'Form Integration'
   const layout = createLayout(createComponentsSectionLayout({
     title,
-    description: 'Segmented buttons can be used within forms as an alternative to radio buttons or checkboxes.'
+    description: 'Segmented buttons can be used within forms as an alternative to radio buttons or checkboxes.',
+    class: 'noflex'
   }), container).component
-
-  // Simple form integration example
-  const formExampleTitle = document.createElement('h3')
-  formExampleTitle.textContent = 'Basic Form Integration'
-  layout.showcase.appendChild(formExampleTitle)
 
   const formExampleDescription = document.createElement('p')
   formExampleDescription.textContent = 'Segmented buttons can be used in forms to select options. Single-select mode works like radio buttons, while multi-select mode works like checkboxes.'

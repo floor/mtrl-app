@@ -104,6 +104,17 @@ $content: '#{b.$prefix}-content';
     margin-top: 24px;
   }
   
+  // Section title for separating color groups
+  .theme-color-section-title {
+    grid-column: 1 / -1;
+    padding: 16px 0 8px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: t.color('on-surface');
+    border-bottom: 1px solid t.color('outline-variant');
+    margin-bottom: 8px;
+  }
+  
   .theme-color-swatch {
     border-radius: f.get-shape('small');
     height: 100px;
@@ -337,33 +348,11 @@ $content: '#{b.$prefix}-content';
       background-color: #795548;
       color: white;
     }
-
-    &.theme-bluekhaki {
-      background-color: #232c44;
-      color: white;
-    }
-
-    &.theme-brownbeige {
-      background-color: #3e2723;
-      color: white;
-    }
-
-    &.theme-tealcaramel {
-      background-color: #2b4d56;
-      color: white;
-    }
-
-    &.theme-greenbeige {
-      background-color: #5d6e57;
-      color: white;
-    }
-
-    &.theme-sageivory {
-      background-color: #7d8c73;
-      color: white;
-    }
-
     
+    &.theme-material {
+      background-color: #6442d6;
+      color: white;
+    }
   }
   
   .dark-mode-container {
@@ -399,6 +388,48 @@ $content: '#{b.$prefix}-content';
     
     [data-theme-mode="dark"] & {
       background-color: rgba(255, 255, 255, 0.05);
+    }
+  }
+  
+  // Neutral color section styling
+  .neutrals-explanation {
+    margin: 20px 0;
+    padding: 16px;
+    background-color: t.color('surface-container-low');
+    border-left: 4px solid t.color('primary');
+    border-radius: 0 f.get-shape('small') f.get-shape('small') 0;
+    
+    h4 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      color: t.color('on-surface');
+    }
+    
+    p {
+      margin: 0;
+      color: t.color('on-surface-variant');
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .color-theme-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+    
+    .theme-color-swatch {
+      height: 80px;
+      padding: 12px;
+    }
+    
+    .theme-color__label {
+      font-size: 0.95rem;
+    }
+    
+    .theme-color__value {
+      font-size: 0.75rem;
     }
   }
 }

@@ -12,6 +12,23 @@ import {
   DIALOG_SIZES
 } from 'mtrl/src/components/dialog'
 
+const createSizesDialog = (size) => {
+  const dialog = createDialog({
+    title: `${size.name} Dialog`,
+    content: `<p>This is a ${size.name.toLowerCase()} sized dialog.</p>
+                <p>Dialog sizes can be customized to fit different amounts of content.</p>`,
+    size: size.value,
+    buttons: [
+      {
+        text: 'Close',
+        variant: 'text',
+        closeDialog: true
+      }
+    ]
+  })
+  dialog.open()
+}
+
 export const initSizes = (container) => {
   const title = 'Dialog Sizes'
   const description = 'Dialogs come in different sizes: small, medium, large, fullwidth'
@@ -33,23 +50,10 @@ export const initSizes = (container) => {
     })
 
     // Create dialog with specific size
-    const dialog = createDialog({
-      title: `${size.name} Dialog`,
-      content: `<p>This is a ${size.name.toLowerCase()} sized dialog.</p>
-                <p>Dialog sizes can be customized to fit different amounts of content.</p>`,
-      size: size.value,
-      buttons: [
-        {
-          text: 'Close',
-          variant: 'text',
-          closeDialog: true
-        }
-      ]
-    })
 
     // Open dialog when button is clicked
     openButton.on('click', () => {
-      dialog.open()
+      createSizesDialog(size)
     })
 
     // Add button to layout with some margin

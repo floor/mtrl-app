@@ -17,7 +17,8 @@ export const initSelectionModes = (container) => {
   const title = 'Selection Modes'
   const layout = createLayout(createComponentsSectionLayout({
     title,
-    description: 'Segmented buttons support two selection modes: single-select and multi-select.'
+    description: 'Segmented buttons support two selection modes: single-select and multi-select.',
+    class: 'noflex'
   }), container).component
 
   // Single-select section

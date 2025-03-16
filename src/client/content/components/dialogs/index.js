@@ -9,7 +9,7 @@ import { initConfirmation } from './confirmation'
 import { initFullscreen } from './fullscreen'
 import { initFormDialog } from './form-dialog'
 import { initAnimations } from './animations'
-import { initFooterAlignments } from './footer-alignments'
+// import { initFooterAlignments } from './footer-alignments'
 
 export const createDialogsContent = (container) => {
   const info = {
@@ -20,11 +20,11 @@ export const createDialogsContent = (container) => {
   const layout = createLayout(componentsLayout(info), container).component
 
   initBasic(layout.body)
+  initFormDialog(layout.body)
   initSizes(layout.body)
-  initCustomButtons(layout.body)
+  // initCustomButtons(layout.body)
   initConfirmation(layout.body)
   initFullscreen(layout.body)
-  initFormDialog(layout.body)
   initAnimations(layout.body)
-  initFooterAlignments(layout.body)
+  // initFooterAlignments(layout.body)
 }

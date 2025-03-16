@@ -21,6 +21,7 @@ import {
   createCarouselContent,
   createCheckboxesContent,
   createChipsContent,
+  createDatePickersContent,
   createDialogsContent,
   createListsContent,
   createNavigationsContent,
@@ -31,6 +32,7 @@ import {
   createSnackbarsContent,
   createSwitchesContent,
   createTextfieldsContent,
+  createTimePickersContent,
   createTabsContent
 } from '../../content'
 
@@ -60,6 +62,7 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/carousel', () => createCarouselContent(ui.content))
   router.register('components/checkboxes', () => createCheckboxesContent(ui.content))
   router.register('components/chips', () => createChipsContent(ui.content))
+  router.register('components/datepickers', () => createDatePickersContent(ui.content))
   router.register('components/dialogs', () => createDialogsContent(ui.content))
   router.register('components/lists', () => createListsContent(ui.content))
   router.register('components/menus', () => createMenusContent(ui.content))
@@ -70,6 +73,7 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/snackbars', () => createSnackbarsContent(ui.content))
   router.register('components/switches', () => createSwitchesContent(ui.content))
   router.register('components/textfields', () => createTextfieldsContent(ui.content))
+  router.register('components/timepickers', () => createTimePickersContent(ui.content))
   router.register('components/tabs', () => createTabsContent(ui.content))
   // Add navigation hooks
   router.beforeEach((route) => {

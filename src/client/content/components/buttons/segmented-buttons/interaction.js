@@ -45,7 +45,8 @@ export const initInteraction = (container) => {
   const title = 'Interactive Behavior'
   const layout = createLayout(createComponentsSectionLayout({
     title,
-    description: 'Demonstrates the interactive behaviors and events of segmented buttons.'
+    description: 'Demonstrates the interactive behaviors and events of segmented buttons.',
+    class: 'noflex'
   }), container).component
 
   // Event handling section

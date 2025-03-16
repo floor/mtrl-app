@@ -16,7 +16,8 @@ export const initVariants = (container) => {
   const title = 'Segmented Button Basic Examples'
   const layout = createLayout(createComponentsSectionLayout({
     title,
-    description: 'Segmented buttons help people select options, switch views, or sort elements. They can be used with text labels, icons, or both.'
+    description: 'Segmented buttons help people select options, switch views, or sort elements. They can be used with text labels, icons, or both.',
+    class: 'noflex'
   }), container).component
 
   // Text-only segmented button

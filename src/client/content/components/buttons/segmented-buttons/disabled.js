@@ -17,7 +17,8 @@ export const initDisabled = (container) => {
   const title = 'Disabled State'
   const layout = createLayout(createComponentsSectionLayout({
     title,
-    description: 'Segmented buttons and individual segments can be disabled to indicate that they are not interactive.'
+    description: 'Segmented buttons and individual segments can be disabled to indicate that they are not interactive.',
+    class: 'noflex'
   }), container).component
 
   // Fully disabled segmented button section

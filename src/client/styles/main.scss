@@ -1,6 +1,7 @@
 // src/client/styles/main.scss
 @use 'sass:map';
 @use 'mtrl/src/styles/themes/baseline';
+@use 'mtrl/src/styles/themes/material';
 @use 'mtrl/src/styles/themes/ocean';
 @use 'mtrl/src/styles/themes/sunset';
 @use 'mtrl/src/styles/themes/forest';
@@ -16,7 +17,7 @@
 @use 'mtrl/src/styles/themes/browngreen';
 @use 'mtrl/src/core/build/ripple' as ripple;
 @use 'mtrl/src/components/bottom-app-bar/styles' as bottom-app-bar;
-// @use 'mtrl/src/components/top-app-bar/styles' as top-app-bar;
+@use 'mtrl/src/components/top-app-bar/styles' as top-app-bar;
 @use 'mtrl/src/components/badge/styles' as badge;
 @use 'mtrl/src/components/button/styles' as button;
 @use 'mtrl/src/components/fab/styles' as fab;
@@ -26,12 +27,15 @@
 @use 'mtrl/src/components/carousel/styles' as carousel;
 @use 'mtrl/src/components/checkbox/styles' as checkbox;
 @use 'mtrl/src/components/chip/styles' as chip;
+@use 'mtrl/src/components/datepicker/styles' as datepicker;
 @use 'mtrl/src/components/dialog/styles' as dialog;
+@use 'mtrl/src/components/divider/styles' as divider;
 @use 'mtrl/src/components/textfield/styles' as textfield;
 @use 'mtrl/src/components/menu/styles' as menu;
 @use 'mtrl/src/components/progress/styles';
 @use 'mtrl/src/components/switch/styles' as switch;
 @use 'mtrl/src/components/radios/styles' as radios;
+@use 'mtrl/src/components/timepicker/styles' as timepicker;
 @use 'mtrl/src/components/slider/styles' as slider;
 @use 'mtrl/src/components/snackbar/styles' as snackbar;
 @use 'mtrl/src/components/navigation/styles' as navigation;
@@ -42,6 +46,7 @@
 @use './app';
 @use './content/content';
 @use './content/components';
+// @use './content/styles';
 @use './content/colors';
 @use './content/layout';
 @use './content/progress';

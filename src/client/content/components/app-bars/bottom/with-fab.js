@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/bottom/with-fab.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentsSectionLayoutInfo
 } from '../../../../config'
 
 import {
@@ -18,7 +18,7 @@ import {
 export const initWithFabBottomAppBar = (container) => {
   const title = 'Bottom App Bar with FAB'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutInfo({
     title,
     class: 'noflex'
   }), container).component
@@ -33,12 +33,12 @@ export const initWithFabBottomAppBar = (container) => {
   // Create end FAB demo
   const endFabDemo = createFabPositionDemo('end')
 
-  // Create center FAB demo
-  const centerFabDemo = createFabPositionDemo('center')
+  // // Create center FAB demo
+  // const centerFabDemo = createFabPositionDemo('center')
 
   // Add containers to the demo section
   demoContainers.appendChild(endFabDemo.container)
-  demoContainers.appendChild(centerFabDemo.container)
+  // demoContainers.appendChild(centerFabDemo.container)
 
   // Add a description
   const description = document.createElement('div')
@@ -53,8 +53,8 @@ export const initWithFabBottomAppBar = (container) => {
   `
 
   // Add to layout
-  layout.body.appendChild(demoContainers)
-  layout.body.appendChild(description)
+  layout.showcase.appendChild(demoContainers)
+  layout.info.appendChild(description)
 }
 
 /**

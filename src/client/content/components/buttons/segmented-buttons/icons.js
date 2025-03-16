@@ -97,7 +97,8 @@ export const initIconsOptions = (container) => {
   const title = 'Icons and Labels'
   const layout = createLayout(createComponentsSectionLayout({
     title,
-    description: 'Segmented buttons can display icons, text labels, or both. Icons enhance visual recognition and complement text labels.'
+    description: 'Segmented buttons can display icons, text labels, or both. Icons enhance visual recognition and complement text labels.',
+    class: 'noflex'
   }), container).component
 
   // Icon-only section

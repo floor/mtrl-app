@@ -4,7 +4,7 @@ import { componentsLayout } from '../../../config'
 import { createLayout } from 'mtrl'
 import { initStandard } from './standard'
 import { initDot } from './dot'
-import { initPositions } from './positions'
+// import { initPositions } from './positions'
 import { initMax } from './max'
 import { initAttached } from './attached'
 import { initEventsAPI } from './events-api'
@@ -26,7 +26,7 @@ export const createBadgesContent = (container) => {
   // Initialize all the demo sections
   initStandard(layout.body)
   initDot(layout.body)
-  initPositions(layout.body)
+  // initPositions(layout.body)
   initMax(layout.body)
   initAttached(layout.body)
   initEventsAPI(layout.body)

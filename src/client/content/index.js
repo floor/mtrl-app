@@ -20,6 +20,7 @@ import { createCarouselContent } from './components/carousel'
 import { createCheckboxesContent } from './components/checkboxes'
 import { createChipsContent } from './components/chips'
 import { createDialogsContent } from './components/dialogs'
+import { createDatePickersContent } from './components/datepickers'
 import { createListsContent } from './components/lists'
 import { createMenusContent } from './components/menus'
 import { createNavigationsContent } from './components/navigations'
@@ -30,6 +31,7 @@ import { createSnackbarsContent } from './components/snackbars'
 import { createSwitchesContent } from './components/switches'
 import { createTabsContent } from './components/tabs'
 import { createTextfieldsContent } from './components/textfields'
+import { createTimePickersContent } from './components/timepickers'
 
 export {
   createHomeContent,
@@ -54,6 +56,7 @@ export {
   createCheckboxesContent,
   createChipsContent,
   createDialogsContent,
+  createDatePickersContent,
   createListsContent,
   createMenusContent,
   createNavigationsContent,
@@ -63,5 +66,6 @@ export {
   createSnackbarsContent,
   createSwitchesContent,
   createTextfieldsContent,
+  createTimePickersContent,
   createTabsContent
 }

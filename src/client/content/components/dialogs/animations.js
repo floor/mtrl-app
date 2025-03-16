@@ -12,6 +12,22 @@ import {
   DIALOG_ANIMATIONS
 } from 'mtrl/src/components/dialog'
 
+const createAnimationsDialog = (animation) => {
+  const dialog = createDialog({
+    title: `${animation.name} Animation`,
+    content: `<p>This dialog uses the ${animation.name.toLowerCase()} animation style.</p>`,
+    animation: animation.value,
+    buttons: [
+      {
+        text: 'Close',
+        variant: 'text',
+        closeDialog: true
+      }
+    ]
+  })
+  dialog.open()
+}
+
 export const initAnimations = (container) => {
   const title = 'Dialog Animations'
   const description = 'Dialogs can use different animation styles when opening and closing'
@@ -32,23 +48,9 @@ export const initAnimations = (container) => {
       variant: 'outlined'
     })
 
-    // Create dialog with specific animation
-    const dialog = createDialog({
-      title: `${animation.name} Animation`,
-      content: `<p>This dialog uses the ${animation.name.toLowerCase()} animation style.</p>`,
-      animation: animation.value,
-      buttons: [
-        {
-          text: 'Close',
-          variant: 'text',
-          closeDialog: true
-        }
-      ]
-    })
-
     // Open dialog when button is clicked
     openButton.on('click', () => {
-      dialog.open()
+      createAnimationsDialog(animation)
     })
 
     // Add button to layout with some margin

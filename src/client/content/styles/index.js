@@ -7,7 +7,8 @@ import {
 import {
   createLayout,
   createElement,
-  createButton
+  createButton,
+  createCard
 } from 'mtrl'
 
 export const createStylesContent = (container) => {
@@ -107,25 +108,7 @@ export const createStylesLayout = () => [
     [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Style Categories' }],
     [createElement, 'div', { class: 'style-categories__grid' },
       // Colors Card
-      [createElement, 'colorsCard', { class: 'style-card style-card--colors' },
-        [createElement, 'div', { class: 'style-card__icon' },
-          [createElement, 'div', { class: 'style-card__color-icon' }]
-        ],
-        [createElement, 'h3', { class: 'style-card__title', text: 'Colors' }],
-        [createElement, 'p', { class: 'style-card__description', text: 'A comprehensive color system with accessible contrast ratios, supporting both light and dark themes.' }],
-        [createElement, 'ul', { class: 'style-card__highlights' },
-          [createElement, 'li', { text: 'Theme palettes' }],
-          [createElement, 'li', { text: 'State colors' }],
-          [createElement, 'li', { text: 'Accessibility tools' }]
-        ],
-        [createElement, 'div', { class: 'style-card__footer' },
-          [createButton, null, {
-            text: 'Explore Colors',
-            variant: 'filled',
-            class: 'style-card__button'
-          }]
-        ]
-      ],
+      [createCard, 'colorsCard', { class: 'style-card style-card--colors' }],
 
       // Typography Card
       [createElement, 'typographyCard', { class: 'style-card style-card--typography' },
@@ -214,18 +197,6 @@ export const createStylesLayout = () => [
           [createElement, 'code', { text: '@include c.typography("headline-medium");\n@include c.typography("body-large");' }]
         ]
       ]
-    ]
-  ],
-
-  // Theme Showcase Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Theme Showcase' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'The MTRL styling system includes multiple built-in themes that can be easily switched.' }],
-    [createElement, 'div', { class: 'theme-showcase' },
-      [createElement, 'div', { class: 'theme-showcase__sample theme-showcase__sample--ocean', text: 'Ocean' }],
-      [createElement, 'div', { class: 'theme-showcase__sample theme-showcase__sample--forest', text: 'Forest' }],
-      [createElement, 'div', { class: 'theme-showcase__sample theme-showcase__sample--sunset', text: 'Sunset' }],
-      [createElement, 'div', { class: 'theme-showcase__sample theme-showcase__sample--spring', text: 'Spring' }]
     ]
   ]
 ]

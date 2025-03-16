@@ -65,12 +65,12 @@ export const componentsLayout = (info) => [
 
 export const createComponentsSectionLayout = (info) => [
   [e, { tag: 'section', class: 'mtrl-components__section' },
-    [e, { class: `mtrl-components__section-head ${info.class}` },
+    [e, { class: 'mtrl-components__section-head' },
       [e, { id: 'title', tag: 'h2', class: 'mtrl-components__section-title', text: info.title }],
       [e, { id: 'title', tag: 'div', class: 'mtrl-components__section-description', text: info.description }]
     ],
     [e, 'div', { id: 'body', class: 'mtrl-components__section-body' },
-      [e, 'div', { id: 'showcase', class: 'mtrl-components__section-showcase' }]
+      [e, 'div', { id: 'showcase', class: `mtrl-components__section-showcase ${info.class}` }]
     ]
   ]
 ]
@@ -130,6 +130,7 @@ export const createComponentsSectionLayoutInfo = (info) => [
 // ]
 
 export const themesMenu = [
+  { name: 'material', text: 'Material' },
   { name: 'spring', text: 'Spring' },
   { name: 'summer', text: 'Summer' },
   { name: 'autumn', text: 'Autumn' },
@@ -144,7 +145,7 @@ export const themesMenu = [
 
 export const navigation = {
   components: [
-    { id: 'badges', label: 'Badges', path: '/components/badges' },
+
     {
       id: 'appbars',
       label: 'App bars',
@@ -153,6 +154,7 @@ export const navigation = {
         { id: 'topappbars', label: 'Top app bar', path: '/components/app-bars/top' }
       ]
     },
+    { id: 'badges', label: 'Badges', path: '/components/badges' },
     {
       id: 'buttons',
       label: 'Buttons',
@@ -167,6 +169,16 @@ export const navigation = {
     // { id: 'carousel', label: 'Carousel', path: '/components/carousel' },
     { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
     { id: 'chips', label: 'Chips', path: '/components/chips' },
+
+    {
+      id: 'datetimepicker',
+      label: 'Date & time pickers',
+      items: [
+        { id: 'datepicker', label: 'Date pickers', path: '/components/datepickers' },
+        { id: 'timepicker', label: 'Time pickers', path: '/components/timepickers' }
+      ]
+    },
+
     { id: 'dialogs', label: 'Dialogs', path: '/components/dialogs' },
     { id: 'lists', label: 'Lists', path: '/components/lists' },
     { id: 'menus', label: 'Menus', path: '/components/menus' },

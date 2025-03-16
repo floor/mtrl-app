@@ -5,16 +5,11 @@ import {
 } from '../../../config'
 
 import {
-  createLayout,
-  createButton
+  createLayout
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 import createCard, {
-  createCardHeader,
-  createCardContent,
-  createCardMedia,
-  createCardActions,
   CARD_VARIANTS
 } from 'mtrl/src/components/card'
 
@@ -25,49 +20,36 @@ export const initActionCards = (container) => {
 
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
-  // Create action cards
+  // Create action cards with inline configuration
   artworks.slice(4, 6).forEach(artwork => {
     const card = createCard({
       variant: CARD_VARIANTS.ELEVATED,
-      interactive: true
+      interactive: true,
+
+      // Media configuration
+      media: {
+        src: getPlaceholderUrl(artwork),
+        alt: `${artwork.title} by ${artwork.artist}`,
+        aspectRatio: '16:9'
+      },
+
+      // Header configuration
+      header: {
+        title: artwork.title,
+        subtitle: `${artwork.artist}, ${artwork.year}`
+      },
+
+      // Content configuration
+      content: {
+        text: artwork.description
+      },
+
+      // Button configuration
+      buttons: [
+        { text: 'Share', variant: 'text' },
+        { text: 'View Details', variant: 'filled' }
+      ]
     })
-
-    // Create media
-    const media = createCardMedia({
-      src: getPlaceholderUrl(artwork),
-      alt: `${artwork.title} by ${artwork.artist}`,
-      aspectRatio: '16:9'
-    })
-
-    const header = createCardHeader({
-      title: artwork.title,
-      subtitle: `${artwork.artist}, ${artwork.year}`
-    })
-
-    const content = createCardContent({
-      text: artwork.description
-    })
-
-    // Create action buttons
-    const viewButton = createButton({
-      text: 'View Details',
-      variant: 'filled'
-    }).element
-
-    const shareButton = createButton({
-      text: 'Share',
-      variant: 'text'
-    }).element
-
-    const actions = createCardActions({
-      actions: [shareButton, viewButton],
-      align: 'end'
-    })
-
-    card.addMedia(media)
-    card.setHeader(header)
-    card.addContent(content)
-    card.setActions(actions)
 
     layout.showcase.appendChild(card.element)
   })
