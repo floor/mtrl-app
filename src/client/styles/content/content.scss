@@ -81,7 +81,7 @@ $content: '#{b.$prefix}-content';
   &__section-title {
     @include c.typography('headline-small');
     color: t.color('on-surface');
-    margin: 0 0 16px; 
+    margin: 0; 
   }
 
   &__grid {
