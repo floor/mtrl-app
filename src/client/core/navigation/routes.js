@@ -40,6 +40,8 @@ import {
 export const initializeRoutes = (router, ui) => {
   if (!router || !ui) return
 
+  console.log('initializeRoutes', router, ui)
+
   // Register route handlers
 
   router.register('/', () => createHomeContent(ui.content))
@@ -79,11 +81,13 @@ export const initializeRoutes = (router, ui) => {
   router.register('components/tabs', () => createTabsContent(ui.content))
   // Add navigation hooks
   router.beforeEach((route) => {
-    // log.debug('Navigation started:', route)
+    log.debug('beforeEach:', route)
+    ui.content.scrollTop = 0
     ui.content.innerHTML = ''
   })
 
   router.afterEach((route) => {
+    log.debug('afterEach:', route)
     // log.debug('Navigation completed:', route)
   })
 }
