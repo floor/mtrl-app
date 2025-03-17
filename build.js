@@ -1,7 +1,7 @@
-// build.js
+// First, update your imports at the top of the file:
 import { mkdir } from 'fs/promises'
 import { existsSync, watch } from 'fs'
-import { join, dirname } from 'path'
+import { join, dirname, basename, relative } from 'path'
 import { fileURLToPath } from 'url'
 import * as sass from 'sass'
 
@@ -39,6 +39,7 @@ const compileSass = async () => {
       ],
       style: isProduction ? 'compressed' : 'expanded',
       sourceMap: !isProduction,
+      sourceMapIncludeSources: !isProduction,
       importers: [{
         // Custom importer to help resolve node_modules paths
         findFileUrl (url) {
@@ -53,10 +54,34 @@ const compileSass = async () => {
     })
 
     await mkdir(dirname(outputFile), { recursive: true })
-    await Bun.write(outputFile, result.css)
 
-    if (result.sourceMap && !isProduction) {
+    // First write the CSS file
+    if (!isProduction && result.sourceMap) {
+      // In development mode, add the sourceMappingURL comment
+      const sourceMappingURL = `\n/*# sourceMappingURL=${basename(outputFile)}.map */`
+      await Bun.write(outputFile, result.css + sourceMappingURL)
+
+      // Ensure source map references are correct
+      if (result.sourceMap.sources) {
+        // Fix source paths to be user-friendly in browser devtools
+        result.sourceMap.sources = result.sourceMap.sources.map(source => {
+          if (source.startsWith('file://')) {
+            // Convert file:// URLs to relative paths for better readability
+            const filePath = fileURLToPath(source)
+            return relative(__dirname, filePath)
+          }
+          return source
+        })
+      }
+
+      // Set the sourceRoot to help with resolving relative paths
+      result.sourceMap.sourceRoot = '/'
+
+      // Write the source map
       await Bun.write(`${outputFile}.map`, JSON.stringify(result.sourceMap))
+    } else {
+      // In production mode, just write the CSS without sourcemap
+      await Bun.write(outputFile, result.css)
     }
 
     console.log('✓ SASS compilation successful')
@@ -64,7 +89,22 @@ const compileSass = async () => {
   } catch (error) {
     console.error('❌ SASS compilation failed:', error)
     if (error.span) {
-      console.error(`  Error in ${error.span.url}:${error.span.start.line}:${error.span.start.column}`)
+      // Better error reporting for SASS compilation errors
+      let errorLocation = `${error.span.url}:${error.span.start.line}:${error.span.start.column}`
+
+      // Try to convert file:// URLs to readable paths
+      if (error.span.url && error.span.url.startsWith('file://')) {
+        try {
+          const filePath = fileURLToPath(error.span.url)
+          const relativePath = relative(__dirname, filePath)
+          errorLocation = `${relativePath}:${error.span.start.line}:${error.span.start.column}`
+        } catch (e) {
+          // Fall back to the original URL if path conversion fails
+        }
+      }
+
+      console.error(`  Error in ${errorLocation}`)
+      console.error(`  ${error.message}`)
     }
   }
 }

@@ -13,7 +13,7 @@ $content: '#{b.$prefix}-content';
   height: 100%;
   overflow: scroll;
   transition: background-color 200ms cubic-bezier(0.2, 0, 0, 1);
-  padding: 0 50px;
+  padding: 0 10px;
 
   &__header {
     height: 200px;
@@ -21,7 +21,7 @@ $content: '#{b.$prefix}-content';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 12px;
+    margin-top: 10px;
     &__section {
       padding: 24px;
     }
@@ -29,13 +29,13 @@ $content: '#{b.$prefix}-content';
       flex: 1;
       height: 100%;
       border-radius: f.get-shape('large');
-      gap: 20px;
+      gap: 5px;
       background-color: t.color('surface-container');
       &.visual {
         flex: none;
         width: 200px;
-        background-color: t.color('secondary');
-        margin-left: 24px;
+        background-color: t.color('tertiary');
+        margin-left: 10px;
       }
       &.info {
         background-color: t.color('primary');

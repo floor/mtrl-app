@@ -11,6 +11,7 @@ export const componentsLayout = (info) => [
       ],
       [e, { tag: 'section', class: 'mtrl-components__box visual' }]
     ],
+    [e, { id: 'navi', class: 'mtrl-components__navi' }],
     [e, { id: 'body', class: 'mtrl-components__body' }],
     [e, { id: 'foot', class: 'mtrl-components__footer' }]
   ]
