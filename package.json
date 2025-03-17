@@ -21,10 +21,13 @@
     "serve": "bun --hot test/serve.ts"
   },
   "dependencies": {
+    "compression": "^1.8.0",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mtrl": "^0.2.7"
   },
   "devDependencies": {
+    "@types/compression": "^1.7.5",
     "bun-types": "latest",
     "ejs": "^3.1.10",
     "sass": "^1.83.4",

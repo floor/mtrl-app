@@ -4,17 +4,20 @@ module.exports = {
     name: 'mtrl-app',
     script: './server.ts',
     interpreter: 'bun',
-    instances: 1,
-    autorestart: true,
+    instances: 'max',
+    exec_mode: 'cluster',
     watch: false,
-    max_memory_restart: '512M',
     env: {
+      // Default environment variables (will be overridden by .env)
       NODE_ENV: 'production',
       PORT: 4000
     },
-    env_staging: {
-      NODE_ENV: 'staging',
-      PORT: 4001
+    env_production: {
+      NODE_ENV: 'production'
+    },
+    env_development: {
+      NODE_ENV: 'development',
+      PORT: 4000
     }
   }]
 }

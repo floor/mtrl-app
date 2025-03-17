@@ -1,14 +1,39 @@
-// server.js
+// server.ts
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
+import compression from 'compression'; // Import compression middleware
+import dotenv from 'dotenv'; // Add dotenv for .env file support
+
+// Load environment variables from .env file
+dotenv.config();
 
 // Get directory name in ESM
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Configure compression middleware - only in production
+if (isProduction) {
+  app.use(compression({
+    // Configure compression level (0-9, where 9 is maximum compression)
+    level: 6, // Good balance between compression ratio and CPU usage
+    // Only compress responses larger than 1KB
+    threshold: 1024,
+    // Only compress specific mime types
+    filter: (req, res) => {
+      const contentType = res.getHeader('Content-Type') || '';
+      if (typeof contentType === 'string') {
+        // Include JavaScript, TypeScript, CSS, HTML, JSON, and plain text
+        return /javascript|typescript|text\/css|text\/html|application\/json|text\/plain/.test(contentType);
+      }
+      return false;
+    }
+  }));
+};
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -20,27 +45,42 @@ app.use((req, res, next) => {
   next();
 });
 
-// CSS files with caching
+// CSS files with caching in production
 app.use('/dist/styles', express.static(path.join(__dirname, 'dist', 'styles'), {
-  maxAge: '1h',
+  maxAge: isProduction ? '1d' : '1h', // Longer cache in production
+  etag: true,
+  lastModified: true,
   setHeaders: (res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
+    // Encourage browsers to use compression
+    res.setHeader('Vary', 'Accept-Encoding');
   }
 }));
 
-// JS files with no caching for development
+// JS/TS files with appropriate caching based on environment
 app.use('/dist', express.static(path.join(__dirname, 'dist'), {
+  maxAge: isProduction ? '1d' : 0, // No cache in dev, 1 day in production
+  etag: true,
+  lastModified: true,
   setHeaders: (res, filePath) => {
-    if (path.extname(filePath) === '.js') {
-      // No cache for JavaScript files
+    const ext = path.extname(filePath);
+    
+    // Handle both JS and TS files
+    if (ext === '.js' || ext === '.ts' || ext === '.mjs') {
       res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
-      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-      res.setHeader('Pragma', 'no-cache');
-      res.setHeader('Expires', '0');
+      
+      if (!isProduction) {
+        // No cache for JavaScript/TypeScript files in development
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+      }
     }
     
     // Always set CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
+    // Encourage browsers to use compression
+    res.setHeader('Vary', 'Accept-Encoding');
   }
 }));
 
@@ -53,14 +93,17 @@ app.use('/dist', (req, res, next) => {
     const ext = path.extname(srcPath);
     
     // Set appropriate headers based on file type
-    if (ext === '.js') {
+    if (ext === '.js' || ext === '.ts' || ext === '.mjs') {
       res.setHeader('Content-Type', 'application/javascript; charset=utf-8');
-      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+      if (!isProduction) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+      }
     } else if (ext === '.css') {
       res.setHeader('Content-Type', 'text/css; charset=utf-8');
     }
     
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Vary', 'Accept-Encoding'); // Important for compression
     return res.sendFile(srcPath);
   }
   
@@ -69,16 +112,20 @@ app.use('/dist', (req, res, next) => {
 
 // Serve public files if they exist
 app.use('/public', express.static(path.join(__dirname, 'public'), {
-  maxAge: '1d',
+  maxAge: isProduction ? '7d' : '1d', // Longer cache in production
+  etag: true,
+  lastModified: true,
   setHeaders: (res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Vary', 'Accept-Encoding');
   }
 }));
 
 app.get('/robots.txt', (req, res) => {
-  res.setHeader('Content-Type', 'text/plain')
-  res.send('User-agent: *\nDisallow:')
-})
+  res.setHeader('Content-Type', 'text/plain');
+  res.send('User-agent: *\nDisallow:');
+});
+
 // Handle sourcemaps specifically
 app.get('*.map', (req, res) => {
   const mapPath = path.join(__dirname, req.path);
@@ -93,39 +140,25 @@ app.get('*.map', (req, res) => {
 
 // For all other routes, serve the main app
 app.get('*', (req, res) => {
-  const timestamp = Date.now(); // For cache busting
+  const timestamp = Date.now(); // For cache busting in development
   res.render('app', { 
     title: 'MTRL Playground',
-    timestamp 
+    timestamp: isProduction ? '' : `?v=${timestamp}`  // Only use timestamp in development
   });
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Server error:', err);
-  res.status(500).send(`
-    <html>
-      <head>
-        <title>Server Error</title>
-        <style>
-          body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 2rem; }
-          .error { color: #e53935; }
-          .container { max-width: 800px; margin: 0 auto; }
-          pre { background: #f5f5f5; padding: 1rem; border-radius: 4px; overflow: auto; }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <h1 class="error">Server Error</h1>
-          <p>The server encountered an error while processing your request.</p>
-          <pre>${err.stack || err.message || 'Unknown error'}</pre>
-        </div>
-      </body>
-    </html>
-  `);
 });
 
 // Start the server with Express directly
 app.listen(PORT, () => {
-  console.log(`Express server running at http://localhost:${PORT}`);
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
+  if (isProduction) {
+    console.log(`🚀 Express server running on port ${PORT}`);
+    console.log(`🔧 Mode: 🏭 Production`);
+    console.log(`📦 Compression: Enabled (level: 6)`);
+    console.log(`📁 Serving JS/TS and CSS with GZIP compression`);
+  } else {
+    console.log(`🚀 Express server running at http://localhost:${PORT}`);
+    console.log(`🔧 Mode: 🔨 Development`);
+    console.log(`📦 Compression: Disabled`);
+  }
+  console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
 });
