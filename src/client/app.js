@@ -71,35 +71,32 @@ const createApp = (options = {}) => {
       })
     }
 
-    // Theme menu setup (defer this to improve initial load)
+    // Theme menu setup - no need to defer
     if (ui.moreMenu?.on) {
-      // Defer menu creation to improve initial load time
-      setTimeout(() => {
-        themeMenu = createMenu({
-          items: themesMenu,
-          openingButton: ui.moreMenu
-        })
+      themeMenu = createMenu({
+        items: themesMenu,
+        openingButton: ui.moreMenu
+      })
 
-        document.body.appendChild(themeMenu.element)
+      document.body.appendChild(themeMenu.element)
 
-        ui.moreMenu.on('click', () => {
-          themeMenu.show()
-          if (ui.moreMenu.element) {
-            themeMenu.position(ui.moreMenu.element)
-          }
-        })
-
-        themeMenu.on('select', ({ name }) => {
-          themeService.setTheme(name)
-          themeMenu.hide()
-        })
-
-        // Set the currently selected theme if possible
-        const { themeName } = themeService.getSettings()
-        if (themeMenu.setSelected && themeName) {
-          themeMenu.setSelected(themeName)
+      ui.moreMenu.on('click', () => {
+        themeMenu.show()
+        if (ui.moreMenu.element) {
+          themeMenu.position(ui.moreMenu.element)
         }
-      }, 100) // Short delay to prioritize critical path rendering
+      })
+
+      themeMenu.on('select', ({ name }) => {
+        themeService.setTheme(name)
+        themeMenu.hide()
+      })
+
+      // Set the currently selected theme if possible
+      const { themeName } = themeService.getSettings()
+      if (themeMenu.setSelected && themeName) {
+        themeMenu.setSelected(themeName)
+      }
     }
   }
 
@@ -174,11 +171,14 @@ const createApp = (options = {}) => {
     }
   }
 
-  // Main initialization function
+  // Main initialization function - streamlined for performance
   const initialize = () => {
     if (isInitialized) return
 
     try {
+      // Set up error boundary early
+      setupErrorBoundary()
+
       // Critical path initialization - keep this minimal and fast
       layoutInstance = initializeLayout()
       if (!layoutInstance) {
@@ -196,28 +196,19 @@ const createApp = (options = {}) => {
         throw new Error('Router initialization failed')
       }
 
-      // Setup error boundary early
-      setupErrorBoundary()
-
-      // Initialize events and handle initial route
+      // Initialize events and handle initial route immediately
       initializeEvents(ui)
+      handleInitialRoute(ui)
 
-      // Defer route handling slightly to allow UI to render first
-      requestAnimationFrame(() => {
-        handleInitialRoute(ui)
-
-        // Execute ready callbacks in next frame for better rendering performance
-        requestAnimationFrame(() => {
-          readyCallbacks.forEach(callback => {
-            try {
-              callback({ layout: layoutInstance, router, ui })
-            } catch (error) {
-              console.error('Error in ready callback:', error)
-            }
-          })
-          readyCallbacks = []
-        })
+      // Execute ready callbacks
+      readyCallbacks.forEach(callback => {
+        try {
+          callback({ layout: layoutInstance, router, ui })
+        } catch (error) {
+          console.error('Error in ready callback:', error)
+        }
       })
+      readyCallbacks = []
 
       isInitialized = true
     } catch (error) {
@@ -226,36 +217,7 @@ const createApp = (options = {}) => {
     }
   }
 
-  // Start initialization when DOM is ready
-  const initWhenReady = () => {
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      // Use requestIdleCallback if available, otherwise setTimeout
-      if (window.requestIdleCallback) {
-        window.requestIdleCallback(() => initialize(), { timeout: 1000 })
-      } else {
-        setTimeout(initialize, 10)
-      }
-    } else {
-      document.addEventListener('DOMContentLoaded', () => {
-        // Use requestIdleCallback if available
-        if (window.requestIdleCallback) {
-          window.requestIdleCallback(() => initialize(), { timeout: 1000 })
-        } else {
-          setTimeout(initialize, 10)
-        }
-      })
-
-      // Fallback for older browsers
-      window.addEventListener('load', () => {
-        if (!isInitialized) {
-          initialize()
-        }
-      })
-    }
-  }
-
-  // Start the initialization process
-  initWhenReady()
+  initialize()
 
   // Return the app interface
   return {
@@ -292,7 +254,7 @@ const createApp = (options = {}) => {
   }
 }
 
-// Initialize app safely and efficiently
+// Initialize app directly
 let app
 try {
   app = createApp({
