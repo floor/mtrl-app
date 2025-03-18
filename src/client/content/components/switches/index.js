@@ -1,4 +1,4 @@
-// src/client/content/components/switches.js
+// src/client/content/components/switches/index.js
 
 import {
   componentsLayout
@@ -17,6 +17,10 @@ import {
 //   <polyline points="20 6 9 17 4 12"></polyline>
 // </svg>`
 
+/**
+ * Create the switches content
+ * @param {HTMLElement} container - The container element
+ */
 export const createSwitchesContent = (container) => {
   const info = {
     title: 'Switches',
@@ -29,3 +33,6 @@ export const createSwitchesContent = (container) => {
   initPositionsSwitches(layout.body)
   initDisabledSwitches(layout.body)
 }
+
+// Ensure we export as default for better compatibility with dynamic loader
+export default createSwitchesContent

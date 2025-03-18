@@ -1,47 +1,19 @@
 // src/client/config.js
 
-// export const themesMenu = [
-//   {
-//     name: 'colors',
-//     text: 'Color',
-//     items: [
+import {
+  iconMtrl,
+  iconComponents,
+  iconGetstarted,
+  iconStyles,
+  iconCore
+} from './icons'
 
-//       { name: 'bluekhaki', text: 'Blue Khaki' },
-//       { name: 'brownbeige', text: 'Brown Beige' },
-//       { name: 'tealcaramel', text: 'Teal Caramel' },
-//       { name: 'greenbeige', text: 'Green Beige' },
-//       { name: 'sageivory', text: 'Sage Ivory' },
-//       { name: 'browngreen', text: 'Brown Green' }
-//     ]
-//   },
-//   {
-//     name: 'seasons',
-//     text: 'Seasons',
-//     items: [
-//       { name: 'spring', text: 'Spring' },
-//       { name: 'summer', text: 'Summer' },
-//       { name: 'autumn', text: 'Autumn' },
-//       { name: 'winter', text: 'Winter' }
-//     ]
-
-//   },
-//   { name: 'ocean', text: 'Ocean' },
-//   { name: 'forest', text: 'Forest' },
-//   { name: 'sunset', text: 'Sunset' }
-// ]
-
-export const themesMenu = [
-  { name: 'material', text: 'Material' },
-  { name: 'spring', text: 'Spring' },
-  { name: 'summer', text: 'Summer' },
-  { name: 'autumn', text: 'Autumn' },
-  { name: 'winter', text: 'Winter' },
-  { name: 'ocean', text: 'Ocean' },
-  { name: 'forest', text: 'Forest' },
-  { name: 'sunset', text: 'Sunset' },
-  { name: 'bluekhaki', text: 'Blue Khaki' },
-  { name: 'brownbeige', text: 'Brown Beige' },
-  { name: 'tealcaramel', text: 'Teal Caramel' }
+export const mainNavigation = [
+  { id: 'home', icon: iconMtrl, label: 'Home' },
+  { id: 'getstarted', icon: iconGetstarted, label: 'Get Started' },
+  { id: 'core', icon: iconCore, label: 'Core' },
+  { id: 'styles', icon: iconStyles, label: 'Styles' },
+  { id: 'components', icon: iconComponents, label: 'Components' }
 ]
 
 export const navigation = {
@@ -101,7 +73,51 @@ export const navigation = {
   styles: [
     { id: 'colors', label: 'Colors', path: '/styles/colors' },
     { id: 'typography', label: 'Typography', path: '/styles/typography' },
-    { id: 'elevation', label: 'Elevation', path: '/styles/elevation' },
-    { id: 'layout', label: 'Layout', path: '/styles/layout' }
+    { id: 'elevation', label: 'Elevation', path: '/styles/elevation' }
+    // { id: 'layout', label: 'Layout', path: '/styles/layout' }
   ]
 }
+
+export const themesMenu = [
+  { name: 'material', text: 'Material' },
+  { name: 'spring', text: 'Spring' },
+  { name: 'summer', text: 'Summer' },
+  { name: 'autumn', text: 'Autumn' },
+  { name: 'winter', text: 'Winter' },
+  { name: 'ocean', text: 'Ocean' },
+  { name: 'forest', text: 'Forest' },
+  { name: 'sunset', text: 'Sunset' },
+  { name: 'bluekhaki', text: 'Blue Khaki' },
+  { name: 'brownbeige', text: 'Brown Beige' },
+  { name: 'tealcaramel', text: 'Teal Caramel' }
+]
+
+// export const themesMenu = [
+//   {
+//     name: 'colors',
+//     text: 'Color',
+//     items: [
+
+//       { name: 'bluekhaki', text: 'Blue Khaki' },
+//       { name: 'brownbeige', text: 'Brown Beige' },
+//       { name: 'tealcaramel', text: 'Teal Caramel' },
+//       { name: 'greenbeige', text: 'Green Beige' },
+//       { name: 'sageivory', text: 'Sage Ivory' },
+//       { name: 'browngreen', text: 'Brown Green' }
+//     ]
+//   },
+//   {
+//     name: 'seasons',
+//     text: 'Seasons',
+//     items: [
+//       { name: 'spring', text: 'Spring' },
+//       { name: 'summer', text: 'Summer' },
+//       { name: 'autumn', text: 'Autumn' },
+//       { name: 'winter', text: 'Winter' }
+//     ]
+
+//   },
+//   { name: 'ocean', text: 'Ocean' },
+//   { name: 'forest', text: 'Forest' },
+//   { name: 'sunset', text: 'Sunset' }
+// ]

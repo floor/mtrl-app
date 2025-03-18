@@ -16,68 +16,196 @@ $app: '#{b.$prefix}-app';
   min-height: 100vh;
   background-color: t.color('surface');
   color: t.color('on-surface');
+  position: relative;
 
   &[data-theme-mode=dark] {
     background-color: t.color('surface');
   }
 
-  .#{b.$prefix}-button.toggle-darkmode {
-    z-index: 10;
-    position: absolute;
-    left: 20px;
-    bottom: 15px;
-  }
-
-  .#{b.$prefix}-button.more-menu {
-    z-index: 10;
-    position: absolute;
-    left: 20px;
-    bottom: 67px;
-  }
-
+  // Fixed rail navigation - mobile dimensions first
   .#{b.$prefix}-nav--rail {
-    z-index: 2;
+    position: fixed;
+    z-index: 3;
+    height: 100vh;
+    width: 60px; // Mobile width
     .#{b.$prefix}-nav-item-label {
       font-size: .8em;
     }
     
+    // Add hover effect
+    .#{b.$prefix}-nav-item {
+      &:hover {
+        background-color: rgba(t.color('on-surface'), 0.05);
+      }
+    }
   }
 
+  // Fixed drawer navigation - mobile dimensions first
   .#{b.$prefix}-nav--drawer {
-    z-index: 1;
+    position: fixed;
+    z-index: 2;
+    left: 60px; // Position after rail (mobile width)
+    top: 0;
+    height: 100vh;
+    width: 70%; // Mobile width as percentage
+    max-width: 280px;
     border-left: 1px solid rgba(0,0,0,.05);
     border-bottom-right-radius: 16px;
     border-top-right-radius: 16px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    
+    // Smooth transition
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform: translateX(0);
+    opacity: 1;
+    
+    // Hidden state
+    &.#{b.$prefix}-nav--hidden {
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    // Close button - visible by default on mobile
+    .drawer-close-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: transparent;
+      border: none;
+      color: t.color('on-surface');
+      font-size: 24px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      
+      &:hover {
+        background-color: rgba(t.color('on-surface'), 0.05);
+      }
+    }
   }
 
-  @media (max-width: 960px) {
-    .#{b.$prefix}-nav {
-      transform: translateX(-100%);      
-    }
-
-    .#{b.$prefix}-nav--open {
-      transform: translateX(0);
-    }
-
-    .#{b.$prefix}-main {
-      margin-left: 0;
-    }
+  // Content area - mobile dimensions first
+  .#{b.$prefix}-content {
+    margin-left: 60px; // Match mobile rail width
+    width: calc(100% - 60px);
+    min-height: 100vh;
+    transition: margin-left 0.3s ease-out;
   }
 
+  // Global toggle/menu buttons - mobile positioning first
+  .#{b.$prefix}-button.toggle-darkmode {
+    z-index: 10;
+    position: fixed;
+    left: 10px;
+    bottom: 15px;
+    transition: .2s ease left;
+  }
+
+  .#{b.$prefix}-button.more-menu {
+    z-index: 10;
+    position: fixed;
+    left: 10px;
+    bottom: 67px;
+    transition: .2s ease left;
+  }
+
+  // Mobile-specific hiding of components
+  .#{b.$prefix}-components__navi {
+    display: none;
+  }
+
+  .#{b.$prefix}-components__box.visual,
+  .#{b.$prefix}-content__box.visual {
+    display: none;
+  }
+
+  .#{b.$prefix}-components__body {
+    margin-right: 10px;
+  }
+
+  // Grid layout for mobile first
   &__grid {
     display: grid;
     gap: 16px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
     margin: 24px 0;
-    
-    @include c.breakpoint-down('sm') {
-      grid-template-columns: 1fr;
-    }
   }
 
   &__controls {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
+  }
+
+
+
+
+  // Desktop styles - as media queries
+  @media (min-width: 961px) {
+    .#{b.$prefix}-nav--rail {
+      width: 80px; // Wider on desktop
+    }
+    
+    .#{b.$prefix}-nav--drawer {
+      left: 80px; // Position after wider rail
+    }
+    
+    .#{b.$prefix}-content {
+      margin-left: 80px; // Match desktop rail width
+      width: calc(100% - 80px);
+    }
+
+    .#{b.$prefix}-content {
+      margin-left: 80px; // Match desktop rail width
+      width: calc(100% - 80px);
+    }
+
+    // Hide close button on desktop
+    .#{b.$prefix}-nav--drawer .drawer-close-btn {
+      display: none;
+    }
+    
+    // Show components on desktop
+    .#{b.$prefix}-components__navi {
+      display: block;
+    }
+    
+    .#{b.$prefix}-components__box.visual,
+    .#{b.$prefix}-content__box.visual {
+      display: block;
+    }
+    
+    // Grid layout for desktop
+    &__grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .#{b.$prefix}-button.toggle-darkmode {
+      left: 20px;
+    }
+
+    .#{b.$prefix}-button.more-menu {
+      left: 20px;
+    }
+  }
+
+  @media (min-width: 1150px) {
+    .#{b.$prefix}-content {
+      margin: auto; // Match desktop rail width
+      max-width: 1024px;
+    }
+  }
+
+  // Non-touch devices (desktop with mouse)
+  @media (hover: hover) {
+    .#{b.$prefix}-nav--drawer .drawer-close-btn {
+      display: none;
+    }
   }
 }

@@ -1,4 +1,4 @@
-// First, update your imports at the top of the file:
+// build.js with code splitting support
 import { mkdir } from 'fs/promises'
 import { existsSync, watch } from 'fs'
 import { join, dirname, basename, relative } from 'path'
@@ -12,11 +12,12 @@ const isProduction = process.argv.includes('--production') || process.env.NODE_E
 // Define consistent output paths
 const DIST_DIR = join(__dirname, 'dist')
 const STYLES_DIR = join(DIST_DIR, 'styles')
+const CHUNKS_DIR = join(DIST_DIR, 'chunks')
 const JS_OUTPUT = join(DIST_DIR, 'app.js')
 const CSS_OUTPUT = join(STYLES_DIR, 'main.css')
 
 // Log build mode
-console.log(`Building in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode`)
+console.log(`Building in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode with code splitting`)
 
 const compileSass = async () => {
   try {
@@ -112,11 +113,14 @@ const compileSass = async () => {
 const buildApp = async () => {
   try {
     console.log('┌─────────────────────────────────────────')
-    console.log('│ JavaScript Build')
+    console.log('│ JavaScript Build with Code Splitting')
     console.log('│ Mode:', isProduction ? 'PRODUCTION' : 'DEVELOPMENT')
     console.log('│ Minify:', isProduction ? 'Yes' : 'No')
     console.log('│ Sourcemaps:', isProduction ? 'No' : 'Yes (inline)')
     console.log('└─────────────────────────────────────────')
+
+    // Create chunks directory if it doesn't exist
+    await mkdir(CHUNKS_DIR, { recursive: true })
 
     const jsResult = await Bun.build({
       entrypoints: [join(__dirname, 'src/client/app.js')],
@@ -126,11 +130,14 @@ const buildApp = async () => {
       format: 'esm',
       target: 'browser',
       naming: {
-        entry: 'app.js'
+        entry: 'app.js',
+        chunk: 'chunks/[name].[hash].[ext]'
       },
       loader: {
         '.svg': 'text'
       },
+      // Enable code splitting
+      splitting: true,
       // Add tree shaking in production
       tree: isProduction ? true : undefined,
       // Remove comments in production
@@ -149,15 +156,38 @@ const buildApp = async () => {
       return false
     }
 
-    const jsSize = (await Bun.file(JS_OUTPUT).size) / 1024
+    // Log all generated outputs, including chunks
+    const outputFiles = jsResult.outputs || []
+
     console.log('✓ JavaScript build successful')
-    console.log(`  Size: ${jsSize.toFixed(2)} KB`)
+    console.log(`  Main bundle: ${(await Bun.file(JS_OUTPUT).size / 1024).toFixed(2)} KB`)
+
+    // Log info about chunks
+    const chunkFiles = outputFiles.filter(file =>
+      file.path.includes('/chunks/') || (file.kind && file.kind === 'chunk')
+    )
+
+    if (chunkFiles.length > 0) {
+      console.log(`  Generated ${chunkFiles.length} code-split chunks:`)
+      let totalChunkSize = 0
+
+      for (const chunk of chunkFiles) {
+        const chunkPath = chunk.path
+        const chunkSize = await Bun.file(chunkPath).size
+        totalChunkSize += chunkSize
+
+        // Extract a shorter name for display
+        const chunkName = basename(chunkPath)
+        // console.log(`    - ${chunkName}: ${(chunkSize / 1024).toFixed(2)} KB`)
+      }
+
+      console.log(`  Total chunks size: ${(totalChunkSize / 1024).toFixed(2)} KB`)
+    }
 
     // Optionally do additional post-processing for production builds
     if (isProduction) {
       console.log('Performing production post-processing...')
       // Here you could do additional processing like:
-      // - Add hash to filenames for cache busting
       // - Update references in HTML
       // - Gzip files for efficient serving
     }
@@ -165,7 +195,39 @@ const buildApp = async () => {
     return true
   } catch (error) {
     console.error('❌ JavaScript build error:', error)
+    console.error(error.stack)
     return false
+  }
+}
+
+// Copy or create HTML file with proper module loading
+const createHtmlFile = async () => {
+  try {
+    const htmlTemplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTRL UI Framework</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <!-- Preload the main JS bundle -->
+  <link rel="modulepreload" href="/app.js">
+</head>
+<body>
+  <!-- Load the main bundle as a module -->
+  <script type="module" src="/app.js"></script>
+</body>
+</html>`
+
+    const htmlOutputPath = join(DIST_DIR, 'index.html')
+
+    // Check if file already exists and skip if it does (to avoid overwriting customizations)
+    if (!existsSync(htmlOutputPath) || !isProduction) {
+      await Bun.write(htmlOutputPath, htmlTemplate)
+      console.log('✓ Created HTML entry point with ES module support')
+    }
+  } catch (error) {
+    console.error('❌ Error creating HTML file:', error)
   }
 }
 
@@ -264,11 +326,13 @@ const verifyOutput = async () => {
   // Check if output files exist
   const jsExists = existsSync(JS_OUTPUT)
   const cssExists = existsSync(CSS_OUTPUT)
+  const htmlExists = existsSync(join(DIST_DIR, 'index.html'))
 
   console.log('┌─────────────────────────────────────────')
   console.log('│ Build Verification')
   console.log('│ JavaScript:', jsExists ? '✓ OK' : '❌ Missing')
   console.log('│ CSS:', cssExists ? '✓ OK' : '❌ Missing')
+  console.log('│ HTML:', htmlExists ? '✓ OK' : '❌ Missing')
   console.log('└─────────────────────────────────────────')
 
   // For production builds, check file sizes
@@ -277,11 +341,31 @@ const verifyOutput = async () => {
     const cssStats = await Bun.file(CSS_OUTPUT).size
     const totalSize = jsStats + cssStats
 
+    // Also check for chunks
+    const chunksDir = join(DIST_DIR, 'chunks')
+    let chunksSize = 0
+    if (existsSync(chunksDir)) {
+      // This is a simplified approach - in a real implementation
+      // you would list all files in the chunks directory and sum their sizes
+      // Here we're assuming all .js files in the chunks directory are our chunks
+      try {
+        const chunkFiles = await Bun.glob('*.js', { cwd: chunksDir })
+        for (const file of chunkFiles) {
+          const chunkPath = join(chunksDir, file)
+          const size = await Bun.file(chunkPath).size
+          chunksSize += size
+        }
+      } catch (error) {
+        console.warn('⚠️ Could not measure chunk sizes:', error.message)
+      }
+    }
+
     console.log('┌─────────────────────────────────────────')
     console.log('│ Production Build Stats')
-    console.log('│ JavaScript:', (jsStats / 1024).toFixed(2), 'KB')
+    console.log('│ JavaScript (main):', (jsStats / 1024).toFixed(2), 'KB')
+    console.log('│ JavaScript (chunks):', (chunksSize / 1024).toFixed(2), 'KB')
     console.log('│ CSS:', (cssStats / 1024).toFixed(2), 'KB')
-    console.log('│ Total Size:', (totalSize / 1024).toFixed(2), 'KB')
+    console.log('│ Total Size:', ((totalSize + chunksSize) / 1024).toFixed(2), 'KB')
     console.log('└─────────────────────────────────────────')
   }
 
@@ -301,6 +385,7 @@ const cleanDist = async () => {
       // Simple approach: just recreate the directories
       await mkdir(DIST_DIR, { recursive: true })
       await mkdir(STYLES_DIR, { recursive: true })
+      await mkdir(CHUNKS_DIR, { recursive: true })
 
       console.log('✓ Dist directory cleaned')
     } catch (error) {
@@ -314,7 +399,7 @@ const build = async () => {
     const startTime = Date.now()
 
     console.log('┌───────────────────────────────────────────────')
-    console.log('│ 🚀 MTRL App Build Process')
+    console.log('│ 🚀 MTRL App Build Process with Code Splitting')
     console.log('│ Mode:', isProduction ? '🏭 PRODUCTION' : '🔧 DEVELOPMENT')
     console.log('│ Watch:', isWatch ? '✓ Enabled' : '✗ Disabled')
     console.log('└───────────────────────────────────────────────')
@@ -326,12 +411,16 @@ const build = async () => {
     // Create output directories
     await mkdir(DIST_DIR, { recursive: true })
     await mkdir(STYLES_DIR, { recursive: true })
+    await mkdir(CHUNKS_DIR, { recursive: true })
 
-    // Build JavaScript
+    // Build JavaScript with code splitting
     await buildApp()
 
     // Compile SASS to CSS
     await compileSass()
+
+    // Create HTML file with ES module support
+    await createHtmlFile()
 
     // Verify output
     await verifyOutput()
@@ -353,7 +442,7 @@ const build = async () => {
     } else {
       console.log('')
       console.log('┌───────────────────────────────────────────────')
-      console.log(`│ ✅ Build completed in ${buildTime}s`)
+      console.log(`│ ✅ Build completed in ${buildTime}s with code splitting`)
       console.log('└───────────────────────────────────────────────')
     }
   } catch (error) {

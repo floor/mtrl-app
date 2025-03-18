@@ -403,7 +403,7 @@ export const createRouter = (options = {}) => {
 
       // Log navigation intent
       if (config.debug) {
-        console.debug('Navigation requested:', { section, subsection, params, options })
+        // console.debug('Navigation requested:', { section, subsection, params, options })
       }
 
       // Generate path

@@ -2,6 +2,7 @@
 
 import { createMenu } from 'mtrl'
 import stateManager from '../state'
+import { iconDark, iconLight } from '../../icons/'
 
 /**
  * Creates a theme manager for handling application theming and dark mode
@@ -19,8 +20,8 @@ export const createThemeManager = (options = {}) => {
     themeAttribute: 'data-theme',
     modeAttribute: 'data-theme-mode',
     modeToggleIcons: {
-      light: 'dark_mode',
-      dark: 'light_mode'
+      light: iconLight,
+      dark: iconDark
     },
     ...options
   }
@@ -46,7 +47,7 @@ export const createThemeManager = (options = {}) => {
    * @private
    */
   const applyTheme = () => {
-    console.log(`Applying theme: ${themeSettings.themeName}, mode: ${themeSettings.themeMode}`)
+    // console.log(`Applying theme: ${themeSettings.themeName}, mode: ${themeSettings.themeMode}`)
 
     // Add theme classes to document body
     document.body.setAttribute(config.themeAttribute, themeSettings.themeName)
@@ -73,16 +74,7 @@ export const createThemeManager = (options = {}) => {
     // Update any UI components that reflect theme state
     if (ui && ui.toggleDarkmode) {
       // Try multiple ways to update the icon
-      if (ui.toggleDarkmode.setIcon) {
-        ui.toggleDarkmode.setIcon(getThemeModeIcon())
-      } else if (ui.toggleDarkmode.element) {
-        const iconElement = ui.toggleDarkmode.element.querySelector('.mtrl-icon') ||
-                         ui.toggleDarkmode.element.querySelector('i')
-
-        if (iconElement) {
-          iconElement.textContent = getThemeModeIcon()
-        }
-      }
+      ui.toggleDarkmode.setIcon(getThemeModeIcon())
     }
 
     // Dispatch theme change event
@@ -123,65 +115,43 @@ export const createThemeManager = (options = {}) => {
     }
   }
 
+  const createThemeMenu = (origin) => {
+    themesMenu = createMenu({
+      items: config.themesMenu,
+      origin
+    })
+
+    document.body.appendChild(themesMenu.element)
+
+    themesMenu.show()
+
+    themesMenu.on('select', ({ name }) => {
+      setTheme(name)
+      themesMenu.destroy()
+      themesMenu = null
+    })
+
+    return themesMenu
+  }
+
   /**
    * Initialize theme selection menu
    * @private
    */
   const initializeThemeMenu = () => {
     // Handle different possible component formats
-    const openingButton = ui.moreMenu
-
-    // Create the menu
-    themesMenu = createMenu({
-      items: config.themesMenu,
-      openingButton
-    })
-
-    // Add menu to document if it has an element
-    if (themesMenu.element) {
-      document.body.appendChild(themesMenu.element)
-    }
+    const origin = ui.moreMenu
 
     // Set up click handler for the menu button
-    if (openingButton.on) {
-      openingButton.on('click', () => {
-        if (themesMenu.show) {
-          themesMenu.show()
+    origin.on('click', () => {
+      console.log('origin', origin)
+      if (themesMenu) return
 
-          // Position the menu near the button if possible
-          const buttonElement = openingButton.element || openingButton
-          if (buttonElement && themesMenu.position) {
-            themesMenu.position(buttonElement)
-          }
-        }
-      })
-    } else if (openingButton.element && openingButton.element.addEventListener) {
-      // Alternative for components without 'on' method
-      openingButton.element.addEventListener('click', () => {
-        if (themesMenu.show) {
-          themesMenu.show()
-
-          if (openingButton.element && themesMenu.position) {
-            themesMenu.position(openingButton.element)
-          }
-        }
-      })
-    }
-
-    // Set up theme selection handler
-    if (themesMenu.on) {
-      themesMenu.on('select', ({ name }) => {
-        setTheme(name)
-        if (themesMenu.hide) {
-          themesMenu.hide()
-        }
-      })
-    }
-
-    // Set the currently selected theme if possible
-    if (themesMenu.setSelected && themeSettings.themeName) {
-      themesMenu.setSelected(themeSettings.themeName)
-    }
+      themesMenu = createThemeMenu(origin)
+      if (themesMenu.setSelected && themeSettings.themeName) {
+        themesMenu.setSelected(themeSettings.themeName)
+      }
+    })
   }
 
   /**
@@ -337,24 +307,14 @@ export const createThemeManager = (options = {}) => {
     const currentMode = themeSettings.themeMode
     const newMode = currentMode === 'dark' ? 'light' : 'dark'
 
-    console.log(`Toggling theme mode: ${currentMode} -> ${newMode}`)
+    // console.log(`Toggling theme mode: ${currentMode} -> ${newMode}`)
 
     // Set new mode
     setThemeMode(newMode)
 
     // Update button icon if provided
     if (button) {
-      if (button.setIcon) {
-        button.setIcon(getThemeModeIcon())
-      } else if (button.element && button.element.querySelector) {
-        // Try to find an icon element to update
-        const iconElement = button.element.querySelector('.mtrl-icon') ||
-                         button.element.querySelector('i')
-
-        if (iconElement) {
-          iconElement.textContent = getThemeModeIcon()
-        }
-      }
+      button.setIcon(getThemeModeIcon())
     }
 
     return newMode
@@ -384,6 +344,8 @@ export const createThemeManager = (options = {}) => {
    */
   const getThemeModeIcon = () => {
     const currentMode = themeSettings.themeMode
+
+    // console.error('getThemeModeIcon', currentMode)
     return config.modeToggleIcons[currentMode] || 'brightness_medium'
   }
 

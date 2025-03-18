@@ -6,6 +6,7 @@ import { navigation, themesMenu } from './config'
 import { setupErrorBoundary } from './core/events'
 import { routes, notFoundHandler } from './routes'
 import themeManager from './core/theme/theme-manager'
+import drawerBehavior from './core/navigation/drawer-behavior'
 
 // Ensure console.log is available even if window.log isn't
 window.log = window.log || console
@@ -41,6 +42,20 @@ try {
     notFoundHandler
   })
 
+  app.onReady(({ ui, navigationManager }) => {
+    // Configure drawer behavior with UI components and navigation config
+    drawerBehavior.configure({
+      ui,
+      navigation // Use the navigation config from your app
+    })
+
+    // Initialize the behavior
+    drawerBehavior.initialize()
+
+    // Log successful initialization
+    // console.info('Drawer behavior enhancement initialized')
+  })
+
   // Make app accessible globally
   window.app = app
 
@@ -55,7 +70,7 @@ try {
   }
 
   // Log successful initialization
-  console.info('MTRL application initialized successfully')
+  // console.info('Application initialized successfully')
 } catch (error) {
   console.error('Failed to create app:', error)
   setupErrorBoundary()

@@ -49,7 +49,7 @@ export const initBasicMenu = (container) => {
       { name: 'save', text: 'Save' },
       { name: 'save-as', text: 'Save As...' }
     ],
-    openingButton: button
+    origin: button
   })
 
   button.on('click', () => {
@@ -98,7 +98,7 @@ export const initNestedMenu = (container) => {
       { type: 'divider' },
       { name: 'find', text: 'Find and Replace...' }
     ],
-    openingButton: button
+    origin: button
   })
 
   button.on('click', () => {
@@ -132,7 +132,7 @@ export const initIconMenu = (container) => {
       { name: 'keyboard', text: 'Keyboard shortcuts' },
       { name: 'help', text: 'Help' }
     ],
-    openingButton: button
+    origin: button
   })
 
   button.on('click', () => {
@@ -166,7 +166,7 @@ export const initCustomMenu = (container) => {
       { name: 'rename', text: 'Rename' },
       { name: 'delete', text: 'Delete', disabled: true }
     ],
-    openingButton: button
+    origin: button
   })
 
   button.on('click', () => {

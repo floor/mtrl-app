@@ -6,6 +6,7 @@ import { createAppRouter } from './router'
 import themeManager from './theme/theme-manager'
 import { createNavigationManager } from './navigation/navigation-manager'
 import { createLayoutManager } from './layout/layout-manager'
+import drawerBehavior from './navigation/drawer-behavior'
 
 /**
  * Creates an application manager responsible for core initialization,
@@ -61,7 +62,7 @@ export const createApp = (options = {}) => {
       isInitialized = true
 
       // Log successful initialization
-      console.info('Application initialized successfully')
+      // console.info('Application initialized successfully')
     } catch (error) {
       console.error('App initialization failed:', error)
       isInitialized = false
@@ -204,7 +205,7 @@ export const createApp = (options = {}) => {
    */
   const initializeNavigation = (ui) => {
     try {
-      // Create navigation manager
+    // Create navigation manager
       const navigation = createNavigationManager({
         ui,
         router,
@@ -215,10 +216,18 @@ export const createApp = (options = {}) => {
       // Initialize navigation
       navigation.initialize()
 
+      // Initialize drawer behavior enhancement
+      drawerBehavior.configure({
+        ui,
+        navigation: options.navigation // Pass in the navigation configuration
+      })
+      drawerBehavior.initialize()
+
       // Register cleanup
       if (eventManager) {
         eventManager.addCleanup(() => {
           navigation.cleanup()
+          drawerBehavior.cleanup()
         })
       }
 

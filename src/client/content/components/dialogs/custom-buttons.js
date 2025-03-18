@@ -8,10 +8,6 @@ import {
   createDialog
 } from 'mtrl'
 
-import {
-  BUTTON_VARIANTS
-} from 'mtrl/src/components/button'
-
 const createButtonsDialog = (statusMessage) => {
   const dialog = createDialog({
     title: 'Save Changes?',
@@ -19,7 +15,7 @@ const createButtonsDialog = (statusMessage) => {
     buttons: [
       {
         text: 'Discard',
-        variant: BUTTON_VARIANTS.TEXT,
+        variant: 'text',
         closeDialog: true,
         onClick: () => {
           statusMessage.textContent = 'Changes discarded!'
@@ -28,7 +24,7 @@ const createButtonsDialog = (statusMessage) => {
       },
       {
         text: 'Cancel',
-        variant: BUTTON_VARIANTS.OUTLINED,
+        variant: 'outlined',
         closeDialog: true,
         onClick: () => {
           statusMessage.textContent = 'Action cancelled'
@@ -37,7 +33,7 @@ const createButtonsDialog = (statusMessage) => {
       },
       {
         text: 'Save',
-        variant: BUTTON_VARIANTS.FILLED,
+        variant: 'filled',
         closeDialog: true,
         onClick: () => {
           statusMessage.textContent = 'Changes saved successfully!'

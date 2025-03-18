@@ -19,9 +19,7 @@ export const createStylesContent = (container) => {
   }
   const layout = createLayout(contentLayout(info), container).component
 
-  console.log('layout', layout)
   const ui = createLayout(createStylesLayout(), layout.body).component
-  console.info('ui', ui)
 
   // Initialize the style card click handlers
   initStyleCardHandlers(ui)

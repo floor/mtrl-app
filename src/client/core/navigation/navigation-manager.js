@@ -2,7 +2,7 @@
 
 /**
  * Creates a navigation manager that handles synchronized navigation
- * between rail, drawer and routes
+ * between rail, drawer and routes with dynamic content loading
  *
  * @param {Object} options - Configuration options
  * @returns {Object} Navigation manager API
@@ -35,10 +35,10 @@ export const createNavigationManager = (options = {}) => {
 
   // Debug logging
   const debug = {
-    enabled: true, // Set to false to disable debug logs
+    enabled: false, // Set to false to disable debug logs
     log: function (...args) {
       if (this.enabled) {
-        console.log('[NavigationManager]', ...args)
+        // console.log('[NavigationManager]', ...args)
       }
     }
   }
@@ -46,19 +46,44 @@ export const createNavigationManager = (options = {}) => {
   // Private methods
 
   /**
-   * Initialize navigation rail
-   * @private
-   */
+ * Initialize navigation rail with mouseover behavior
+ * @private
+ */
   const initializeRail = () => {
     if (!ui.rail) return
 
-    debug.log('Initializing navigation rail')
+    debug.log('Initializing navigation rail with mouseover support')
 
-    // Create rail change handler
+    // Store current section to prevent redundant updates
+    let lastHoveredSection = null
+
+    // Click handler - for actual navigation
     railHandler = (event) => {
       const { id } = event
 
       debug.log('Rail selection changed:', id)
+
+      // Navigate to section
+      if (router) {
+        router.navigate(id, '', { replace: true })
+      }
+
+      // Update current section
+      currentSection = id
+    }
+
+    // Mouseover handler - for showing drawer
+    const railMouseoverHandler = (event) => {
+      const railItem = event.target.closest('[data-id]')
+      if (!railItem) return
+
+      const id = railItem.getAttribute('data-id')
+      if (!id) return // Only skip if no id found
+
+      // Always update lastHoveredSection
+      lastHoveredSection = id
+
+      debug.log('Rail mouseover:', id)
 
       // Get items for this section
       const items = navigation[id] || []
@@ -74,26 +99,51 @@ export const createNavigationManager = (options = {}) => {
           debug.log('Updating drawer with items for section:', id, itemsWithSection.length)
           updateDrawerItems(itemsWithSection)
 
-          if (config.autoOpenDrawer) {
-            toggleDrawer(true)
-          }
-        } else {
-          updateDrawerItems([])
-          toggleDrawer(false)
+          // Always show drawer on mouseover
+          toggleDrawer(true)
         }
       }
-
-      // Navigate to section
-      if (router) {
-        router.navigate(id, '', { replace: true })
-      }
-
-      // Update current section
-      currentSection = id
     }
 
-    // Attach handler
+    // Add drawer hover handler to keep it open when hovered
+    const drawerHoverHandler = () => {
+      if (ui.nav) {
+        toggleDrawer(true)
+      }
+    }
+
+    // Optional - Mouseout handler to hide drawer
+    const mouseoutHandler = (event) => {
+    // Only hide drawer if not moving to drawer or other rail item
+      const relatedTarget = event.relatedTarget
+      if (relatedTarget && (
+        relatedTarget.closest('.mtrl-nav--drawer') ||
+        relatedTarget.closest('.mtrl-nav--rail'))) {
+        return
+      }
+
+      debug.log('Mouse left navigation area')
+      toggleDrawer(false)
+    }
+
+    // Attach handlers
     ui.rail.on('change', railHandler)
+
+    // Add DOM event handlers
+    if (ui.rail.element) {
+      ui.rail.element.addEventListener('mouseover', railMouseoverHandler)
+
+      // Comment this line to keep drawer always open after hover
+      ui.rail.element.addEventListener('mouseout', mouseoutHandler)
+    }
+
+    // Add drawer hover handlers
+    if (ui.nav && ui.nav.element) {
+      ui.nav.element.addEventListener('mouseover', drawerHoverHandler)
+
+      // Comment this line to keep drawer always open after hover
+      ui.nav.element.addEventListener('mouseout', mouseoutHandler)
+    }
   }
 
   /**
@@ -210,52 +260,6 @@ export const createNavigationManager = (options = {}) => {
   }
 
   /**
-   * Improved helper to find parent item ID for a subsection
-   * @param {string} section - Current section
-   * @param {string} subsectionPath - Subsection path to find parent for
-   * @returns {string|null} Parent ID or null if not found
-   */
-  const findParentForSubsection = (section, subsectionPath) => {
-    if (!navigation[section]) {
-      debug.log('No navigation items found for section:', section)
-      return null
-    }
-
-    debug.log('Finding parent for subsection path:', subsectionPath, 'in section:', section)
-
-    // First try to parse the path to get potential parent and subsection
-    const { parentId, subsectionId } = parseSubsectionPath(section, subsectionPath)
-
-    // If we found a parent directly, return it
-    if (parentId) {
-      // Verify this parent exists and has the subsection as a child
-      const parentItem = navigation[section].find(item => item.id === parentId)
-      if (parentItem && parentItem.items) {
-        const hasChild = parentItem.items.some(item => item.id === subsectionId)
-        if (hasChild) {
-          debug.log('Confirmed parent for subsection:', parentId)
-          return parentId
-        }
-      }
-    }
-
-    // Fall back to searching through all items
-    debug.log('Searching through all items for parent of:', subsectionId)
-    for (const item of navigation[section]) {
-      if (item.items && Array.isArray(item.items)) {
-        const foundChild = item.items.find(child => child.id === subsectionId)
-        if (foundChild) {
-          debug.log('Found parent through search:', item.id)
-          return item.id
-        }
-      }
-    }
-
-    debug.log('No parent found for subsection:', subsectionPath)
-    return null
-  }
-
-  /**
    * Expand a parent item to reveal its children
    * @param {string} parentId - ID of the parent item to expand
    * @param {string} childId - ID of the child item (for expandForItem method)
@@ -269,14 +273,12 @@ export const createNavigationManager = (options = {}) => {
       if (typeof ui.nav.expandItem === 'function') {
         debug.log('Using expandItem method')
         ui.nav.expandItem(parentId)
-      }
-      // If the drawer has an expandForItem method that takes child ID
-      else if (typeof ui.nav.expandForItem === 'function') {
+      } else if (typeof ui.nav.expandForItem === 'function') {
+        // If the drawer has an expandForItem method that takes child ID
         debug.log('Using expandForItem method')
         ui.nav.expandForItem(childId)
-      }
-      // Last resort - try to manipulate the DOM directly
-      else {
+      } else {
+        // Last resort - try to manipulate the DOM directly
         debug.log('No expansion methods found, trying direct DOM manipulation')
         try {
           // Find the parent item element
