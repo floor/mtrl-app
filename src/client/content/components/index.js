@@ -1,7 +1,7 @@
 // src/client/content/components/index.js
 import { contentLayout } from '../../layout'
 import { createLayout, createElement } from 'mtrl'
-import { createRouter } from '../../core/router'
+import { createAppRouter } from '../../core/router'
 
 import { componentsList } from './components-list'
 
@@ -18,7 +18,7 @@ import createCard, {
  */
 export const createComponentsContent = (container, options = {}) => {
   // Get router from options or create a new one
-  const router = options.router || createRouter()
+  const router = options.router || createAppRouter()
 
   const info = {
     title: 'Components',
@@ -73,6 +73,9 @@ const initComponentsGroup = (container, group, router) => {
 
   // Add component cards
   group.components.forEach((component, index) => {
+    // Skip components without a path
+    if (!component.path) return
+
     const card = createComponentCard(component)
 
     card.on('click', () => {
@@ -86,15 +89,36 @@ const initComponentsGroup = (container, group, router) => {
 
       console.log('Navigating to:', component.title, path)
 
-      // Use router's parsePath to extract section and subsection
-      // This is the EXACT same approach used in drawer.js
+      // Enhanced navigation approach
       if (router) {
-        const route = router.parsePath(path)
+        // Parse the path directly into section and subsection
+        const pathParts = path.replace(/^\/+/, '').split('/')
+        const section = pathParts[0] || 'home'
+        const subsection = pathParts.slice(1).join('/') || ''
 
-        // Navigate using the parsed route info
-        router.navigate(route.section, route.subsection, { replace: true })
+        console.log('Navigating with parsed parts:', { section, subsection })
+
+        // Use direct navigation with the component path
+        if (window.app && window.app.getRouter()) {
+          // If global app is available, use its router for consistent navigation
+          window.app.getRouter().navigate(section, subsection, { replace: true })
+        } else {
+          // Fall back to provided router
+          router.navigate(section, subsection, { replace: true })
+
+          // Fallback for direct navigation in case the router isn't properly triggering content updates
+          if (typeof window.handleNavigation === 'function') {
+            window.handleNavigation(path)
+          } else if (component.handler && typeof component.handler === 'function') {
+            // If component has a direct handler, call it
+            component.handler(document.querySelector('.mtrl-content'))
+          }
+        }
       } else {
         console.error('Router not available for navigation')
+
+        // Fallback to direct URL change if router is unavailable
+        window.location.href = path
       }
     })
 

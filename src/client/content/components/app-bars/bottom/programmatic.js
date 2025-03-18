@@ -11,6 +11,7 @@ import {
   createLayout,
   createBottomAppBar,
   createButton,
+  createSnackbar,
   createFab
 } from 'mtrl'
 
@@ -146,7 +147,11 @@ export const initProgrammaticBottomAppBar = (container) => {
   addActionButton.on('click', () => {
     // Prevent adding too many actions
     if (actionCount >= 4) {
-      alert('Maximum of 4 actions reached')
+      const snackbar = createSnackbar({
+        message: 'Maximum of 4 actions reached'
+      })
+      snackbar.show()
+
       return
     }
 
@@ -165,7 +170,10 @@ export const initProgrammaticBottomAppBar = (container) => {
 
   removeActionButton.on('click', () => {
     if (actionCount <= 1) {
-      alert('Must have at least one action')
+      const snackbar = createSnackbar({
+        message: 'Must have at least one action'
+      })
+      snackbar.show()
       return
     }
 
@@ -185,7 +193,10 @@ export const initProgrammaticBottomAppBar = (container) => {
 
   addFabButton.on('click', () => {
     if (hasFab) {
-      alert('FAB is already added')
+      const snackbar = createSnackbar({
+        message: 'FAB is already added'
+      })
+      snackbar.show()
       return
     }
 
@@ -204,7 +215,10 @@ export const initProgrammaticBottomAppBar = (container) => {
 
   removeFabButton.on('click', () => {
     if (!hasFab) {
-      alert('No FAB to remove')
+      const snackbar = createSnackbar({
+        message: 'No FAB to remove'
+      })
+      snackbar.show()
       return
     }
 
