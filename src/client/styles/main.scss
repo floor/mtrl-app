@@ -16,9 +16,7 @@
 @use 'mtrl/src/styles/themes/sageivory';
 @use 'mtrl/src/styles/themes/browngreen';
 @use 'mtrl/src/core/build/ripple' as ripple;
-@use 'mtrl/src/components/bottom-app-bar/styles' as bottom-app-bar;
-@use 'mtrl/src/components/top-app-bar/styles' as top-app-bar;
-@use 'mtrl/src/components/badge/styles' as badge;
+
 @use 'mtrl/src/components/button/styles' as button;
 @use 'mtrl/src/components/fab/styles' as fab;
 @use 'mtrl/src/components/extended-fab/styles' as extended-fab;
@@ -30,18 +28,23 @@
 @use 'mtrl/src/components/datepicker/styles' as datepicker;
 @use 'mtrl/src/components/dialog/styles' as dialog;
 @use 'mtrl/src/components/divider/styles' as divider;
-@use 'mtrl/src/components/textfield/styles' as textfield;
 @use 'mtrl/src/components/menu/styles' as menu;
 @use 'mtrl/src/components/progress/styles';
-@use 'mtrl/src/components/switch/styles' as switch;
+
 @use 'mtrl/src/components/radios/styles' as radios;
 @use 'mtrl/src/components/timepicker/styles' as timepicker;
 @use 'mtrl/src/components/search/styles' as search;
-@use 'mtrl/src/components/slider/styles' as slider;
 @use 'mtrl/src/components/snackbar/styles' as snackbar;
 @use 'mtrl/src/components/navigation/styles' as navigation;
 @use 'mtrl/src/components/list/styles' as list;
-@use 'mtrl/src/components/tabs/styles' as tabs;
+
+@use 'mtrl/src/styles/components/badge' as badge;
+@use 'mtrl/src/styles/components/bottom-app-bar' as bottom-app-bar;
+@use 'mtrl/src/styles/components/slider' as slider;
+@use 'mtrl/src/styles/components/switch' as switch;
+@use 'mtrl/src/styles/components/tabs' as tabs;
+@use 'mtrl/src/styles/components/textfield' as textfield;
+@use 'mtrl/src/styles/components/top-app-bar' as top-app-bar;
 
 @use './base';
 @use './app';
