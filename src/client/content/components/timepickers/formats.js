@@ -5,10 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  TIME_FORMAT
-} from 'mtrl/src/components/timepicker'
-
-import {
   createLayout,
   createTimePicker
 } from 'mtrl'
@@ -43,7 +39,7 @@ export const initFormats = (container) => {
   const format12Picker = createTimePicker({
     title: 'Select Time',
     value: new Date(2025, 0, 1, 15, 30, 0),
-    format: TIME_FORMAT.FORMAT_12
+    format: '12h'
   })
 
   format12Input.addEventListener('click', () => {
@@ -83,7 +79,7 @@ export const initFormats = (container) => {
   const format24Picker = createTimePicker({
     title: 'Select Time',
     value: new Date(2025, 0, 1, 15, 30, 0),
-    format: TIME_FORMAT.FORMAT_24
+    format: '24h'
   })
 
   format24Input.addEventListener('click', () => {
@@ -119,7 +115,7 @@ export const initFormats = (container) => {
   const format12sPicker = createTimePicker({
     title: 'Select Time',
     value: new Date(2025, 0, 1, 15, 30, 45),
-    format: TIME_FORMAT.FORMAT_12,
+    format: '12h',
     showSeconds: true
   })
 
@@ -162,7 +158,7 @@ export const initFormats = (container) => {
   const format24sPicker = createTimePicker({
     title: 'Select Time',
     value: new Date(2025, 0, 1, 15, 30, 45),
-    format: TIME_FORMAT.FORMAT_24,
+    format: '24h',
     showSeconds: true
   })
 

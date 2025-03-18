@@ -6,10 +6,6 @@ import {
 } from '../../layout'
 
 import {
-  RADIO_DIRECTIONS
-} from 'mtrl/src/components/radios'
-
-import {
   createLayout,
   createRadios
 } from 'mtrl'
@@ -31,7 +27,6 @@ export const initRadiosSizes = (container) => {
 
   const small = createRadios({
     name: 'size',
-    direction: RADIO_DIRECTIONS.HORIZONTAL,
     options: [
       { value: 'sm', label: 'Small' },
       { value: 'md', label: 'Medium' },
@@ -42,7 +37,6 @@ export const initRadiosSizes = (container) => {
 
   const radios = createRadios({
     name: 'size',
-    direction: RADIO_DIRECTIONS.HORIZONTAL,
     options: [
       { value: 'sm', label: 'Small' },
       { value: 'md', label: 'Medium' },
@@ -53,7 +47,6 @@ export const initRadiosSizes = (container) => {
 
   const large = createRadios({
     name: 'size',
-    direction: RADIO_DIRECTIONS.HORIZONTAL,
     options: [
       { value: 'sm', label: 'Small' },
       { value: 'md', label: 'Medium' },

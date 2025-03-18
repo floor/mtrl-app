@@ -7,17 +7,13 @@ import {
   createTabs
 } from 'mtrl'
 
-import {
-  TABS_VARIANTS
-} from 'mtrl/src/components/tabs'
-
 export const initSecondaryTabs = (container) => {
   const title = 'Secondary Tabs'
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with secondary variant
   const tabs = createTabs({
-    variant: TABS_VARIANTS.SECONDARY,
+    variant: 'secondary',
     tabs: [
       { text: 'All items', value: 'all', state: 'active' },
       { text: 'Unread', value: 'unread' },
@@ -26,7 +22,7 @@ export const initSecondaryTabs = (container) => {
   })
 
   // Debug: Log the variant value and element classes
-  console.log('Secondary Variant Value:', TABS_VARIANTS.SECONDARY)
+  console.log('Secondary Variant Value:', 'secondary')
   console.log('Tabs Element Classes:', tabs.element.className)
 
   // Add info text

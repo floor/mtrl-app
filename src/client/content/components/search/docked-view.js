@@ -11,9 +11,13 @@ import {
 } from 'mtrl'
 
 import {
-  SEARCH_VARIANTS,
   SEARCH_VIEW_MODES
 } from 'mtrl/src/components/search'
+
+export const SEARCH_VARIANTS = {
+  BAR: 'bar',
+  VIEW: 'view'
+}
 
 export const initDockedView = (container) => {
   const title = 'Search View (Docked Mode)'

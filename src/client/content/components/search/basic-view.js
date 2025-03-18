@@ -10,9 +10,10 @@ import {
   createElement
 } from 'mtrl'
 
-import {
-  SEARCH_VARIANTS
-} from 'mtrl/src/components/search'
+export const SEARCH_VARIANTS = {
+  BAR: 'bar',
+  VIEW: 'view'
+}
 
 export const initBasicView = (container) => {
   const title = 'Search View (Full Screen Mode)'

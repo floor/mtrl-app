@@ -9,10 +9,10 @@ import {
   createSearch
 } from 'mtrl'
 
-import {
-  SEARCH_VARIANTS
-} from 'mtrl/src/components/search'
-
+export const SEARCH_VARIANTS = {
+  BAR: 'bar',
+  VIEW: 'view'
+}
 export const initWithSuggestions = (container) => {
   const title = 'Search with Suggestions'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component

@@ -5,11 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  TIME_PICKER_TYPE,
-  TIME_PICKER_ORIENTATION
-} from 'mtrl/src/components/timepicker'
-
-import {
   createLayout,
   createButton,
   createTimePicker
@@ -33,8 +28,7 @@ export const initVariants = (container) => {
   const standardInput = createTimeInput('3:45 PM')
 
   const standardPicker = createTimePicker({
-    value: new Date(2025, 0, 1, 15, 45, 0),
-    type: TIME_PICKER_TYPE.STANDARD
+    value: new Date(2025, 0, 1, 15, 45, 0)
   })
 
   standardInput.addEventListener('click', () => {
@@ -61,8 +55,7 @@ export const initVariants = (container) => {
   const compactInput = createTimeInput('8:15 AM')
 
   const compactPicker = createTimePicker({
-    value: new Date(2025, 0, 1, 8, 15, 0),
-    type: TIME_PICKER_TYPE.COMPACT
+    value: new Date(2025, 0, 1, 8, 15, 0)
   })
 
   compactInput.addEventListener('click', () => {
@@ -93,7 +86,7 @@ export const initVariants = (container) => {
 
   const verticalPicker = createTimePicker({
     value: new Date(2025, 0, 1, 10, 30, 0),
-    orientation: TIME_PICKER_ORIENTATION.VERTICAL
+    orientation: 'vertical'
   })
 
   verticalButton.on('click', () => {
@@ -113,7 +106,7 @@ export const initVariants = (container) => {
 
   const horizontalPicker = createTimePicker({
     value: new Date(2025, 0, 1, 18, 0, 0),
-    orientation: TIME_PICKER_ORIENTATION.HORIZONTAL
+    orientation: 'horizontal'
   })
 
   horizontalButton.on('click', () => {

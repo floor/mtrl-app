@@ -4,13 +4,23 @@ import {
 } from '../../../../layout'
 
 import {
+  createExtendedFab,
   createLayout
 } from 'mtrl'
 
-import {
-  createExtendedFab,
-  FAB_POSITIONS
-} from 'mtrl/src/components/extended-fab'
+/**
+ * FAB positions for fixed positioning
+ */
+export const FAB_POSITIONS = {
+  /** Top right corner */
+  TOP_RIGHT: 'top-right',
+  /** Top left corner */
+  TOP_LEFT: 'top-left',
+  /** Bottom right corner */
+  BOTTOM_RIGHT: 'bottom-right',
+  /** Bottom left corner */
+  BOTTOM_LEFT: 'bottom-left'
+}
 
 // Different icons for position demonstration
 const icons = {

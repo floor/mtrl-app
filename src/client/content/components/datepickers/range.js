@@ -7,9 +7,13 @@ import {
   createDatePicker
 } from 'mtrl'
 
-import {
-  DATEPICKER_SELECTION_MODES
-} from 'mtrl/src/components/datepicker'
+const DATEPICKER_SELECTION_MODES = {
+  /** Single date selection */
+  SINGLE: 'single',
+
+  /** Date range selection */
+  RANGE: 'range'
+}
 
 export const initRange = (container) => {
   const title = 'Date Range Selection'

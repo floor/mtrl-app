@@ -5,14 +5,35 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout
+  createLayout,
+  createFab
 } from 'mtrl'
 
-import {
-  createFab,
-  FAB_VARIANTS,
-  FAB_SIZES
-} from 'mtrl/src/components/fab'
+/**
+ * FAB variants for styling
+ */
+export const FAB_VARIANTS = {
+  /** Primary container color with on-primary-container icons */
+  PRIMARY: 'primary',
+  /** Secondary container color with on-secondary-container icons */
+  SECONDARY: 'secondary',
+  /** Tertiary container color with on-tertiary-container icons */
+  TERTIARY: 'tertiary',
+  /** Surface color with primary color icons */
+  SURFACE: 'surface'
+}
+
+/**
+ * FAB size variants
+ */
+export const FAB_SIZES = {
+  /** Standard FAB size (56dp) */
+  DEFAULT: 'default',
+  /** Small FAB size (40dp) */
+  SMALL: 'small',
+  /** Large FAB size (96dp) */
+  LARGE: 'large'
+}
 
 // Icon for the FABs
 const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

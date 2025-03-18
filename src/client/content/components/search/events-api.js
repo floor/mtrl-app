@@ -12,9 +12,14 @@ import {
   createElement
 } from 'mtrl'
 
-import {
-  SEARCH_EVENTS
-} from 'mtrl/src/components/search'
+export const SEARCH_EVENTS = {
+  FOCUS: 'focus',
+  BLUR: 'blur',
+  INPUT: 'input',
+  SUBMIT: 'submit',
+  CLEAR: 'clear',
+  ICON_CLICK: 'iconClick'
+}
 
 export const initEventsAPI = (container) => {
   const title = 'Using Events and API'

@@ -9,11 +9,26 @@ import {
   createLayout,
   createElement,
   createButton,
-  createTextfield
+  createTextfield,
+  createProgress
 } from 'mtrl'
 
-import createProgress, { PROGRESS_VARIANTS } from 'mtrl/src/components/progress'
+/**
+ * Progress component variants
+ */
+const PROGRESS_VARIANTS = {
+  /** Standard linear progress bar */
+  LINEAR: 'linear',
 
+  /** Circular progress indicator */
+  CIRCULAR: 'circular',
+
+  /** Progress with known value */
+  DETERMINATE: 'determinate',
+
+  /** Indeterminate progress animation */
+  INDETERMINATE: 'indeterminate'
+}
 /**
  * Creates the main Progress component showcase
  * @param {HTMLElement} container - The container element to append content to

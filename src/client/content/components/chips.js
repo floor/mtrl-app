@@ -9,11 +9,32 @@ import {
 import {
   createLayout,
   createButton,
-  createTextfield
+  createTextfield,
+  createChip
 } from 'mtrl'
 
-import createChip, { CHIP_VARIANTS } from 'mtrl/src/components/chip'
-import createChipSet from 'mtrl/src/components/chip/chip-set'
+export const CHIP_VARIANTS = {
+  /** Standard filled chip with solid background */
+  FILLED: 'filled',
+
+  /** Outlined chip with transparent background and border */
+  OUTLINED: 'outlined',
+
+  /** Elevated chip with shadow */
+  ELEVATED: 'elevated',
+
+  /** Assist chip for suggesting actions */
+  ASSIST: 'assist',
+
+  /** Filter chip for filtering content */
+  FILTER: 'filter',
+
+  /** Input chip for representing user input */
+  INPUT: 'input',
+
+  /** Suggestion chip for presenting options */
+  SUGGESTION: 'suggestion'
+}
 
 // Icons for chip examples
 const checkIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

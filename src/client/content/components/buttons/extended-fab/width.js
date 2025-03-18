@@ -6,13 +6,16 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout
+  createLayout,
+  createExtendedFab
 } from 'mtrl'
 
-import {
-  createExtendedFab,
-  EXTENDED_FAB_WIDTH
-} from 'mtrl/src/components/extended-fab'
+export const EXTENDED_FAB_WIDTH = {
+  /** Fixed width based on content */
+  FIXED: 'fixed',
+  /** Fluid width that can adapt to container */
+  FLUID: 'fluid'
+}
 
 // Icon for the Extended FABs
 const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

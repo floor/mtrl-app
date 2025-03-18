@@ -5,11 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  TIME_PICKER_TYPE,
-  TIME_FORMAT
-} from 'mtrl/src/components/timepicker'
-
-import {
   createLayout,
   createButton,
   createTimePicker
@@ -85,12 +80,12 @@ export const initProgramming = (container) => {
 
   toggleFormatBtn.on('click', () => {
     const currentFormat = timePicker.getFormat()
-    const newFormat = currentFormat === TIME_FORMAT.AMPM ? TIME_FORMAT.MILITARY : TIME_FORMAT.AMPM
+    const newFormat = currentFormat === '12h' ? '24h' : '12h'
 
     timePicker.setFormat(newFormat)
 
     // Update button text
-    toggleFormatBtn.setText(`Current: ${newFormat === TIME_FORMAT.AMPM ? '12-hour' : '24-hour'} format`)
+    toggleFormatBtn.setText(`Current: ${newFormat === '12h' ? '12-hour' : '24-hour'} format`)
   })
 
   // Toggle Type button
@@ -101,12 +96,12 @@ export const initProgramming = (container) => {
 
   toggleTypeBtn.on('click', () => {
     const currentType = timePicker.getType()
-    const newType = currentType === TIME_PICKER_TYPE.DIAL ? TIME_PICKER_TYPE.INPUT : TIME_PICKER_TYPE.DIAL
+    const newType = currentType === 'dial' ? 'input' : 'dial'
 
     timePicker.setType(newType)
 
     // Update button text
-    toggleTypeBtn.setText(`Current: ${newType === TIME_PICKER_TYPE.DIAL ? 'Dial' : 'Input'} type`)
+    toggleTypeBtn.setText(`Current: ${newType === 'dial' ? 'Dial' : 'Input'} type`)
   })
 
   // Open TimePicker button
