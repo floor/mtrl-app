@@ -1,6 +1,6 @@
 // build.js with code splitting support
 import { mkdir } from 'fs/promises'
-import { existsSync, watch } from 'fs'
+import { existsSync, watch, readdirSync } from 'fs'
 import { join, dirname, basename, relative } from 'path'
 import { fileURLToPath } from 'url'
 import * as sass from 'sass'
@@ -21,7 +21,7 @@ console.log(`Building in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode wit
 
 const compileSass = async () => {
   try {
-    const inputFile = join(__dirname, 'src/client/styles/main.scss')
+    const inputFile = join(__dirname, 'client/styles/main.scss')
     const outputFile = CSS_OUTPUT
 
     console.log('┌─────────────────────────────────────────')
@@ -35,7 +35,7 @@ const compileSass = async () => {
     const result = await sass.compileAsync(inputFile, {
       loadPaths: [
         join(__dirname, 'node_modules'),
-        join(__dirname, 'src/client/styles'),
+        join(__dirname, 'client/styles'),
         join(__dirname) // Add root directory to help resolve paths
       ],
       style: isProduction ? 'compressed' : 'expanded',
@@ -87,26 +87,43 @@ const compileSass = async () => {
 
     console.log('✓ SASS compilation successful')
     console.log(`  Size: ${(result.css.length / 1024).toFixed(2)} KB`)
+
+    return true // Return true on success
   } catch (error) {
-    console.error('❌ SASS compilation failed:', error)
+    console.error('❌ SASS compilation failed:', error.message || error)
     if (error.span) {
       // Better error reporting for SASS compilation errors
-      let errorLocation = `${error.span.url}:${error.span.start.line}:${error.span.start.column}`
+      let errorLocation = 'unknown location'
 
-      // Try to convert file:// URLs to readable paths
-      if (error.span.url && error.span.url.startsWith('file://')) {
-        try {
-          const filePath = fileURLToPath(error.span.url)
-          const relativePath = relative(__dirname, filePath)
-          errorLocation = `${relativePath}:${error.span.start.line}:${error.span.start.column}`
-        } catch (e) {
-          // Fall back to the original URL if path conversion fails
+      // Check if error.span.url exists and is a string before calling startsWith
+      if (error.span.url && typeof error.span.url === 'string') {
+        errorLocation = `${error.span.url}:${error.span.start.line}:${error.span.start.column}`
+
+        // Try to convert file:// URLs to readable paths
+        if (error.span.url.startsWith('file://')) {
+          try {
+            const filePath = fileURLToPath(error.span.url)
+            const relativePath = relative(__dirname, filePath)
+            errorLocation = `${relativePath}:${error.span.start.line}:${error.span.start.column}`
+          } catch (e) {
+            // Fall back to the original URL if path conversion fails
+          }
         }
+      } else if (error.span.start) {
+        // If we don't have a URL but have line/column info
+        errorLocation = `line ${error.span.start.line}, column ${error.span.start.column}`
       }
 
       console.error(`  Error in ${errorLocation}`)
       console.error(`  ${error.message}`)
     }
+
+    // In watch mode, we don't want to exit the process
+    if (isWatch) {
+      console.log('🔄 Continuing to watch for changes...')
+    }
+
+    return false // Return false on failure
   }
 }
 
@@ -122,15 +139,17 @@ const buildApp = async () => {
     // Create chunks directory if it doesn't exist
     await mkdir(CHUNKS_DIR, { recursive: true })
 
+    // Fix: Use a unique outfile rather than relying on naming configuration
+    // This avoids the "Multiple files share the same output path" error
     const jsResult = await Bun.build({
-      entrypoints: [join(__dirname, 'src/client/app.js')],
+      entrypoints: [join(__dirname, 'client/app.js')],
       outdir: DIST_DIR,
       minify: isProduction, // Only minify in production
       sourcemap: isProduction ? 'none' : 'inline', // No sourcemaps in production
       format: 'esm',
       target: 'browser',
       naming: {
-        entry: 'app.js',
+        // Use a unique chunk naming pattern
         chunk: 'chunks/[name].[hash].[ext]'
       },
       loader: {
@@ -154,6 +173,21 @@ const buildApp = async () => {
       console.error('❌ JavaScript build failed')
       console.error(jsResult.logs)
       return false
+    }
+
+    // Ensure main bundle is renamed to app.js if it's not already
+    const mainOutput = jsResult.outputs.find(output =>
+      !output.path.includes('/chunks/') && output.path.endsWith('.js')
+    )
+
+    if (mainOutput && mainOutput.path !== JS_OUTPUT) {
+      // Rename the main output file to app.js
+      try {
+        await Bun.write(JS_OUTPUT, await Bun.file(mainOutput.path).text())
+        console.log('✓ Renamed main bundle to app.js')
+      } catch (error) {
+        console.error(`❌ Error renaming main bundle: ${error.message}`)
+      }
     }
 
     // Log all generated outputs, including chunks
@@ -250,14 +284,13 @@ const setupWatchers = () => {
 
   const jsWatchPaths = [
     join(__dirname, 'node_modules/mtrl/src'),
-    join(__dirname, 'src/client'),
-    join(__dirname, 'src/server')
+    join(__dirname, 'client'),
+    join(__dirname, 'server')
   ]
 
   const scssWatchPaths = [
-    join(__dirname, 'src/client/styles'),
-    join(__dirname, 'node_modules/mtrl/src/styles'),
-    join(__dirname, 'node_modules/mtrl/src/components')
+    join(__dirname, 'client/styles'),
+    join(__dirname, 'node_modules/mtrl/src/styles')
   ]
 
   const watchJsFiles = () => {
@@ -341,15 +374,13 @@ const verifyOutput = async () => {
     const cssStats = await Bun.file(CSS_OUTPUT).size
     const totalSize = jsStats + cssStats
 
-    // Also check for chunks
+    // Also check for chunks - using fs.readdirSync instead of Bun.glob
     const chunksDir = join(DIST_DIR, 'chunks')
     let chunksSize = 0
     if (existsSync(chunksDir)) {
-      // This is a simplified approach - in a real implementation
-      // you would list all files in the chunks directory and sum their sizes
-      // Here we're assuming all .js files in the chunks directory are our chunks
       try {
-        const chunkFiles = await Bun.glob('*.js', { cwd: chunksDir })
+        // Use readdirSync instead of Bun.glob which may not be available in all Bun versions
+        const chunkFiles = readdirSync(chunksDir).filter(file => file.endsWith('.js'))
         for (const file of chunkFiles) {
           const chunkPath = join(chunksDir, file)
           const size = await Bun.file(chunkPath).size
@@ -414,10 +445,10 @@ const build = async () => {
     await mkdir(CHUNKS_DIR, { recursive: true })
 
     // Build JavaScript with code splitting
-    await buildApp()
+    const jsSuccess = await buildApp()
 
     // Compile SASS to CSS
-    await compileSass()
+    const sassSuccess = await compileSass()
 
     // Create HTML file with ES module support
     await createHtmlFile()
@@ -425,8 +456,10 @@ const build = async () => {
     // Verify output
     await verifyOutput()
 
-    // Update reload timestamp
-    await updateReloadTimestamp()
+    // Update reload timestamp if at least one of the build steps succeeded
+    if (jsSuccess || sassSuccess) {
+      await updateReloadTimestamp()
+    }
 
     const buildTime = ((Date.now() - startTime) / 1000).toFixed(2)
 
@@ -443,11 +476,29 @@ const build = async () => {
       console.log('')
       console.log('┌───────────────────────────────────────────────')
       console.log(`│ ✅ Build completed in ${buildTime}s with code splitting`)
+      if (!jsSuccess || !sassSuccess) {
+        console.log('│ ⚠️ Build completed with some errors')
+      }
       console.log('└───────────────────────────────────────────────')
+
+      // Only exit with error code in non-watch mode if there were failures
+      if (!isWatch && (!jsSuccess || !sassSuccess)) {
+        process.exit(1)
+      }
     }
   } catch (error) {
     console.error('❌ Build failed with error:', error)
-    process.exit(1)
+
+    // Don't exit the process in watch mode
+    if (isWatch) {
+      console.log('🔄 Continuing to watch for changes...')
+
+      const { watchJsFiles, watchScssFiles } = setupWatchers()
+      watchJsFiles()
+      watchScssFiles()
+    } else {
+      process.exit(1)
+    }
   }
 }
 
