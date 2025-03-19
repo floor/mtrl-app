@@ -10,8 +10,8 @@ import {
 
 export const createHomeContent = (container) => {
   const info = {
-    title: 'MTRL',
-    description: 'A functional JavaScript component library with composable architecture'
+    title: 'mtrl',
+    description: 'A functional TypeScript/Javascript component library with composable architecture'
   }
 
   container.classList.add('components')

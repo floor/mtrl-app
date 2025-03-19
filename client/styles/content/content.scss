@@ -11,8 +11,7 @@ $content: '#{b.$prefix}-content';
 .#{$content} {
   flex: 1;
   height: 100%;
-  overflow: scroll;
-  transition: background-color 200ms cubic-bezier(0.2, 0, 0, 1);
+  transition: background-color 200ms cubic-bezier(0.2, 0, 0, 1), margin 200ms ease;
   padding: 0 10px;
   margin: auto;
 
@@ -39,7 +38,7 @@ $content: '#{b.$prefix}-content';
         margin-left: 10px;
       }
       &.info {
-        background-color: t.color('primary');
+        background-color: t.color('surface-container-highest');
         color: var(--mtrl-sys-color-on-primary);
         padding: 18px 24px;
         .#{$content}__title {

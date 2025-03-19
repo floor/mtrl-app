@@ -13,6 +13,8 @@ export function createDrawerBehavior (options = {}) {
     drawerHiddenClass: 'mtrl-nav--hidden',
     closeButtonClass: 'drawer-close-btn',
     mobileBreakpoint: 960,
+    hoverDelay: 300, // Delay before switching drawer content (ms)
+    closeDelay: 400, // Delay before closing drawer (ms)
     // Allow for no UI passed initially, will be set in configure
     ui: null,
     navigation: null, // Navigation configuration data
@@ -24,6 +26,11 @@ export function createDrawerBehavior (options = {}) {
   let isDrawerVisible = false
   let eventHandlers = {}
   let currentNavigation = null
+  let currentSectionId = null
+  let hoverTimer = null
+  let closeTimer = null
+  let mouseInDrawer = false
+  let mouseInRail = false
 
   // Core references
   let ui = config.ui
@@ -84,6 +91,12 @@ export function createDrawerBehavior (options = {}) {
   function showDrawer () {
     if (!ui?.nav?.element) return api
 
+    // Clear any pending close timer
+    if (closeTimer) {
+      clearTimeout(closeTimer)
+      closeTimer = null
+    }
+
     ui.nav.element.classList.remove(config.drawerHiddenClass)
     ui.nav.element.setAttribute('aria-hidden', 'false')
     isDrawerVisible = true
@@ -92,16 +105,39 @@ export function createDrawerBehavior (options = {}) {
   }
 
   /**
-   * Hides the drawer
+   * Hides the drawer with optional delay
    *
+   * @param {boolean} withDelay - Whether to apply delay before closing
    * @returns {Object} Drawer behavior manager for chaining
    */
-  function hideDrawer () {
+  function hideDrawer (withDelay = false) {
     if (!ui?.nav?.element) return api
 
-    ui.nav.element.classList.add(config.drawerHiddenClass)
-    ui.nav.element.setAttribute('aria-hidden', 'true')
-    isDrawerVisible = false
+    // If we're still hovering over nav elements, don't hide
+    if (mouseInDrawer || mouseInRail) {
+      return api
+    }
+
+    // Clear any existing close timer
+    if (closeTimer) {
+      clearTimeout(closeTimer)
+      closeTimer = null
+    }
+
+    const hideAction = () => {
+      // Double-check we're still not hovering over nav elements
+      if (!mouseInDrawer && !mouseInRail) {
+        ui.nav.element.classList.add(config.drawerHiddenClass)
+        ui.nav.element.setAttribute('aria-hidden', 'true')
+        isDrawerVisible = false
+      }
+    }
+
+    if (withDelay && !isMobileView()) {
+      closeTimer = setTimeout(hideAction, config.closeDelay)
+    } else {
+      hideAction()
+    }
 
     return api
   }
@@ -114,21 +150,21 @@ export function createDrawerBehavior (options = {}) {
   function ensureClosedOnLoad () {
     // Make sure this executes immediately when the function is called
     if (ui?.nav?.element) {
-      hideDrawer()
+      hideDrawer(false)
     }
 
     // Also handle the case where UI might not be available yet
     // or if DOM isn't fully loaded
     window.addEventListener('DOMContentLoaded', () => {
       if (ui?.nav?.element) {
-        hideDrawer()
+        hideDrawer(false)
       }
     })
 
     // Add a final check for when the window fully loads
     window.addEventListener('load', () => {
       if (ui?.nav?.element) {
-        hideDrawer()
+        hideDrawer(false)
       }
     })
 
@@ -152,10 +188,42 @@ export function createDrawerBehavior (options = {}) {
     closeButton.className = config.closeButtonClass
     closeButton.setAttribute('aria-label', 'Close navigation')
     closeButton.innerHTML = '&times;'
-    closeButton.addEventListener('click', () => hideDrawer())
+    closeButton.addEventListener('click', () => hideDrawer(false))
 
     ui.nav.element.appendChild(closeButton)
     return closeButton
+  }
+
+  /**
+   * Handles section change with hover intent
+   *
+   * @param {string} sectionId - Section ID to change to
+   */
+  function handleSectionChange (sectionId) {
+    // Clear any existing hover timer
+    if (hoverTimer) {
+      clearTimeout(hoverTimer)
+      hoverTimer = null
+    }
+
+    // If it's the same section, no need to change
+    if (sectionId === currentSectionId) {
+      return
+    }
+
+    // Set a timer to change the section after delay
+    hoverTimer = setTimeout(() => {
+      // Update current section
+      currentSectionId = sectionId
+
+      // Check if this section has items
+      if (hasSectionItems(sectionId)) {
+        showDrawer()
+      } else {
+        // No items for this section, hide the drawer
+        hideDrawer(true)
+      }
+    }, config.hoverDelay)
   }
 
   /**
@@ -166,19 +234,71 @@ export function createDrawerBehavior (options = {}) {
   function handleRailMouseover (event) {
     if (isMobileView() || !ui?.rail?.element) return
 
+    mouseInRail = true
+
     const railItem = event.target.closest('[data-id]')
     if (!railItem) return
 
     const sectionId = railItem.getAttribute('data-id')
     if (!sectionId) return
 
-    // Check if this section has items
-    if (hasSectionItems(sectionId)) {
-      showDrawer()
-    } else {
-      // No items for this section, hide the drawer
-      hideDrawer()
+    handleSectionChange(sectionId)
+  }
+
+  /**
+   * Event handler for rail mouseenter
+   *
+   * @param {Event} event - Mouseenter event
+   */
+  function handleRailMouseenter (event) {
+    if (isMobileView() || !ui?.rail?.element) return
+    mouseInRail = true
+  }
+
+  /**
+   * Event handler for rail mouseleave
+   *
+   * @param {Event} event - Mouseleave event
+   */
+  function handleRailMouseleave (event) {
+    if (isMobileView() || !ui?.rail?.element) return
+    mouseInRail = false
+
+    // Only hide if not moving to drawer
+    const relatedTarget = event.relatedTarget
+    if (relatedTarget && relatedTarget.closest('.mtrl-nav--drawer')) {
+      return
     }
+
+    hideDrawer(true)
+  }
+
+  /**
+   * Event handler for drawer mouseenter
+   *
+   * @param {Event} event - Mouseenter event
+   */
+  function handleDrawerMouseenter (event) {
+    if (isMobileView() || !ui?.nav?.element) return
+    mouseInDrawer = true
+  }
+
+  /**
+   * Event handler for drawer mouseleave
+   *
+   * @param {Event} event - Mouseleave event
+   */
+  function handleDrawerMouseleave (event) {
+    if (isMobileView() || !ui?.nav?.element) return
+    mouseInDrawer = false
+
+    // Only hide if not moving to rail
+    const relatedTarget = event.relatedTarget
+    if (relatedTarget && relatedTarget.closest('.mtrl-nav--rail')) {
+      return
+    }
+
+    hideDrawer(true)
   }
 
   /**
@@ -195,51 +315,16 @@ export function createDrawerBehavior (options = {}) {
     const sectionId = railItem.getAttribute('data-id')
     if (!sectionId) return
 
+    // Update current section
+    currentSectionId = sectionId
+
     // Check if this section has items
     if (hasSectionItems(sectionId)) {
       showDrawer()
     } else {
       // No items for this section, hide the drawer
-      hideDrawer()
+      hideDrawer(false)
     }
-  }
-
-  /**
-   * Event handler for rail mouseout
-   *
-   * @param {Event} event - Mouseout event
-   */
-  function handleRailMouseout (event) {
-    if (isMobileView() || !ui?.rail?.element || !ui?.nav?.element) return
-
-    // Only hide if not moving to drawer
-    const relatedTarget = event.relatedTarget
-    if (relatedTarget && (
-      relatedTarget.closest('.mtrl-nav--drawer') ||
-        relatedTarget.closest('.mtrl-nav--rail'))) {
-      return
-    }
-
-    hideDrawer()
-  }
-
-  /**
-   * Event handler for drawer mouseout
-   *
-   * @param {Event} event - Mouseout event
-   */
-  function handleDrawerMouseout (event) {
-    if (isMobileView() || !ui?.nav?.element || !ui?.rail?.element) return
-
-    // Only hide if not moving to rail
-    const relatedTarget = event.relatedTarget
-    if (relatedTarget && (
-      relatedTarget.closest('.mtrl-nav--drawer') ||
-        relatedTarget.closest('.mtrl-nav--rail'))) {
-      return
-    }
-
-    hideDrawer()
   }
 
   /**
@@ -259,7 +344,7 @@ export function createDrawerBehavior (options = {}) {
     }
 
     // Small delay to allow the navigation to process the selection
-    setTimeout(() => hideDrawer(), 150)
+    setTimeout(() => hideDrawer(false), 150)
   }
 
   /**
@@ -279,17 +364,21 @@ export function createDrawerBehavior (options = {}) {
       // Store handlers for cleanup
       eventHandlers = {
         railMouseover: handleRailMouseover,
+        railMouseenter: handleRailMouseenter,
+        railMouseleave: handleRailMouseleave,
         railClick: handleRailClick,
-        railMouseout: handleRailMouseout,
-        drawerMouseout: handleDrawerMouseout,
+        drawerMouseenter: handleDrawerMouseenter,
+        drawerMouseleave: handleDrawerMouseleave,
         drawerItemClick: handleDrawerItemClick
       }
 
       // Add event listeners
       ui.rail.element.addEventListener('mouseover', eventHandlers.railMouseover)
+      ui.rail.element.addEventListener('mouseenter', eventHandlers.railMouseenter)
+      ui.rail.element.addEventListener('mouseleave', eventHandlers.railMouseleave)
       ui.rail.element.addEventListener('click', eventHandlers.railClick)
-      ui.rail.element.addEventListener('mouseout', eventHandlers.railMouseout)
-      ui.nav.element.addEventListener('mouseout', eventHandlers.drawerMouseout)
+      ui.nav.element.addEventListener('mouseenter', eventHandlers.drawerMouseenter)
+      ui.nav.element.addEventListener('mouseleave', eventHandlers.drawerMouseleave)
       ui.nav.element.addEventListener('click', eventHandlers.drawerItemClick)
 
       // Add close button
@@ -324,15 +413,28 @@ export function createDrawerBehavior (options = {}) {
     if (!isInitialized || !ui) return
 
     try {
+      // Clear any timers
+      if (hoverTimer) {
+        clearTimeout(hoverTimer)
+        hoverTimer = null
+      }
+
+      if (closeTimer) {
+        clearTimeout(closeTimer)
+        closeTimer = null
+      }
+
       // Remove event listeners if elements exist
       if (ui.rail?.element) {
         ui.rail.element.removeEventListener('mouseover', eventHandlers.railMouseover)
+        ui.rail.element.removeEventListener('mouseenter', eventHandlers.railMouseenter)
+        ui.rail.element.removeEventListener('mouseleave', eventHandlers.railMouseleave)
         ui.rail.element.removeEventListener('click', eventHandlers.railClick)
-        ui.rail.element.removeEventListener('mouseout', eventHandlers.railMouseout)
       }
 
       if (ui.nav?.element) {
-        ui.nav.element.removeEventListener('mouseout', eventHandlers.drawerMouseout)
+        ui.nav.element.removeEventListener('mouseenter', eventHandlers.drawerMouseenter)
+        ui.nav.element.removeEventListener('mouseleave', eventHandlers.drawerMouseleave)
         ui.nav.element.removeEventListener('click', eventHandlers.drawerItemClick)
 
         // Remove close button if it exists

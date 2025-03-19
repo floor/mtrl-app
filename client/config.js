@@ -18,7 +18,6 @@ export const mainNavigation = [
 
 export const navigation = {
   components: [
-
     {
       id: 'appbars',
       label: 'App bars',
