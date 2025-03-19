@@ -1,0 +1,2 @@
+[install]
+hooksPath = "./.bun-hooks"
