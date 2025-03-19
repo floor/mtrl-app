@@ -1,9 +1,10 @@
 // server/index.ts
 import { logRequest, logResponse, logError } from "./middleware/logger.js";
-import { handleStaticRequest, handleFaviconRequest, handleManifestRequest } from "./handlers/static.js";
-import { handleRobotsRequest, handleLiveReload, handleHealthCheck } from "./handlers/special.js";
+import { handleStaticRequest, handleFaviconRequest } from "./handlers/static.js";
+import { handleRobotsRequest, handleLiveReload, handleHealthCheck, handleManifestRequest } from "./handlers/special.js";
 import { handleAppRequest, handleNotFound } from "./handlers/app.js";
 import { initLiveReload } from "./services/live-reload.js";
+import { compressionMiddleware } from "./middleware/compression.js";
 import config from "./config.js";
 
 const { port, isProduction } = config;
@@ -26,62 +27,36 @@ async function handleRequest(req: Request): Promise<Response> {
     // Log the incoming request
     logRequest(req, url);
     
-    // Handle special routes
-    // Order matters here - check special routes before static files
+    // Define a variable to hold the response
+    let response: Response | null = null;
     
-    // 1. Health check
-    const healthResponse = handleHealthCheck(url);
-    if (healthResponse) {
-      const endTime = performance.now();
-      logResponse(url.pathname, healthResponse.status, Math.round(endTime - startTime));
-      return healthResponse;
+    // Try special handlers first
+    response = handleHealthCheck(req) || 
+               handleRobotsRequest(req) || 
+               ((!isProduction) ? handleLiveReload(req) : null) ||
+               await handleManifestRequest(req) ||
+               await handleFaviconRequest(req);
+    
+    // If no special handler matched, try static files
+    if (!response && (url.pathname.startsWith('/dist/') || url.pathname.startsWith('/public/'))) {
+      response = await handleStaticRequest(req);
     }
     
-    // 2. Robots.txt
-    const robotsResponse = handleRobotsRequest(url);
-    if (robotsResponse) {
-      const endTime = performance.now();
-      logResponse(url.pathname, robotsResponse.status, Math.round(endTime - startTime));
-      return robotsResponse;
+    // If still no match, use the app handler
+    if (!response) {
+      response = await handleAppRequest(req);
     }
     
-    // 3. Live reload (development only)
-    const reloadResponse = handleLiveReload(url);
-    if (reloadResponse) {
-      const endTime = performance.now();
-      logResponse(url.pathname, reloadResponse.status, Math.round(endTime - startTime));
-      return reloadResponse;
+    // Apply compression if in production mode
+    if (isProduction && response) {
+      response = await compressionMiddleware(req, response);
     }
     
-    // 4. Web App Manifest (new addition)
-    const manifestResponse = await handleManifestRequest(req);
-    if (manifestResponse) {
-      const endTime = performance.now();
-      logResponse(url.pathname, manifestResponse.status, Math.round(endTime - startTime));
-      return manifestResponse;
-    }
-    
-    // 5. Favicon
-    const faviconResponse = await handleFaviconRequest(req);
-    if (faviconResponse) {
-      const endTime = performance.now();
-      logResponse(url.pathname, faviconResponse.status, Math.round(endTime - startTime));
-      return faviconResponse;
-    }
-    
-    // 6. Static files
-    const staticResponse = await handleStaticRequest(req);
-    if (staticResponse) {
-      const endTime = performance.now();
-      logResponse(url.pathname, staticResponse.status, Math.round(endTime - startTime));
-      return staticResponse;
-    }
-    
-    // 7. Main app (default route)
-    const appResponse = await handleAppRequest(url);
+    // Log the response
     const endTime = performance.now();
-    logResponse(url.pathname, appResponse.status, Math.round(endTime - startTime));
-    return appResponse;
+    logResponse(url.pathname, response.status, Math.round(endTime - startTime));
+    
+    return response;
     
   } catch (error: any) {
     // Handle unexpected errors
@@ -106,7 +81,7 @@ const startupBanner = `
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Bun HTTP server running on http://localhost:${server.port}
 🔧 Mode: ${isProduction ? "🏭 Production" : "🔨 Development"}
-📦 Compression: ${isProduction ? "Enabled (gzip)" : "Disabled"}
+📦 Compression: ${isProduction ? "✅ Enabled (gzip)" : "❌ Disabled"}
 📁 Static file serving enabled
 🌐 Web App Manifest support enabled
 ${!isProduction ? "🔄 Live reload enabled" : ""}

@@ -7,10 +7,12 @@ import config from "../config.js";
 
 /**
  * Handle main app requests
- * @param url The request URL object
+ * @param req The request object
  * @returns A response object
  */
-export async function handleAppRequest(url: URL): Promise<Response> {
+export async function handleAppRequest(req: Request): Promise<Response> {
+  const url = new URL(req.url);
+  
   try {
     const templatePath = getTemplateFile("app.ejs");
     
@@ -36,10 +38,11 @@ export async function handleAppRequest(url: URL): Promise<Response> {
 
 /**
  * Handle 404 (not found) responses
- * @param url The request URL object
+ * @param req The request object
  * @returns A 404 response
  */
-export function handleNotFound(url: URL): Response {
+export function handleNotFound(req: Request): Response {
+  const url = new URL(req.url);
   const error = new Error(`Not Found: ${url.pathname}`);
   logError(url.pathname, error, false);
   
