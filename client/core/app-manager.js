@@ -7,6 +7,7 @@ import themeManager from './theme/theme-manager'
 import { createNavigationManager } from './navigation/navigation-manager'
 import { createLayoutManager } from './layout/layout-manager'
 import drawerBehavior from './navigation/drawer-behavior'
+import railBehavior from './navigation/rail'
 
 /**
  * Creates an application manager responsible for core initialization,
@@ -205,7 +206,7 @@ export const createApp = (options = {}) => {
    */
   const initializeNavigation = (ui) => {
     try {
-    // Create navigation manager
+      // Create navigation manager for content management
       const navigation = createNavigationManager({
         ui,
         router,
@@ -213,21 +214,32 @@ export const createApp = (options = {}) => {
         ...options.navigationOptions
       })
 
-      // Initialize navigation
+      // Initialize navigation manager
       navigation.initialize()
 
-      // Initialize drawer behavior enhancement
+      // Configure drawer behavior - Only handle drawer-specific behavior
       drawerBehavior.configure({
         ui,
-        navigation: options.navigation // Pass in the navigation configuration
+        navigation: options.navigation
       })
       drawerBehavior.initialize()
+
+      // First configure rail behavior
+      railBehavior.configure({
+        rail: ui.rail,
+        router,
+        navigationConfig: options.navigation
+      })
+
+      // Then initialize it after configuration
+      railBehavior.initialize()
 
       // Register cleanup
       if (eventManager) {
         eventManager.addCleanup(() => {
           navigation.cleanup()
           drawerBehavior.cleanup()
+          railBehavior.cleanup()
         })
       }
 
