@@ -4,13 +4,16 @@ module.exports = {
     name: 'mtrl-app',
     script: './server.ts',
     interpreter: 'bun',
-    instances: 'max',
-    exec_mode: 'cluster',
+    instances: 1, // Use a single instance to avoid conflicts
+    exec_mode: 'fork', // Use fork mode instead of cluster for Bun
     watch: false,
+    max_memory_restart: '200M',
     env: {
       // Default environment variables (will be overridden by .env)
       NODE_ENV: 'production',
-      PORT: 4000
+      PORT: 4000,
+      COMPRESSION_ENABLED: 'true',
+      COMPRESSION_LEVEL: '6'
     },
     env_production: {
       NODE_ENV: 'production'
