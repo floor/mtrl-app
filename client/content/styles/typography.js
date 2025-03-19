@@ -281,7 +281,7 @@ export const initTypographyDemo = (ui) => {
   const headline = createElement({
     tag: 'h1',
     class: 'type-headline-large',
-    text: 'Typography in MTRL'
+    text: 'Typography in mtrl'
   })
 
   // Subheadline
@@ -295,7 +295,7 @@ export const initTypographyDemo = (ui) => {
   const bodyText = createElement({
     tag: 'p',
     class: 'type-body-medium',
-    text: 'Good typography makes the reading experience comfortable and helps create clear hierarchies. The MTRL framework provides a comprehensive typography system that helps maintain consistent type styles across your application.'
+    text: 'Good typography makes the reading experience comfortable and helps create clear hierarchies. The mtrl framework provides a comprehensive typography system that helps maintain consistent type styles across your application.'
   })
 
   // Quote

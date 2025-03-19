@@ -219,7 +219,7 @@ export const generateDynamicRoutes = () => {
 
   Object.keys(ROUTE_MODULE_MAP).forEach(routePath => {
     routes[routePath] = {
-      title: `Mtrl - ${getTitleFromPath(routePath)}`,
+      title: `${getTitleFromPath(routePath)}`,
       handler: createDynamicHandler(routePath)
     }
   })

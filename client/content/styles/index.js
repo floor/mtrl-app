@@ -97,7 +97,7 @@ export const createStylesLayout = () => [
   // Introduction Section
   [createElement, 'section', { class: 'mtrl-content__section' },
     [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Design System Overview' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'The MTRL styling system provides a consistent foundation for building beautiful, functional interfaces. The system is based on Material Design principles but optimized for flexibility and performance.' }],
+    [createElement, 'p', { class: 'mtrl-content__description', text: 'The mtrl styling system provides a consistent foundation for building beautiful, functional interfaces. The system is based on Material Design principles but optimized for flexibility and performance.' }],
     [createElement, 'p', { class: 'mtrl-content__description', text: 'Explore each subsystem to understand the building blocks of our design language.' }]
   ],
 

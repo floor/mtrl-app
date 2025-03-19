@@ -310,7 +310,7 @@ export const createElevationLayout = () => [
   // Elevation Levels Section
   [createElement, { tag: 'section', class: 'mtrl-content__section' },
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Elevation Levels' }],
-    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'The MTRL framework provides standard elevation levels to create consistent depth throughout your application.' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'The mtrl framework provides standard elevation levels to create consistent depth throughout your application.' }],
     [createElement, 'levels', { id: 'levels', class: 'elevation-levels-container' }]
   ],
 

@@ -8,8 +8,8 @@ export const componentsLayout = (info) => [
       [e, { tag: 'section', class: 'mtrl-components__box info' },
         [e, 'h1', { id: 'title', class: 'mtrl-components__title', text: info.title }],
         [e, 'p', { id: 'decription', class: 'mtrl-components__text', text: info.description }]
-      ],
-      [e, { tag: 'section', class: 'mtrl-components__box visual' }]
+      ]
+      // [e, { tag: 'section', class: 'mtrl-components__box visual' }]
     ],
     // [e, { id: 'navi', class: 'mtrl-components__navi' }],
     [e, { id: 'body', class: 'mtrl-components__body' }],

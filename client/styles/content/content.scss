@@ -38,8 +38,8 @@ $content: '#{b.$prefix}-content';
         margin-left: 10px;
       }
       &.info {
-        background-color: t.color('surface-container-highest');
-        color: var(--mtrl-sys-color-on-primary);
+        background-color: t.color('outline-variant');
+        color: var(--mtrl-sys-color-on-surface-bright);
         padding: 18px 24px;
         .#{$content}__title {
           @include c.typography('headline-large');

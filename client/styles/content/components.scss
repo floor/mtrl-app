@@ -54,8 +54,8 @@ $components: '#{b.$prefix}-components';
         margin-left: 10px;
       }
       &.info {
-        background-color: t.color('primary');
-        color: var(--mtrl-sys-color-on-primary);
+        background-color: t.color('outline-variant');
+        color: var(--mtrl-sys-color-on-outline-variant);
         padding: 18px 24px;
         .#{$components}__title {
           @include c.typography('headline-large');

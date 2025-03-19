@@ -38,7 +38,7 @@ export const initCompositionPatterns = (ui) => {
   const explanationText = createElement({
     tag: 'p',
     class: 'composition-explanation__text',
-    text: 'The MTRL library uses functional composition to create components. This approach provides several advantages: more reusable code, simpler testing, and flexible component extension.'
+    text: 'The mtrl library uses functional composition to create components. This approach provides several advantages: more reusable code, simpler testing, and flexible component extension.'
   })
 
   patternsExplanation.appendChild(explanationText)
@@ -58,7 +58,7 @@ export const initCompositionPatterns = (ui) => {
   const exampleCode = createElement({
     tag: 'pre',
     class: 'composition-example__code',
-    text: `// The composition pattern in MTRL:
+    text: `// The composition pattern in mtrl:
 // 1. Create base component
 // 2. Apply enhancers/mixins using pipe or compose
 // 3. Pass configuration to the resulting function
@@ -199,7 +199,7 @@ export const initPipeFunction = (ui) => {
   const explanationText = createElement({
     tag: 'p',
     class: 'composition-explanation__text',
-    text: 'The pipe function is the core utility for composing components in MTRL. It takes a series of functions and returns a new function that passes its argument through each function in the series, from left to right.'
+    text: 'The pipe function is the core utility for composing components in mtrl. It takes a series of functions and returns a new function that passes its argument through each function in the series, from left to right.'
   })
 
   pipeExplanation.appendChild(explanationText)
@@ -369,7 +369,7 @@ export const initFeatures = (ui) => {
   const explanationText = createElement({
     tag: 'p',
     class: 'composition-explanation__text',
-    text: 'The MTRL library includes a set of feature functions that enhance components with specific capabilities. Each feature is a higher-order function that takes a component and returns an enhanced version of that component.'
+    text: 'The mtrl library includes a set of feature functions that enhance components with specific capabilities. Each feature is a higher-order function that takes a component and returns an enhanced version of that component.'
   })
 
   featuresExplanation.appendChild(explanationText)
@@ -389,7 +389,7 @@ export const initFeatures = (ui) => {
   const exampleCode = createElement({
     tag: 'pre',
     class: 'composition-example__code',
-    text: `// Feature functions in MTRL follow this pattern:
+    text: `// Feature functions in mtrl follow this pattern:
 // (config) => (component) => enhancedComponent
 
 // Text feature adds text capabilities
@@ -585,7 +585,7 @@ export const initCustomComponent = (ui) => {
   const explanationText = createElement({
     tag: 'p',
     class: 'composition-explanation__text',
-    text: 'Creating custom components in MTRL is straightforward with the composition pattern. You can mix and match features to create components with exactly the behavior you need.'
+    text: 'Creating custom components in mtrl is straightforward with the composition pattern. You can mix and match features to create components with exactly the behavior you need.'
   })
 
   customExplanation.appendChild(explanationText)
@@ -826,7 +826,7 @@ export const initAdvancedPatterns = (ui) => {
   const explanationText = createElement({
     tag: 'p',
     class: 'composition-explanation__text',
-    text: 'The MTRL library includes advanced composition patterns for more complex scenarios. These include conditional composition, component variants, and state composition.'
+    text: 'The mtrl library includes advanced composition patterns for more complex scenarios. These include conditional composition, component variants, and state composition.'
   })
 
   advancedExplanation.appendChild(explanationText)
@@ -985,14 +985,14 @@ export const createCompositionLayout = () => [
   // Composition Patterns Section
   [createElement, { tag: 'section', class: 'mtrl-content__section' },
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Composition Patterns' }],
-    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Learn how MTRL uses functional composition instead of inheritance to create flexible, reusable components.' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Learn how mtrl uses functional composition instead of inheritance to create flexible, reusable components.' }],
     [createElement, 'patterns', { id: 'patterns', class: 'patterns-container' }]
   ],
 
   // Pipe Function Section
   [createElement, { tag: 'section', class: 'mtrl-content__section' },
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Pipe Function' }],
-    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'The pipe function is the core utility that enables functional composition in MTRL.' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'The pipe function is the core utility that enables functional composition in mtrl.' }],
     [createElement, 'pipe', { id: 'pipe', class: 'pipe-container' }]
   ],
 
@@ -1020,7 +1020,7 @@ export const createCompositionLayout = () => [
   // Best Practices Section
   [createElement, { tag: 'section', class: 'mtrl-content__section' },
     [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Best Practices' }],
-    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Follow these guidelines to get the most out of the composition pattern in your MTRL applications.' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Follow these guidelines to get the most out of the composition pattern in your mtrl applications.' }],
     [createElement, { tag: 'div', class: 'best-practices' },
       [createElement, { tag: 'ul', class: 'best-practices-list' },
         [createElement, { tag: 'li', html: '<strong>Keep features focused:</strong> Each feature function should do one thing well. This makes them more reusable across different components.' }],
