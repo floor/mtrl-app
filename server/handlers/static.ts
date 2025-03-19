@@ -8,7 +8,8 @@ import { logError } from "../middleware/logger.js";
  * @param url The request URL object
  * @returns A response object or null if not a static file
  */
-export async function handleStaticRequest(url: URL): Promise<Response | null> {
+export async function handleStaticRequest(req: Request): Promise<Response | null> {
+  const url = new URL(req.url);
   const path = url.pathname;
   
   try {
@@ -23,8 +24,8 @@ export async function handleStaticRequest(url: URL): Promise<Response | null> {
       return null;
     }
     
-    // Serve the file
-    return await serveStaticFile(filePath);
+    // Serve the file with compression
+    return await serveStaticFile(filePath, {}, req);
   } catch (error: any) {
     logError(path, error);
     return new Response(`Error serving static file: ${error.message}`, { 
@@ -39,7 +40,8 @@ export async function handleStaticRequest(url: URL): Promise<Response | null> {
  * @param url The request URL object
  * @returns A response object or null if not a favicon request
  */
-export async function handleFaviconRequest(url: URL): Promise<Response | null> {
+export async function handleFaviconRequest(req: Request): Promise<Response | null> {
+  const url = new URL(req.url);
   const path = url.pathname;
   
   if (path !== "/favicon.ico") {
@@ -56,7 +58,7 @@ export async function handleFaviconRequest(url: URL): Promise<Response | null> {
     
     for (const faviconPath of possiblePaths) {
       if (isValidFile(faviconPath)) {
-        return await serveStaticFile(faviconPath);
+        return await serveStaticFile(faviconPath, {}, req);
       }
     }
     
@@ -73,10 +75,11 @@ export async function handleFaviconRequest(url: URL): Promise<Response | null> {
 
 /**
  * Handle web app manifest requests
- * @param url The request URL object
+ * @param req The request object 
  * @returns A response object or null if not a manifest request
  */
-export async function handleManifestRequest(url: URL): Promise<Response | null> {
+export async function handleManifestRequest(req: Request): Promise<Response | null> {
+  const url = new URL(req.url);
   const path = url.pathname;
   
   // Check for both naming conventions
@@ -101,7 +104,7 @@ export async function handleManifestRequest(url: URL): Promise<Response | null> 
       if (isValidFile(manifestPath)) {
         return await serveStaticFile(manifestPath, {
           "Content-Type": "application/manifest+json"
-        });
+        }, req);
       }
     }
     
@@ -128,10 +131,15 @@ export async function handleManifestRequest(url: URL): Promise<Response | null> 
       "display": "standalone"
     };
     
-    return new Response(JSON.stringify(defaultManifest, null, 2), {
-      status: 200,
-      headers: { "Content-Type": "application/manifest+json" }
-    });
+    const jsonString = JSON.stringify(defaultManifest, null, 2);
+    
+    // Set basic headers
+    const headers = {
+      "Content-Type": "application/manifest+json",
+      "Cache-Control": "max-age=3600"
+    };
+    
+    return new Response(jsonString, { status: 200, headers });
   } catch (error: any) {
     logError(path, error);
     return new Response(`Error serving manifest: ${error.message}`, { 

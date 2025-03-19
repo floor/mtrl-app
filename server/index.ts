@@ -1,6 +1,6 @@
 // server/index.ts
 import { logRequest, logResponse, logError } from "./middleware/logger.js";
-import { handleStaticRequest, handleFaviconRequest } from "./handlers/static.js";
+import { handleStaticRequest, handleFaviconRequest, handleManifestRequest } from "./handlers/static.js";
 import { handleRobotsRequest, handleLiveReload, handleHealthCheck } from "./handlers/special.js";
 import { handleAppRequest, handleNotFound } from "./handlers/app.js";
 import { initLiveReload } from "./services/live-reload.js";
@@ -53,23 +53,31 @@ async function handleRequest(req: Request): Promise<Response> {
       return reloadResponse;
     }
     
-    // 4. Favicon
-    const faviconResponse = await handleFaviconRequest(url);
+    // 4. Web App Manifest (new addition)
+    const manifestResponse = await handleManifestRequest(req);
+    if (manifestResponse) {
+      const endTime = performance.now();
+      logResponse(url.pathname, manifestResponse.status, Math.round(endTime - startTime));
+      return manifestResponse;
+    }
+    
+    // 5. Favicon
+    const faviconResponse = await handleFaviconRequest(req);
     if (faviconResponse) {
       const endTime = performance.now();
       logResponse(url.pathname, faviconResponse.status, Math.round(endTime - startTime));
       return faviconResponse;
     }
     
-    // 5. Static files
-    const staticResponse = await handleStaticRequest(url);
+    // 6. Static files
+    const staticResponse = await handleStaticRequest(req);
     if (staticResponse) {
       const endTime = performance.now();
       logResponse(url.pathname, staticResponse.status, Math.round(endTime - startTime));
       return staticResponse;
     }
     
-    // 6. Main app (default route)
+    // 7. Main app (default route)
     const appResponse = await handleAppRequest(url);
     const endTime = performance.now();
     logResponse(url.pathname, appResponse.status, Math.round(endTime - startTime));
@@ -98,8 +106,9 @@ const startupBanner = `
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Bun HTTP server running on http://localhost:${server.port}
 🔧 Mode: ${isProduction ? "🏭 Production" : "🔨 Development"}
-📦 Compression: ${isProduction ? "Enabled (level: 6)" : "Disabled"}
+📦 Compression: ${isProduction ? "Enabled (gzip)" : "Disabled"}
 📁 Static file serving enabled
+🌐 Web App Manifest support enabled
 ${!isProduction ? "🔄 Live reload enabled" : ""}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `;
