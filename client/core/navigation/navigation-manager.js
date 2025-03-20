@@ -18,10 +18,21 @@ export const createNavigationManager = (options = {}) => {
   // State tracking
   let currentSection = null
   let currentSubsection = null
+  let preventDrawerHiding = false
 
   // Event handlers
   let railHandler = null
   let drawerHandler = null
+
+  // Enhanced hover behavior state
+  let lastHoveredSection = null
+  const lastMouseX = 0 // Changed from const to let
+  const lastMouseY = 0 // Changed from const to let
+  let drawerPosition = null
+  let mouseInDrawer = false
+  let hoverTimer = null
+  let drawerChangeTimer = null
+  let preventContentChange = false
 
   // Options with defaults
   const config = {
@@ -30,38 +41,152 @@ export const createNavigationManager = (options = {}) => {
     },
     autoOpenDrawer: true,
     persistDrawerState: true,
+    hoverDelay: 200, // Initial hover delay
+    drawerDelay: 500, // Delay for changing drawer content when already open
+    closeDelay: 600, // Delay before closing drawer when mouse leaves
+    pathPredictionThreshold: 15, // Threshold in pixels to detect movement toward drawer
+    mobileBreakpoint: 960, // Pixel width for mobile breakpoint
     ...options
   }
 
   // Debug logging
   const debug = {
-    enabled: false, // Set to false to disable debug logs
+    enabled: true, // Set to false to disable debug logs
     log: function (...args) {
       if (this.enabled) {
-        // console.log('[NavigationManager]', ...args)
+        console.log('[NavigationManager]', ...args)
       }
     }
   }
 
-  // Private methods
+  /**
+   * Checks if current viewport is mobile
+   * @returns {boolean} True if viewport is mobile size
+   */
+  const isMobileView = () => {
+    return window.innerWidth <= config.mobileBreakpoint
+  }
 
   /**
- * Initialize navigation rail with mouseover behavior
- * @private
- */
+   * Function to reset the preventContentChange flag properly
+   * This should be called in appropriate places
+   */
+  const resetContentChangeFlag = () => {
+    if (preventContentChange) {
+      debug.log('Resetting preventContentChange flag')
+      preventContentChange = false
+    }
+  }
+
+  /**
+   * Updated mousemove handler to monitor when to reset the flag
+   */
+  const documentMouseMoveHandler = (event) => {
+    // Only check if the flag is set to prevent unnecessary processing
+    if (preventContentChange) {
+      // Check if mouse is far from drawer
+      if (drawerPosition) {
+        const distanceFromDrawer = Math.min(
+          Math.abs(event.clientX - drawerPosition.left),
+          Math.abs(event.clientX - drawerPosition.right)
+        )
+
+        // If we're far from the drawer (over 200px away) and not in drawer
+        if (distanceFromDrawer > 200 && !mouseInDrawer) {
+          resetContentChangeFlag()
+        }
+      }
+    }
+  }
+
+  /**
+   * Update the drawer position data for movement detection
+   */
+  const updateDrawerPosition = () => {
+    if (!ui?.nav?.element) return
+    drawerPosition = ui.nav.element.getBoundingClientRect()
+  }
+
+  /**
+   * Detect if the mouse is moving toward the drawer
+   * @param {number} currentX - Current mouse X position
+   * @param {number} currentY - Current mouse Y position
+   * @returns {boolean} True if the mouse appears to be moving toward the drawer
+   */
+  const isMovingTowardDrawer = (currentX, currentY) => {
+    if (!drawerPosition) {
+      updateDrawerPosition()
+      return false
+    }
+
+    // If drawer is visible
+    if (isDrawerVisible()) {
+      // For left-positioned drawer
+      const movingRight = currentX > lastMouseX
+
+      // Calculate the angle of movement
+      const deltaX = currentX - lastMouseX
+      const deltaY = currentY - lastMouseY
+
+      // Check if mouse is at a height that could be moving toward drawer
+      const isAtDrawerHeight = currentY >= (drawerPosition.top - config.pathPredictionThreshold) &&
+                               currentY <= (drawerPosition.bottom + config.pathPredictionThreshold)
+
+      // More aggressive detection of movement toward drawer:
+      // 1. Moving right (toward drawer) and is within drawer height range
+      // 2. Horizontal movement is significant
+      if (movingRight && isAtDrawerHeight && currentX < drawerPosition.left &&
+          Math.abs(deltaX) > Math.abs(deltaY)) {
+        return true
+      }
+
+      // If we're very close to the drawer and moving horizontally
+      if (currentX < drawerPosition.left &&
+          (drawerPosition.left - currentX) < 100 &&
+          isAtDrawerHeight) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  /**
+   * Check if the drawer is currently visible
+   * @returns {boolean} True if drawer is visible
+   */
+  const isDrawerVisible = () => {
+    if (!ui?.nav?.element) return false
+    return !ui.nav.element.classList.contains(config.drawerClasses.hidden)
+  }
+
+  /**
+   * Initialize navigation rail with enhanced hover behavior
+   * @private
+   */
   const initializeRail = () => {
     if (!ui.rail) return
 
-    debug.log('Initializing navigation rail with mouseover support')
+    debug.log('Initializing navigation rail with enhanced hover behavior')
 
-    // Store current section to prevent redundant updates
-    let lastHoveredSection = null
+    // Add document mousemove listener for flag reset detection
+    document.addEventListener('mousemove', documentMouseMoveHandler)
 
     // Click handler - for actual navigation
     railHandler = (event) => {
       const { id } = event
 
       debug.log('Rail selection changed:', id)
+
+      // Clear any pending timers
+      if (hoverTimer) {
+        clearTimeout(hoverTimer)
+        hoverTimer = null
+      }
+      if (drawerChangeTimer) {
+        clearTimeout(drawerChangeTimer)
+        drawerChangeTimer = null
+      }
 
       // Navigate to section
       if (router) {
@@ -70,79 +195,217 @@ export const createNavigationManager = (options = {}) => {
 
       // Update current section
       currentSection = id
+      lastHoveredSection = id
+
+      // Update drawer with section items - force update since this is a direct click
+      if (navigation[id] && navigation[id].length > 0) {
+        const items = navigation[id].map(item => ({
+          ...item,
+          section: id
+        }))
+
+        updateDrawerItems(items)
+        toggleDrawer(true)
+      } else {
+        // No items for this section, hide drawer
+        toggleDrawer(false)
+      }
     }
 
-    // Mouseover handler - for showing drawer
+    // Enhanced mouseover handler with better movement detection
     const railMouseoverHandler = (event) => {
-      const railItem = event.target.closest('[data-id]')
+      // Get the original DOM event if it's a wrapped component event
+      const domEvent = event.originalEvent || event
+      const railItem = event.target ? event.target.closest('[data-id]') : domEvent.target.closest('[data-id]')
       if (!railItem) return
 
       const id = railItem.getAttribute('data-id')
-      if (!id) return // Only skip if no id found
+      if (!id) return
 
-      // Always update lastHoveredSection
-      lastHoveredSection = id
+      // Skip if content changes are prevented
+      if (preventContentChange) {
+        debug.log('Skipping rail mouseover - content changes are prevented')
+        return
+      }
 
-      debug.log('Rail mouseover:', id)
+      // Clear any existing timers for consistency
+      if (hoverTimer) {
+        clearTimeout(hoverTimer)
+        hoverTimer = null
+      }
 
-      // Get items for this section
-      const items = navigation[id] || []
+      // Use a shorter, consistent delay for better UX
+      hoverTimer = setTimeout(() => {
+        debug.log(`Rail item hover (${id}): Updating drawer content`)
 
-      // Update drawer if available
-      if (ui.nav) {
-        if (items.length > 0) {
-          const itemsWithSection = items.map(item => ({
+        // Check if section has items
+        if (navigation[id] && navigation[id].length > 0) {
+          // Has items - show drawer with content
+          const items = navigation[id].map(item => ({
             ...item,
             section: id
           }))
 
-          debug.log('Updating drawer with items for section:', id, itemsWithSection.length)
-          updateDrawerItems(itemsWithSection)
-
-          // Always show drawer on mouseover
+          updateDrawerItems(items)
           toggleDrawer(true)
+          lastHoveredSection = id
+        } else {
+          // No items for this section, hide drawer
+          debug.log(`No items for section: ${id}, hiding drawer`)
+          toggleDrawer(false)
         }
+      }, 150) // Short, consistent delay
+    }
+
+    /**
+     * Updated drawerMouseenterHandler that sets both flags
+     */
+    const drawerMouseenterHandler = () => {
+      debug.log('Mouse entered drawer')
+      mouseInDrawer = true
+      preventContentChange = true // Original behavior - prevent content changes
+      preventDrawerHiding = true // New flag - prevent drawer from hiding
+
+      // Clear any pending drawer hide timer
+      if (closeTimer) {
+        clearTimeout(closeTimer)
+        closeTimer = null
       }
     }
 
-    // Add drawer hover handler to keep it open when hovered
-    const drawerHoverHandler = () => {
-      if (ui.nav) {
-        toggleDrawer(true)
-      }
-    }
+    /**
+     * Updated drawerMouseleaveHandler that handles the new flag
+     */
+    const drawerMouseleaveHandler = (event) => {
+      debug.log('Mouse left drawer')
+      mouseInDrawer = false
 
-    // Optional - Mouseout handler to hide drawer
-    const mouseoutHandler = (event) => {
-    // Only hide drawer if not moving to drawer or other rail item
+      // Always reset drawer hiding prevention when mouse leaves drawer
+      preventDrawerHiding = false
+
+      // Get the element the mouse is moving to
       const relatedTarget = event.relatedTarget
-      if (relatedTarget && (
-        relatedTarget.closest('.mtrl-nav--drawer') ||
-        relatedTarget.closest('.mtrl-nav--rail'))) {
+
+      // Check if moving to rail
+      if (relatedTarget &&
+      (relatedTarget.closest('.mtrl-nav--rail') ||
+      relatedTarget.classList.contains('mtrl-nav--rail'))) {
+        debug.log('Moving to rail, not hiding drawer')
+        // Reset content change prevention immediately when moving to rail
+        // This allows hovering over other rail items to work
+        preventContentChange = false
+        preventDrawerHiding = true
         return
       }
 
-      debug.log('Mouse left navigation area')
-      toggleDrawer(false)
+      // Reset content change prevention IMMEDIATELY if not moving to rail
+      // This fixes the issue where rail hover doesn't work after leaving drawer
+      preventContentChange = false
+
+      debug.log('Moving away from drawer, hiding with delay')
+      hideDrawer(true)
     }
 
-    // Attach handlers
-    ui.rail.on('change', railHandler)
-
-    // Add DOM event handlers
+    // Add mouse handlers
     if (ui.rail.element) {
+      // Use standard DOM event for more consistent handling
       ui.rail.element.addEventListener('mouseover', railMouseoverHandler)
-
-      // Comment this line to keep drawer always open after hover
-      ui.rail.element.addEventListener('mouseout', mouseoutHandler)
+    }
+    // Also add through component event system if available
+    if (ui.rail.on) {
+      ui.rail.on('change', railHandler)
+      ui.rail.on('mouseover', railMouseoverHandler)
     }
 
-    // Add drawer hover handlers
+    // Add drawer mouse handlers
     if (ui.nav && ui.nav.element) {
-      ui.nav.element.addEventListener('mouseover', drawerHoverHandler)
+      ui.nav.element.addEventListener('mouseenter', drawerMouseenterHandler)
+      ui.nav.element.addEventListener('mouseleave', drawerMouseleaveHandler)
+    }
 
-      // Comment this line to keep drawer always open after hover
-      ui.nav.element.addEventListener('mouseout', mouseoutHandler)
+    // Update initial drawer position
+    updateDrawerPosition()
+  }
+
+  /**
+   * Update drawer for a specific section
+   * @param {string} id - Section ID
+   */
+  const updateDrawerForSection = (id) => {
+    debug.log(`Updating drawer for section: ${id}`)
+
+    // Check if section has items
+    if (!navigation[id] || navigation[id].length === 0) {
+      debug.log(`No items for section: ${id}, hiding drawer`)
+      toggleDrawer(false)
+      return
+    }
+
+    // Has items - update content
+    const items = navigation[id].map(item => ({
+      ...item,
+      section: id
+    }))
+
+    updateDrawerItems(items)
+    toggleDrawer(true)
+
+    // Update drawer position after content changes
+    setTimeout(updateDrawerPosition, 50)
+  }
+
+  // Close timer for drawer
+  let closeTimer = null
+
+  /**
+   * Updated hideDrawer function that properly respects both flags
+   * @param {boolean} withDelay - Whether to apply delay before closing
+   * @param {boolean} force - Whether to force hiding regardless of prevention flags
+   */
+  const hideDrawer = (withDelay = false, force = false) => {
+    if (!ui?.nav?.element) return
+
+    // Don't hide if mouse is in drawer (unless forced)
+    if (!force && mouseInDrawer) {
+      debug.log('Not hiding drawer because mouse is over it')
+      return
+    }
+
+    // Don't hide if drawer hiding is prevented (unless forced)
+    if (!force && preventDrawerHiding) {
+      debug.log('Not hiding drawer because drawer hiding is prevented')
+      return
+    }
+
+    // Don't hide if content changes are prevented and we're moving toward drawer
+    // This preserves the original mouse movement prediction behavior
+    if (!force && preventContentChange && isMovingTowardDrawer(lastMouseX, lastMouseY)) {
+      debug.log('Not hiding drawer because user appears to be moving toward it')
+      return
+    }
+
+    // Clear any existing close timer
+    if (closeTimer) {
+      clearTimeout(closeTimer)
+      closeTimer = null
+    }
+
+    const doHide = () => {
+    // Final check before hiding
+      if (force || (!mouseInDrawer && !preventDrawerHiding)) {
+        debug.log('Hiding drawer', force ? '(forced)' : '')
+        toggleDrawer(false)
+      } else {
+        debug.log('Cancelled drawer hiding - conditions changed')
+      }
+    }
+
+    // Use delay if requested
+    if (withDelay && !isMobileView()) {
+      debug.log(`Setting drawer hide timer with ${config.closeDelay}ms delay`)
+      closeTimer = setTimeout(doHide, config.closeDelay)
+    } else {
+      doHide()
     }
   }
 
@@ -621,10 +884,39 @@ export const createNavigationManager = (options = {}) => {
   const cleanup = () => {
     debug.log('Cleaning up NavigationManager resources')
 
+    // Clean up document mouse move handler
+    document.removeEventListener('mousemove', documentMouseMoveHandler)
+
+    // Clean up timers
+    if (hoverTimer) {
+      clearTimeout(hoverTimer)
+      hoverTimer = null
+    }
+    if (drawerChangeTimer) {
+      clearTimeout(drawerChangeTimer)
+      drawerChangeTimer = null
+    }
+    if (closeTimer) {
+      clearTimeout(closeTimer)
+      closeTimer = null
+    }
+
     // Clean up rail handler
     if (ui.rail && railHandler) {
       ui.rail.off('change', railHandler)
+      if (ui.rail.off) {
+        ui.rail.off('mouseover', null) // Remove all mouseover handlers
+      }
+      if (ui.rail.element) {
+        ui.rail.element.removeEventListener('mouseover', null) // Remove all mouseover handlers
+      }
       railHandler = null
+    }
+
+    // Clean up drawer mouse handlers
+    if (ui.nav && ui.nav.element) {
+      ui.nav.element.removeEventListener('mouseenter', null)
+      ui.nav.element.removeEventListener('mouseleave', null)
     }
 
     // Clean up drawer
@@ -639,10 +931,11 @@ export const createNavigationManager = (options = {}) => {
     handleInitialRoute,
     navigateTo,
     cleanupDrawer,
-    cleanup
+    cleanup,
+    isDrawerVisible,
+    updateDrawerForSection,
+    hideDrawer
   }
 
   return navigationManager
 }
-
-export default createNavigationManager

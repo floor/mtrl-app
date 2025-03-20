@@ -63,7 +63,7 @@ export const createApp = (options = {}) => {
       isInitialized = true
 
       // Log successful initialization
-      // console.info('Application initialized successfully')
+      console.info('Application initialized successfully')
     } catch (error) {
       console.error('App initialization failed:', error)
       isInitialized = false
@@ -214,24 +214,28 @@ export const createApp = (options = {}) => {
         ...options.navigationOptions
       })
 
-      // Initialize navigation manager
+      // Initialize navigation manager first
       navigation.initialize()
 
-      // Configure drawer behavior - Only handle drawer-specific behavior
+      // Configure simplified drawer behavior to use navigation manager
       drawerBehavior.configure({
         ui,
-        navigation: options.navigation
+        navigation: options.navigation,
+        navigationManager: navigation // Pass navigation manager to drawer
       })
+
+      // Initialize simplified drawer behavior
       drawerBehavior.initialize()
 
-      // First configure rail behavior
+      // Configure simplified rail behavior to also use navigation manager
       railBehavior.configure({
         rail: ui.rail,
         router,
-        navigationConfig: options.navigation
+        navigationConfig: options.navigation,
+        navigationManager: navigation // Pass navigation manager to rail
       })
 
-      // Then initialize it after configuration
+      // Initialize simplified rail behavior
       railBehavior.initialize()
 
       // Register cleanup
