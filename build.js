@@ -88,9 +88,11 @@ const compileSass = async () => {
     console.log('✓ SASS compilation successful')
     console.log(`  Size: ${(result.css.length / 1024).toFixed(2)} KB`)
 
-    return true // Return true on success
+    return { success: true, message: 'SASS compilation successful' } // Return success status with message
   } catch (error) {
     console.error('❌ SASS compilation failed:', error.message || error)
+    let errorDetails = ''
+
     if (error.span) {
       // Better error reporting for SASS compilation errors
       let errorLocation = 'unknown location'
@@ -114,6 +116,7 @@ const compileSass = async () => {
         errorLocation = `line ${error.span.start.line}, column ${error.span.start.column}`
       }
 
+      errorDetails = `Error in ${errorLocation}: ${error.message}`
       console.error(`  Error in ${errorLocation}`)
       console.error(`  ${error.message}`)
     }
@@ -123,7 +126,7 @@ const compileSass = async () => {
       console.log('🔄 Continuing to watch for changes...')
     }
 
-    return false // Return false on failure
+    return { success: false, message: errorDetails || error.message || 'Unknown SASS error' } // Return failure status with error message
   }
 }
 
@@ -172,7 +175,7 @@ const buildApp = async () => {
     if (!jsResult.success) {
       console.error('❌ JavaScript build failed')
       console.error(jsResult.logs)
-      return false
+      return { success: false, message: 'JavaScript build failed' }
     }
 
     // Ensure main bundle is renamed to app.js if it's not already
@@ -226,11 +229,11 @@ const buildApp = async () => {
       // - Gzip files for efficient serving
     }
 
-    return true
+    return { success: true, message: 'JavaScript build successful' }
   } catch (error) {
     console.error('❌ JavaScript build error:', error)
     console.error(error.stack)
-    return false
+    return { success: false, message: error.message || 'Unknown JavaScript build error' }
   }
 }
 
@@ -260,19 +263,28 @@ const createHtmlFile = async () => {
       await Bun.write(htmlOutputPath, htmlTemplate)
       console.log('✓ Created HTML entry point with ES module support')
     }
+
+    return { success: true }
   } catch (error) {
     console.error('❌ Error creating HTML file:', error)
+    return { success: false, message: error.message || 'Error creating HTML file' }
   }
 }
 
 // Update timestamp file to trigger live reload when needed
 const updateReloadTimestamp = async () => {
-  if (!isProduction) {
-    const reloadDir = join(__dirname, 'src/dist')
-    const reloadFile = join(reloadDir, 'reload')
-    await mkdir(reloadDir, { recursive: true })
-    await Bun.write(reloadFile, Date.now().toString())
-    console.log('🔄 Browser reload triggered')
+  try {
+    if (!isProduction) {
+      const reloadDir = join(__dirname, 'src/dist')
+      const reloadFile = join(reloadDir, 'reload')
+      await mkdir(reloadDir, { recursive: true })
+      await Bun.write(reloadFile, Date.now().toString())
+      console.log('🔄 Browser reload triggered')
+    }
+    return { success: true }
+  } catch (error) {
+    console.error('❌ Error triggering browser reload:', error)
+    return { success: false, message: error.message || 'Error triggering browser reload' }
   }
 }
 
@@ -302,8 +314,13 @@ const setupWatchers = () => {
       }
       buildTimeout = setTimeout(async () => {
         console.log('\n📁 JavaScript file changed:', filename)
-        const success = await buildApp()
-        if (success) await updateReloadTimestamp()
+        const result = await buildApp()
+        if (result.success) {
+          await updateReloadTimestamp()
+        } else {
+          console.error(`❌ JavaScript build failed: ${result.message}`)
+          console.log('⚠️ Browser reload not triggered due to build errors')
+        }
         buildTimeout = null
       }, 100) // 100ms debounce time
     }
@@ -330,8 +347,15 @@ const setupWatchers = () => {
       }
       compileTimeout = setTimeout(async () => {
         console.log('\n📁 SCSS file changed:', filename)
-        await compileSass()
-        await updateReloadTimestamp()
+        const result = await compileSass()
+
+        if (result.success) {
+          await updateReloadTimestamp()
+        } else {
+          console.error(`❌ SCSS compilation failed: ${result.message}`)
+          console.log('⚠️ Browser reload not triggered due to SCSS errors')
+        }
+
         compileTimeout = null
       }, 100) // 100ms debounce time
     }
@@ -400,7 +424,14 @@ const verifyOutput = async () => {
     console.log('└─────────────────────────────────────────')
   }
 
-  return jsExists && cssExists
+  return {
+    success: jsExists && cssExists,
+    details: {
+      js: jsExists,
+      css: cssExists,
+      html: htmlExists
+    }
+  }
 }
 
 const cleanDist = async () => {
@@ -419,10 +450,13 @@ const cleanDist = async () => {
       await mkdir(CHUNKS_DIR, { recursive: true })
 
       console.log('✓ Dist directory cleaned')
+      return { success: true }
     } catch (error) {
       console.error('❌ Error cleaning dist directory:', error)
+      return { success: false, message: error.message || 'Error cleaning dist directory' }
     }
   }
+  return { success: true }
 }
 
 const build = async () => {
@@ -445,20 +479,24 @@ const build = async () => {
     await mkdir(CHUNKS_DIR, { recursive: true })
 
     // Build JavaScript with code splitting
-    const jsSuccess = await buildApp()
+    const jsResult = await buildApp()
 
     // Compile SASS to CSS
-    const sassSuccess = await compileSass()
+    const sassResult = await compileSass()
 
     // Create HTML file with ES module support
     await createHtmlFile()
 
     // Verify output
-    await verifyOutput()
+    const verifyResult = await verifyOutput()
 
-    // Update reload timestamp if at least one of the build steps succeeded
-    if (jsSuccess || sassSuccess) {
+    // IMPORTANT CHANGE: Only update reload timestamp if both build steps succeeded
+    if (jsResult.success && sassResult.success) {
       await updateReloadTimestamp()
+    } else if (!sassResult.success) {
+      console.log('⚠️ Browser reload not triggered due to SCSS compilation errors')
+    } else if (!jsResult.success) {
+      console.log('⚠️ Browser reload not triggered due to JavaScript build errors')
     }
 
     const buildTime = ((Date.now() - startTime) / 1000).toFixed(2)
@@ -476,13 +514,22 @@ const build = async () => {
       console.log('')
       console.log('┌───────────────────────────────────────────────')
       console.log(`│ ✅ Build completed in ${buildTime}s with code splitting`)
-      if (!jsSuccess || !sassSuccess) {
-        console.log('│ ⚠️ Build completed with some errors')
+
+      // Better error reporting
+      if (!jsResult.success || !sassResult.success) {
+        console.log('│ ⚠️ Build completed with some errors:')
+        if (!jsResult.success) {
+          console.log(`│   - JavaScript: ${jsResult.message}`)
+        }
+        if (!sassResult.success) {
+          console.log(`│   - SCSS: ${sassResult.message}`)
+        }
       }
+
       console.log('└───────────────────────────────────────────────')
 
       // Only exit with error code in non-watch mode if there were failures
-      if (!isWatch && (!jsSuccess || !sassSuccess)) {
+      if (!isWatch && (!jsResult.success || !sassResult.success)) {
         process.exit(1)
       }
     }
