@@ -8,7 +8,7 @@
 
 $app: '#{b.$prefix}-app';
 
-.#{b.$prefix}-app {
+.#{$app} {
   @include c.typography('body-medium');
   display: flex;
   margin: 0;
@@ -27,7 +27,7 @@ $app: '#{b.$prefix}-app';
     position: fixed;
     z-index: 3;
     height: 100vh;
-    width: 60px; // Mobile width
+    width: 70px; // Mobile width
     .#{b.$prefix}-nav-item-label {
       font-size: .8em;
     }
@@ -126,7 +126,7 @@ $app: '#{b.$prefix}-app';
   }
 
   .#{b.$prefix}-components__body {
-    margin-right: 10px;
+    margin-right: 0;
   }
 
   // Grid layout for mobile first
@@ -144,26 +144,21 @@ $app: '#{b.$prefix}-app';
   }
 
 
-
-
   // Desktop styles - as media queries
-  @media (min-width: 961px) {
+  @media (min-width: 960px) {
+    margin-left: 88px;
+
     .#{b.$prefix}-nav--rail {
-      width: 80px; // Wider on desktop
+      width: 88px; // Wider on desktop
     }
     
     .#{b.$prefix}-nav--drawer {
-      left: 80px; // Position after wider rail
+      left: 88px; // Position after wider rail
     }
     
     .#{b.$prefix}-content {
-      margin-left: 80px; // Match desktop rail width
-      width: calc(100% - 80px);
-    }
-
-    .#{b.$prefix}-content {
-      margin-left: 80px; // Match desktop rail width
-      width: calc(100% - 80px);
+      width: 100%;
+      margin: 0 auto;
     }
 
     // Hide close button on desktop
@@ -195,9 +190,12 @@ $app: '#{b.$prefix}-app';
     }
   }
 
-  @media (min-width: 1150px) {
+  @media (min-width: 1280px) {
+    margin-left: 88px;
+    background-color: red;
+
     .#{b.$prefix}-content {
-      margin: auto; // Match desktop rail width
+      margin: auto;
       max-width: 1024px;
     }
   }

@@ -18,7 +18,7 @@ export async function handleAppRequest(req: Request): Promise<Response> {
     
     // Basic template data
     const templateData: TemplateData = {
-      title: "MTRL Playground",
+      title: "mtrl app",
       isProduction: config.isProduction,
       timestamp: config.isProduction ? "" : `?v=${Date.now()}`,
       commonChunks: [], // Populate with code-split chunks if needed

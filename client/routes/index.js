@@ -19,7 +19,7 @@ export const notFoundHandler = (route, ui) => {
   //     </div>
   //   `
   // }
-  // document.title = 'Mtrl - Page Not Found'
+  // document.title = 'mtrl - Page Not Found'
   return true
 }
 

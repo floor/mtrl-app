@@ -12,9 +12,7 @@ $components: '#{b.$prefix}-components';
   padding: 16px;
 }
 
-
 .#{$components} {
-
   max-width: 1024px;
   margin: auto;
 
@@ -77,9 +75,7 @@ $components: '#{b.$prefix}-components';
     border-radius: 16px;
     background-color: t.color('surface-container');
     min-height: 200px;
-
   }
-
 
   &__section {
     padding: 0;
@@ -92,11 +88,16 @@ $components: '#{b.$prefix}-components';
     &-title {
       margin-bottom: 0
     }
+
+    &-description {
+      margin-top: 6px
+    }
+
     &-body {
       display: flex;
       justify-content: center;
       gap: 20px;
-      padding: 24px;
+      padding: 96px 24px 96px;
       border-radius: 16px;
       background-color: t.color('surface-bright');
       // background-image: url(/public/img/grid-light.png);

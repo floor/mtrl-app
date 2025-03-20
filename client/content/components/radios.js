@@ -26,7 +26,7 @@ export const initRadiosSizes = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const small = createRadios({
-    name: 'size',
+    name: 'size1',
     options: [
       { value: 'sm', label: 'Small' },
       { value: 'md', label: 'Medium' },
@@ -36,7 +36,7 @@ export const initRadiosSizes = (container) => {
   })
 
   const radios = createRadios({
-    name: 'size',
+    name: 'size2',
     options: [
       { value: 'sm', label: 'Small' },
       { value: 'md', label: 'Medium' },
@@ -46,7 +46,7 @@ export const initRadiosSizes = (container) => {
   })
 
   const large = createRadios({
-    name: 'size',
+    name: 'size3',
     options: [
       { value: 'sm', label: 'Small' },
       { value: 'md', label: 'Medium' },
