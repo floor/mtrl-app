@@ -1,15 +1,16 @@
-// src/client/core/layout/layout-manager.js
+// src/client/core/structure/structure-manager.js
 
 /**
- * Creates a layout manager that handles layout initialization, component registration,
+ * Creates a structure manager that handles structure initialization, component registration,
  * and provides utilities for working with the UI components
  *
  * @param {Object} options - Configuration options
- * @returns {Object} Layout manager API
+ * @returns {Object} Structure manager API
  */
-export const createLayoutManager = (options = {}) => {
-  // Layout reference
-  const layout = options.layout || null
+export const createStructureManager = (options = {}) => {
+  // Structure references
+  const structure = options.structure || null
+  const structureAPI = options.structureAPI || null
 
   // Component registry
   const components = new Map()
@@ -25,7 +26,7 @@ export const createLayoutManager = (options = {}) => {
   }
 
   // Create the API object - define this early to avoid reference issues
-  const layoutManager = {}
+  const structureManager = {}
 
   // Private methods
 
@@ -48,36 +49,44 @@ export const createLayoutManager = (options = {}) => {
   // Public API methods
 
   /**
-   * Initialize the layout manager
-   * @returns {Object} Layout manager for chaining
+   * Initialize the structure manager
+   * @returns {Object} Structure manager for chaining
    */
   const initialize = () => {
-    if (isInitialized || !layout) return layoutManager
+    if (isInitialized || !structure) return structureManager
 
     try {
-      // Register root component
-      registerComponent('root', layout.component)
-
       // Add application body class
       document.body.classList.add(config.appBodyClass)
 
-      // Register all child components if layout supports it
-      if (typeof layout.getAll === 'function') {
-        const componentsMap = layout.getAll()
+      // Register all components from the structure
+      if (structureAPI) {
+        // Use the getAll method from the structure API
+        const componentsMap = structureAPI.getAll()
 
         if (componentsMap && typeof componentsMap === 'object') {
           Object.entries(componentsMap).forEach(([name, component]) => {
             registerComponent(name, component)
           })
         }
+      } else if (structure) {
+        // Fallback to direct structure traversal
+        Object.entries(structure).forEach(([name, component]) => {
+          if (component && (
+            component instanceof HTMLElement ||
+            (component && typeof component === 'object' && component.element)
+          )) {
+            registerComponent(name, component)
+          }
+        })
       }
 
       isInitialized = true
     } catch (error) {
-      console.error('Layout manager initialization failed:', error)
+      console.error('Structure manager initialization failed:', error)
     }
 
-    return layoutManager
+    return structureManager
   }
 
   /**
@@ -86,6 +95,12 @@ export const createLayoutManager = (options = {}) => {
    * @returns {Object|null} Component or null if not found
    */
   const getComponent = (name) => {
+    // Try using the structure API first
+    if (structureAPI && typeof structureAPI.get === 'function') {
+      return structureAPI.get(name)
+    }
+
+    // Fallback to local component registry
     const component = components.get(name)
     return component ? component.instance : null
   }
@@ -106,6 +121,9 @@ export const createLayoutManager = (options = {}) => {
    * @returns {boolean} Whether the component exists
    */
   const hasComponent = (name) => {
+    if (structureAPI && typeof structureAPI.get === 'function') {
+      return structureAPI.get(name) !== null
+    }
     return components.has(name)
   }
 
@@ -114,12 +132,15 @@ export const createLayoutManager = (options = {}) => {
    * @returns {Map} Map of all components
    */
   const getAllComponents = () => {
+    if (structureAPI && typeof structureAPI.getAll === 'function') {
+      return structureAPI.getAll()
+    }
     return new Map(components)
   }
 
   /**
    * Clear the content area
-   * @returns {Object} Layout manager for chaining
+   * @returns {Object} Structure manager for chaining
    */
   const clearContent = () => {
     const content = getComponent('content') ||
@@ -138,19 +159,19 @@ export const createLayoutManager = (options = {}) => {
       }
     }
 
-    return layoutManager
+    return structureManager
   }
 
   /**
    * Set content in the main content area
    * @param {string|HTMLElement} content - Content to set
-   * @returns {Object} Layout manager for chaining
+   * @returns {Object} Structure manager for chaining
    */
   const setContent = (contentToSet) => {
     const contentComponent = getComponent('content') ||
                            document.querySelector(config.contentSelector)
 
-    if (!contentComponent) return layoutManager
+    if (!contentComponent) return structureManager
 
     // Clear existing content
     clearContent()
@@ -176,16 +197,16 @@ export const createLayoutManager = (options = {}) => {
       }
     }
 
-    return layoutManager
+    return structureManager
   }
 
   /**
    * Set the page title
    * @param {string} title - Page title
-   * @returns {Object} Layout manager for chaining
+   * @returns {Object} Structure manager for chaining
    */
   const setPageTitle = (title) => {
-    if (!title) return layoutManager
+    if (!title) return structureManager
 
     // Update document title
     document.title = title
@@ -200,19 +221,19 @@ export const createLayoutManager = (options = {}) => {
       }
     }
 
-    return layoutManager
+    return structureManager
   }
 
   /**
    * Show or hide a component
    * @param {string} name - Component name
    * @param {boolean} visible - Visibility state
-   * @returns {Object} Layout manager for chaining
+   * @returns {Object} Structure manager for chaining
    */
   const setComponentVisibility = (name, visible) => {
     const component = getComponent(name)
 
-    if (!component) return layoutManager
+    if (!component) return structureManager
 
     // Use component's show/hide methods if available
     if (typeof component.show === 'function' && typeof component.hide === 'function') {
@@ -226,11 +247,11 @@ export const createLayoutManager = (options = {}) => {
       component.element.style.display = visible ? '' : 'none'
     }
 
-    return layoutManager
+    return structureManager
   }
 
   /**
-   * Clean up layout manager resources
+   * Clean up structure manager resources
    */
   const cleanup = () => {
     components.clear()
@@ -238,23 +259,23 @@ export const createLayoutManager = (options = {}) => {
   }
 
   // Assign methods to the API object
-  layoutManager.initialize = initialize
-  layoutManager.getComponent = getComponent
-  layoutManager.getComponentElement = getComponentElement
-  layoutManager.hasComponent = hasComponent
-  layoutManager.getAllComponents = getAllComponents
-  layoutManager.clearContent = clearContent
-  layoutManager.setContent = setContent
-  layoutManager.setPageTitle = setPageTitle
-  layoutManager.setComponentVisibility = setComponentVisibility
-  layoutManager.cleanup = cleanup
+  structureManager.initialize = initialize
+  structureManager.getComponent = getComponent
+  structureManager.getComponentElement = getComponentElement
+  structureManager.hasComponent = hasComponent
+  structureManager.getAllComponents = getAllComponents
+  structureManager.clearContent = clearContent
+  structureManager.setContent = setContent
+  structureManager.setPageTitle = setPageTitle
+  structureManager.setComponentVisibility = setComponentVisibility
+  structureManager.cleanup = cleanup
 
-  // Initialize immediately if layout is provided
-  if (layout) {
+  // Initialize immediately if structure is provided
+  if (structure || structureAPI) {
     initialize()
   }
 
-  return layoutManager
+  return structureManager
 }
 
-export default createLayoutManager
+export default createStructureManager

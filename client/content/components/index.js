@@ -87,7 +87,7 @@ const initComponentsGroup = (container, group, router) => {
         path = `/${path}`
       }
 
-      console.log('Navigating to:', component.title, path)
+      // console.log('Navigating to:', component.title, path)
 
       // Enhanced navigation approach
       if (router) {
@@ -96,7 +96,7 @@ const initComponentsGroup = (container, group, router) => {
         const section = pathParts[0] || 'home'
         const subsection = pathParts.slice(1).join('/') || ''
 
-        console.log('Navigating with parsed parts:', { section, subsection })
+        // console.log('Navigating with parsed parts:', { section, subsection })
 
         // Use direct navigation with the component path
         if (window.app && window.app.getRouter()) {

@@ -12,7 +12,7 @@ import {
 } from 'mtrl'
 
 export const createStylesContent = (container) => {
-  log.info('createStylesContent', container)
+  // log.info('createStylesContent', container)
   const info = {
     title: 'Styling System',
     description: 'A comprehensive design system for consistent, accessible, and beautiful interfaces'

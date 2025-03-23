@@ -23,8 +23,8 @@ export const initVariants = (container) => {
       variant,
       ripple: true
     })
-    btn.element.addEventListener('click', () => log.info('native button clicked'))
-    btn.on('click', () => log.info('component button clicked'))
+    // btn.element.addEventListener('click', () => log.info('native button clicked'))
+    // btn.on('click', () => log.info('component button clicked'))
     layout.showcase.appendChild(btn.element)
   })
 }

@@ -5,76 +5,142 @@ import {
   iconComponents,
   iconGetstarted,
   iconStyles,
-  iconCore
+  iconCore,
+  iconMore,
+  iconDark
 } from './icons'
 
-export const mainNavigation = [
-  { id: 'home', icon: iconMtrl, label: 'Home' },
-  { id: 'getstarted', icon: iconGetstarted, label: 'Get Started' },
-  { id: 'core', icon: iconCore, label: 'Core' },
-  { id: 'styles', icon: iconStyles, label: 'Styles' },
-  { id: 'components', icon: iconComponents, label: 'Components' }
-]
+import {
+  createElement,
+  createNavigationSystem,
+  createButton
+} from 'mtrl'
 
-export const navigation = {
-  components: [
-    {
-      id: 'appbars',
-      label: 'App bars',
-      items: [
-        { id: 'bottomappbars', label: 'Bottom app bar', path: '/components/app-bars/bottom' },
-        { id: 'topappbars', label: 'Top app bar', path: '/components/app-bars/top' }
-      ]
-    },
-    { id: 'badges', label: 'Badges', path: '/components/badges' },
-    {
-      id: 'buttons',
-      label: 'Buttons',
-      items: [
-        { id: 'common', label: 'Common', path: '/components/buttons/common' },
-        { id: 'fab', label: 'FAB', path: '/components/buttons/fab' },
-        { id: 'extended-fab', label: 'Extended FAB', path: '/components/buttons/extended-fab' }
-        // { id: 'segmented-buttons', label: 'Segemented Buttons', path: '/components/buttons/segmented-buttons' }
-      ]
-    },
-    { id: 'cards', label: 'Cards', path: '/components/cards' },
-    // { id: 'carousel', label: 'Carousel', path: '/components/carousel' },
-    { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
-    { id: 'chips', label: 'Chips', path: '/components/chips' },
+export const appStructure = {
+  content: {
+    name: 'content',
+    creator: createElement,
+    options: {
+      tag: 'div',
+      className: 'mtrl-content'
+    }
+  },
+  moreMenu: {
+    name: 'moreMenu',
+    creator: createButton,
+    options: {
+      icon: iconMore,
+      iconSize: 'medium',
+      class: 'more-menu',
+      variant: 'outlined',
+      ariaLabel: 'Themes'
+    }
+  },
+  toggleDarkmode: {
+    name: 'toggleDarkmode',
+    creator: createButton,
+    options: {
+      icon: iconDark,
+      iconSize: 'medium',
+      class: 'toggle-darkmode',
+      variant: 'outlined',
+      ariaLabel: 'Darkmode'
+    }
+  }
+}
 
-    {
-      id: 'datetimepicker',
-      label: 'Date & time pickers',
-      items: [
-        { id: 'datepicker', label: 'Date pickers', path: '/components/datepickers' },
-        { id: 'timepicker', label: 'Time pickers', path: '/components/timepickers' }
-      ]
-    },
+// Navigation structure for the new Navigation System
+export const navigationStructure = {
+  // Home section
+  home: {
+    label: 'Home',
+    icon: iconMtrl
+    // items: [
+    //   { id: 'overview', label: 'Overview', path: '/home' }, // Path to home root
+    //   { id: 'about', label: 'About', path: '/home/about' }
+    // ]
+  },
 
-    { id: 'dialogs', label: 'Dialogs', path: '/components/dialogs' },
-    { id: 'lists', label: 'Lists', path: '/components/lists' },
-    { id: 'menus', label: 'Menus', path: '/components/menus' },
-    // { id: 'navigations', label: 'Navigations', path: '/components/navigations' },
-    { id: 'progress', label: 'Progress', path: '/components/progress' },
-    { id: 'radios', label: 'Radio Buttons', path: '/components/radios' },
-    { id: 'search', label: 'Search', path: '/components/search' },
-    { id: 'sliders', label: 'Sliders', path: '/components/sliders' },
-    { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
-    { id: 'switches', label: 'Switches', path: '/components/switches' },
-    { id: 'tabs', label: 'Tabs', path: '/components/tabs' },
-    { id: 'textfields', label: 'Textfields', path: '/components/textfields' }
-  ],
-  core: [
-    { id: 'events', label: 'Events', path: '/core/events' },
-    { id: 'state', label: 'State', path: '/core/state' },
-    { id: 'composition', label: 'Composition', path: '/core/composition' }
-  ],
-  styles: [
-    { id: 'colors', label: 'Colors', path: '/styles/colors' },
-    { id: 'typography', label: 'Typography', path: '/styles/typography' },
-    { id: 'elevation', label: 'Elevation', path: '/styles/elevation' }
-    // { id: 'layout', label: 'Layout', path: '/styles/layout' }
-  ]
+  // Get Started section
+  getstarted: {
+    label: 'Get Started',
+    icon: iconGetstarted
+    // items: [
+    //   { id: 'installation', label: 'Installation', path: '/getstarted' }, // Path to getstarted root
+    //   { id: 'usage', label: 'Usage', path: '/getstarted/usage' },
+    //   { id: 'examples', label: 'Examples', path: '/getstarted/examples' }
+    // ]
+  },
+
+  // Core section
+  core: {
+    label: 'Core',
+    icon: iconCore,
+    items: [
+      { id: 'events', label: 'Events', path: '/core/events' },
+      { id: 'state', label: 'State', path: '/core/state' },
+      { id: 'composition', label: 'Composition', path: '/core/composition' }
+    ]
+  },
+
+  // Styles section
+  styles: {
+    label: 'Styles',
+    icon: iconStyles,
+    items: [
+      { id: 'colors', label: 'Colors', path: '/styles/colors' },
+      { id: 'typography', label: 'Typography', path: '/styles/typography' },
+      { id: 'elevation', label: 'Elevation', path: '/styles/elevation' }
+    ]
+  },
+
+  // Components section
+  components: {
+    label: 'Components',
+    icon: iconComponents,
+    items: [
+      {
+        id: 'appbars',
+        label: 'App bars',
+        items: [
+          { id: 'bottomappbars', label: 'Bottom app bar', path: '/components/app-bars/bottom' },
+          { id: 'topappbars', label: 'Top app bar', path: '/components/app-bars/top' }
+        ]
+      },
+      { id: 'badges', label: 'Badges', path: '/components/badges' },
+      {
+        id: 'buttons',
+        label: 'Buttons',
+        items: [
+          { id: 'common', label: 'Common', path: '/components/buttons/common' },
+          { id: 'fab', label: 'FAB', path: '/components/buttons/fab' },
+          { id: 'extended-fab', label: 'Extended FAB', path: '/components/buttons/extended-fab' }
+        ]
+      },
+      { id: 'cards', label: 'Cards', path: '/components/cards' },
+      { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
+      { id: 'chips', label: 'Chips', path: '/components/chips' },
+      {
+        id: 'datetimepicker',
+        label: 'Date & time pickers',
+        items: [
+          { id: 'datepicker', label: 'Date pickers', path: '/components/datepickers' },
+          { id: 'timepicker', label: 'Time pickers', path: '/components/timepickers' }
+        ]
+      },
+      { id: 'dialogs', label: 'Dialogs', path: '/components/dialogs' },
+      { id: 'lists', label: 'Lists', path: '/components/lists' },
+      { id: 'menus', label: 'Menus', path: '/components/menus' },
+      { id: 'progress', label: 'Progress', path: '/components/progress' },
+      { id: 'radios', label: 'Radio Buttons', path: '/components/radios' },
+      { id: 'search', label: 'Search', path: '/components/search' },
+      { id: 'sliders', label: 'Sliders', path: '/components/sliders' },
+      { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
+      { id: 'switches', label: 'Switches', path: '/components/switches' },
+      { id: 'tabs', label: 'Tabs', path: '/components/tabs' },
+      { id: 'textfields', label: 'Textfields', path: '/components/textfields' }
+    ]
+  }
 }
 
 export const themesMenu = [

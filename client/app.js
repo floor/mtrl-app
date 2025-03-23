@@ -1,12 +1,10 @@
 // src/client/app.js
 
 import { createApp } from './core/app-manager'
-import { mainLayout } from './layout'
-import { navigation, themesMenu } from './config'
+import { themesMenu, appStructure } from './config'
 import { setupErrorBoundary } from './core/events'
 import { routes, notFoundHandler } from './routes'
 import themeManager from './core/theme/theme-manager'
-import drawerBehavior from './core/navigation/drawer-behavior'
 
 // Ensure console.log is available even if window.log isn't
 window.log = window.log || console
@@ -15,12 +13,9 @@ window.log = window.log || console
 let app
 try {
   app = createApp({
-    // Layout setup
-    layout: mainLayout,
+    // Structure setup
+    structure: appStructure,
     container: document.body,
-
-    // Navigation configuration
-    navigation,
 
     // Theme configuration
     themesMenu,
@@ -43,17 +38,8 @@ try {
   })
 
   app.onReady(({ ui, navigationManager }) => {
-    // Configure drawer behavior with UI components and navigation config
-    drawerBehavior.configure({
-      ui,
-      navigation // Use the navigation config from your app
-    })
-
-    // Initialize the behavior
-    drawerBehavior.initialize()
-
     // Log successful initialization
-    // console.info('Drawer behavior enhancement initialized')
+    // console.info('Application initialized successfully')
   })
 
   // Make app accessible globally
@@ -68,12 +54,12 @@ try {
       return themeManager.toggleDarkMode()
     }
   }
-
-  // Log successful initialization
-  // console.info('Application initialized successfully')
 } catch (error) {
   console.error('Failed to create app:', error)
   setupErrorBoundary()
 }
+
+// Test the fix by navigating to a section
+// navFix.navigate('components');
 
 export default createApp

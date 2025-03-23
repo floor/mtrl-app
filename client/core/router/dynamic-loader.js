@@ -10,6 +10,22 @@
 // Map of route paths to their content module paths
 // This allows us to map routes to their corresponding module paths
 const ROUTE_MODULE_MAP = {
+  // Section routes
+  home: () => import('../../content/home'),
+  styles: () => import('../../content/styles'),
+  components: () => import('../../content/components'),
+
+  // Core routes
+  'core/events': () => import('../../content/core/events'),
+  'core/state': () => import('../../content/core/state'),
+  'core/composition': () => import('../../content/core/composition'),
+
+  // Style routes
+  'styles/colors': () => import('../../content/styles/colors'),
+  'styles/typography': () => import('../../content/styles/typography'),
+  'styles/elevation': () => import('../../content/styles/elevation'),
+  'styles/layout': () => import('../../content/styles/layout'),
+
   // Components routes
   'components/buttons/common': () => import('../../content/components/buttons/common'),
   'components/buttons/fab': () => import('../../content/components/buttons/fab'),
@@ -32,23 +48,8 @@ const ROUTE_MODULE_MAP = {
   'components/switches': () => import('../../content/components/switches'),
   'components/tabs': () => import('../../content/components/tabs'),
   'components/textfields': () => import('../../content/components/textfields'),
-  'components/timepickers': () => import('../../content/components/timepickers'),
+  'components/timepickers': () => import('../../content/components/timepickers')
 
-  // Core routes
-  'core/events': () => import('../../content/core/events'),
-  'core/state': () => import('../../content/core/state'),
-  'core/composition': () => import('../../content/core/composition'),
-
-  // Style routes
-  'styles/colors': () => import('../../content/styles/colors'),
-  'styles/typography': () => import('../../content/styles/typography'),
-  'styles/elevation': () => import('../../content/styles/elevation'),
-  'styles/layout': () => import('../../content/styles/layout'),
-
-  // Section routes
-  components: () => import('../../content/components'),
-  styles: () => import('../../content/styles'),
-  home: () => import('../../content/home')
 }
 
 /**

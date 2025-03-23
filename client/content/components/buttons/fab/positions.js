@@ -58,8 +58,6 @@ export const initPositions = (container) => {
   demoContainer.style.border = '1px dashed #ccc'
   demoContainer.style.marginBottom = '20px'
 
-  console.log(layout.showcase)
-
   layout.showcase.style.display = 'block'
 
   // Add to showcase

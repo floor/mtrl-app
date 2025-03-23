@@ -1,13 +1,12 @@
 // src/client/core/app-manager.js
 
 import { createEventManager, setupErrorBoundary } from './events'
-import { createLayout } from 'mtrl'
+import { createStructure } from 'mtrl/src/core/structure'
 import { createAppRouter } from './router'
 import themeManager from './theme/theme-manager'
-import { createNavigationManager } from './navigation/navigation-manager'
-import { createLayoutManager } from './layout/layout-manager'
-import drawerBehavior from './navigation/drawer-behavior'
-import railBehavior from './navigation/rail'
+import { createNavigationSystem } from 'mtrl/src/components/navigation/system'
+import { createStructureManager } from './structure/structure-manager'
+import { appStructure, navigationStructure } from '../config'
 
 /**
  * Creates an application manager responsible for core initialization,
@@ -20,13 +19,17 @@ export const createApp = (options = {}) => {
   // Internal state
   let isInitialized = false
   let readyCallbacks = []
+  let processingRouteChange = false
+  let processingNavChange = false
+  let handlingDrawerItemClick = false // Flag to track drawer item clicks
 
   // Core subsystems
-  let layout = null
-  let layoutManager = null
+  let structureResult = null // Updated to use StructureResult
+  let components = null
+  let structureManager = null
   let router = null
   let eventManager = null
-  let navigationManager = null
+  let navigationSystem = null
 
   // Private methods
 
@@ -41,11 +44,14 @@ export const createApp = (options = {}) => {
       // Set up global error boundary
       setupErrorBoundary()
 
-      // Initialize layout
-      layout = initializeLayout()
+      // Initialize structure
+      structureResult = initializeStructure()
+
+      // Get all components from the structure
+      components = structureResult.getAll()
 
       // Get UI components
-      const ui = layout?.component
+      const ui = components
       if (!ui) {
         throw new Error('UI component is undefined')
       }
@@ -54,18 +60,14 @@ export const createApp = (options = {}) => {
       router = initializeRouter(ui)
       eventManager = initializeEvents(ui)
       initializeTheme(ui)
-      navigationManager = initializeNavigation(ui)
+      navigationSystem = initializeNavigation(ui)
 
       // Execute ready callbacks
       executeReadyCallbacks()
 
       // Mark as initialized
       isInitialized = true
-
-      // Log successful initialization
-      console.info('Application initialized successfully')
     } catch (error) {
-      console.error('App initialization failed:', error)
       isInitialized = false
 
       // Call error handler if provided
@@ -76,32 +78,27 @@ export const createApp = (options = {}) => {
   }
 
   /**
-   * Initialize the application layout
+   * Initialize the application structure
    * @private
    */
-  const initializeLayout = () => {
-    try {
-      // Get layout configuration
-      const layoutConfig = options.layout
-      if (!layoutConfig) {
-        throw new Error('Layout configuration is required')
-      }
-
-      // Initialize layout with the container
-      const container = options.container || document.body
-      const layoutInstance = createLayout(layoutConfig, container)
-
-      // Create layout manager
-      layoutManager = createLayoutManager({
-        layout: layoutInstance,
-        options: options.layoutOptions
-      })
-
-      return layoutInstance
-    } catch (error) {
-      console.error('Failed to initialize layout:', error)
-      throw error
+  const initializeStructure = () => {
+    // Get structure configuration
+    if (!appStructure) {
+      throw new Error('Structure configuration is required')
     }
+
+    // Initialize structure with the container
+    const container = options.container || document.body
+    const structureResult = createStructure(appStructure, container)
+
+    // Create structure manager
+    structureManager = createStructureManager({
+      structure: structureResult.structure,
+      structureAPI: structureResult, // Pass the full API
+      options: options.layoutOptions
+    })
+
+    return structureResult
   }
 
   /**
@@ -110,35 +107,29 @@ export const createApp = (options = {}) => {
    * @private
    */
   const initializeRouter = (ui) => {
-    try {
-      // Create router with UI reference
-      const routerInstance = createAppRouter({
-        ui,
-        onError: (error) => {
-          console.error('Navigation error:', error)
-          if (typeof options.onNavigationError === 'function') {
-            options.onNavigationError(error)
-          }
-        },
-        hooks: options.routerHooks,
-        ...options.routerOptions
-      })
+    // Create router with UI reference
+    const routerInstance = createAppRouter({
+      ui,
+      onError: (error) => {
+        if (typeof options.onNavigationError === 'function') {
+          options.onNavigationError(error)
+        }
+      },
+      hooks: options.routerHooks,
+      ...options.routerOptions
+    })
 
-      // Register routes if provided
-      if (options.routes) {
-        routerInstance.registerRoutes(options.routes)
-      }
-
-      // Register notFoundHandler if provided
-      if (options.notFoundHandler) {
-        routerInstance.registerNotFound(options.notFoundHandler)
-      }
-
-      return routerInstance
-    } catch (error) {
-      console.error('Failed to initialize router:', error)
-      throw error
+    // Register routes if provided
+    if (options.routes) {
+      routerInstance.registerRoutes(options.routes)
     }
+
+    // Register notFoundHandler if provided
+    if (options.notFoundHandler) {
+      routerInstance.registerNotFound(options.notFoundHandler)
+    }
+
+    return routerInstance
   }
 
   /**
@@ -147,20 +138,15 @@ export const createApp = (options = {}) => {
    * @private
    */
   const initializeEvents = (ui) => {
-    try {
-      // Create event manager
-      const events = createEventManager(ui)
+    // Create event manager
+    const events = createEventManager(ui)
 
-      // Register app cleanup
-      events.addCleanup(() => {
-        cleanupApp()
-      })
+    // Register app cleanup
+    events.addCleanup(() => {
+      cleanupApp()
+    })
 
-      return events
-    } catch (error) {
-      console.error('Failed to initialize events:', error)
-      throw error
-    }
+    return events
   }
 
   /**
@@ -169,94 +155,212 @@ export const createApp = (options = {}) => {
    * @private
    */
   const initializeTheme = (ui) => {
-    try {
-      // Check if there's existing themeManager instance from singleton
+    // Configure the theme manager
+    themeManager.configure({
+      ui,
+      themesMenu: options.themesMenu,
+      ...options.themeOptions
+    })
 
-      // Configure the theme manager
-      themeManager.configure({
-        ui,
-        themesMenu: options.themesMenu,
-        ...options.themeOptions
+    // Initialize theme system
+    themeManager.initialize()
+
+    // Set up an important CSS class for app styling
+    document.body.classList.add('mtrl-app')
+
+    // Register cleanup
+    if (eventManager) {
+      eventManager.addCleanup(() => {
+        themeManager.cleanup()
       })
-
-      // Initialize theme system
-      themeManager.initialize()
-
-      // Set up an important CSS class for app styling
-      document.body.classList.add('mtrl-app')
-
-      // Register cleanup
-      if (eventManager) {
-        eventManager.addCleanup(() => {
-          themeManager.cleanup()
-        })
-      }
-
-      return themeManager
-    } catch (error) {
-      console.error('Failed to initialize theme:', error)
-      throw error
     }
+
+    return themeManager
   }
 
   /**
-   * Initialize navigation
+   * Initialize navigation with the new navigation system
    * @param {Object} ui - UI component reference
    * @private
    */
   const initializeNavigation = (ui) => {
-    try {
-      // Create navigation manager for content management
-      const navigation = createNavigationManager({
-        ui,
-        router,
-        navigation: options.navigation,
-        ...options.navigationOptions
-      })
+    // Use the navigation structure from config
+    const items = navigationStructure || {}
 
-      // Initialize navigation manager first
-      navigation.initialize()
+    // Create navigation system
+    const navSystem = createNavigationSystem({
+      items,
+      expanded: false,
+      railOptions: {
+        componentName: 'rail',
+        position: 'left',
+        showLabels: true
+      },
+      drawerOptions: {
+        componentName: 'nav',
+        position: 'left'
+      },
+      ...options.navigationOptions
+    })
 
-      // Configure simplified drawer behavior to use navigation manager
-      drawerBehavior.configure({
-        ui,
-        navigation: options.navigation,
-        navigationManager: navigation // Pass navigation manager to drawer
-      })
+    // Initialize navigation system
+    navSystem.initialize()
 
-      // Initialize simplified drawer behavior
-      drawerBehavior.initialize()
-
-      // Configure simplified rail behavior to also use navigation manager
-      railBehavior.configure({
-        rail: ui.rail,
-        router,
-        navigationConfig: options.navigation,
-        navigationManager: navigation // Pass navigation manager to rail
-      })
-
-      // Initialize simplified rail behavior
-      railBehavior.initialize()
-
-      // Register cleanup
-      if (eventManager) {
-        eventManager.addCleanup(() => {
-          navigation.cleanup()
-          drawerBehavior.cleanup()
-          railBehavior.cleanup()
-        })
-      }
-
-      // Process initial route
-      if (router && options.processInitialRoute !== false) {
-        navigation.handleInitialRoute()
-      }
-
-      return navigation
-    } catch (error) {
-      console.error('Failed to initialize navigation:', error)
-      throw error
+    // Force drawer to be hidden after initialization
+    if (navSystem.hideDrawer) {
+      navSystem.hideDrawer()
     }
+
+    // Store references in UI
+    if (navSystem.getRail()) ui.rail = navSystem.getRail()
+    if (navSystem.getDrawer()) ui.nav = navSystem.getDrawer()
+
+    // Set up router integration
+    if (router) {
+      /**
+       * Handle section change events (rail item clicks)
+       */
+      navSystem.onSectionChange = (section, eventData) => {
+        // Skip if we're already processing a navigation change
+        // if (navSystem.isProcessingChange()) {
+        //   return
+        // }
+
+        // Set processing flag using the navigation system API
+        navSystem.setProcessingChange(true)
+
+        // Set processing flag
+        processingNavChange = true
+
+        // Get the section data
+        const sectionData = items[section]
+        if (!sectionData) {
+          processingNavChange = false
+          return
+        }
+
+        // Navigate to section directly
+        router.navigate(section, null, { replace: true })
+
+        // Clear flag after a delay
+        setTimeout(() => {
+          processingNavChange = false
+        }, 50)
+      }
+
+      /**
+       * Handle item selection events (drawer item clicks)
+       */
+      navSystem.onItemSelect = (event) => {
+        // Skip if we're already processing a route change
+        if (processingRouteChange) {
+          return
+        }
+
+        // Set handlingDrawerItemClick flag to prevent drawer content refresh
+        handlingDrawerItemClick = true
+
+        // Get path from the event
+        let path = null
+
+        // Check different possible locations for path
+        if (event.item?.config?.path) {
+          path = event.item.config.path
+        } else if (event.item?.config?.data?.path) {
+          path = event.item.config.data.path
+        }
+
+        if (path) {
+          // Set processing flag
+          processingRouteChange = true
+
+          // Parse the path to get route components
+          const route = router.parsePath(path)
+
+          // Determine if this is a drawer item with nested items
+          const hasNestedItems = event.item?.config?.items?.length > 0
+
+          // Only navigate if this isn't an expandable drawer item
+          if (!hasNestedItems) {
+            // Navigate using router - but preserve the drawer's expanded state
+            router.navigate(route.section, route.subsection, {
+              replace: true,
+              preserveDrawerState: true // Add a hint to preserve drawer state
+            })
+          }
+
+          // Clear flags after a delay
+          setTimeout(() => {
+            processingRouteChange = false
+            handlingDrawerItemClick = false
+          }, 50)
+        } else {
+          // If no path, reset the flag immediately
+          handlingDrawerItemClick = false
+        }
+      }
+
+      // Process initial route if needed
+      if (options.processInitialRoute !== false) {
+        const { pathname } = window.location
+        const route = router.parsePath(pathname)
+
+        if (route.section) {
+          // Set processing flag
+          processingNavChange = true
+
+          // This will update both rail and drawer via the navigation system
+          navSystem.navigateTo(route.section, route.subsection)
+
+          // Make sure drawer stays hidden initially
+          navSystem.hideDrawer()
+
+          // Clear flag after a delay
+          setTimeout(() => {
+            processingNavChange = false
+          }, 50)
+        }
+      }
+
+      // Keep navigation in sync with router
+      router.afterEach((route, options = {}) => {
+        // Skip if we're already processing a navigation change
+        if (processingNavChange) {
+          return
+        }
+
+        // Skip drawer content update if handling drawer item click
+        if (handlingDrawerItemClick || options.preserveDrawerState) {
+          // Update the subsection in the state
+          if (route.subsection) {
+            navSystem.getActiveSubsection = () => route.subsection
+          }
+
+          return
+        }
+
+        if (route.section) {
+          // Set processing flag
+          processingRouteChange = true
+
+          // This ensures navigation state stays in sync with URL changes
+          // The navigation system will handle updating the drawer content
+          navSystem.navigateTo(route.section, route.subsection)
+
+          // Clear flag after a delay
+          setTimeout(() => {
+            processingRouteChange = false
+          }, 50)
+        }
+      })
+    }
+
+    // Register cleanup
+    if (eventManager) {
+      eventManager.addCleanup(() => navSystem.cleanup())
+    }
+
+    return navSystem
   }
 
   /**
@@ -265,18 +369,19 @@ export const createApp = (options = {}) => {
    */
   const executeReadyCallbacks = () => {
     const callbackData = {
-      layout,
+      structure: structureResult.structure,
+      structureAPI: structureResult,
       router,
-      ui: layout?.component,
+      ui: components,
       themeManager,
-      navigationManager
+      navigationSystem
     }
 
     readyCallbacks.forEach(callback => {
       try {
         callback(callbackData)
       } catch (error) {
-        console.error('Error in ready callback:', error)
+        // Silent error in callback
       }
     })
 
@@ -290,8 +395,8 @@ export const createApp = (options = {}) => {
    */
   const cleanupApp = () => {
     // Clean up subsystems
-    if (navigationManager) {
-      navigationManager.cleanup()
+    if (navigationSystem) {
+      navigationSystem.cleanup()
     }
 
     if (themeManager) {
@@ -302,14 +407,14 @@ export const createApp = (options = {}) => {
       router.destroy()
     }
 
-    if (layout) {
-      layout.destroy()
+    if (structureResult) {
+      structureResult.destroy() // Use the destroy method on structureResult
     }
 
     // Reset state
-    layout = null
+    structureResult = null
     router = null
-    navigationManager = null
+    navigationSystem = null
     isInitialized = false
   }
 
@@ -328,14 +433,15 @@ export const createApp = (options = {}) => {
   const onReady = (callback) => {
     if (typeof callback !== 'function') return app
 
-    if (isInitialized && layout?.component) {
+    if (isInitialized && components) {
       // If already initialized, execute immediately
       callback({
-        layout,
+        structure: structureResult.structure,
+        structureAPI: structureResult,
         router,
-        ui: layout.component,
+        ui: components,
         themeManager,
-        navigationManager
+        navigationSystem
       })
     } else {
       // Queue for later execution
@@ -376,11 +482,19 @@ export const createApp = (options = {}) => {
   }
 
   /**
-   * Get the layout instance
-   * @returns {Object} Layout instance
+   * Get the structure instance
+   * @returns {Object} Structure instance
    */
-  const getLayout = () => {
-    return layout
+  const getStructure = () => {
+    return structureResult ? structureResult.structure : null
+  }
+
+  /**
+   * Get the structure API
+   * @returns {Object} Structure API with utility methods
+   */
+  const getStructureAPI = () => {
+    return structureResult
   }
 
   /**
@@ -389,7 +503,7 @@ export const createApp = (options = {}) => {
    * @returns {Object} UI component
    */
   const getComponent = (name) => {
-    return layout?.get(name)
+    return structureResult ? structureResult.get(name) : null
   }
 
   /**
@@ -409,11 +523,11 @@ export const createApp = (options = {}) => {
   }
 
   /**
-   * Get the navigation manager
-   * @returns {Object} Navigation manager
+   * Get the navigation system
+   * @returns {Object} Navigation system
    */
-  const getNavigationManager = () => {
-    return navigationManager
+  const getNavigationSystem = () => {
+    return navigationSystem
   }
 
   // Create the API object
@@ -422,11 +536,12 @@ export const createApp = (options = {}) => {
     initialize,
     destroy,
     isInitialized: getIsInitialized,
-    getLayout,
+    getStructure,
+    getStructureAPI,
     getComponent,
     getRouter,
     getThemeManager,
-    getNavigationManager
+    getNavigationSystem
   }
 
   return app
