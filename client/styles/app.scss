@@ -100,17 +100,17 @@ $app: '#{b.$prefix}-app';
 
   // Global toggle/menu buttons - mobile positioning first
   .#{b.$prefix}-button.toggle-darkmode {
-    z-index: 10;
+    z-index: 110;
     position: fixed;
-    left: 10px;
+    left: 15px;
     bottom: 15px;
     transition: .2s ease left;
   }
 
   .#{b.$prefix}-button.more-menu {
-    z-index: 10;
+    z-index: 111;
     position: fixed;
-    left: 10px;
+    left: 15px;
     bottom: 67px;
     transition: .2s ease left;
   }
@@ -182,11 +182,11 @@ $app: '#{b.$prefix}-app';
     }
 
     .#{b.$prefix}-button.toggle-darkmode {
-      left: 20px;
+      left: 23px;
     }
 
     .#{b.$prefix}-button.more-menu {
-      left: 20px;
+      left: 23px;
     }
   }
 

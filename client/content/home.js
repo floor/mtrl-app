@@ -16,5 +16,5 @@ export const createHomeContent = (container) => {
 
   container.classList.add('components')
 
-  const layout = createLayout(contentLayout(info), container).component
+  return createLayout(contentLayout(info), container).component
 }
