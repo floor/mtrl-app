@@ -2,7 +2,7 @@
 
 import { createEventManager, setupErrorBoundary } from './events'
 import { createStructure } from 'mtrl/src/core/structure'
-import { createRouter } from './router/router-service'
+import { createRouter } from './router/service'
 import themeManager from './theme/theme-manager'
 import { createNavigationSystem } from 'mtrl/src/components/navigation/system'
 import { createStructureManager } from './structure/structure-manager'
