@@ -21,6 +21,7 @@ node_modules
 # reports
 coverage/
 .nyc_output/
+git-user-stats.js
 
 # miscellaneous
 *.swp
