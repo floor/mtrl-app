@@ -92,8 +92,8 @@ $app: '#{b.$prefix}-app';
 
   // Content area - mobile dimensions first
   .#{b.$prefix}-content {
-    margin-left: 60px; // Match mobile rail width
-    width: calc(100% - 60px);
+    margin-left: 70px; // Match mobile rail width
+    width: calc(100% - 70px);
     min-height: 100vh;
     transition: margin-left 0.3s ease-out;
   }
@@ -146,8 +146,6 @@ $app: '#{b.$prefix}-app';
 
   // Desktop styles - as media queries
   @media (min-width: 960px) {
-    margin-left: 88px;
-
     .#{b.$prefix}-nav--rail {
       width: 88px; // Wider on desktop
     }
@@ -158,7 +156,7 @@ $app: '#{b.$prefix}-app';
     
     .#{b.$prefix}-content {
       width: 100%;
-      margin: 0 auto;
+      margin-left: 88px
     }
 
     // Hide close button on desktop
@@ -191,7 +189,6 @@ $app: '#{b.$prefix}-app';
   }
 
   @media (min-width: 1280px) {
-    margin-left: 88px;
     background-color: t.color('surface');
 
     .#{b.$prefix}-content {

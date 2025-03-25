@@ -56,18 +56,37 @@ export function createRouter (options = {}) {
     const fullPath = pathname + search
     const route = parsePath(fullPath, config)
 
-    // Prevent duplicate navigation
+    // Mark this as a popstate-triggered navigation
+    route.popstate = true
+
+    // Get current route before navigation
     const currentRoute = navigationStack.getCurrent()
+
+    console.log(`[ROUTER] Popstate detected: ${currentRoute?.path || 'null'} -> ${route.path}`)
+
+    // Prevent duplicate navigation
     if (currentRoute &&
         currentRoute.path === route.path &&
         currentRoute.query === route.query) {
+      console.log(`[ROUTER] Ignoring duplicate navigation to ${route.path}`)
       return
+    }
+
+    // Important: Save the scroll position BEFORE we navigate away!
+    if (config.scrollRestoration) {
+      // Save the current scroll position for the current route
+      const currentScrollY = window.scrollY || window.pageYOffset || 0
+      console.log(`[ROUTER] Before popstate, saving scroll ${currentScrollY}px for ${currentRoute?.path}`)
+      if (currentRoute) {
+        scrollManager.saveScrollPosition(currentRoute)
+      }
     }
 
     navigate(route.section, route.subsection, {
       noHistory: true,
       params: route.params,
-      popstate: true
+      popstate: true,
+      previousRoute: currentRoute
     })
   })
 
@@ -208,13 +227,21 @@ export function createRouter (options = {}) {
       let handlerResult = false
 
       if (matchedRoute) {
-        // Handle scroll restoration before rendering
-        if (config.scrollRestoration && !normalized.options.noScroll) {
-          scrollManager.resetScroll()
+        // Handle scroll restoration for popstate events differently
+        if (config.scrollRestoration) {
+          if (route.popstate) {
+            // console.log(`[ROUTER] Handling popstate scroll restoration for ${route.path}`)
+            // Let the scroll manager handle popstate scroll restoration
+            scrollManager.handlePopStateScroll(route, normalized.options.previousRoute)
+          } else if (!normalized.options.noScroll) {
+            // console.log(`[ROUTER] Normal navigation, resetting scroll for ${route.path}`)
+            // For normal navigation, reset scroll to top
+            scrollManager.resetScroll()
+          }
         }
 
-        // Clear previous content
-        clearContentContainer(config.ui)
+        // Clear previous content - preserve scroll on popstate
+        clearContentContainer(config.ui, route.popstate)
 
         // Execute the handler
         try {
@@ -223,6 +250,13 @@ export function createRouter (options = {}) {
 
           // Update document title if provided
           updateDocumentTitle(route, matchedRoute)
+
+          // Save the scroll position of the previous route before updating navigation stack
+          const previousRoute = navigationStack.getCurrent()
+          if (previousRoute && config.scrollRestoration && !route.popstate) {
+            // console.log(`[ROUTER] Saving scroll position for ${previousRoute.path} before navigation`)
+            scrollManager.saveScrollPosition(previousRoute)
+          }
 
           // Add to navigation stack
           navigationStack.push(route)
@@ -236,8 +270,17 @@ export function createRouter (options = {}) {
           return false
         }
       } else if (config.notFoundHandler) {
-        // Clear previous content
-        clearContentContainer(config.ui)
+        // Handle scroll for not-found similarly
+        if (config.scrollRestoration) {
+          if (route.popstate) {
+            scrollManager.handlePopStateScroll(route, normalized.options.previousRoute)
+          } else if (!normalized.options.noScroll) {
+            scrollManager.resetScroll()
+          }
+        }
+
+        // Clear previous content - preserve scroll on popstate
+        clearContentContainer(config.ui, route.popstate)
 
         // Execute not found handler
         try {

@@ -16,6 +16,27 @@ export const createAppRouter = (options = {}) => {
     ...options
   })
 
+  // Set up scroll tracking to continuously update the current route's scroll position
+  if (typeof window !== 'undefined' && router.config.scrollRestoration) {
+    let scrollTimer
+    window.addEventListener('scroll', () => {
+      if (scrollTimer) clearTimeout(scrollTimer)
+
+      scrollTimer = setTimeout(() => {
+        const currentRoute = router.getCurrentRoute()
+        if (currentRoute) {
+          const scrollPosition = window.scrollY || window.pageYOffset || 0
+          if (scrollPosition > 0 && router.config.debug) {
+            console.log(`[ROUTER] Saving scroll position for ${currentRoute.path}: ${scrollPosition}px`)
+          }
+          if (options.scrollManager) {
+            options.scrollManager.saveScrollPosition(currentRoute)
+          }
+        }
+      }, 200) // Debounce to avoid excessive saves
+    }, { passive: true })
+  }
+
   // Set up common hooks and handlers
   router.beforeEach((route, prevRoute) => {
     // Log all navigation for debugging
@@ -23,13 +44,29 @@ export const createAppRouter = (options = {}) => {
       console.debug(`Route change: ${prevRoute?.path || 'initial'} -> ${route.path}`)
     }
 
-    // Handle content clearing
-    if (options.ui?.content) {
-      options.ui.content.scrollTop = 0
+    // If we're navigating between routes (not initial) and not from popstate
+    // action, we should clear the content but not handle scrolling here
+    if (prevRoute && !route.popstate && options.ui?.content) {
+      // We don't reset scroll here - let the scroll manager handle that
+      // Just clear the content for the new route
       options.ui.content.innerHTML = ''
     }
 
     return true // Continue navigation
+  })
+
+  // Add default after hook to save scroll position after content renders
+  router.afterEach((to, from) => {
+    // After navigation completes and content renders, track the new route for scroll
+    if (router.config.scrollRestoration) {
+      // Wait a short delay for content to fully render
+      setTimeout(() => {
+        if (from && from.path) {
+          router.config.debug && console.debug(`AfterEach saving scroll for: ${from.path}`)
+          // Additional logging if needed
+        }
+      }, 50)
+    }
   })
 
   // Allow additional hooks without requiring direct router access

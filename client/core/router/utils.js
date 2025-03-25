@@ -21,11 +21,22 @@ export function defaultErrorHandler (error, route, ui) {
 /**
  * Clear the content container
  * @param {Object} ui - UI components
+ * @param {boolean} preserveScroll - Whether to preserve scroll position
  */
-export function clearContentContainer (ui) {
+export function clearContentContainer (ui, preserveScroll = false) {
   if (ui && ui.content) {
-    // Remove all content
+    // If preserving scroll, remember position (use window.scrollY for consistent behavior)
+    const scrollTop = preserveScroll ? (window.scrollY || window.pageYOffset || 0) : 0
+
+    // Clear content
     ui.content.innerHTML = ''
+
+    // Restore scroll position if needed
+    if (preserveScroll) {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollTop)
+      })
+    }
   }
 }
 
