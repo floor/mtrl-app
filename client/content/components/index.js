@@ -1,6 +1,7 @@
 // src/client/content/components/index.js
-import { contentLayout } from '../../layout'
-import { createLayout, createElement } from 'mtrl'
+import { createContentStructure } from '../../structure'
+import { createElement, createStructure } from 'mtrl'
+// import { createStructure } from 'mtrl/src/core/structure'
 import { createAppRouter } from '../../core/router'
 
 import { componentsList } from './components-list'
@@ -17,24 +18,29 @@ import createCard, {
  * @param {Object} options - Options including router instance
  */
 export const createComponentsContent = (container, options = {}) => {
-  console.trace('createComponentsContent')
+  console.log('createComponentsContent', container, options)
 
   // Get router from options or create a new one
   const router = options.router || createAppRouter()
+
+  console.log('router', router)
 
   const info = {
     title: 'Components',
     description: 'Components are interactive building blocks for creating a user interface. They can be organized into categories based on their purpose: Action, containment, communication, navigation, selection, and text input.'
   }
 
+  console.log('createStructure', createStructure)
+  console.log('createContentStructure', createContentStructure)
+
   // Create layout
-  const layout = createLayout(contentLayout(info), container).component
+  const structure = createStructure(createContentStructure(info), container).component
 
   componentsList.forEach((group, index) => {
-    initComponentsGroup(layout.body, group, router)
+    initComponentsGroup(structure.body, group, router)
   })
 
-  return layout
+  return structure
 }
 
 /**

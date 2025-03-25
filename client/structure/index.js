@@ -1,5 +1,6 @@
-import { contentLayout } from './content'
-import { componentsLayout } from './components'
+// Import renamed structure definition functions
+import { createContentStructure } from './content'
+import { createComponentsStructure } from './components'
 import {
   createSectionShowcase,
   createComponentsSectionLayout,
@@ -7,9 +8,10 @@ import {
   createComponentsSectionLayoutInfo
 } from './section'
 
+// Export all structure definitions
 export {
-  contentLayout,
-  componentsLayout,
+  createContentStructure,
+  createComponentsStructure,
   createSectionShowcase,
   createComponentsSectionLayout,
   createComponentsSectionLayoutBox,

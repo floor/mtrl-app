@@ -12,7 +12,6 @@ import {
 
 import {
   createElement,
-  createNavigationSystem,
   createButton
 } from 'mtrl'
 
