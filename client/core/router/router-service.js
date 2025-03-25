@@ -53,6 +53,18 @@ export const createRouter = (options = {}) => {
     }
   }
 
+  /**
+   * Clear the content container
+   * This ensures old content is removed before new content is added
+   * @private
+   */
+  const clearContentContainer = () => {
+    if (config.ui && config.ui.content) {
+      // Remove all content
+      config.ui.content.innerHTML = ''
+    }
+  }
+
   // Private methods
 
   /**
@@ -86,15 +98,21 @@ export const createRouter = (options = {}) => {
    * @private
    */
   const updateBrowserHistory = (route, options = {}) => {
+    // Ensure we use a relative URL path (starts with /)
+    let path = route.path
+    if (!path.startsWith('/')) {
+      path = '/' + path
+    }
+
     const historyData = {
       ...route,
       timestamp: Date.now()
     }
 
     if (options.replace) {
-      window.history.replaceState(historyData, '', route.path)
+      window.history.replaceState(historyData, '', path)
     } else {
-      window.history.pushState(historyData, '', route.path)
+      window.history.pushState(historyData, '', path)
     }
   }
 
@@ -340,10 +358,6 @@ export const createRouter = (options = {}) => {
       return router
     }
 
-    if (config.debug) {
-      // console.info(`Route registered: ${path}`)
-    }
-
     return router
   }
 
@@ -388,27 +402,25 @@ export const createRouter = (options = {}) => {
    * @returns {Promise<boolean>} Navigation result
    */
   async function navigate (target, subsection = '', options = {}) {
-    console.error('navigate', target)
-    console.log('target', target)
-    console.log('subsection', subsection)
-    console.log('options', options)
-
     try {
       // Handle direct object navigation
-      let section; let params = {}
+      let section
+      let params = {}
 
-      if (typeof target === 'object' && target !== null) {
+      // Special case for path-based navigation (from drawer menu items)
+      if (typeof target === 'string' && target.startsWith('/')) {
+        // This is a direct path (e.g. "/components/chips")
+        const routeObj = parsePath(target)
+        section = routeObj.section
+        subsection = routeObj.subsection
+        params = routeObj.params
+      } else if (typeof target === 'object' && target !== null) {
         section = target.section
         subsection = target.subsection || ''
         params = target.params || {}
         options = { ...options, ...target.options }
       } else {
         section = target
-      }
-
-      // Log navigation intent
-      if (config.debug) {
-        // console.debug('Navigation requested:', { section, subsection, params, options })
       }
 
       // Generate path
@@ -429,9 +441,6 @@ export const createRouter = (options = {}) => {
 
         // If hook returns explicitly false, cancel navigation
         if (result === false) {
-          if (config.debug) {
-            console.debug('Navigation cancelled by hook')
-          }
           return false
         }
 
@@ -461,6 +470,9 @@ export const createRouter = (options = {}) => {
           handleScrollRestoration(route)
         }
 
+        // Clear previous content
+        clearContentContainer()
+
         // Execute the handler
         try {
           const handler = matchedRoute.handler
@@ -488,6 +500,9 @@ export const createRouter = (options = {}) => {
           return false
         }
       } else if (config.notFoundHandler) {
+        // Clear previous content
+        clearContentContainer()
+
         // Execute not found handler
         try {
           handlerResult = await config.notFoundHandler(route, config.ui)
@@ -506,9 +521,9 @@ export const createRouter = (options = {}) => {
       }
 
       // Run after navigation hooks
-      // for (const hook of afterHooks) {
-      //   await hook(route, lastRoute)
-      // }
+      for (const hook of afterHooks) {
+        await hook(route, lastRoute, options)
+      }
 
       // Return handler result or true if successful
       return handlerResult !== false
@@ -623,10 +638,6 @@ export const createRouter = (options = {}) => {
     afterHooks.length = 0
     currentRoute = null
     navigationStack = []
-
-    if (config.debug) {
-      console.info('Router destroyed')
-    }
   }
 
   /**
@@ -642,7 +653,7 @@ export const createRouter = (options = {}) => {
     return navigate(route.section, route.subsection, {
       noHistory: true,
       params: route.params,
-      initialRoute: true // Add this flag
+      initialRoute: true
     })
   }
 

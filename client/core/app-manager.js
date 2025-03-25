@@ -2,11 +2,12 @@
 
 import { createEventManager, setupErrorBoundary } from './events'
 import { createStructure } from 'mtrl/src/core/structure'
-import { createAppRouter } from './router'
+import { createRouter } from './router/router-service'
 import themeManager from './theme/theme-manager'
 import { createNavigationSystem } from 'mtrl/src/components/navigation/system'
 import { createStructureManager } from './structure/structure-manager'
 import { appStructure, navigationStructure } from '../config'
+import { generateDynamicRoutes } from './router/dynamic-loader'
 
 /**
  * Creates an application manager responsible for core initialization,
@@ -19,19 +20,21 @@ export const createApp = (options = {}) => {
   // Internal state
   let isInitialized = false
   let readyCallbacks = []
-  let processingRouteChange = false
-  let processingNavChange = false
-  let handlingDrawerItemClick = false // Flag to track drawer item clicks
+
+  // Navigation synchronization state
+  const syncState = {
+    isNavigating: false,
+    source: null, // 'router' or 'navigation'
+    ignoreNextNavSync: false
+  }
 
   // Core subsystems
-  let structureResult = null // Updated to use StructureResult
+  let structureResult = null
   let components = null
   let structureManager = null
   let router = null
   let eventManager = null
   let navigationSystem = null
-
-  // Private methods
 
   /**
    * Initialize the application
@@ -61,10 +64,6 @@ export const createApp = (options = {}) => {
       eventManager = initializeEvents(ui)
       initializeTheme(ui)
       navigationSystem = initializeNavigation(ui)
-
-      // this should be done by the navSystem
-
-      initializeInitialRoute(router)
 
       // Execute ready callbacks
       executeReadyCallbacks()
@@ -98,7 +97,7 @@ export const createApp = (options = {}) => {
     // Create structure manager
     structureManager = createStructureManager({
       structure: structureResult.structure,
-      structureAPI: structureResult, // Pass the full API
+      structureAPI: structureResult,
       options: options.layoutOptions
     })
 
@@ -111,18 +110,16 @@ export const createApp = (options = {}) => {
    * @private
    */
   const initializeRouter = (ui) => {
-    console.log('initializeRouter', ui.content)
-
     // Create router with UI reference
-    const routerInstance = createAppRouter({
+    const routerInstance = createRouter({
       ui,
       onError: (error) => {
         if (typeof options.onNavigationError === 'function') {
           options.onNavigationError(error)
         }
       },
-      hooks: options.routerHooks,
-      ...options.routerOptions
+      scrollRestoration: options.routerOptions?.scrollRestoration !== false,
+      debug: options.routerOptions?.debug || false
     })
 
     // Register routes if provided
@@ -130,21 +127,15 @@ export const createApp = (options = {}) => {
       routerInstance.registerRoutes(options.routes)
     }
 
+    // Register dynamic routes
+    routerInstance.registerRoutes(generateDynamicRoutes())
+
     // Register notFoundHandler if provided
     if (options.notFoundHandler) {
       routerInstance.registerNotFound(options.notFoundHandler)
     }
 
     return routerInstance
-  }
-
-  const initializeInitialRoute = (router) => {
-    const { pathname } = window.location
-    const route = router.parsePath(pathname)
-
-    console.log('route', route)
-
-    router.navigate(route.section, route.subsection, { replace: true })
   }
 
   /**
@@ -194,7 +185,7 @@ export const createApp = (options = {}) => {
   }
 
   /**
-   * Initialize navigation with the new navigation system
+   * Initialize navigation with the navigation system
    * @param {Object} ui - UI component reference
    * @private
    */
@@ -222,9 +213,7 @@ export const createApp = (options = {}) => {
     navSystem.initialize()
 
     // Force drawer to be hidden after initialization
-    if (navSystem.hideDrawer) {
-      navSystem.hideDrawer()
-    }
+    navSystem.hideDrawer()
 
     // Store references in UI
     if (navSystem.getRail()) ui.rail = navSystem.getRail()
@@ -236,35 +225,29 @@ export const createApp = (options = {}) => {
        * Handle section change events (rail item clicks)
        */
       navSystem.onSectionChange = (section, eventData) => {
-        console.trace('onSectionChange', section)
-        console.log('isProcessingChange', navSystem.isProcessingChange())
+        // Skip if currently navigating from another source
+        if (syncState.isNavigating && syncState.source !== 'navigation') {
+          return
+        }
 
-        // Skip if we're already processing a navigation change
-        // if (navSystem.isProcessingChange()) {
-        //   return
-        // }
-
-        // Set processing flag using the navigation system API
-        navSystem.setProcessingChange(true)
-
-        // Set processing flag
-        processingNavChange = true
+        // Set sync state
+        syncState.isNavigating = true
+        syncState.source = 'navigation'
 
         // Get the section data
         const sectionData = items[section]
         if (!sectionData) {
-          processingNavChange = false
+          syncState.isNavigating = false
           return
         }
 
-        console.log('router.navigate', section)
-
         // Navigate to section directly
-        router.navigate(section, null, { replace: true })
+        router.navigate(section)
 
-        // Clear flag after a delay
+        // Reset sync state after a short delay
         setTimeout(() => {
-          processingNavChange = false
+          syncState.isNavigating = false
+          syncState.source = null
         }, 50)
       }
 
@@ -272,13 +255,10 @@ export const createApp = (options = {}) => {
        * Handle item selection events (drawer item clicks)
        */
       navSystem.onItemSelect = (event) => {
-        // Skip if we're already processing a route change
-        if (processingRouteChange) {
+        // Skip if already processing a route change
+        if (syncState.isNavigating && syncState.source !== 'navigation') {
           return
         }
-
-        // Set handlingDrawerItemClick flag to prevent drawer content refresh
-        handlingDrawerItemClick = true
 
         // Get path from the event
         let path = null
@@ -291,106 +271,83 @@ export const createApp = (options = {}) => {
         }
 
         if (path) {
-          // Set processing flag
-          processingRouteChange = true
-
-          // Parse the path to get route components
-          const route = router.parsePath(path)
+          // Set sync state
+          syncState.isNavigating = true
+          syncState.source = 'navigation'
+          syncState.ignoreNextNavSync = true
 
           // Determine if this is a drawer item with nested items
           const hasNestedItems = event.item?.config?.items?.length > 0
 
           // Only navigate if this isn't an expandable drawer item
           if (!hasNestedItems) {
-            // Navigate using router - but preserve the drawer's expanded state
-            router.navigate(route.section, route.subsection, {
-              replace: true,
-              preserveDrawerState: true // Add a hint to preserve drawer state
-            })
+            // For drawer navigation, make sure we have a leading slash for path-based navigation
+            if (!path.startsWith('/')) {
+              path = '/' + path
+            }
+
+            // Navigate using the path
+            router.navigate(path)
           }
 
-          // Clear flags after a delay
+          // Reset sync state after a short delay
           setTimeout(() => {
-            processingRouteChange = false
-            handlingDrawerItemClick = false
+            syncState.isNavigating = false
+            syncState.source = null
+            syncState.ignoreNextNavSync = false
           }, 50)
-        } else {
-          // If no path, reset the flag immediately
-          handlingDrawerItemClick = false
         }
       }
 
-      // Process initial route if needed
-      if (options.processInitialRoute !== false) {
-        console.log('Process initial route if needed')
-
-        const { pathname } = window.location
-        const route = router.parsePath(pathname)
-
-        console.log('route', route)
-
-        if (route.section) {
-          // Set processing flag
-          processingNavChange = true
-
-          // Use a let variable instead of const so we can change it
-          let isInitialLoad = true
-
-          // This will update both rail and drawer via the navigation system
-          // navSystem.navigateTo(route.section, route.subsection, true)
-          // navSystem.navigateTo(route.section, route.subsection)
-
-          // Make sure drawer stays hidden initially
-          navSystem.hideDrawer()
-
-          // Clear flag after a delay
-          setTimeout(() => {
-            processingNavChange = false
-          }, 50)
-
-          // CRITICAL: Use router.afterEach to prevent unwanted redirects on reload
-          router.afterEach((newRoute, prevRoute) => {
-            // We need to handle the case where this is our first navigation
-            // when loading the page directly at a URL with a subsection
-            if (isInitialLoad && newRoute.subsection) {
-              // Mark initial load as handled
-              isInitialLoad = false
-            }
-          })
-        }
-      }
-
-      // Keep navigation in sync with router
-      router.afterEach((route, options = {}) => {
-        // Skip if we're already processing a navigation change
-        if (processingNavChange) {
+      // Register router hook to keep navigation in sync with routing
+      router.afterEach((route, prevRoute, options = {}) => {
+        // Skip if we're already processing a navigation from the navigation system
+        if (syncState.isNavigating && syncState.source === 'navigation') {
           return
         }
 
         // Skip drawer content update if handling drawer item click
-        if (handlingDrawerItemClick || options.preserveDrawerState) {
-          // Update the subsection in the state
-          if (route.subsection) {
-            navSystem.getActiveSubsection = () => route.subsection
-          }
-
+        if (syncState.ignoreNextNavSync || options.preserveDrawerState) {
           return
         }
 
+        // Set sync state
+        syncState.isNavigating = true
+        syncState.source = 'router'
+
+        // Update navigation system with section and subsection
         if (route.section) {
-          // Set processing flag
-          processingRouteChange = true
-
-          // This ensures navigation state stays in sync with URL changes
-          // The navigation system will handle updating the drawer content
           navSystem.navigateTo(route.section, route.subsection)
-
-          // Clear flag after a delay
-          setTimeout(() => {
-            processingRouteChange = false
-          }, 50)
         }
+
+        // Reset sync state after a short delay
+        setTimeout(() => {
+          syncState.isNavigating = false
+          syncState.source = null
+        }, 50)
       })
+
+      // Process initial route if needed
+      if (options.processInitialRoute !== false) {
+        // Use router's built-in initial route processing
+        router.processInitialRoute().then(success => {
+          if (success) {
+            // Update navigation to match initial route
+            const currentRoute = router.getCurrentRoute()
+            if (currentRoute) {
+              // Update navigation without triggering another navigation
+              syncState.isNavigating = true
+              syncState.source = 'router'
+              navSystem.navigateTo(currentRoute.section, currentRoute.subsection, true)
+              navSystem.hideDrawer()
+              setTimeout(() => {
+                syncState.isNavigating = false
+                syncState.source = null
+              }, 50)
+            }
+          }
+        })
+      }
     }
 
     // Register cleanup
@@ -446,7 +403,7 @@ export const createApp = (options = {}) => {
     }
 
     if (structureResult) {
-      structureResult.destroy() // Use the destroy method on structureResult
+      structureResult.destroy()
     }
 
     // Reset state
@@ -462,124 +419,54 @@ export const createApp = (options = {}) => {
   }
 
   // Public API
-
-  /**
-   * Register a callback to be executed when the app is ready
-   * @param {Function} callback - Callback function
-   * @returns {Object} App instance for chaining
-   */
-  const onReady = (callback) => {
-    if (typeof callback !== 'function') return app
-
-    if (isInitialized && components) {
-      // If already initialized, execute immediately
-      callback({
-        structure: structureResult.structure,
-        structureAPI: structureResult,
-        router,
-        ui: components,
-        themeManager,
-        navigationSystem
-      })
-    } else {
-      // Queue for later execution
-      readyCallbacks.push(callback)
-    }
-
-    return app
-  }
-
-  /**
-   * Initialize the application (if deferred)
-   * @returns {Object} App instance for chaining
-   */
-  const initialize = () => {
-    if (!isInitialized) {
-      initializeApp()
-    }
-    return app
-  }
-
-  /**
-   * Clean up and destroy the application
-   */
-  const destroy = () => {
-    if (eventManager) {
-      eventManager.cleanup()
-    } else {
-      cleanupApp()
-    }
-  }
-
-  /**
-   * Check if the app is initialized
-   * @returns {boolean} Initialization status
-   */
-  const getIsInitialized = () => {
-    return isInitialized
-  }
-
-  /**
-   * Get the structure instance
-   * @returns {Object} Structure instance
-   */
-  const getStructure = () => {
-    return structureResult ? structureResult.structure : null
-  }
-
-  /**
-   * Get the structure API
-   * @returns {Object} Structure API with utility methods
-   */
-  const getStructureAPI = () => {
-    return structureResult
-  }
-
-  /**
-   * Get a UI component by name
-   * @param {string} name - Component name
-   * @returns {Object} UI component
-   */
-  const getComponent = (name) => {
-    return structureResult ? structureResult.get(name) : null
-  }
-
-  /**
-   * Get the router instance
-   * @returns {Object} Router instance
-   */
-  const getRouter = () => {
-    return router
-  }
-
-  /**
-   * Get the theme manager
-   * @returns {Object} Theme manager
-   */
-  const getThemeManager = () => {
-    return themeManager
-  }
-
-  /**
-   * Get the navigation system
-   * @returns {Object} Navigation system
-   */
-  const getNavigationSystem = () => {
-    return navigationSystem
-  }
-
-  // Create the API object
   const app = {
-    onReady,
-    initialize,
-    destroy,
-    isInitialized: getIsInitialized,
-    getStructure,
-    getStructureAPI,
-    getComponent,
-    getRouter,
-    getThemeManager,
-    getNavigationSystem
+    // Register callback to be executed when app is ready
+    onReady (callback) {
+      if (typeof callback !== 'function') return this
+
+      if (isInitialized && components) {
+        // If already initialized, execute immediately
+        callback({
+          structure: structureResult.structure,
+          structureAPI: structureResult,
+          router,
+          ui: components,
+          themeManager,
+          navigationSystem
+        })
+      } else {
+        // Queue for later execution
+        readyCallbacks.push(callback)
+      }
+
+      return this
+    },
+
+    // Initialize the application (if deferred)
+    initialize () {
+      if (!isInitialized) {
+        initializeApp()
+      }
+      return this
+    },
+
+    // Clean up and destroy the application
+    destroy () {
+      if (eventManager) {
+        eventManager.cleanup()
+      } else {
+        cleanupApp()
+      }
+    },
+
+    // Getter methods
+    isInitialized: () => isInitialized,
+    getStructure: () => structureResult ? structureResult.structure : null,
+    getStructureAPI: () => structureResult,
+    getComponent: (name) => structureResult ? structureResult.get(name) : null,
+    getRouter: () => router,
+    getThemeManager: () => themeManager,
+    getNavigationSystem: () => navigationSystem
   }
 
   return app
