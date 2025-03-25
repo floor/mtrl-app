@@ -6,6 +6,7 @@ import { initContinuous, initContinuous1000 } from './continuous'
 import { initCentered } from './centered'
 import { initRange } from './range'
 import { initDiscrete, initDiscreteWithLabels } from './discrete'
+import { initRangeDiscrete } from './range-discrete'
 import { initDisabled } from './disabled'
 import { initEventsAPI } from './events-api'
 
@@ -23,6 +24,7 @@ export const createSlidersContent = (container) => {
   initRange(layout.body)
   initDiscrete(layout.body)
   initDiscreteWithLabels(layout.body)
+  initRangeDiscrete(layout.body)
   initDisabled(layout.body)
   initEventsAPI(layout.body)
 }

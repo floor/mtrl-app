@@ -12,7 +12,7 @@ import {
 } from 'mtrl/src/components/slider'
 
 export const initDiscrete = (container) => {
-  const title = 'Slider with tick marks and labels'
+  const title = 'Slider with tick marks'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const slider = createSlider({
