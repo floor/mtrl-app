@@ -17,6 +17,8 @@ import createCard, {
  * @param {Object} options - Options including router instance
  */
 export const createComponentsContent = (container, options = {}) => {
+  console.trace('createComponentsContent')
+
   // Get router from options or create a new one
   const router = options.router || createAppRouter()
 

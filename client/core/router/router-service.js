@@ -388,6 +388,11 @@ export const createRouter = (options = {}) => {
    * @returns {Promise<boolean>} Navigation result
    */
   async function navigate (target, subsection = '', options = {}) {
+    console.error('navigate', target)
+    console.log('target', target)
+    console.log('subsection', subsection)
+    console.log('options', options)
+
     try {
       // Handle direct object navigation
       let section; let params = {}
@@ -501,9 +506,9 @@ export const createRouter = (options = {}) => {
       }
 
       // Run after navigation hooks
-      for (const hook of afterHooks) {
-        await hook(route, lastRoute)
-      }
+      // for (const hook of afterHooks) {
+      //   await hook(route, lastRoute)
+      // }
 
       // Return handler result or true if successful
       return handlerResult !== false
@@ -633,9 +638,11 @@ export const createRouter = (options = {}) => {
     const fullPath = pathname + search
     const route = parsePath(fullPath)
 
+    // Make sure we pass the initialRoute flag
     return navigate(route.section, route.subsection, {
       noHistory: true,
-      params: route.params
+      params: route.params,
+      initialRoute: true // Add this flag
     })
   }
 

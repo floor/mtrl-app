@@ -62,6 +62,10 @@ export const createApp = (options = {}) => {
       initializeTheme(ui)
       navigationSystem = initializeNavigation(ui)
 
+      // this should be done by the navSystem
+
+      initializeInitialRoute(router)
+
       // Execute ready callbacks
       executeReadyCallbacks()
 
@@ -107,6 +111,8 @@ export const createApp = (options = {}) => {
    * @private
    */
   const initializeRouter = (ui) => {
+    console.log('initializeRouter', ui.content)
+
     // Create router with UI reference
     const routerInstance = createAppRouter({
       ui,
@@ -130,6 +136,15 @@ export const createApp = (options = {}) => {
     }
 
     return routerInstance
+  }
+
+  const initializeInitialRoute = (router) => {
+    const { pathname } = window.location
+    const route = router.parsePath(pathname)
+
+    console.log('route', route)
+
+    router.navigate(route.section, route.subsection, { replace: true })
   }
 
   /**
@@ -221,6 +236,9 @@ export const createApp = (options = {}) => {
        * Handle section change events (rail item clicks)
        */
       navSystem.onSectionChange = (section, eventData) => {
+        console.trace('onSectionChange', section)
+        console.log('isProcessingChange', navSystem.isProcessingChange())
+
         // Skip if we're already processing a navigation change
         // if (navSystem.isProcessingChange()) {
         //   return
@@ -238,6 +256,8 @@ export const createApp = (options = {}) => {
           processingNavChange = false
           return
         }
+
+        console.log('router.navigate', section)
 
         // Navigate to section directly
         router.navigate(section, null, { replace: true })
@@ -302,15 +322,23 @@ export const createApp = (options = {}) => {
 
       // Process initial route if needed
       if (options.processInitialRoute !== false) {
+        console.log('Process initial route if needed')
+
         const { pathname } = window.location
         const route = router.parsePath(pathname)
+
+        console.log('route', route)
 
         if (route.section) {
           // Set processing flag
           processingNavChange = true
 
+          // Use a let variable instead of const so we can change it
+          let isInitialLoad = true
+
           // This will update both rail and drawer via the navigation system
-          navSystem.navigateTo(route.section, route.subsection)
+          // navSystem.navigateTo(route.section, route.subsection, true)
+          // navSystem.navigateTo(route.section, route.subsection)
 
           // Make sure drawer stays hidden initially
           navSystem.hideDrawer()
@@ -319,6 +347,16 @@ export const createApp = (options = {}) => {
           setTimeout(() => {
             processingNavChange = false
           }, 50)
+
+          // CRITICAL: Use router.afterEach to prevent unwanted redirects on reload
+          router.afterEach((newRoute, prevRoute) => {
+            // We need to handle the case where this is our first navigation
+            // when loading the page directly at a URL with a subsection
+            if (isInitialLoad && newRoute.subsection) {
+              // Mark initial load as handled
+              isInitialLoad = false
+            }
+          })
         }
       }
 
