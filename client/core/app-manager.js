@@ -241,6 +241,12 @@ export const createApp = (options = {}) => {
           return
         }
 
+        // Update drawer content without showing the drawer
+        if (sectionData.items?.length) {
+          // Update drawer content but don't open it
+          navSystem.navigateTo(section, null, true)
+        }
+
         // Navigate to section directly
         router.navigate(section)
 
@@ -288,6 +294,9 @@ export const createApp = (options = {}) => {
 
             // Navigate using the path
             router.navigate(path)
+
+            // Always hide the drawer after navigation
+            navSystem.hideDrawer()
           }
 
           // Reset sync state after a short delay
@@ -307,7 +316,7 @@ export const createApp = (options = {}) => {
         }
 
         // Skip drawer content update if handling drawer item click
-        if (syncState.ignoreNextNavSync || options.preserveDrawerState) {
+        if (syncState.ignoreNextNavSync) {
           return
         }
 
@@ -317,14 +326,11 @@ export const createApp = (options = {}) => {
 
         // Update navigation system with section and subsection
         if (route.section) {
-          // When using back/forward button navigation, keep drawer closed
+          // Update rail selection and drawer content, but don't open drawer
           navSystem.navigateTo(route.section, route.subsection, true)
 
-          // If this is from popstate (browser back/forward) or has keepDrawerClosed flag,
-          // ensure the drawer stays closed
-          if (route.popstate || route.keepDrawerClosed) {
-            navSystem.hideDrawer()
-          }
+          // Always ensure drawer is closed by default after navigation
+          navSystem.hideDrawer()
         }
 
         // Reset sync state after a short delay

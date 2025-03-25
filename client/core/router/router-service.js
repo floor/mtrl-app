@@ -84,12 +84,10 @@ export const createRouter = (options = {}) => {
       return
     }
 
-    // For back/forward navigation, we want to keep the drawer closed
     navigate(route.section, route.subsection, {
       noHistory: true,
       params: route.params,
-      popstate: true,
-      keepDrawerClosed: true // Add a flag to indicate we should keep drawer closed
+      popstate: true
     })
   }
 
@@ -110,7 +108,7 @@ export const createRouter = (options = {}) => {
     const historyData = {
       ...route,
       timestamp: Date.now(),
-      keepDrawerClosed: options.keepDrawerClosed
+      popstate: options.popstate
     }
 
     if (options.replace) {
@@ -437,8 +435,7 @@ export const createRouter = (options = {}) => {
         path,
         params,
         timestamp: Date.now(),
-        // Preserve drawer state information
-        keepDrawerClosed: options.keepDrawerClosed,
+        // Set popstate flag if this navigation is from browser back/forward
         popstate: options.popstate
       }
 
@@ -660,8 +657,7 @@ export const createRouter = (options = {}) => {
     return navigate(route.section, route.subsection, {
       noHistory: true,
       params: route.params,
-      initialRoute: true,
-      keepDrawerClosed: true // Ensure drawer stays closed on initial load
+      initialRoute: true
     })
   }
 
