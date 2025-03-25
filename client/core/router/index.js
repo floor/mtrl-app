@@ -1,6 +1,6 @@
-// src/client/core/router/index.js
+// client/core/router/index.js
 
-import { createRouter } from './router-service'
+import createRouter from './service.js'
 
 /**
  * Router factory that provides consistent router creation with application defaults
@@ -47,7 +47,7 @@ export const createAppRouter = (options = {}) => {
 }
 
 // Re-export the router service for direct access if needed
-export { createRouter } from './router-service'
+export { createRouter }
 
 // Export default factory function
 export default createAppRouter

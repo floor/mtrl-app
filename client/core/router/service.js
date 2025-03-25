@@ -375,6 +375,7 @@ export function createRouter (options = {}) {
     // Configuration
     setDefaultRoute,
     configure,
+    config,
 
     // Cleanup
     destroy
