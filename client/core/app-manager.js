@@ -317,7 +317,14 @@ export const createApp = (options = {}) => {
 
         // Update navigation system with section and subsection
         if (route.section) {
-          navSystem.navigateTo(route.section, route.subsection)
+          // When using back/forward button navigation, keep drawer closed
+          navSystem.navigateTo(route.section, route.subsection, true)
+
+          // If this is from popstate (browser back/forward) or has keepDrawerClosed flag,
+          // ensure the drawer stays closed
+          if (route.popstate || route.keepDrawerClosed) {
+            navSystem.hideDrawer()
+          }
         }
 
         // Reset sync state after a short delay
