@@ -29,13 +29,13 @@
     "bun-types": "^1.2.5",
     "compression": "^1.8.0",
     "ejs": "^3.1.10",
-    "madge": "^8.0.0",
     "mtrl": "^0.2.9"
   },
   "devDependencies": {
     "sass": "^1.83.4",
     "standard": "^17.1.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "madge": "^8.0.0"
   },
   "repository": {
     "type": "git",
