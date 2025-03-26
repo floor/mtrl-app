@@ -48,7 +48,7 @@ export const createSectionShowcase = (info) => {
   }
 }
 
-export const createComponentsSectionLayout = (info) => {
+export const createComponentsSectionStructure = (info) => {
   return {
     element: {
       options: {
@@ -98,7 +98,7 @@ export const createComponentsSectionLayout = (info) => {
   }
 }
 
-export const createComponentsSectionLayoutBox = (info) => {
+export const createComponentsSectionStructureBox = (info) => {
   return {
     element: {
       options: {
@@ -148,7 +148,7 @@ export const createComponentsSectionLayoutBox = (info) => {
   }
 }
 
-export const createComponentsSectionLayoutInfo = (info) => {
+export const createComponentsSectionStructureInfo = (info) => {
   return {
     element: {
       options: {

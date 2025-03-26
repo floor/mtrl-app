@@ -1,26 +1,26 @@
 export const createContentStructure = (info) => {
   return {
     head: {
-      options: { className: 'mtrl-content__header' },
+      options: { className: 'content__header' },
       children: {
         section: {
-          options: { className: 'mtrl-content__box info' },
+          options: { className: 'content__box content-info' },
           children: {
             title: {
-              options: { text: info.title, className: 'mtrl-content__title' }
+              options: { text: info.title, className: 'content__title' }
             },
             description: {
-              options: { text: info.description, className: 'mtrl-content__text' }
+              options: { text: info.description, className: 'content__text' }
             }
           }
         }
       }
     },
     body: {
-      options: { id: 'body', className: 'mtrl-content__body' }
+      options: { id: 'body', className: 'content__body' }
     },
     foot: {
-      options: { id: 'foot', className: 'mtrl-content__footer' }
+      options: { id: 'foot', className: 'content__footer' }
     }
   }
 }

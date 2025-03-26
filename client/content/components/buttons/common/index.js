@@ -1,11 +1,11 @@
 // src/client/content/components/button/index.js
 
 import {
-  componentsLayout
-} from '../../../../layout'
+  createComponentsStructure
+} from '../../../../structure'
 
 import {
-  createLayout
+  createStructure
 } from 'mtrl'
 
 import { initVariants } from './variants'
@@ -18,9 +18,9 @@ export const createButtonsContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const structure = createStructure(createComponentsStructure(info), container).component
 
-  initVariants(layout.body)
-  initDisabled(layout.body)
-  initIcons(layout.body)
+  initVariants(structure.body)
+  initDisabled(structure.body)
+  initIcons(structure.body)
 }

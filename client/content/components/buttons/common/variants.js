@@ -3,17 +3,17 @@
 import { capitalize } from '../../../../core/utils'
 
 import {
-  createComponentsSectionLayout
-} from '../../../../layout'
+  createComponentsSectionStructure
+} from '../../../../structure'
 
 import {
-  createLayout,
+  createStructure,
   createButton
 } from 'mtrl'
 
 export const initVariants = (container) => {
   const title = 'Buttons Variants'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const structure = createStructure(createComponentsSectionStructure({ title }), container).component
 
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {
@@ -25,6 +25,6 @@ export const initVariants = (container) => {
     })
     // btn.element.addEventListener('click', () => log.info('native button clicked'))
     // btn.on('click', () => log.info('component button clicked'))
-    layout.showcase.appendChild(btn.element)
+    structure.showcase.appendChild(btn.element)
   })
 }

@@ -18,20 +18,13 @@ import createCard, {
  * @param {Object} options - Options including router instance
  */
 export const createComponentsContent = (container, options = {}) => {
-  console.log('createComponentsContent', container, options)
-
   // Get router from options or create a new one
   const router = options.router || createAppRouter()
-
-  console.log('router', router)
 
   const info = {
     title: 'Components',
     description: 'Components are interactive building blocks for creating a user interface. They can be organized into categories based on their purpose: Action, containment, communication, navigation, selection, and text input.'
   }
-
-  console.log('createStructure', createStructure)
-  console.log('createContentStructure', createContentStructure)
 
   // Create layout
   const structure = createStructure(createContentStructure(info), container).component

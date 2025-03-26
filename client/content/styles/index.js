@@ -1,12 +1,11 @@
 // src/client/content/styles/index.js
 
 import {
-  contentLayout
-} from '../../layout'
+  createContentStructure
+} from '../../structure'
 
 import {
-  createLayout,
-  createElement,
+  createStructure,
   createButton,
   createCard
 } from 'mtrl'
@@ -17,9 +16,9 @@ export const createStylesContent = (container) => {
     title: 'Styling System',
     description: 'A comprehensive design system for consistent, accessible, and beautiful interfaces'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createStructure(createContentStructure(info), container).component
 
-  const ui = createLayout(createStylesLayout(), layout.body).component
+  const ui = createStructure(createStylesStructure(), layout.body).component
 
   // Initialize the style card click handlers
   initStyleCardHandlers(ui)
@@ -93,108 +92,423 @@ const addManualNavigation = (ui) => {
   })
 }
 
-export const createStylesLayout = () => [
-  // Introduction Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Design System Overview' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'The mtrl styling system provides a consistent foundation for building beautiful, functional interfaces. The system is based on Material Design principles but optimized for flexibility and performance.' }],
-    [createElement, 'p', { class: 'mtrl-content__description', text: 'Explore each subsystem to understand the building blocks of our design language.' }]
-  ],
+export const createStylesStructure = () => {
+  return {
+    element: {
+      children: {
+        // Introduction Section
+        introSection: {
+          options: {
+            tag: 'section',
+            className: 'content__section'
+          },
+          children: {
+            title: {
+              options: {
+                tag: 'h2',
+                className: 'content__section-title',
+                text: 'Design System Overview'
+              }
+            },
+            description1: {
+              options: {
+                tag: 'p',
+                className: 'content__description',
+                text: 'The mtrl styling system provides a consistent foundation for building beautiful, functional interfaces. The system is based on Material Design principles but optimized for flexibility and performance.'
+              }
+            },
+            description2: {
+              options: {
+                tag: 'p',
+                className: 'content__description',
+                text: 'Explore each subsystem to understand the building blocks of our design language.'
+              }
+            }
+          }
+        },
 
-  // Style Categories Grid
-  [createElement, 'section', { class: 'mtrl-content__section style-categories' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Style Categories' }],
-    [createElement, 'div', { class: 'style-categories__grid' },
-      // Colors Card
-      [createCard, 'colorsCard', { class: 'style-card style-card--colors' }],
+        // Style Categories Grid
+        categoriesSection: {
+          options: {
+            tag: 'section',
+            className: 'content__section style-categories'
+          },
+          children: {
+            title: {
+              options: {
+                tag: 'h2',
+                className: 'content__section-title',
+                text: 'Style Categories'
+              }
+            },
+            grid: {
+              options: {
+                tag: 'div',
+                className: 'style-categories__grid'
+              },
+              children: {
+                // Colors Card
+                colorsCard: {
+                  name: 'colorsCard',
+                  creator: createCard,
+                  options: {
+                    className: 'style-card style-card--colors'
+                  }
+                },
 
-      // Typography Card
-      [createElement, 'typographyCard', { class: 'style-card style-card--typography' },
-        [createElement, 'div', { class: 'style-card__icon' },
-          [createElement, 'div', { class: 'style-card__typography-icon' }]
-        ],
-        [createElement, 'h3', { class: 'style-card__title', text: 'Typography' }],
-        [createElement, 'p', { class: 'style-card__description', text: 'Type scales and styles designed for readability, hierarchy, and rhythm across all screen sizes.' }],
-        [createElement, 'ul', { class: 'style-card__highlights' },
-          [createElement, 'li', { text: 'Type scale' }],
-          [createElement, 'li', { text: 'Font stacks' }],
-          [createElement, 'li', { text: 'Semantic styles' }]
-        ],
-        [createElement, 'div', { class: 'style-card__footer' },
-          [createButton, null, {
-            text: 'Explore Typography',
-            variant: 'filled',
-            class: 'style-card__button'
-          }]
-        ]
-      ],
+                // Typography Card
+                typographyCard: {
+                  options: {
+                    tag: 'typographyCard',
+                    className: 'style-card style-card--typography'
+                  },
+                  children: {
+                    icon: {
+                      options: {
+                        tag: 'div',
+                        className: 'style-card__icon'
+                      },
+                      children: {
+                        typographyIcon: {
+                          options: {
+                            tag: 'div',
+                            className: 'style-card__typography-icon'
+                          }
+                        }
+                      }
+                    },
+                    title: {
+                      options: {
+                        tag: 'h3',
+                        className: 'style-card__title',
+                        text: 'Typography'
+                      }
+                    },
+                    description: {
+                      options: {
+                        tag: 'p',
+                        className: 'style-card__description',
+                        text: 'Type scales and styles designed for readability, hierarchy, and rhythm across all screen sizes.'
+                      }
+                    },
+                    highlights: {
+                      options: {
+                        tag: 'ul',
+                        className: 'style-card__highlights'
+                      },
+                      children: {
+                        item1: {
+                          options: {
+                            tag: 'li',
+                            text: 'Type scale'
+                          }
+                        },
+                        item2: {
+                          options: {
+                            tag: 'li',
+                            text: 'Font stacks'
+                          }
+                        },
+                        item3: {
+                          options: {
+                            tag: 'li',
+                            text: 'Semantic styles'
+                          }
+                        }
+                      }
+                    },
+                    footer: {
+                      options: {
+                        tag: 'div',
+                        className: 'style-card__footer'
+                      },
+                      children: {
+                        button: {
+                          creator: createButton,
+                          options: {
+                            text: 'Explore Typography',
+                            variant: 'filled',
+                            className: 'style-card__button'
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
 
-      // Elevation Card
-      [createElement, 'elevationCard', { class: 'style-card style-card--elevation' },
-        [createElement, 'div', { class: 'style-card__icon' },
-          [createElement, 'div', { class: 'style-card__elevation-icon' }]
-        ],
-        [createElement, 'h3', { class: 'style-card__title', text: 'Elevation' }],
-        [createElement, 'p', { class: 'style-card__description', text: 'Shadow and surface systems that create depth and hierarchy through visual layers.' }],
-        [createElement, 'ul', { class: 'style-card__highlights' },
-          [createElement, 'li', { text: 'Elevation levels' }],
-          [createElement, 'li', { text: 'Shadow utilities' }],
-          [createElement, 'li', { text: 'Surface states' }]
-        ],
-        [createElement, 'div', { class: 'style-card__footer' },
-          [createButton, null, {
-            text: 'Explore Elevation',
-            variant: 'filled',
-            class: 'style-card__button'
-          }]
-        ]
-      ],
+                // Elevation Card
+                elevationCard: {
+                  options: {
+                    tag: 'elevationCard',
+                    className: 'style-card style-card--elevation'
+                  },
+                  children: {
+                    icon: {
+                      options: {
+                        tag: 'div',
+                        className: 'style-card__icon'
+                      },
+                      children: {
+                        elevationIcon: {
+                          options: {
+                            tag: 'div',
+                            className: 'style-card__elevation-icon'
+                          }
+                        }
+                      }
+                    },
+                    title: {
+                      options: {
+                        tag: 'h3',
+                        className: 'style-card__title',
+                        text: 'Elevation'
+                      }
+                    },
+                    description: {
+                      options: {
+                        tag: 'p',
+                        className: 'style-card__description',
+                        text: 'Shadow and surface systems that create depth and hierarchy through visual layers.'
+                      }
+                    },
+                    highlights: {
+                      options: {
+                        tag: 'ul',
+                        className: 'style-card__highlights'
+                      },
+                      children: {
+                        item1: {
+                          options: {
+                            tag: 'li',
+                            text: 'Elevation levels'
+                          }
+                        },
+                        item2: {
+                          options: {
+                            tag: 'li',
+                            text: 'Shadow utilities'
+                          }
+                        },
+                        item3: {
+                          options: {
+                            tag: 'li',
+                            text: 'Surface states'
+                          }
+                        }
+                      }
+                    },
+                    footer: {
+                      options: {
+                        tag: 'div',
+                        className: 'style-card__footer'
+                      },
+                      children: {
+                        button: {
+                          creator: createButton,
+                          options: {
+                            text: 'Explore Elevation',
+                            variant: 'filled',
+                            className: 'style-card__button'
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
 
-      // Layout Card
-      [createElement, 'layoutCard', { class: 'style-card style-card--layout' },
-        [createElement, 'div', { class: 'style-card__icon' },
-          [createElement, 'div', { class: 'style-card__layout-icon' }]
-        ],
-        [createElement, 'h3', { class: 'style-card__title', text: 'Layout' }],
-        [createElement, 'p', { class: 'style-card__description', text: 'Responsive grid systems, spacing scales, and layout patterns for consistent interfaces.' }],
-        [createElement, 'ul', { class: 'style-card__highlights' },
-          [createElement, 'li', { text: 'Grid system' }],
-          [createElement, 'li', { text: 'Spacing scale' }],
-          [createElement, 'li', { text: 'Responsive patterns' }]
-        ],
-        [createElement, 'div', { class: 'style-card__footer' },
-          [createButton, null, {
-            text: 'Explore Layout',
-            variant: 'filled',
-            class: 'style-card__button'
-          }]
-        ]
-      ]
-    ]
-  ],
+                // Layout Card
+                layoutCard: {
+                  options: {
+                    tag: 'layoutCard',
+                    className: 'style-card style-card--layout'
+                  },
+                  children: {
+                    icon: {
+                      options: {
+                        tag: 'div',
+                        className: 'style-card__icon'
+                      },
+                      children: {
+                        layoutIcon: {
+                          options: {
+                            tag: 'div',
+                            className: 'style-card__layout-icon'
+                          }
+                        }
+                      }
+                    },
+                    title: {
+                      options: {
+                        tag: 'h3',
+                        className: 'style-card__title',
+                        text: 'Layout'
+                      }
+                    },
+                    description: {
+                      options: {
+                        tag: 'p',
+                        className: 'style-card__description',
+                        text: 'Responsive grid systems, spacing scales, and layout patterns for consistent interfaces.'
+                      }
+                    },
+                    highlights: {
+                      options: {
+                        tag: 'ul',
+                        className: 'style-card__highlights'
+                      },
+                      children: {
+                        item1: {
+                          options: {
+                            tag: 'li',
+                            text: 'Grid system'
+                          }
+                        },
+                        item2: {
+                          options: {
+                            tag: 'li',
+                            text: 'Spacing scale'
+                          }
+                        },
+                        item3: {
+                          options: {
+                            tag: 'li',
+                            text: 'Responsive patterns'
+                          }
+                        }
+                      }
+                    },
+                    footer: {
+                      options: {
+                        tag: 'div',
+                        className: 'style-card__footer'
+                      },
+                      children: {
+                        button: {
+                          creator: createButton,
+                          options: {
+                            text: 'Explore Layout',
+                            variant: 'filled',
+                            className: 'style-card__button'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
 
-  // Using the Style System Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Using the Style System' }],
-    [createElement, 'div', { class: 'usage-guide' },
-      [createElement, 'div', { class: 'usage-guide__step' },
-        [createElement, 'h3', { text: '1. Import Styles' }],
-        [createElement, 'pre', { class: 'code-block' },
-          [createElement, 'code', { text: '@use "mtrl/src/styles/themes/baseline";\n@use "mtrl/src/styles/abstract/theme as t";' }]
-        ]
-      ],
-      [createElement, 'div', { class: 'usage-guide__step' },
-        [createElement, 'h3', { text: '2. Apply Colors' }],
-        [createElement, 'pre', { class: 'code-block' },
-          [createElement, 'code', { text: '.my-element {\n  background-color: t.color("surface");\n  color: t.color("on-surface");\n}' }]
-        ]
-      ],
-      [createElement, 'div', { class: 'usage-guide__step' },
-        [createElement, 'h3', { text: '3. Use Typography' }],
-        [createElement, 'pre', { class: 'code-block' },
-          [createElement, 'code', { text: '@include c.typography("headline-medium");\n@include c.typography("body-large");' }]
-        ]
-      ]
-    ]
-  ]
-]
+        // Using the Style System Section
+        usageSection: {
+          options: {
+            tag: 'section',
+            className: 'content__section'
+          },
+          children: {
+            title: {
+              options: {
+                tag: 'h2',
+                className: 'content__section-title',
+                text: 'Using the Style System'
+              }
+            },
+            guide: {
+              options: {
+                tag: 'div',
+                className: 'usage-guide'
+              },
+              children: {
+                step1: {
+                  options: {
+                    tag: 'div',
+                    className: 'usage-guide__step'
+                  },
+                  children: {
+                    title: {
+                      options: {
+                        tag: 'h3',
+                        text: '1. Import Styles'
+                      }
+                    },
+                    codeBlock: {
+                      options: {
+                        tag: 'pre',
+                        className: 'code-block'
+                      },
+                      children: {
+                        code: {
+                          options: {
+                            tag: 'code',
+                            text: '@use "mtrl/src/styles/themes/baseline";\n@use "mtrl/src/styles/abstract/theme as t";'
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                step2: {
+                  options: {
+                    tag: 'div',
+                    className: 'usage-guide__step'
+                  },
+                  children: {
+                    title: {
+                      options: {
+                        tag: 'h3',
+                        text: '2. Apply Colors'
+                      }
+                    },
+                    codeBlock: {
+                      options: {
+                        tag: 'pre',
+                        className: 'code-block'
+                      },
+                      children: {
+                        code: {
+                          options: {
+                            tag: 'code',
+                            text: '.my-element {\n  background-color: t.color("surface");\n  color: t.color("on-surface");\n}'
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                step3: {
+                  options: {
+                    tag: 'div',
+                    className: 'usage-guide__step'
+                  },
+                  children: {
+                    title: {
+                      options: {
+                        tag: 'h3',
+                        text: '3. Use Typography'
+                      }
+                    },
+                    codeBlock: {
+                      options: {
+                        tag: 'pre',
+                        className: 'code-block'
+                      },
+                      children: {
+                        code: {
+                          options: {
+                            tag: 'code',
+                            text: '@include c.typography("headline-medium");\n@include c.typography("body-large");'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

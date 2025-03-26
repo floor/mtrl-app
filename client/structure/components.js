@@ -17,7 +17,7 @@ export const createComponentsStructure = (info) => {
 
               options: {
                 tag: 'section',
-                className: 'components__box info'
+                className: 'components__box components-info'
               },
               children: {
                 title: {

@@ -1,11 +1,11 @@
 // src/client/content/components/button/icons.js
 
 import {
-  createComponentsSectionLayout
-} from '../../../../layout'
+  createComponentsSectionStructure
+} from '../../../../structure'
 
 import {
-  createLayout,
+  createStructure,
   createButton
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ const heartIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" x
 
 export const initIcons = (container) => {
   const title = 'Buttons icons'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const structure = createStructure(createComponentsSectionStructure({ title }), container).component
   const states = ['enabled', 'disabled']
   states.forEach(state => {
     const disabled = state === 'enabled'
@@ -31,6 +31,6 @@ export const initIcons = (container) => {
     if (!disabled) btn.disable()
 
     // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-    layout.showcase.appendChild(btn.element)
+    structure.showcase.appendChild(btn.element)
   })
 }

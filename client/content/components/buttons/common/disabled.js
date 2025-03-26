@@ -3,17 +3,17 @@
 import { capitalize } from '../../../../core/utils'
 
 import {
-  createComponentsSectionLayout
-} from '../../../../layout'
+  createComponentsSectionStructure
+} from '../../../../structure'
 
 import {
-  createLayout,
+  createStructure,
   createButton
 } from 'mtrl'
 
 export const initDisabled = (container) => {
   const title = 'Buttons Disabled'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const structure = createStructure(createComponentsSectionStructure({ title }), container).component
 
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {
@@ -24,6 +24,6 @@ export const initDisabled = (container) => {
       disabled: true
     })
     // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-    layout.showcase.appendChild(btn.element)
+    structure.showcase.appendChild(btn.element)
   })
 }

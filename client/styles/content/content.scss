@@ -32,13 +32,13 @@ $content: '#{b.$prefix}-content';
       border-radius: f.get-shape('large');
       gap: 5px;
       background-color: t.color('surface-container');
-      &.visual {
+      &.#{$content}-visual {
         flex: none;
         width: 200px;
         background-color: t.color('tertiary');
         margin-left: 10px;
       }
-      &.info {
+      &.#{$content}-info {
         background-color: t.color('outline-variant');
         color: var(--mtrl-sys-color-on-surface-bright);
         padding: 18px 24px;

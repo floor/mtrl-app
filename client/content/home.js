@@ -1,11 +1,11 @@
 // src/client/content/home.js
 
 import {
-  contentLayout
-} from '../layout'
+  createContentStructure
+} from '../structure'
 
 import {
-  createLayout
+  createStructure
 } from 'mtrl'
 
 export const createHomeContent = (container) => {
@@ -16,5 +16,5 @@ export const createHomeContent = (container) => {
 
   container.classList.add('components')
 
-  return createLayout(contentLayout(info), container).component
+  return createStructure(createContentStructure(info), container).component
 }

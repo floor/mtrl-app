@@ -6,18 +6,20 @@
 @use 'mtrl/src/styles/abstract/theme' as t;
 @use 'mtrl/src/styles/abstract/config' as c;
 
-.usage-guide {
+// Use the prefix from base
+// #{b.$prefix}
+.#{b.$prefix}-usage-guide {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
   margin-top: 24px;
   
-  .mtrl-card {
+  .#{b.$prefix}-card {
     height: 100%;
     width: 100% !important; // Override default card width
     
     // Make sure the code examples display properly
-    .mtrl-card-content {
+    .#{b.$prefix}-card-content {
       code {
         white-space: pre;
         overflow-x: auto;
@@ -27,7 +29,7 @@
     }
   }
   
-  .usage-note {
+  .#{b.$prefix}-usage-note {
     margin-top: 16px;
     font-size: 0.875rem;
     color: t.color('on-surface-variant');
@@ -35,7 +37,7 @@
   }
   
   // Properly style code blocks inside cards
-  .code-block {
+  .#{b.$prefix}-code-block {
     background-color: t.color('surface-container-high');
     border-radius: f.get-shape('small');
     padding: 16px;
@@ -62,21 +64,21 @@
 }
 
 // Surface demos
-.surface-demo {
+.#{b.$prefix}-surface-demo {
   margin-top: 24px;
   
-  .mtrl-card {
+  .#{b.$prefix}-card {
     width: 100% !important;
   }
   
-  .surface-container-demo {
+  .#{b.$prefix}-surface-container-demo {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 16px;
     margin: 16px 0;
   }
   
-  .surface-sample {
+  .#{b.$prefix}-surface-sample {
     height: 100px;
     border-radius: f.get-shape('medium');
     padding: 16px;
@@ -110,12 +112,12 @@
       background-color: t.color('surface-container-highest');
     }
     
-    .surface-name {
+    .#{b.$prefix}-surface-name {
       font-weight: 500;
       color: t.color('on-surface');
     }
     
-    .surface-desc {
+    .#{b.$prefix}-surface-desc {
       font-size: 0.75rem;
       color: t.color('on-surface-variant');
     }
@@ -123,7 +125,7 @@
 }
 
 // Theme showcase updates
-.theme-showcase {
+.#{b.$prefix}-theme-showcase {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 16px;
@@ -164,11 +166,11 @@
 
 // Responsive adjustments
 @include m.breakpoint-down('md') {
-  .usage-guide {
+  .#{b.$prefix}-usage-guide {
     grid-template-columns: 1fr;
   }
   
-  .surface-container-demo {
+  .#{b.$prefix}-surface-container-demo {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   }
 }

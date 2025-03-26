@@ -174,18 +174,16 @@ function getContentCreatorPatterns (routePath) {
       patterns.push(componentName)
       patterns.push(`${componentName}Content`)
     }
-  }
-  // Handle style routes like 'styles/colors'
-  else if (parts[0] === 'styles') {
+  } else if (parts[0] === 'styles') {
+    // Handle style routes like 'styles/colors'
     const styleName = lastPart
     patterns.push(`create${capitalizeFirstLetter(styleName)}Content`)
 
     // Format for full path: createStylesColorsContent
     const fullName = parts.map(part => capitalizeFirstLetter(part)).join('')
     patterns.push(`create${fullName}Content`)
-  }
-  // Handle core routes like 'core/state'
-  else if (parts[0] === 'core') {
+  } else if (parts[0] === 'core') {
+    // Handle core routes like 'core/state'
     const coreName = lastPart
     patterns.push(`create${capitalizeFirstLetter(coreName)}Content`)
 

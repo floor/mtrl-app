@@ -44,13 +44,13 @@ $components: '#{b.$prefix}-components';
       border-radius: f.get-shape('large');
       gap: 10px;
       background-color: t.color('surface-container');
-      &.visual {
+      &.#{b.$prefix}-visual {
         flex: none;
         width: 100px;
         background-color: t.color('secondary');
         margin-left: 10px;
       }
-      &.info {
+      &.#{$components}-info {
         background-color: t.color('outline-variant');
         color: var(--mtrl-sys-color-on-outline-variant);
         padding: 18px 24px;
