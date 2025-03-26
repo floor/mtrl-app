@@ -10,6 +10,8 @@ import {
   createCard
 } from 'mtrl'
 
+import { createAppRouter } from '../../core/router'
+
 export const createStylesContent = (container) => {
   // log.info('createStylesContent', container)
   const info = {
@@ -28,11 +30,7 @@ const initStyleCardHandlers = (ui) => {
   // Get router from window.app if available or try to find it from other global objects
   let router = null
 
-  if (window.app?.getRouter) {
-    router = window.app.getRouter()
-  } else if (window.router) {
-    router = window.router
-  }
+  router = createAppRouter()
 
   if (!router) {
     log.error('Router not found, adding manual navigation links')
