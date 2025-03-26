@@ -3,14 +3,14 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createTabs,
   createButton
 } from 'mtrl'
 
 export const initDynamicTabs = (container) => {
   const title = 'Dynamic Tabs'
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createStructure(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with an initial set of tabs
   const tabs = createTabs({

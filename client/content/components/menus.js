@@ -6,7 +6,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createMenu,
   createButton,
   createElement
@@ -22,7 +22,7 @@ export const createMenusContent = (container) => {
     description: 'Display a list of choices on a temporary surface'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).component
 
   initBasicMenu(layout.body)
   initNestedMenu(layout.body)
@@ -32,7 +32,7 @@ export const createMenusContent = (container) => {
 
 export const initBasicMenu = (container) => {
   const title = 'Basic Menu'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 
@@ -66,7 +66,7 @@ export const initBasicMenu = (container) => {
 
 export const initNestedMenu = (container) => {
   const title = 'Nested Menu'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 
@@ -115,7 +115,7 @@ export const initNestedMenu = (container) => {
 
 export const initIconMenu = (container) => {
   const title = 'Icon Menu'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 
@@ -149,7 +149,7 @@ export const initIconMenu = (container) => {
 
 export const initCustomMenu = (container) => {
   const title = 'Custom Menu'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 

@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createSearch,
   createButton,
   createDivider,
@@ -23,7 +23,7 @@ export const SEARCH_EVENTS = {
 
 export const initEventsAPI = (container) => {
   const title = 'Using Events and API'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   // Create the search component with event handlers
   const search = createSearch({
@@ -158,7 +158,7 @@ export const initEventsAPI = (container) => {
   ]
 
   // Create the demo layout
-  const demo = createLayout(demoStructure, layout.body).component
+  const demo = createStructure(demoStructure, layout.body).component
 
   // Add the search component
   demo.searchContainer.appendChild(search.element)

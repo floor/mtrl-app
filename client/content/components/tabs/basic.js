@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createTabs,
   createElement
 } from 'mtrl'
@@ -11,7 +11,7 @@ import {
 export const initBasicTabs = (container) => {
   const title = 'Basic Tabs'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createStructure(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   const box = createElement({ tag: 'div', class: 'mtrl-components__section-box' })
 

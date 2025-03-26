@@ -6,7 +6,7 @@ import {
 
 import {
   createElement,
-  createLayout,
+  createStructure,
   createButton
 } from 'mtrl'
 
@@ -29,7 +29,7 @@ export const initSwipeableCard = (container) => {
   const title = 'Swipeable Cards'
   const description = 'Cards with swipe gesture interactions and accessible alternatives'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
 
   // Create a swipeable card
   const artwork = artworks[8] // American Gothic

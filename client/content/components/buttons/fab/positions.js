@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createFab
 } from 'mtrl'
 
@@ -46,7 +46,7 @@ const icons = {
 
 export const initPositions = (container) => {
   const title = 'FAB Positions'
-  const layout = createLayout(createComponentsSectionLayoutInfo({
+  const layout = createStructure(createComponentsSectionLayoutInfo({
     title,
     description: 'These FABs demonstrate positioning. In a real application, they would be fixed to the viewport.'
   }), container).component

@@ -5,7 +5,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createElement,
   createList,
   createButton
@@ -28,7 +28,7 @@ export const createListsContent = (container, components) => {
     description: 'Lists are continuous, vertical indexes of text and images'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).component
 
   initBasicList(layout.body)
   initSingleSelectList(layout.body)
@@ -39,7 +39,7 @@ export const createListsContent = (container, components) => {
 
 const initBasicList = (container) => {
   const title = 'Basic List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const basicList = createList({
     items: [
@@ -63,7 +63,7 @@ const initBasicList = (container) => {
 
 const initSingleSelectList = (container) => {
   const title = 'Single Select List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const list = createList({
     type: 'single',
@@ -91,7 +91,7 @@ const initSingleSelectList = (container) => {
 
 const initMultiSelectList = (container) => {
   const title = 'Multi Select List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const list = createList({
     type: 'multi',
@@ -119,7 +119,7 @@ const initMultiSelectList = (container) => {
 
 const initSectionedList = (container) => {
   const title = 'Sectioned List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const list = createList({
     sections: [
@@ -158,7 +158,7 @@ const initSectionedList = (container) => {
 
 const initVerticalLayout = (container) => {
   const title = 'Vertical Layout'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const list = createList({
     layout: 'vertical',

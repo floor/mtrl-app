@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createSwitch
 } from 'mtrl'
 
 export const initDisabledSwitches = (container) => {
   const title = 'Disabled'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   // Disabled switch
   const disabledSwitch = createSwitch({

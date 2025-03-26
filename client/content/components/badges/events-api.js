@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createBadge,
   createButton
 } from 'mtrl'
@@ -18,7 +18,7 @@ import {
 export const initEventsAPI = (container) => {
   const title = 'Badge API Demo'
   const subtitle = 'Try out the badge API methods'
-  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the badge and controls
   const demoContainer = document.createElement('div')

@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createElement
 } from 'mtrl'
 
@@ -26,7 +26,7 @@ export const initLoadingCard = async (container) => {
   const title = 'Loading Cards'
   const description = 'Cards with loading state and placeholder content'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
 
   // Create two cards - one loading, one showing loaded content
   const artwork = artworks[1] // The Starry Night

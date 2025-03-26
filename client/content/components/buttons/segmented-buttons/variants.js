@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout
+  createStructure
 } from 'mtrl'
 
 import {
@@ -14,7 +14,7 @@ import {
 
 export const initVariants = (container) => {
   const title = 'Segmented Button Basic Examples'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createStructure(createComponentsSectionLayout({
     title,
     description: 'Segmented buttons help people select options, switch views, or sort elements',
     class: 'noflex'

@@ -5,7 +5,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout
+  createStructure
 } from 'mtrl'
 
 import { initVariants } from './variants'
@@ -21,7 +21,7 @@ export const createExtendedFabContent = (container) => {
     description: 'An Extended Floating Action Button (Extended FAB) contains both an icon and a text label. It represents the primary, most common, or most important action on a screen. Extended FABs are more prominent and provide clearer action guidance than standard FABs.'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).component
 
   initVariants(layout.body)
   initWidthOptions(layout.body)

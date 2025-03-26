@@ -7,7 +7,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createButton,
   createTextfield,
   createChip
@@ -67,7 +67,7 @@ export const createChipsContent = (container) => {
     description: 'Compact elements that represent an input, attribute, or action'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).component
 
   initChipVariants(layout.body)
   initChipWithIcons(layout.body)
@@ -84,7 +84,7 @@ export const createChipsContent = (container) => {
  */
 export const initChipVariants = (container) => {
   const title = 'Chip Variants'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const variants = Object.values(CHIP_VARIANTS)
   variants.forEach(variant => {
@@ -104,7 +104,7 @@ export const initChipVariants = (container) => {
  */
 export const initChipWithIcons = (container) => {
   const title = 'Chips with Icons'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   // Example with leading icon
   const leadingIconChip = createChip({
@@ -148,7 +148,7 @@ export const initChipWithIcons = (container) => {
  */
 export const initSelectableChips = (container) => {
   const title = 'Selectable Chips'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   // Create a selection chips container
   const chipsContainer = document.createElement('div')
@@ -197,7 +197,7 @@ export const initChipSet = (container) => {
   const title = 'Chip Set'
   const subtitle = 'Scrollable horizontal chip set'
 
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createStructure(createComponentsSectionLayout({
     title,
     subtitle
   }), container).component
@@ -280,7 +280,7 @@ export const initChipSet = (container) => {
  */
 export const initFilterChipSet = (container) => {
   const title = 'Filter Chip Set'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   // Example label
   const label = document.createElement('p')
@@ -353,7 +353,7 @@ export const initFilterChipSet = (container) => {
 export const initInputChips = (container) => {
   const title = 'Input Chips'
   const subtitle = 'Use with Textfield for tag/recipient input'
-  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the input chips
   const inputChipSetContainer = document.createElement('div')
@@ -459,7 +459,7 @@ export const initInputChips = (container) => {
 export const initInteractiveChipExample = (container) => {
   const title = 'Interactive Chip Example'
   const subtitle = 'City selection with feedback'
-  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the example
   const demoContainer = document.createElement('div')

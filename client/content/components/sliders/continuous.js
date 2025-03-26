@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createSlider
 } from 'mtrl'
 
@@ -13,7 +13,7 @@ const callVolume = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="2
 
 export const initContinuous = (container) => {
   const title = 'Continuous Slider with Label'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayoutInfo({ title }), container).component
 
   const slider = createSlider({
     label: 'Brightness',
@@ -27,7 +27,7 @@ export const initContinuous = (container) => {
 
 export const initContinuous1000 = (container) => {
   const title = 'Continuous Slider with Label and Icon'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayoutInfo({ title }), container).component
 
   const sliderCallVolume = createSlider({
     label: 'Call volume',

@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout
+  createStructure
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
@@ -18,7 +18,7 @@ export const initActionCards = (container) => {
   const title = 'Action Cards'
   const description = 'Cards with interactive buttons'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
 
   // Create action cards with inline configuration
   artworks.slice(4, 6).forEach(artwork => {

@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createButton
   , createElement
 } from 'mtrl'
@@ -24,7 +24,7 @@ export const initDynamicCard = (container) => {
   const title = 'Dynamic Cards'
   const description = 'Cards with content that updates dynamically'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
 
   // Create dynamic card
   const artwork = artworks[2] // The Persistence of Memory

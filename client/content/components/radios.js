@@ -6,7 +6,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createRadios
 } from 'mtrl'
 
@@ -16,14 +16,14 @@ export const createRadiosContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).component
 
   initRadiosSizes(layout.body)
 }
 
 export const initRadiosSizes = (container) => {
   const title = 'Radios Size'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
 
   const small = createRadios({
     name: 'size1',

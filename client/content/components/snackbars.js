@@ -4,7 +4,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createElement,
   createSnackbar,
   createButton
@@ -21,9 +21,9 @@ export const createSnackbarsContent = (container, components) => {
     title: 'Snackbars',
     description: 'Show short updates about app processes at the bottom of the screen'
   }
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).component
 
-  const ui = createLayout(createSnackbarsLayout(), layout.body).component
+  const ui = createStructure(createSnackbarsLayout(), layout.body).component
   console.info('ui', ui)
 }
 

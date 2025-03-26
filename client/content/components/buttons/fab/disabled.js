@@ -5,7 +5,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createFab
 } from 'mtrl'
 
@@ -42,7 +42,7 @@ const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
 
 export const initDisabled = (container) => {
   const title = 'FAB Disabled'
-  const layout = createLayout(createComponentsSectionLayout({ title, class: 'noflex' }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, class: 'noflex' }), container).component
 
   const variants = Object.values(FAB_VARIANTS)
 

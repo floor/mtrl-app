@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createTopAppBar,
   createButton
 } from 'mtrl'
@@ -12,7 +12,7 @@ import {
 export const initTypesTopAppBar = (container) => {
   const title = 'Top App Bar Types'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createStructure(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component

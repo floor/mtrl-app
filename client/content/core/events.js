@@ -5,7 +5,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createElement,
   createButton
 } from 'mtrl'
@@ -15,9 +15,9 @@ export const createEventsContent = (container) => {
     title: 'Events',
     description: 'A standardized system for handling events across components'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createStructure(contentLayout(info), container).component
 
-  const ui = createLayout(createEventsLayout(), layout.body).component
+  const ui = createStructure(createEventsLayout(), layout.body).component
 
   initEventManager(ui)
   initEventBus(ui)

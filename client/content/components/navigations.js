@@ -6,7 +6,7 @@ import {
 
 import {
   createElement,
-  createLayout,
+  createStructure,
   createNavigation,
   createButton
 } from 'mtrl'
@@ -17,11 +17,11 @@ export const createNavigationsContent = (container, components) => {
     title: 'Navigation',
     description: 'Let users switch between UI views'
   }
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).component
 
   console.log('layout', layout)
 
-  const ui = createLayout(createMenusLayout(components), layout.body).component
+  const ui = createStructure(createMenusLayout(components), layout.body).component
 }
 
 export const createMenusLayout = (components) => [

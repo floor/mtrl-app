@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createButton,
   createDialog,
   createTextfield,
@@ -155,7 +155,7 @@ const createContactDialog = (nameField, emailField, phoneField, resultContainer)
 export const initFormDialog = (container) => {
   const title = 'Form Dialog'
   const description = 'A dialog containing form elements for user input'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
   const openContactButton = createButton({

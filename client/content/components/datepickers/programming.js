@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createButton,
   createDatePicker
 } from 'mtrl'
@@ -11,7 +11,7 @@ import {
 export const initProgramming = (container) => {
   const title = 'Programmatic Control'
   const description = 'Control the DatePicker programmatically using its API'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createStructure(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create a date picker
   const datePicker = createDatePicker({

@@ -5,7 +5,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createElement,
   createButton
 } from 'mtrl'
@@ -15,9 +15,9 @@ export const createElevationContent = (container) => {
     title: 'Elevation',
     description: 'Elevation creates visual hierarchy and depth using shadows and surface positioning'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createStructure(contentLayout(info), container).component
 
-  const ui = createLayout(createElevationLayout(), layout.body).component
+  const ui = createStructure(createElevationLayout(), layout.body).component
 
   initElevationLevels(ui)
   initElevationPrinciples(ui)

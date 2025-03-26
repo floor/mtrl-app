@@ -5,7 +5,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createElement,
   createButton
 } from 'mtrl'
@@ -15,9 +15,9 @@ export const createTypographyContent = (container) => {
     title: 'Typography',
     description: 'Typography expresses hierarchy and brand presence through type styles'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createStructure(contentLayout(info), container).component
 
-  const ui = createLayout(createTypographyLayout(), layout.body).component
+  const ui = createStructure(createTypographyLayout(), layout.body).component
 
   initFontScales(ui)
   initTypeRoles(ui)

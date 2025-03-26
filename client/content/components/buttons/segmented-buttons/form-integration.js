@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  createStructure,
   createButton
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ import {
 
 export const initFormIntegration = (container) => {
   const title = 'Form Integration'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createStructure(createComponentsSectionLayout({
     title,
     description: 'Segmented buttons can be used within forms as an alternative to radio buttons or checkboxes.',
     class: 'noflex'
