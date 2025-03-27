@@ -16,7 +16,9 @@ export const createRadiosContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createStructure(componentsLayout(info), container).component
+  const layout = createStructure(componentsLayout(info), container).getAll()
+
+  console.log('layout', layout)
 
   initRadiosSizes(layout.body)
 }

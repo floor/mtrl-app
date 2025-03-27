@@ -55,6 +55,10 @@ $components: '#{b.$prefix}-components';
         color: var(--mtrl-sys-color-on-outline-variant);
         padding: 18px 24px;
         .#{$components}__title {
+          @include c.typography('display_large');
+          margin: 0;
+        }
+        .#{$components}__description {
           @include c.typography('headline-large');
           margin: 0;
         }

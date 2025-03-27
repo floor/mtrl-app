@@ -11,42 +11,14 @@ import {
 } from './icons'
 
 import {
-  createElement,
   createButton
 } from 'mtrl'
 
-export const appStructure = {
-  content: {
-    name: 'content',
-    creator: createElement,
-    options: {
-      tag: 'div',
-      className: 'mtrl-content'
-    }
-  },
-  moreMenu: {
-    name: 'moreMenu',
-    creator: createButton,
-    options: {
-      icon: iconMore,
-      iconSize: 'medium',
-      class: 'more-menu',
-      variant: 'outlined',
-      ariaLabel: 'Themes'
-    }
-  },
-  toggleDarkmode: {
-    name: 'toggleDarkmode',
-    creator: createButton,
-    options: {
-      icon: iconDark,
-      iconSize: 'medium',
-      class: 'toggle-darkmode',
-      variant: 'outlined',
-      ariaLabel: 'Darkmode'
-    }
-  }
-}
+export const appStructure = [
+  ['content', { tag: 'div', className: 'content' }],
+  [createButton, 'moreMenu', { icon: iconMore, class: 'more-menu', variant: 'outlined', ariaLabel: 'Themes' }],
+  [createButton, 'toggleDarkmode', { icon: iconDark, class: 'toggle-darkmode', variant: 'outlined', ariaLabel: 'Darkmode' }]
+]
 
 // Navigation structure for the new Navigation System
 export const navigationStructure = {

@@ -99,7 +99,7 @@ $app: '#{b.$prefix}-app';
   }
 
   // Global toggle/menu buttons - mobile positioning first
-  .#{b.$prefix}-button.toggle-darkmode {
+  .#{b.$prefix}-button.#{b.$prefix}-toggle-darkmode {
     z-index: 110;
     position: fixed;
     left: 15px;
@@ -107,7 +107,7 @@ $app: '#{b.$prefix}-app';
     transition: .2s ease left;
   }
 
-  .#{b.$prefix}-button.more-menu {
+  .#{b.$prefix}-button.#{b.$prefix}-more-menu {
     z-index: 111;
     position: fixed;
     left: 15px;
@@ -179,11 +179,11 @@ $app: '#{b.$prefix}-app';
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
-    .#{b.$prefix}-button.toggle-darkmode {
+    .#{b.$prefix}-button.#{b.$prefix}-toggle-darkmode {
       left: 23px;
     }
 
-    .#{b.$prefix}-button.more-menu {
+    .#{b.$prefix}-button.#{b.$prefix}-more-menu {
       left: 23px;
     }
   }

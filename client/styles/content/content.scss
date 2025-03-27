@@ -29,6 +29,7 @@ $content: '#{b.$prefix}-content';
     .#{$content}__box {
       flex: 1;
       height: 100%;
+      padding: 24px;
       border-radius: f.get-shape('large');
       gap: 5px;
       background-color: t.color('surface-container');
