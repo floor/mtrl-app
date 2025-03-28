@@ -1,0 +1,342 @@
+// src/client/styles/content/elevation.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+
+// Elevation levels container
+.mtrl-elevation-levels-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.mtrl-elevation-card {
+  padding: 24px;
+  border-radius: v.shape('medium');
+  background-color: t.color('surface');
+  transition: all 0.3s ease;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mtrl-elevation-level {
+  @include m.typography('label-large');
+  margin-bottom: 8px;
+}
+
+.mtrl-elevation-description {
+  @include m.typography('body-small');
+  color: t.color('on-surface-variant');
+}
+
+// The actual elevation classes
+.mtrl-elevation-0 {
+  box-shadow: none;
+}
+
+.mtrl-elevation-1 {
+  box-shadow: v.elevation('level-1');
+}
+
+.mtrl-elevation-2 {
+  box-shadow: v.elevation('level-2');
+}
+
+.mtrl-elevation-3 {
+  box-shadow: v.elevation('level-3');
+}
+
+.mtrl-elevation-4 {
+  box-shadow: v.elevation('level-4');
+}
+
+.mtrl-elevation-5 {
+  box-shadow: v.elevation('level-5');
+}
+
+// Elevation principles
+.mtrl-elevation-principles-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.mtrl-principle-card {
+  display: flex;
+  border-radius: v.shape('medium');
+  background-color: t.color('surface-container-low');
+  overflow: hidden;
+  box-shadow: v.elevation('level-1');
+  
+  @media (max-width: v.breakpoint('md') - 1) {
+    flex-direction: column;
+  }
+}
+
+.mtrl-principle-example {
+  flex: 1;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  background-color: t.color('surface');
+}
+
+.mtrl-principle-content {
+  flex: 2;
+  padding: 24px;
+}
+
+.mtrl-principle-title {
+  @include m.typography('title-medium');
+  margin: 0 0 12px 0;
+}
+
+.mtrl-principle-description {
+  @include m.typography('body-medium');
+  margin: 0;
+  color: t.color('on-surface-variant');
+}
+
+// Specific principle examples
+.mtrl-elevation-principle-shadow {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 40px;
+}
+
+.mtrl-demo-surface {
+  width: 80px;
+  height: 80px;
+  border-radius: v.shape('small');
+  background-color: t.color('primary-container');
+  color: t.color('on-primary-container');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  position: relative;
+  margin-right: -40px;
+}
+
+.mtrl-elevation-principle-hierarchy {
+  flex-direction: column;
+  justify-content: space-around;
+  
+  .mtrl-demo-surface {
+    margin: 12px 0;
+    width: 180px;
+    margin-right: 0;
+  }
+}
+
+.mtrl-demo-primary {
+  background-color: t.color('primary');
+  color: t.color('on-primary');
+  z-index: 3;
+}
+
+.mtrl-demo-secondary {
+  background-color: t.color('secondary-container');
+  color: t.color('on-secondary-container');
+  z-index: 2;
+}
+
+.mtrl-demo-tertiary {
+  background-color: t.color('tertiary-container');
+  color: t.color('on-tertiary-container');
+  z-index: 1;
+}
+
+.mtrl-elevation-principle-surface {
+  flex-wrap: wrap;
+  justify-content: space-around;
+  
+  .mtrl-demo-surface {
+    margin: 8px;
+    width: 70px;
+    height: 70px;
+  }
+}
+
+.mtrl-surface-level-0 {
+  background-color: t.color('surface');
+  color: t.color('on-surface');
+}
+
+.mtrl-surface-level-1 {
+  background-color: t.color('surface-container-low');
+  color: t.color('on-surface');
+}
+
+.mtrl-surface-level-2 {
+  background-color: t.color('surface-container');
+  color: t.color('on-surface');
+}
+
+.mtrl-surface-level-3 {
+  background-color: t.color('surface-container-high');
+  color: t.color('on-surface');
+}
+
+// Dynamic elevation
+.mtrl-dynamic-elevation-container {
+  margin-top: 24px;
+}
+
+.mtrl-dynamic-card {
+  border-radius: v.shape('medium');
+  padding: 24px;
+  background-color: t.color('surface');
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  // &:hover {
+  //   transform: translateY(-3px);
+  // }
+}
+
+.mtrl-dynamic-card-content {
+  text-align: center;
+}
+
+.mtrl-dynamic-card-title {
+  @include m.typography('headline-small');
+  margin: 0 0 12px 0;
+}
+
+.mtrl-dynamic-card-description {
+  @include m.typography('body-medium');
+  margin-bottom: 24px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mtrl-dynamic-button-container {
+  margin-top: 16px;
+}
+
+// Elevation usage examples
+.mtrl-elevation-usage-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.mtrl-usage-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.mtrl-component-example {
+  height: 140px;
+  border-radius: v.shape('medium');
+  background-color: t.color('surface');
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.mtrl-component-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  background-color: t.color('primary-container');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mtrl-component-name {
+  @include m.typography('label-large');
+  margin-bottom: 4px;
+}
+
+.mtrl-component-elevation {
+  @include m.typography('label-small');
+  color: t.color('on-surface-variant');
+}
+
+.mtrl-component-description {
+  @include m.typography('body-small');
+  color: t.color('on-surface-variant');
+  margin: 0;
+}
+
+// Code examples
+.mtrl-code-block {
+  background-color: t.color('surface-container');
+  padding: 16px;
+  border-radius: v.shape('small');
+  overflow: auto;
+  font-family: 'Roboto Mono', monospace;
+  margin: 12px 0 24px 0;
+  
+  code {
+    @include m.typography('body-small');
+  }
+}
+
+// Custom component icons
+.mtrl-component-card {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 2v14h18V5H3z' fill='currentColor'/%3E%3C/svg%3E");
+}
+
+.mtrl-component-dialog {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm1 2v14h14V5H5z' fill='currentColor'/%3E%3Cpath d='M7 9h10v2H7V9zm0 4h10v2H7v-2z' fill='currentColor'/%3E%3C/svg%3E");
+}
+
+.mtrl-component-navigation-bar {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M3 4h18v2H3V4zm0 7h12v2H3v-2zm0 7h18v2H3v-2z' fill='currentColor'/%3E%3C/svg%3E");
+}
+
+.mtrl-component-floating-action-button {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'/%3E%3Cpath d='M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z' fill='currentColor'/%3E%3C/svg%3E");
+}
+
+// Responsive adjustments
+@media (max-width: v.breakpoint('md') - 1) {
+  .mtrl-elevation-levels-container {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  
+  .mtrl-elevation-usage-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Dark mode adjustments
+[data-theme-mode="dark"] {
+  .mtrl-elevation-1 {
+    box-shadow: v.elevation('level-1');
+  }
+  
+  .mtrl-elevation-2 {
+    box-shadow: v.elevation('level-2');
+  }
+  
+  .mtrl-elevation-3 {
+    box-shadow: v.elevation('level-3');
+  }
+  
+  .mtrl-elevation-4 {
+    box-shadow: v.elevation('level-4');
+  }
+  
+  .mtrl-elevation-5 {
+    box-shadow: v.elevation('level-5');
+  }
+}
