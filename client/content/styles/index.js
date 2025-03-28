@@ -5,7 +5,7 @@ import {
 } from '../../structure'
 
 import {
-  createStructure,
+  createLayout,
   createButton,
   createCard
 } from 'mtrl'
@@ -18,9 +18,9 @@ export const createStylesContent = (container) => {
     title: 'Styling System',
     description: 'A comprehensive design system for consistent, accessible, and beautiful interfaces'
   }
-  const layout = createStructure(createContentStructure(info), container).component
+  const layout = createLayout(createContentStructure(info), container).component
 
-  const ui = createStructure(createStylesStructure(), layout.body).component
+  const ui = createLayout(createStylesStructure(), layout.body).component
 
   // Initialize the style card click handlers
   initStyleCardHandlers(ui)

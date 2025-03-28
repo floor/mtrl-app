@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure
+  createLayout
 } from 'mtrl'
 
 import {
@@ -95,7 +95,7 @@ const icons = {
 
 export const initIconsOptions = (container) => {
   const title = 'Icons and Labels'
-  const layout = createStructure(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Segmented buttons can display icons, text labels, or both. Icons enhance visual recognition and complement text labels.',
     class: 'noflex'

@@ -9,7 +9,7 @@ import { initPositionsSwitches } from './positions'
 import { initDisabledSwitches } from './disabled'
 
 import {
-  createStructure
+  createLayout
 } from 'mtrl'
 
 // const CHECK_ICON = `
@@ -27,7 +27,7 @@ export const createSwitchesContent = (container) => {
     description: 'Switches toggle the selection of an item on or off'
   }
 
-  const layout = createStructure(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicSwitches(layout.body)
   initPositionsSwitches(layout.body)

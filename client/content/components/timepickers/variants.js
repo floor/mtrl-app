@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton,
   createTimePicker
 } from 'mtrl'
@@ -13,7 +13,7 @@ import {
 export const initVariants = (container) => {
   const title = 'TimePicker Variants'
   const description = 'TimePickers come in different types and orientations'
-  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create grid layout for variants
   const grid = document.createElement('div')

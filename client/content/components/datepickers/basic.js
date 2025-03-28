@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton,
   createDatePicker
 } from 'mtrl'
@@ -28,7 +28,7 @@ const createBasicDatePicker = (container) => {
 export const initBasic = (container) => {
   const title = 'Basic DatePicker'
   const description = 'A simple date picker with default docked calendar style'
-  const layout = createStructure(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create the basic date picker
   createBasicDatePicker(layout.body)

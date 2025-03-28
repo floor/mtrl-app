@@ -5,7 +5,7 @@ import {
 } from '../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createElement,
   createButton,
   createTextfield
@@ -16,9 +16,9 @@ export const createStateContent = (container) => {
     title: 'State',
     description: 'A lightweight state management system for components and applications'
   }
-  const layout = createStructure(contentLayout(info), container).component
+  const layout = createLayout(contentLayout(info), container).component
 
-  const ui = createStructure(createStateLayout(), layout.body).component
+  const ui = createLayout(createStateLayout(), layout.body).component
 
   initEmitter(ui)
   initStore(ui)

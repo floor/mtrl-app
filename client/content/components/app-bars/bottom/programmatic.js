@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createBottomAppBar,
   createButton,
   createSnackbar,
@@ -28,7 +28,7 @@ export const FAB_VARIANTS = {
 export const initProgrammaticBottomAppBar = (container) => {
   const title = 'Programmatic Control'
 
-  const layout = createStructure(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component

@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createSlider
 } from 'mtrl'
 
@@ -13,7 +13,7 @@ import {
 
 export const initVertical = (container) => {
   const title = 'Vertical slider'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const slider = createSlider({
     min: 0,

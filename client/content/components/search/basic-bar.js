@@ -5,14 +5,14 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createSearch,
   createElement
 } from 'mtrl'
 
 export const initBasicBar = (container) => {
   const title = 'Basic Search Bar'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a basic search bar
   const searchBar = createSearch({
@@ -32,7 +32,7 @@ export const initBasicBar = (container) => {
   ]
 
   // Create the demo
-  const demo = createStructure(demoStructure, layout.body).component
+  const demo = createLayout(demoStructure, layout.body).component
 
   // Add the search component to its container
   demo.searchContainer.appendChild(searchBar.element)

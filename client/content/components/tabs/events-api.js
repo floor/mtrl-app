@@ -3,14 +3,14 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTabs,
   createButton
 } from 'mtrl'
 
 export const initEventsAPI = (container) => {
   const title = 'Events & API Methods'
-  const layout = createStructure(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with callback handlers
   const tabs = createTabs({

@@ -5,7 +5,7 @@ import {
 } from '../../../../structure'
 
 import {
-  createStructure,
+  createLayout,
   createButton
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ const heartIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" x
 
 export const initIcons = (container) => {
   const title = 'Buttons icons'
-  const structure = createStructure(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
   const states = ['enabled', 'disabled']
   states.forEach(state => {
     const disabled = state === 'enabled'

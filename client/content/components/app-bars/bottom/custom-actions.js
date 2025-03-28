@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createBottomAppBar,
   createButton,
   createFab
@@ -27,7 +27,7 @@ export const FAB_VARIANTS = {
 export const initCustomActionsBottomAppBar = (container) => {
   const title = 'Custom Actions & Context'
 
-  const layout = createStructure(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component

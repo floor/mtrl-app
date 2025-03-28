@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createBottomAppBar,
   createButton,
   createFab
@@ -39,7 +39,7 @@ export const FAB_SIZES = {
 export const initWithFabBottomAppBar = (container) => {
   const title = 'Bottom App Bar with FAB'
 
-  const layout = createStructure(createSectionShowcase({
+  const layout = createLayout(createSectionShowcase({
     title,
     class: 'noflex'
   }), container).component

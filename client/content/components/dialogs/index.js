@@ -1,7 +1,7 @@
 // src/client/content/components/dialogs/index.js
 
 import { componentsLayout } from '../../../layout'
-import { createStructure } from 'mtrl'
+import { createLayout } from 'mtrl'
 import { initBasic } from './basic'
 import { initSizes } from './sizes'
 import { initCustomButtons } from './custom-buttons'
@@ -17,7 +17,7 @@ export const createDialogsContent = (container) => {
     description: 'Display a popup dialog for focused user interactions'
   }
 
-  const layout = createStructure(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasic(layout.body)
   initFormDialog(layout.body)

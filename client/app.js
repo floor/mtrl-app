@@ -1,7 +1,7 @@
 // src/client/app.js
 
 import { createApp } from './core/app-manager'
-import { themesMenu, appStructure } from './config'
+import { themesMenu, appLayout } from './config'
 import { setupErrorBoundary } from './core/events'
 import { routes, notFoundHandler } from './routes'
 import themeManager from './core/theme/theme-manager'
@@ -13,8 +13,8 @@ window.log = window.log || console
 let app
 try {
   app = createApp({
-    // Structure setup
-    structure: appStructure,
+    // Layout setup
+    layout: appLayout,
     container: document.body,
 
     // Theme configuration

@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton,
   createDialog
 } from 'mtrl'
@@ -32,7 +32,7 @@ const createSizesDialog = (size) => {
 export const initSizes = (container) => {
   const title = 'Dialog Sizes'
   const description = 'Dialogs come in different sizes: small, medium, large, fullwidth'
-  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create a dialog for each size
   const sizes = [

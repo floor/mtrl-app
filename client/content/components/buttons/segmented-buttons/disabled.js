@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ import {
 
 export const initDisabled = (container) => {
   const title = 'Disabled State'
-  const layout = createStructure(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Segmented buttons and individual segments can be disabled to indicate that they are not interactive.',
     class: 'noflex'

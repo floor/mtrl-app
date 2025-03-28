@@ -1,12 +1,12 @@
 // src/client/content/styles/elevation/levels.js
-import { createStructure } from 'mtrl'
+import { createLayout } from 'mtrl'
 
 /**
  * Creates the Elevation Levels section
  * @param {HTMLElement} container - Parent container
  */
 export const createElevationLevelsSection = (container) => {
-  const sectionStructure = createStructure([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Elevation Levels' },
@@ -39,7 +39,7 @@ export const initElevationLevels = (container) => {
   ]
 
   elevationLevels.forEach(elevation => {
-    const structure = createStructure([
+    const structure = createLayout([
       'card', {
         tag: 'div',
         class: `elevation-card elevation-${elevation.level}`,

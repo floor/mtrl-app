@@ -14,14 +14,14 @@ import {
   createButton
 } from 'mtrl'
 
-export const appStructure = [
+export const appLayout = [
   ['content', { tag: 'div', className: 'content' }],
   [createButton, 'moreMenu', { icon: iconMore, class: 'more-menu', variant: 'outlined', ariaLabel: 'Themes' }],
   [createButton, 'toggleDarkmode', { icon: iconDark, class: 'toggle-darkmode', variant: 'outlined', ariaLabel: 'Darkmode' }]
 ]
 
 // Navigation structure for the new Navigation System
-export const navigationStructure = {
+export const navigationLayout = {
   // Home section
   home: {
     label: 'Home',

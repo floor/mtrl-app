@@ -4,7 +4,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTextfield
 } from 'mtrl'
 
@@ -19,7 +19,7 @@ const clearIcon = `<svg viewBox="0 0 24 24" width="24" height="24">
 
 export const initCombinedFeatures = (container) => {
   const title = 'Textfields with Combined Features'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with both icons and supporting text
   const filled = createTextfield({

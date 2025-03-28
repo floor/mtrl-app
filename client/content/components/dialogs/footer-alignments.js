@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton,
   createDialog
 } from 'mtrl'
@@ -15,7 +15,7 @@ import {
 export const initFooterAlignments = (container) => {
   const title = 'Footer Alignments'
   const description = 'Dialog buttons can be aligned in different ways within the footer'
-  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create a dialog for each footer alignment
   const alignments = [

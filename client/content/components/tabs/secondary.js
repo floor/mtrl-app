@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTabs
 } from 'mtrl'
 
 export const initSecondaryTabs = (container) => {
   const title = 'Secondary Tabs'
-  const layout = createStructure(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with secondary variant
   const tabs = createTabs({

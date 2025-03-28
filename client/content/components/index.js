@@ -1,7 +1,7 @@
 // src/client/content/components/index.js
 import { createContentStructure } from '../../structure'
-import { createElement, createStructure } from 'mtrl'
-// import { createStructure } from 'mtrl/src/core/structure'
+import { createElement, createLayout } from 'mtrl'
+// import { createLayout } from 'mtrl/src/core/structure'
 import { createAppRouter } from '../../core/router'
 
 import { componentsList } from './components-list'
@@ -27,7 +27,7 @@ export const createComponentsContent = (container, options = {}) => {
   }
 
   // Create layout
-  const structure = createStructure(createContentStructure(info), container).component
+  const structure = createLayout(createContentStructure(info), container).component
 
   componentsList.forEach((group, index) => {
     initComponentsGroup(structure.body, group, router)

@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ import {
 
 export const initSelectionModes = (container) => {
   const title = 'Selection Modes'
-  const layout = createStructure(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Segmented buttons support two selection modes: single-select and multi-select.',
     class: 'noflex'

@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton,
   createDialog
 } from 'mtrl'
@@ -48,7 +48,7 @@ const createButtonsDialog = (statusMessage) => {
 export const initCustomButtons = (container) => {
   const title = 'Dialog with Custom Buttons'
   const description = 'Dialogs can have custom buttons with different variants and behaviors'
-  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
   const openButton = createButton({

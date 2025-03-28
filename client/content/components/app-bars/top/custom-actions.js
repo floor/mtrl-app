@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTopAppBar,
   createButton
 } from 'mtrl'
@@ -12,7 +12,7 @@ import {
 export const initCustomActionsTopAppBar = (container) => {
   const title = 'Custom Actions & Context'
 
-  const layout = createStructure(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component

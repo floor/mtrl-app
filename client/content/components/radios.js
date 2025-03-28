@@ -6,7 +6,7 @@ import {
 } from '../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createRadios
 } from 'mtrl'
 
@@ -16,7 +16,7 @@ export const createRadiosContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createStructure(componentsLayout(info), container).getAll()
+  const layout = createLayout(componentsLayout(info), container).getAll()
 
   console.log('layout', layout)
 
@@ -25,7 +25,7 @@ export const createRadiosContent = (container) => {
 
 export const initRadiosSizes = (container) => {
   const title = 'Radios Size'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const small = createRadios({
     name: 'size1',

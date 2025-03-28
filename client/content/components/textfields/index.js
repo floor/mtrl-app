@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure
+  createLayout
 } from 'mtrl'
 
 import { initTextfieldVariants } from './variants'
@@ -21,7 +21,7 @@ export const createTextfieldsContent = (container) => {
     description: 'Text fields let users enter and edit text'
   }
 
-  const layout = createStructure(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   // Initialize all the textfield examples
   initTextfieldVariants(layout.body)

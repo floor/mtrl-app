@@ -7,13 +7,13 @@ import {
 } from '../../../../structure'
 
 import {
-  createStructure,
+  createLayout,
   createButton
 } from 'mtrl'
 
 export const initDisabled = (container) => {
   const title = 'Buttons Disabled'
-  const structure = createStructure(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
 
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {

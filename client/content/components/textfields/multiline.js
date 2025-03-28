@@ -4,13 +4,13 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTextfield
 } from 'mtrl'
 
 export const initMultilineTextfield = (container) => {
   const title = 'Multiline Textfield'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled multiline textfield
   const filled = createTextfield({

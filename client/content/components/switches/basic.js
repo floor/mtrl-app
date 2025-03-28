@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createSwitch
 } from 'mtrl'
 
 export const initBasicSwitches = (container) => {
   const title = 'Basic Switches'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Default switch
   const defaultSwitch = createSwitch({

@@ -5,7 +5,7 @@ import {
 } from '../structure'
 
 import {
-  createStructure
+  createLayout
 } from 'mtrl'
 
 export const createHomeContent = (container) => {
@@ -16,5 +16,5 @@ export const createHomeContent = (container) => {
 
   container.classList.add('components')
 
-  return createStructure(createContentStructure(info), container).component
+  return createLayout(createContentStructure(info), container).component
 }

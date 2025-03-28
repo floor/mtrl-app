@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTextfield
 } from 'mtrl'
 
 export const initTextfieldVariants = (container) => {
   const title = 'Textfield Variants'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a wrapper for the filled variant
   // const filledWrapper = createElement({ class: 'mtrl-content__variant' })

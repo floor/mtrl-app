@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createBadge,
   createButton
 } from 'mtrl'
@@ -17,7 +17,7 @@ import {
 
 export const initAttached = (container) => {
   const title = 'Badges Attached to Elements'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const badgeContainer = document.createElement('div')
   badgeContainer.style.display = 'flex'

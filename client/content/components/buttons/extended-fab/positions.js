@@ -5,7 +5,7 @@ import {
 
 import {
   createExtendedFab,
-  createStructure
+  createLayout
 } from 'mtrl'
 
 /**
@@ -54,7 +54,7 @@ const positionLabels = {
 
 export const initPositions = (container) => {
   const title = 'Extended FAB Positions'
-  const layout = createStructure(createComponentsSectionLayoutInfo({
+  const layout = createLayout(createComponentsSectionLayoutInfo({
     title,
     description: 'Extended FABs can be positioned in different corners of the screen. In a real application, they would be fixed to the viewport.'
   }), container).component

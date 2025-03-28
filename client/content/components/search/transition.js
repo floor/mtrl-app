@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createSearch,
   createElement
 } from 'mtrl'
@@ -18,7 +18,7 @@ import {
 
 export const initTransition = (container) => {
   const title = 'Search Bar to View Mode Transition'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a search bar that will expand into view mode
   const searchBar = createSearch({
@@ -91,7 +91,7 @@ export const initTransition = (container) => {
   ]
 
   // Create the demo
-  const demo = createStructure(demoStructure, layout.body).component
+  const demo = createLayout(demoStructure, layout.body).component
 
   // Add the search component to its container
   demo.searchContainer.appendChild(searchBar.element)

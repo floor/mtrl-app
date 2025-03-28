@@ -4,13 +4,13 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTextfield
 } from 'mtrl'
 
 export const initSupportingText = (container) => {
   const title = 'Textfields with Supporting Text'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with supporting text
   const filled = createTextfield({

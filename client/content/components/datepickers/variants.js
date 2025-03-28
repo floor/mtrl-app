@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createButton,
   createDatePicker
 } from 'mtrl'
@@ -22,7 +22,7 @@ const DATEPICKER_VARIANTS = {
 export const initVariants = (container) => {
   const title = 'DatePicker Variants'
   const sectionDescription = 'DatePickers come in three variants: docked, modal, and modal input'
-  const layout = createStructure(createComponentsSectionLayout({ title, description: sectionDescription }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description: sectionDescription }), container).component
 
   // Create grid layout for variants
   const grid = document.createElement('div')

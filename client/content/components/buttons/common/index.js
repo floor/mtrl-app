@@ -5,7 +5,7 @@ import {
 } from '../../../../structure'
 
 import {
-  createStructure
+  createLayout
 } from 'mtrl'
 
 import { initVariants } from './variants'
@@ -18,7 +18,7 @@ export const createButtonsContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const structure = createStructure(createComponentsStructure(info), container).component
+  const structure = createLayout(createComponentsStructure(info), container).component
 
   initVariants(structure.body)
   initDisabled(structure.body)

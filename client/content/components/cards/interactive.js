@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createElement
 } from 'mtrl'
 
@@ -27,7 +27,7 @@ export const initInteractiveCards = (container) => {
   const title = 'Interactive Cards'
   const description = 'Cards that respond to user interaction with hover effects and ripples'
 
-  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Card interaction types to showcase
   const interactionTypes = [

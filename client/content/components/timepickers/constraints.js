@@ -5,14 +5,14 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createTimePicker
 } from 'mtrl'
 
 export const initConstraints = (container) => {
   const title = 'Time Constraints'
   const description = 'Restrict time selection with min and max time constraints'
-  const layout = createStructure(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create examples container
   const examples = document.createElement('div')

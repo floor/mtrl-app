@@ -9,7 +9,7 @@ import {
 import { setupGridInteractions, setupResponsiveDemo, setupCardInteractions } from './layout-utils'
 
 import {
-  createStructure,
+  createLayout,
   createElement,
   createButton
 } from 'mtrl'
@@ -41,7 +41,7 @@ export const createLayoutContent = (container) => {
     title: 'Layout',
     description: 'Structured arrangements of components with responsive behavior'
   }
-  const layout = createStructure(contentLayout(info), container).component
+  const layout = createLayout(contentLayout(info), container).component
 
   console.log('layout', layout)
 
@@ -57,7 +57,7 @@ export const createLayoutContent = (container) => {
 
 const initBasicLayoutExample = (container) => {
   const title = 'Basic Layout Structure'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Add description
   const description = createElement({
@@ -116,7 +116,7 @@ const initBasicLayoutExample = (container) => {
 
 const initResponsiveLayoutExample = (container) => {
   const title = 'Responsive Layout'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Add description
   const description = createElement({
@@ -177,7 +177,7 @@ const initResponsiveLayoutExample = (container) => {
 
 const initGridLayoutExample = (container) => {
   const title = 'Grid Layout'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Add description
   const description = createElement({
@@ -239,7 +239,7 @@ const initGridLayoutExample = (container) => {
 
 const initCardLayoutExample = (container) => {
   const title = 'Card Layout'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Add description
   const description = createElement({
@@ -329,7 +329,7 @@ const initCardLayoutExample = (container) => {
 
 const initSplitLayoutExample = (container) => {
   const title = 'Split Layout'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Add description
   const description = createElement({

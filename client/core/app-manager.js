@@ -1,12 +1,12 @@
 // src/client/core/app-manager.js
 
 import { createEventManager, setupErrorBoundary } from './events'
-import { createStructure } from 'mtrl'
+import { createLayout } from 'mtrl'
 import { createRouter } from './router/service'
 import themeManager from './theme/theme-manager'
 import { createNavigationSystem } from 'mtrl/src/components/navigation/system'
-import { createStructureManager } from './structure/structure-manager'
-import { appStructure, navigationStructure } from '../config'
+import { createLayoutManager } from './layout'
+import { appLayout, navigationLayout } from '../config'
 import { generateDynamicRoutes } from './router/dynamic-loader'
 
 /**
@@ -29,9 +29,9 @@ export const createApp = (options = {}) => {
   }
 
   // Core subsystems
-  let structureResult = null
+  let layoutResult = null
   let components = null
-  let structureManager = null
+  let layoutManager = null
   let router = null
   let eventManager = null
   let navigationSystem = null
@@ -47,14 +47,15 @@ export const createApp = (options = {}) => {
       // Set up global error boundary
       setupErrorBoundary()
 
-      // Initialize structure
-      structureResult = initializeStructure()
+      // Initialize layout
+      layoutResult = initializeLayout()
 
-      // Get all components from the structure
-      components = structureResult.getAll()
+      // Get all components from the layout
+      components = layoutResult.getAll()
 
       // Get UI components
       const ui = components
+
       if (!ui) {
         throw new Error('UI component is undefined')
       }
@@ -81,27 +82,27 @@ export const createApp = (options = {}) => {
   }
 
   /**
-   * Initialize the application structure
+   * Initialize the application layout
    * @private
    */
-  const initializeStructure = () => {
-    // Get structure configuration
-    if (!appStructure) {
+  const initializeLayout = () => {
+    // Get layout configuration
+    if (!appLayout) {
       throw new Error('Structure configuration is required')
     }
 
-    // Initialize structure with the container
+    // Initialize layout with the container
     const container = options.container || document.body
-    const structureResult = createStructure(appStructure, container)
+    const layoutResult = createLayout(appLayout, container)
 
-    // Create structure manager
-    structureManager = createStructureManager({
-      structure: structureResult.structure,
-      structureAPI: structureResult,
+    // Create layout manager
+    layoutManager = createLayoutManager({
+      layout: layoutResult.layout,
+      LayoutAPI: layoutResult,
       options: options.layoutOptions
     })
 
-    return structureResult
+    return layoutResult
   }
 
   /**
@@ -190,8 +191,8 @@ export const createApp = (options = {}) => {
    * @private
    */
   const initializeNavigation = (ui) => {
-    // Use the navigation structure from config
-    const items = navigationStructure || {}
+    // Use the navigation layout from config
+    const items = navigationLayout || {}
 
     // Create navigation system
     const navSystem = createNavigationSystem({
@@ -377,8 +378,8 @@ export const createApp = (options = {}) => {
    */
   const executeReadyCallbacks = () => {
     const callbackData = {
-      structure: structureResult.structure,
-      structureAPI: structureResult,
+      layout: layoutResult.layout,
+      LayoutAPI: layoutResult,
       router,
       ui: components,
       themeManager,
@@ -415,12 +416,12 @@ export const createApp = (options = {}) => {
       router.destroy()
     }
 
-    if (structureResult) {
-      structureResult.destroy()
+    if (layoutResult) {
+      layoutResult.destroy()
     }
 
     // Reset state
-    structureResult = null
+    layoutResult = null
     router = null
     navigationSystem = null
     isInitialized = false
@@ -440,8 +441,8 @@ export const createApp = (options = {}) => {
       if (isInitialized && components) {
         // If already initialized, execute immediately
         callback({
-          structure: structureResult.structure,
-          structureAPI: structureResult,
+          layout: layoutResult.layout,
+          LayoutAPI: layoutResult,
           router,
           ui: components,
           themeManager,
@@ -474,9 +475,9 @@ export const createApp = (options = {}) => {
 
     // Getter methods
     isInitialized: () => isInitialized,
-    getStructure: () => structureResult ? structureResult.structure : null,
-    getStructureAPI: () => structureResult,
-    getComponent: (name) => structureResult ? structureResult.get(name) : null,
+    getLayout: () => layoutResult ? layoutResult.layout : null,
+    getLayoutAPI: () => layoutResult,
+    getComponent: (name) => layoutResult ? layoutResult.get(name) : null,
     getRouter: () => router,
     getThemeManager: () => themeManager,
     getNavigationSystem: () => navigationSystem

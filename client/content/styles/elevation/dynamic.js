@@ -1,12 +1,12 @@
 // src/client/content/styles/elevation/dynamic.js
-import { createButton, createStructure } from 'mtrl'
+import { createButton, createLayout } from 'mtrl'
 
 /**
  * Creates the Dynamic Elevation section
  * @param {HTMLElement} container - Parent container
  */
 export const createDynamicElevationSection = (container) => {
-  const sectionStructure = createStructure([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Dynamic Elevation' },
@@ -29,7 +29,7 @@ export const createDynamicElevationSection = (container) => {
  */
 export const initDynamicElevation = (container) => {
   // Create dynamic elevation example
-  const structure = createStructure([
+  const structure = createLayout([
     'card', { tag: 'div', class: 'dynamic-card elevation-1' },
     [
       'content', { tag: 'div', class: 'dynamic-card-content' },

@@ -5,7 +5,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createStructure
+  createLayout
 } from 'mtrl'
 
 import { initVariants } from './variants'
@@ -20,7 +20,7 @@ export const createFabContent = (container) => {
     description: 'A FAB (Floating Action Button) represents the primary action on a screen. It appears in front of all screen content and is recognizable for its circular shape and icon in the center.'
   }
 
-  const layout = createStructure(componentsLayout(info), container).getAll()
+  const layout = createLayout(componentsLayout(info), container).getAll()
 
   initVariants(layout.body)
   initSizes(layout.body)

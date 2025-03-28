@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createSwitch
 } from 'mtrl'
 
 export const initPositionsSwitches = (container) => {
   const title = 'Label Positions'
-  const layout = createStructure(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Label at end (default)
   const endLabelSwitch = createSwitch({

@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createStructure,
+  createLayout,
   createElement
 } from 'mtrl'
 
@@ -27,7 +27,7 @@ export const initExpandableCards = (container) => {
   const title = 'Expandable Cards'
   const description = 'Cards with expandable content sections'
 
-  const layout = createStructure(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create expandable cards with different initial states
   ;[
