@@ -324,13 +324,13 @@ export const initDynamicTheme = (ui) => {
     { name: 'spring', label: 'Spring Theme' },
     { name: 'summer', label: 'Summer Theme' },
     { name: 'autumn', label: 'Autumn Theme' },
-    { name: 'winter', label: 'Winter Theme' },
-    { name: 'bluekhaki', label: 'Blue Khaki' },
-    { name: 'brownbeige', label: 'Brown Beige' },
-    { name: 'tealcaramel', label: 'Teal Caramel' },
-    { name: 'greenbeige', label: 'Green Beige' },
-    { name: 'sageivory', label: 'Sage Ivory' },
-    { name: 'browngreen', label: 'Brown Green' }
+    { name: 'winter', label: 'Winter Theme' }
+    // { name: 'bluekhaki', label: 'Blue Khaki' },
+    // { name: 'brownbeige', label: 'Brown Beige' },
+    // { name: 'tealcaramel', label: 'Teal Caramel' },
+    // { name: 'greenbeige', label: 'Green Beige' },
+    // { name: 'sageivory', label: 'Sage Ivory' },
+    // { name: 'browngreen', label: 'Brown Green' }
   ]
 
   themes.forEach(theme => {

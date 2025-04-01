@@ -50,7 +50,8 @@
 @use './app';
 @use './content/content';
 @use './content/components';
-// @use './content/styles';
+@use './content/typography';
+@use './content/styles';
 @use './content/colors';
 @use './content/layout';
 @use './content/elevation';

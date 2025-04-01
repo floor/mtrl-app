@@ -50,7 +50,8 @@ export const navigationLayout = {
     items: [
       { id: 'events', label: 'Events', path: '/core/events' },
       { id: 'state', label: 'State', path: '/core/state' },
-      { id: 'composition', label: 'Composition', path: '/core/composition' }
+      { id: 'composition', label: 'Composition', path: '/core/composition' },
+      { id: 'layout', label: 'Layout', path: '/core/layout' }
     ]
   },
 
@@ -89,6 +90,7 @@ export const navigationLayout = {
         ]
       },
       { id: 'cards', label: 'Cards', path: '/components/cards' },
+      { id: 'caoursel', label: 'Carousel', path: '/components/carousel' },
       { id: 'checkboxes', label: 'Checkboxes', path: '/components/checkboxes' },
       { id: 'chips', label: 'Chips', path: '/components/chips' },
       {

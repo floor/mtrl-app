@@ -7,8 +7,8 @@ import {
   createSwitch
 } from 'mtrl'
 
-export const initBasicSwitches = (container) => {
-  const title = 'Switches'
+export const initSupportingText = (container) => {
+  const title = 'Switches with supporting text'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   layout.body.style.flexDirection = 'column'
@@ -19,14 +19,15 @@ export const initBasicSwitches = (container) => {
 
   // Default switch
   const defaultSwitch = createSwitch({
-    label: 'Default Switch'
+    label: 'Permission manager',
+    supportingText: 'App has access to your data'
   })
-
   layout.body.appendChild(defaultSwitch.element)
 
   // Checked switch
   const checkedSwitch = createSwitch({
-    label: 'Initially Checked',
+    label: 'Camera access',
+    supportingText: 'App has access to you camera',
     checked: true
   })
 

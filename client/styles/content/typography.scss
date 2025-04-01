@@ -1,0 +1,262 @@
+// src/client/styles/content/typography.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+
+// Type scale containers
+.#{b.$prefix}-type-scales-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: v.spacing('6');
+  margin-top: v.spacing('6');
+}
+
+.#{b.$prefix}-type-scale-item {
+  display: flex;
+  align-items: center;
+  border-radius: v.shape('medium');
+  padding: v.spacing('4');
+  background-color: t.color('surface-container-low');
+  transition: v.motion('duration-short2') v.motion('easing-standard');
+  @include m.elevation(1);
+
+  &:hover {
+    transform: translateY(-2px);
+    @include m.elevation(2);
+  }
+}
+
+.#{b.$prefix}-body-scale-item {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.#{b.$prefix}-type-scale__sample {
+  font-size: 32px;
+  margin-right: v.spacing('4');
+  min-width: 50px;
+  text-align: center;
+}
+
+.#{b.$prefix}-type-scale__body-sample {
+  margin-bottom: v.spacing('4');
+  width: 100%;
+}
+
+.#{b.$prefix}-type-scale__details {
+  flex: 1;
+}
+
+.#{b.$prefix}-type-scale__label {
+  font-weight: 500;
+  margin-bottom: v.spacing('1');
+}
+
+.#{b.$prefix}-type-scale__info {
+  font-size: 0.85rem;
+  color: t.color('on-surface-variant');
+}
+
+// Typography roles
+.#{b.$prefix}-type-roles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: v.spacing('6');
+  margin-top: v.spacing('6');
+}
+
+.#{b.$prefix}-type-role-item {
+  border-radius: v.shape('medium');
+  padding: v.spacing('4');
+  background-color: t.color('surface-container-low');
+  transition: v.motion('duration-short2') v.motion('easing-standard');
+  @include m.elevation(1);
+
+  &:hover {
+    transform: translateY(-2px);
+    @include m.elevation(2);
+  }
+}
+
+.#{b.$prefix}-type-role__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: v.spacing('4');
+}
+
+.#{b.$prefix}-type-role__title {
+  margin: 0;
+  font-weight: 500;
+}
+
+.#{b.$prefix}-type-role__scale {
+  font-size: 0.85rem;
+  padding: v.spacing('1') v.spacing('2');
+  background-color: t.color('surface-variant');
+  border-radius: v.shape('small');
+  color: t.color('on-surface');
+}
+
+.#{b.$prefix}-type-role__sample {
+  margin-bottom: v.spacing('4');
+}
+
+.#{b.$prefix}-type-role__description {
+  font-size: 0.85rem;
+  color: t.color('on-surface-variant');
+}
+
+// Font weights
+.#{b.$prefix}-font-weights-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: v.spacing('6');
+  margin-top: v.spacing('6');
+}
+
+.#{b.$prefix}-font-weight-item {
+  border-radius: v.shape('medium');
+  padding: v.spacing('4');
+  background-color: t.color('surface-container-low');
+  text-align: center;
+  transition: v.motion('duration-short2') v.motion('easing-standard');
+  @include m.elevation(1);
+
+  &:hover {
+    transform: translateY(-2px);
+    @include m.elevation(2);
+  }
+}
+
+.#{b.$prefix}-font-weight__sample {
+  font-size: 32px;
+  margin-bottom: v.spacing('3');
+}
+
+.#{b.$prefix}-font-weight__name {
+  font-weight: 500;
+  margin-bottom: v.spacing('1');
+}
+
+.#{b.$prefix}-font-weight__value {
+  font-size: 0.85rem;
+  color: t.color('on-surface-variant');
+}
+
+// Typography demo
+.#{b.$prefix}-typography-demo {
+  border-radius: v.shape('medium');
+  padding: v.spacing('6');
+  background-color: t.color('surface-container-low');
+  margin-top: v.spacing('6');
+  @include m.elevation(1);
+}
+
+.#{b.$prefix}-typography-demo__content {
+  margin-bottom: v.spacing('6');
+
+  &.bold-text {
+    font-weight: 700;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: v.spacing('2');
+  }
+
+  h2 {
+    margin-bottom: v.spacing('4');
+    color: t.color('on-surface-variant');
+  }
+
+  p {
+    margin-bottom: v.spacing('6');
+    max-width: 800px;
+  }
+}
+
+.#{b.$prefix}-typography-demo__quote {
+  font-style: italic;
+  border-left: 4px solid t.color('primary');
+  padding-left: v.spacing('4');
+  margin-bottom: v.spacing('2');
+
+  cite {
+    display: block;
+    text-align: right;
+    margin-top: v.spacing('2');
+  }
+}
+
+.#{b.$prefix}-typography-demo__controls {
+  display: flex;
+  gap: v.spacing('3');
+}
+
+// Code examples
+.#{b.$prefix}-code-examples {
+  margin-top: v.spacing('4');
+
+  h3 {
+    margin-top: v.spacing('6');
+    margin-bottom: v.spacing('2');
+    @include m.typography('title-medium');
+  }
+}
+
+.#{b.$prefix}-code-block {
+  background-color: t.color('surface-container');
+  padding: v.spacing('4');
+  border-radius: v.shape('small');
+  overflow: auto;
+  font-family: monospace;
+  margin: v.spacing('3') 0 v.spacing('6') 0;
+}
+
+// Type scale classes - generated using a loop for all typography variants
+$typography-scales: (
+  'display': ('large', 'medium', 'small'),
+  'headline': ('large', 'medium', 'small'),
+  'title': ('large', 'medium', 'small'),
+  'body': ('large', 'medium', 'small'),
+  'label': ('large', 'medium', 'small')
+);
+
+@each $family, $sizes in $typography-scales {
+  @each $size in $sizes {
+    $scale: #{$family}-#{$size};
+    .#{b.$prefix}-type-#{$scale} {
+      @include m.typography($scale);
+    }
+  }
+}
+
+// Responsive adjustments
+@include m.breakpoint-down('md') {
+  .#{b.$prefix}-type-scales-container,
+  .#{b.$prefix}-type-roles-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .#{b.$prefix}-font-weights-container {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .#{b.$prefix}-typography-demo__controls {
+    flex-direction: column;
+  }
+}
+
+// Dark mode adjustments
+[data-theme-mode="dark"] {
+  .#{b.$prefix}-type-scale-item,
+  .#{b.$prefix}-type-role-item,
+  .#{b.$prefix}-font-weight-item,
+  .#{b.$prefix}-typography-demo,
+  .#{b.$prefix}-code-block {
+    background-color: t.color('surface-container-low');
+  }
+}

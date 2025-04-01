@@ -9,7 +9,7 @@ import {
 } from 'mtrl'
 
 export const initBasicTabs = (container) => {
-  const title = 'Basic Tabs'
+  const title = 'Tabs'
 
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 

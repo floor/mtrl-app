@@ -19,12 +19,12 @@ const ROUTE_MODULE_MAP = {
   'core/events': () => import('../../content/core/events'),
   'core/state': () => import('../../content/core/state'),
   'core/composition': () => import('../../content/core/composition'),
+  'core/layout': () => import('../../content/core/layout'),
 
   // Style routes
   'styles/colors': () => import('../../content/styles/colors'),
   'styles/typography': () => import('../../content/styles/typography'),
   'styles/elevation': () => import('../../content/styles/elevation'),
-  'styles/layout': () => import('../../content/styles/layout'),
 
   // Components routes
   'components/buttons/common': () => import('../../content/components/buttons/common'),

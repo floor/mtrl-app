@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import { initBasicSwitches } from './basic'
-import { initPositionsSwitches } from './positions'
 import { initDisabledSwitches } from './disabled'
+import { initSupportingText } from './supporting'
 
 import {
   createLayout
@@ -30,7 +30,7 @@ export const createSwitchesContent = (container) => {
   const layout = createLayout(componentsLayout(info), container).component
 
   initBasicSwitches(layout.body)
-  initPositionsSwitches(layout.body)
+  initSupportingText(layout.body)
   initDisabledSwitches(layout.body)
 }
 

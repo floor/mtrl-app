@@ -15,10 +15,11 @@ $components: '#{b.$prefix}-components';
 .#{$components} {
   max-width: 1024px;
   margin: auto;
+  padding-bottom: 16px;
 
   &-grid__container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     justify-items: start;
     gap: 20px;
   }
@@ -43,6 +44,7 @@ $components: '#{b.$prefix}-components';
       height: 100%;
       border-radius: f.get-shape('large');
       gap: 10px;
+      padding: 56px;
       background-color: t.color('surface-container');
       &.#{b.$prefix}-visual {
         flex: none;
@@ -53,22 +55,25 @@ $components: '#{b.$prefix}-components';
       &.#{$components}-info {
         background-color: t.color('outline-variant');
         color: var(--mtrl-sys-color-on-outline-variant);
-        padding: 18px 24px;
+        padding: 32px 56px 56px;
         .#{$components}__title {
           @include c.typography('display-large');
+          font-weight: 500;
           margin: 0;
         }
         .#{$components}__description {
-          @include c.typography('headline-large');
-          margin: 0;
+          @include c.typography('headline-small');
+          margin: 8px 0 0 0;
         }
       }
     }
   }
   
-
-  &__body {
-    margin-right: 200px
+  &__footer {
+    height: 200px;
+    color: t.color('on-surface-dim');
+    background-color: t.color('surface-dim');
+    border-radius: 16px;
   }
 
   &__navi {
@@ -100,7 +105,7 @@ $components: '#{b.$prefix}-components';
       display: flex;
       justify-content: center;
       gap: 20px;
-      padding: 96px 24px 96px;
+      padding: 60px 24px 60px;
       border-radius: 16px;
       background-color: t.color('surface-bright');
       // background-image: url(/public/img/grid-light.png);

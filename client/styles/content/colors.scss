@@ -15,9 +15,9 @@ $content: '#{b.$prefix}-content';
     margin-bottom: 16px;
     line-height: 1.5;
   }
-  
- // Color palettes - improved styling
-  .color-palettes {
+
+  // Color palettes - improved styling
+  .#{b.$prefix}-color-palettes {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 24px;

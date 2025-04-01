@@ -1,10 +1,12 @@
+// src/examples/price-range.js
 import {
-  createComponentsSectionLayout
+  createComponentsSectionLayoutInfo
 } from '../../../layout'
 
 import {
   createLayout,
-  createSlider
+  createSlider,
+  createSnackbar
 } from 'mtrl'
 
 import {
@@ -12,17 +14,37 @@ import {
 } from 'mtrl/src/components/slider'
 
 export const initRange = (container) => {
-  const title = 'Range slider'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const title = 'Price Range Filter'
+  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
-  const slider = createSlider({
+  const priceSlider = createSlider({
     min: 0,
     max: 1000,
     value: 200,
     secondValue: 800,
     range: true,
-    color: SLIDER_COLORS.SECONDARY
+    step: 100,
+    ticks: true,
+    color: SLIDER_COLORS.SECONDARY,
+    label: 'Price range'
   })
-  // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-  layout.body.appendChild(slider.element)
+
+  const duration = 1000
+
+  // Update price display when slider changes
+  priceSlider.on('change', (event) => {
+    console.log('change', event.value)
+    createSnackbar({
+      message: `Price range changed: ${event.value} - ${event.secondValue}`,
+      action: duration === 0 ? 'Dismiss' : undefined,
+      duration
+    }).show()
+    // Here you would filter products based on price range
+  })
+
+  // priceSlider.on('input', (event) => {
+  //   console.log('input', event.value, event.secondValue)
+  // })
+
+  layout.body.appendChild(priceSlider.element)
 }

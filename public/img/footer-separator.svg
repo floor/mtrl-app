@@ -1,0 +1,12 @@
+<svg viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="160" height="40" fill="transparent" />
+  <!-- Stretched horizontally by increasing the x-coordinates -->
+  <path d="M0,20 
+         C15,5 25,5 40,20 
+         C55,35 65,35 80,20
+         C95,5 105,5 120,20
+         C135,35 145,35 160,20" 
+      stroke="#ffffff" 
+      fill="none" 
+      stroke-width="1.5" />
+</svg>

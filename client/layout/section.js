@@ -1,3 +1,32 @@
+export const sectionLayout = (i) => [
+  ['section', { class: `content__section ${i.class}` },
+    ['head', { class: `section__head ${i.headClass}` }],
+    ['body', { class: `section__body ${i.bodyClass}` }],
+    ['foot', { class: `section__foot ${i.footClass}` }]
+  ]
+]
+
+export const sectionTitleLayout = (i) => [
+  ['section', { class: `content__section ${i.class}` },
+    ['head', { class: `section__head ${i.headClass}` },
+      ['title', { tag: 'h2', class: 'section__title', text: i.title }]
+    ],
+    ['body', { class: `section__body ${i.bodyClass}` }],
+    ['foot', { class: `section__foot ${i.footClass}` }]
+  ]
+]
+
+export const sectionTitleDescriptionLayout = (i) => [
+  ['section', { class: 'content__section ${i.class}' },
+    ['head', { id: 'head', class: `content__section__head ${i.headClass}` },
+      ['title', { tag: 'h2', class: 'section__title', text: i.title }],
+      ['decription', { tag: 'p', class: 'section__text', text: i.description }]
+    ],
+    ['body', { class: `section__body ${i.bodyClass}` }],
+    ['foot', { class: `section__foot ${i.footClass}` }]
+  ]
+]
+
 export const createSectionShowcase = (info) => [
   [{ tag: 'section', class: 'components__section components__section' },
     [{ class: 'components__section-head' },

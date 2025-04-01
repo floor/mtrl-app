@@ -15,9 +15,9 @@ $content: '#{b.$prefix}-content';
   padding: 0 10px;
   // margin: auto;
   margin-left: 88px;
-
+  padding-bottom: 16px;
+  
   &__header {
-    height: 200px;
     margin-bottom: 32px;
     display: flex;
     align-items: center;
@@ -42,15 +42,65 @@ $content: '#{b.$prefix}-content';
       &.#{$content}-info {
         background-color: t.color('outline-variant');
         color: var(--mtrl-sys-color-on-surface-bright);
-        padding: 18px 24px;
+        padding: 32px 56px 56px;
         .#{$content}__title {
-          @include c.typography('headline-large');
+          @include c.typography('display-large');
+          font-weight: 500;
           margin: 0;
+        }
+        .#{$content}-logo {
+          // width: 100px;
+          svg {
+            width: 100px;
+            height: 70px;
+          }
+        }
+        .#{$content}__description {
+          @include c.typography('headline-small');
+          margin: 8px 0 0 0;
         }
       }
     }
   }
   
+
+  &__footer {
+    // height: 200px;
+    // color: t.color('on-surface-dim');
+    // background-color: t.color('surface-dim');
+    background-image: url('/public/img/footer-separator.svg');
+    background-position: top;
+    background-repeat: repeat-x;
+    background-size: 3%;
+    border-radius: 16px;
+    display: flex;
+    // padding: 32px 56px 56px;
+    .#{$content}__footer-section {
+      flex: 5;
+      display: flex;
+      flex-direction: column;
+      padding: 96px 56px 96px 56px;
+      .#{$content}-logo {
+        // width: 100px;
+        svg {
+          width: 50px;
+          height: 30px;
+          stroke-color: var(--mtrl-sys-color-on-surface-bright);
+        }
+      }
+    }
+    .#{$content}__footer-section.#{$content}__footer-link {
+      flex: 5;
+      .#{$content}__footer-section__social {
+        @include c.typography('headline-small');
+        
+      }
+      a.#{$content}-link {
+        display: inline-block;
+      }
+    }
+  }
+
   &__section {
     background-color: t.color('surface-container');
     border-radius: f.get-shape('large');
@@ -69,6 +119,12 @@ $content: '#{b.$prefix}-content';
       .#{$content}__spacer {
         flex: 1;
       }
+    }
+    &.#{b.$prefix}-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 24px;
     }
   }
 

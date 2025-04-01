@@ -7,7 +7,9 @@ import {
   createButton,
   createDialog,
   createTextfield,
-  createSlider
+  createSlider,
+  createCheckbox,
+  createSnackbar
 } from 'mtrl'
 
 const callVolume = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
@@ -21,7 +23,7 @@ const alarmVolume = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewB
 const createSettingsDialog = () => {
   const dialog = createDialog({
     title: 'Settings',
-    content: '<div id="settings-form" style="display: flex; flex-direction: column; gap: 16px;"></div>',
+    content: '<div id="settings-form" style="display: flex; flex-direction: column; gap: 16px; background-color: var(--mtrl-sys-color-surface-container-high"></div>',
     divider: true,
     buttons: [
       {
@@ -34,11 +36,18 @@ const createSettingsDialog = () => {
         variant: 'text',
         closeDialog: false,
         onClick: () => {
-
+          dialog.close()
+          createSnackbar({
+            message: 'Settings saved',
+            action: 'OK'
+          }).show()
         }
       }
     ]
   })
+
+  // dialog.element.style.transform = 'scale(.7)'
+
   dialog.open()
 
   dialog.on('open', () => {
@@ -68,10 +77,10 @@ const createSettingsDialog = () => {
   })
 }
 
-const createContactDialog = (nameField, emailField, phoneField, resultContainer) => {
+const createContactDialog = (nameField, emailField, phoneField, newsletterCheckbox, resultContainer) => {
   const dialog = createDialog({
     title: 'Create New Contact',
-    content: '<div id="contact-form" style="display: flex; flex-direction: column; gap: 16px;"></div>',
+    content: '<div id="contact-form" style="display: flex; flex-direction: column; gap: 16px; background-color: var(--mtrl-sys-color-surface-container-high"></div>',
     divider: true,
     buttons: [
       {
@@ -87,7 +96,7 @@ const createContactDialog = (nameField, emailField, phoneField, resultContainer)
           // Get values from form fields
           const name = nameField.getValue()
           const email = emailField.getValue()
-          const phone = phoneField.getValue()
+          // const phone = phoneField.getValue()
 
           // Simple validation
           let isValid = true
@@ -111,14 +120,19 @@ const createContactDialog = (nameField, emailField, phoneField, resultContainer)
 
           // If valid, close dialog and show result
           if (isValid) {
-            resultContainer.textContent = `Contact saved: ${name}, ${email}, ${phone}`
-            resultContainer.style.backgroundColor = '#ccffcc'
             dialog.close()
+            createSnackbar({
+              message: 'Contact saved',
+              action: 'OK'
+            }).show()
           }
         }
       }
     ]
   })
+
+  // dialog.element.style.transform = 'scale(.7)'
+
   dialog.open()
 
   dialog.on('open', () => {
@@ -131,12 +145,14 @@ const createContactDialog = (nameField, emailField, phoneField, resultContainer)
       label: 'Name',
       placeholder: 'Enter full name',
       variant: 'outlined'
+      // supportingText: 'Required'
     })
 
     emailField = createTextfield({
       label: 'Email',
       placeholder: 'email@example.com',
       variant: 'outlined'
+      // supportingText: 'Required'
     })
 
     phoneField = createTextfield({
@@ -145,10 +161,15 @@ const createContactDialog = (nameField, emailField, phoneField, resultContainer)
       variant: 'outlined'
     })
 
+    newsletterCheckbox = createCheckbox({
+      label: 'Newsletter'
+    })
+
     // Add fields to form
     formContainer.appendChild(nameField.element)
     formContainer.appendChild(emailField.element)
     formContainer.appendChild(phoneField.element)
+    formContainer.appendChild(newsletterCheckbox.element)
   })
 }
 
@@ -163,22 +184,14 @@ export const initFormDialog = (container) => {
     variant: 'filled'
   })
 
-  // Result container
-  const resultContainer = document.createElement('div')
-  resultContainer.classList.add('form-result')
-  resultContainer.style.marginTop = '16px'
-  resultContainer.style.padding = '8px'
-  resultContainer.style.borderRadius = '4px'
-  resultContainer.style.minHeight = '36px'
-
   // Create a dialog with form content
 
   // Create form fields (will be added to form when dialog opens)
-  let nameField, emailField, phoneField
+  let nameField, emailField, phoneField, newsletterCheckbox
 
   // Open dialog when button is clicked
   openContactButton.on('click', () => {
-    createContactDialog(nameField, emailField, phoneField, resultContainer)
+    createContactDialog(nameField, emailField, phoneField, newsletterCheckbox)
   })
 
   // Create button to open dialog
@@ -195,5 +208,4 @@ export const initFormDialog = (container) => {
   // Add button and result container to layout
   layout.body.appendChild(openContactButton.element)
   layout.body.appendChild(openSettingsButton.element)
-  layout.body.appendChild(resultContainer)
 }

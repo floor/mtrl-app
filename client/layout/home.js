@@ -1,6 +1,6 @@
 import { iconMtrl } from '../icons'
 
-export const createContentStructure = (info) => {
+export const createHomeLayout = (info) => {
   return {
     head: {
       options: { className: 'content__header' },
@@ -8,9 +8,7 @@ export const createContentStructure = (info) => {
         section: {
           options: { className: 'content__box content-info' },
           children: {
-            title: {
-              options: { text: info.title, className: 'content__title' }
-            },
+            mtrl: { options: { html: iconMtrl, className: 'content-logo' } },
             description: {
               options: { text: info.description, className: 'content__description' }
             }
@@ -19,7 +17,7 @@ export const createContentStructure = (info) => {
       }
     },
     body: {
-      options: { id: 'body', className: 'content__body' }
+      options: { className: 'content__body' }
     },
     foot: {
       options: { className: 'content__footer' },
