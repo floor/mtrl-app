@@ -33,15 +33,15 @@ export const navigationLayout = {
   },
 
   // Get Started section
-  getstarted: {
-    label: 'Get Started',
-    icon: iconGetstarted
-    // items: [
-    //   { id: 'installation', label: 'Installation', path: '/getstarted' }, // Path to getstarted root
-    //   { id: 'usage', label: 'Usage', path: '/getstarted/usage' },
-    //   { id: 'examples', label: 'Examples', path: '/getstarted/examples' }
-    // ]
-  },
+  // getstarted: {
+  //   label: 'Get Started',
+  //   icon: iconGetstarted
+  //   // items: [
+  //   //   { id: 'installation', label: 'Installation', path: '/getstarted' }, // Path to getstarted root
+  //   //   { id: 'usage', label: 'Usage', path: '/getstarted/usage' },
+  //   //   { id: 'examples', label: 'Examples', path: '/getstarted/examples' }
+  //   // ]
+  // },
 
   // Core section
   core: {
