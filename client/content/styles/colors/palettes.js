@@ -10,7 +10,7 @@ export const createColorPalettes = (container) => {
   // Create main layout with content section
   const layout = createLayout(createContentSection({
     title: 'Theme Colors',
-    description: 'Theme colors provide semantic meaning and are used consistently across components. Use these tokens to maintain visual consistency and accessibility.',
+    description: 'Theme colors provide semantic meaning and are used consistently across components.',
     class: 'color-palettes'
   }), container).getAll()
 
@@ -18,7 +18,7 @@ export const createColorPalettes = (container) => {
   const themeTitle = layout.title
 
   // Define themes with their colors
-  const themes = ['ocean', 'forest', 'sunset', 'material', 'spring', 'summer', 'autumn', 'winter']
+  const themes = ['ocean', 'forest', 'material', 'spring', 'summer', 'autumn', 'winter']
 
   // Create a layout with separate containers for controls and palettes
   const mainLayout = createLayout([
