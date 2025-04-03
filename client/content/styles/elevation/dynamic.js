@@ -63,11 +63,11 @@ export const initDynamicElevation = (container) => {
     // Remove all elevation classes
     const card = structure.get('card')
     for (let i = 0; i <= 5; i++) {
-      card.classList.remove(`elevation-${i}`)
+      card.classList.remove(`mtrl-elevation-${i}`)
     }
 
     // Add new elevation class
-    card.classList.add(`elevation-${currentElevation}`)
+    card.classList.add(`mtrl-elevation-${currentElevation}`)
 
     // Update button text
     elevateButton.setText(`Elevation Level: ${currentElevation}`)

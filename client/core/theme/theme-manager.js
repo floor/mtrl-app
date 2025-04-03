@@ -121,6 +121,10 @@ export const createThemeManager = (options = {}) => {
       origin
     })
 
+    themesMenu.position(origin.element)
+
+    themesMenu.show()
+
     document.body.appendChild(themesMenu.element)
 
     themesMenu.show()

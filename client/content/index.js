@@ -6,7 +6,8 @@ import { createStylesContent } from './styles/index'
 import { createColorsContent } from './styles/colors'
 import { createTypographyContent } from './styles/typography'
 import { createElevationContent } from './styles/elevation'
-import { createLayoutContent } from './styles/layout'
+import { createLayoutContent } from './sytles/layout'
+import { createLayoutStylesContent } from './styles/layout'
 import { createComponentsContent } from './components'
 import { createBottomAppBarsContent } from './components/app-bars/bottom'
 import { createTopAppBarsContent } from './components/app-bars/top'
@@ -39,11 +40,12 @@ export {
   createEventsContent,
   createStateContent,
   createCompositionContent,
+  createLayoutContent,
   createStylesContent,
   createColorsContent,
   createTypographyContent,
   createElevationContent,
-  createLayoutContent,
+  createLayoutStylesContent,
   createComponentsContent,
   createBottomAppBarsContent,
   createTopAppBarsContent,

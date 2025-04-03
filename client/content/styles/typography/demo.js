@@ -58,7 +58,7 @@ export const initTypographyDemo = (container) => {
   // Quote
   const quote = createElement({
     tag: 'blockquote',
-    class: 'mtrl-typography-demo__quote mtrl-type-title-medium',
+    class: 'mtrl-typography-demo__quote',
     text: '"Typography is what language looks like."'
   })
 

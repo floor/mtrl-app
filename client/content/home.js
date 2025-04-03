@@ -36,9 +36,9 @@ export const createHomeContent = (container) => {
   const layout = createLayout(createHomeLayout(info), container).component
 
   createButtonVariants(layout.body)
-  createRangeSlider(layout.body)
-  createTextfieldCombined(layout.body)
   createSwitches(layout.body)
+  createTextfieldCombined(layout.body)
+  createRangeSlider(layout.body)
   createDialogs(layout.body)
   createTabs(layout.body)
 }

@@ -62,7 +62,8 @@ export const navigationLayout = {
     items: [
       { id: 'colors', label: 'Colors', path: '/styles/colors' },
       { id: 'typography', label: 'Typography', path: '/styles/typography' },
-      { id: 'elevation', label: 'Elevation', path: '/styles/elevation' }
+      { id: 'elevation', label: 'Elevation', path: '/styles/elevation' },
+      { id: 'layout', label: 'Layout', path: '/styles/layout' }
     ]
   },
 

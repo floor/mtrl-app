@@ -1,4 +1,4 @@
-import { contentLayout, createContentLayout } from './content'
+import { contentLayout, createContentLayout, createContentSection } from './content'
 
 import { componentsLayout } from './components'
 import {
@@ -13,6 +13,7 @@ import {
 
 export {
   contentLayout,
+  createContentSection,
   componentsLayout,
   createContentLayout,
   sectionLayout,

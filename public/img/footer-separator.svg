@@ -6,7 +6,7 @@
          C55,35 65,35 80,20
          C95,5 105,5 120,20
          C135,35 145,35 160,20" 
-      stroke="#ffffff" 
+      stroke="currentColor" 
       fill="none" 
       stroke-width="1.5" />
 </svg>

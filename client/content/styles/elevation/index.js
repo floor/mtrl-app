@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/index.js
-import { contentLayout } from '../../../layout'
+import { createContentLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { createElevationLevelsSection } from './levels'
 import { createElevationPrinciplesSection } from './principles'
@@ -18,7 +18,7 @@ export const createElevationContent = (container) => {
   }
 
   // Create the main layout
-  const structure = createLayout(contentLayout(info), container)
+  const structure = createLayout(createContentLayout(info), container)
 
   // Get the layout body for adding content sections
   const contentBody = structure.get('body')

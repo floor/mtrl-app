@@ -25,6 +25,7 @@ const ROUTE_MODULE_MAP = {
   'styles/colors': () => import('../../content/styles/colors'),
   'styles/typography': () => import('../../content/styles/typography'),
   'styles/elevation': () => import('../../content/styles/elevation'),
+  'styles/layout': () => import('../../content/styles/layout'),
 
   // Components routes
   'components/buttons/common': () => import('../../content/components/buttons/common'),
