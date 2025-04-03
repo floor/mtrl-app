@@ -8,14 +8,11 @@ import {
 } from 'mtrl'
 
 export const createBasicLayout = (container) => {
-  console.log('createBasicLayout', container)
   const layout = createLayout(createContentSection({
     title: 'Basic Layout Structure',
     description: 'A standard layout with header, sidebar, main content, and footer.',
     class: 'theme-colors'
   }), container).getAll()
-
-  console.log('layout.body', layout.body)
 
   const basicLayoutContainer = createElement({
     class: 'layout-demo basic-layout'

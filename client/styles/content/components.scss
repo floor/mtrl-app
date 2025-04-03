@@ -94,7 +94,8 @@ $components: '#{b.$prefix}-components';
       padding: 24px;
     }
     &-title {
-      margin-bottom: 0
+      font-weight: normal;
+      // margin-bottom: 0
     }
 
     &-description {

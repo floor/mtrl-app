@@ -18,25 +18,37 @@ $content: '#{b.$prefix}-content';
 
   // Color palettes - improved styling
   .#{b.$prefix}-color-palettes {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    // display: grid;
+    // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 24px;
     margin-top: 24px;
   }
 
-  .color-palette {
+  .#{b.$prefix}-color-palettes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .#{b.$prefix}-theme-controls-container {
+      padding: 0;
+    }
+
+  .#{b.$prefix}-color-palette {
     border-radius: f.get-shape('medium');
     overflow: hidden;
     @include c.elevation(1);
     background-color: t.color('surface');
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-color: 1px solid  t.color('outline-variant');
     
     &:hover {
       @include c.elevation(2);
     }
   }
 
-  .color-palette__title {
+  .#{b.$prefix}-color-palette__title {
     padding: 16px;
     margin: 0;
     font-size: 1.1rem;
@@ -45,7 +57,7 @@ $content: '#{b.$prefix}-content';
     font-weight: 500;
   }
 
-  .color-swatch {
+  .#{b.$prefix}-color-swatch {
     min-height: 60px;
     display: flex;
     flex-direction: column;
@@ -66,12 +78,12 @@ $content: '#{b.$prefix}-content';
     }
   }
 
-  .color-swatch__tone {
+  .#{b.$prefix}-color-swatch__tone {
     font-weight: 500;
     font-size: 1rem;
   }
 
-  .color-swatch__value {
+  .#{b.$prefix}-color-swatch__value {
     font-size: 0.85rem;
     opacity: 0.8;
     max-width: 100%;
@@ -80,24 +92,24 @@ $content: '#{b.$prefix}-content';
     white-space: nowrap;
   }
   
-  .color-swatch__info {
+  .#{b.$prefix}-color-swatch__info {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
   
-  .color-swatch__tone {
+  .#{b.$prefix}-color-swatch__tone {
     font-weight: 500;
     font-size: 1rem;
   }
   
-  .color-swatch__value {
+  .#{b.$prefix}-color-swatch__value {
     font-size: 0.85rem;
     opacity: 0.7;
   }
   
   // Theme colors
-  .color-theme-grid {
+  .#{b.$prefix}-color-theme-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 16px;
@@ -105,7 +117,7 @@ $content: '#{b.$prefix}-content';
   }
   
   // Section title for separating color groups
-  .theme-color-section-title {
+  .#{b.$prefix}-theme-color-section-title {
     grid-column: 1 / -1;
     padding: 16px 0 8px;
     font-weight: 500;
@@ -115,7 +127,7 @@ $content: '#{b.$prefix}-content';
     margin-bottom: 8px;
   }
   
-  .theme-color-swatch {
+  .#{b.$prefix}-theme-color-swatch {
     border-radius: f.get-shape('small');
     height: 100px;
     padding: 16px;
@@ -128,6 +140,13 @@ $content: '#{b.$prefix}-content';
     }
   }
   
+  .#{b.$prefix}-theme-controls-container {
+    // padding: 1rem;
+    // background-color: var(--mtrl-sys-color-surface-variant);
+    // border-radius: 8px;
+    // box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
   .theme-color__info {
     height: 100%;
     display: flex;
@@ -165,6 +184,8 @@ $content: '#{b.$prefix}-content';
     }
   }
   
+
+
   .state-color-example {
     height: 50px;
     display: flex;

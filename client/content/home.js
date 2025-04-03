@@ -4,6 +4,7 @@ import {
   createHomeLayout
 } from '../layout/home'
 
+import { createColorPalettes } from './styles/colors/palettes'
 import { initVariants as createButtonVariants } from './components/buttons/common/variants'
 import { initRange as createRangeSlider } from './components/sliders/range'
 import { initCombinedFeatures as createTextfieldCombined } from './components/textfields/combined-features'
@@ -16,29 +17,19 @@ import {
   createLayout
 } from 'mtrl'
 
-// export const createHomeContent = (container) => {
-//   const info = {
-//     title: 'mtrl',
-//     description: 'A functional TypeScript/Javascript component library with composable architecture'
-//   }
-
-//   const layout = createLayout(createContentStructure(info), container).component
-
-//   createLayout(createButtonVariants(), layout.body)
-// }
-
 export const createHomeContent = (container) => {
   const info = {
     title: 'mtrl',
     description: 'A functional TypeScript/Javascript component library with composable architecture'
   }
 
-  const layout = createLayout(createHomeLayout(info), container).component
+  const body = createLayout(createHomeLayout(info), container).get('body')
 
-  createButtonVariants(layout.body)
-  createSwitches(layout.body)
-  createTextfieldCombined(layout.body)
-  createRangeSlider(layout.body)
-  createDialogs(layout.body)
-  createTabs(layout.body)
+  createColorPalettes(body)
+  createButtonVariants(body)
+  createSwitches(body)
+  createTextfieldCombined(body)
+  createRangeSlider(body)
+  createDialogs(body)
+  createTabs(body)
 }

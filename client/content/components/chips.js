@@ -10,6 +10,7 @@ import {
   createLayout,
   createButton,
   createTextfield,
+  createChipSet,
   createChip
 } from 'mtrl'
 
@@ -89,7 +90,7 @@ export const initChipVariants = (container) => {
   const variants = Object.values(CHIP_VARIANTS)
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const chip = createChip({
+    const chip = createChipSet({
       text: `${text} Chip`,
       variant,
       ripple: true
@@ -204,15 +205,9 @@ export const initChipSet = (container) => {
 
   // Define chips with unique values
   const chipConfigs = [
-    { text: 'JavaScript', variant: CHIP_VARIANTS.FILLED, value: 'js' },
     { text: 'TypeScript', variant: CHIP_VARIANTS.FILLED, value: 'ts' },
-    { text: 'HTML', variant: CHIP_VARIANTS.FILLED, value: 'html' },
-    { text: 'CSS', variant: CHIP_VARIANTS.FILLED, value: 'css' },
-    { text: 'React', variant: CHIP_VARIANTS.FILLED, value: 'react' },
-    { text: 'Vue', variant: CHIP_VARIANTS.FILLED, value: 'vue' },
-    { text: 'Angular', variant: CHIP_VARIANTS.FILLED, value: 'angular' },
-    { text: 'Svelte', variant: CHIP_VARIANTS.FILLED, value: 'svelte' },
-    { text: 'Node.js', variant: CHIP_VARIANTS.FILLED, value: 'node' }
+    { text: 'SCSS', variant: CHIP_VARIANTS.FILLED, value: 'css' },
+    { text: 'Bun', variant: CHIP_VARIANTS.FILLED, value: 'bun' }
   ]
 
   // Create a scrollable chip set container

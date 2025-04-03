@@ -688,14 +688,7 @@
 
 // content/styles/layout
 
-
-// // src/client/styles/content/layout.scss
-// @use 'mtrl/src/styles/abstract/base' as b;
-// @use 'mtrl/src/styles/abstract/variables' as v;
-// @use 'mtrl/src/styles/abstract/functions' as f;
-// @use 'mtrl/src/styles/abstract/mixins' as m;
-// @use 'mtrl/src/styles/abstract/theme' as t;
-
+// Common layout demo styles
 // Common layout demo styles
 .layout-demo {
   margin-top: 24px;
@@ -1007,62 +1000,132 @@
   }
 }
 
-// Split Layout
-.split-layout {
+// Split Layout section with improved styling
+.#{b.$prefix}-split-layout {
   display: flex;
   height: 300px;
-  background-color: t.color('surface-container-low');
+  background-color: transparent; // Remove background color
+  position: relative;
+  gap: 24px; // Add gap between panes
+  box-shadow: none; // Remove shadow
+  border-radius: 0; // Remove border radius
   
-  .layout-demo__panel {
+  .#{b.$prefix}-layout-demo__pane {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 24px;
     transition: all 0.3s ease;
     @include m.typography('body-large');
+    border-radius: v.shape('medium'); // Add border radius to panes
+    // box-shadow: v.elevation('level-1'); // Add shadow to panes instead of container
   }
   
-  .layout-demo__panel--left {
+  .#{b.$prefix}-layout-demo__pane--left {
     background-color: t.color('primary-container');
     color: t.color('on-primary-container');
   }
   
-  .layout-demo__panel--right {
+  .#{b.$prefix}-layout-demo__pane--right {
     background-color: t.color('secondary-container');
     color: t.color('on-secondary-container');
   }
-  
-  // Split configurations
-  &.split-50-50 {
-    .layout-demo__panel {
-      flex: 1;
-    }
-  }
-  
-  &.split-30-70 {
-    .layout-demo__panel--left {
-      flex: 3;
+
+  // Resize handle styling
+  .#{b.$prefix}-layout-demo__resize-handle {
+    position: absolute;
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: 24px; // Handle width matching gap
+    height: 60px; // Taller handle
+    margin-left: 0;
+    cursor: col-resize;
+    background-color: transparent;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    
+    &::after {
+      content: "";
+      width: 4px;
+      height: 48px;
+      border-radius: 2px;
+      background-color: t.color('outline-variant');
+      transition: all 0.2s ease;
     }
     
-    .layout-demo__panel--right {
-      flex: 7;
-    }
-  }
-  
-  &.split-70-30 {
-    .layout-demo__panel--left {
-      flex: 7;
+    &:hover {
+      // background-color: t.color('surface-container-highest');
+      transition: none;
+      &::after {
+        background-color: t.color('primary');
+        height: 48px;
+      }
     }
     
-    .layout-demo__panel--right {
-      flex: 3;
+
+
+    &:active {
+      transition: none;
+      &::after {
+
+        background-color: t.color('primary');
+        height: 48px;
+        width: 6px;
+        border-radius: 3px;
+      }
     }
   }
   
-  &.split-stack {
+  &.resizing {
+    cursor: col-resize;
+    user-select: none;
+    
+    .#{b.$prefix}-layout-demo__pane {
+      pointer-events: none;
+      transition: none;
+    }
+  }
+  
+  // Hide resize handle when stacked
+  .#{b.$prefix}-split-stack .#{b.$prefix}-layout-demo__resize-handle {
+    display: none;
+  }
+  
+  // // Split configurations
+  .#{b.$prefix}-split-50-50 {
+    .#{b.$prefix}-layout-demo__pane {
+      flex: 0 0 calc(50% - 12px); // Account for gap
+    }
+  }
+  
+  // &.split-30-70 {
+  //   .#{b.$prefix}-layout-demo__pane--left {
+  //     flex: 0 0 calc(30% - 12px); // Account for gap
+  //   }
+    
+  //   .#{b.$prefix}-layout-demo__pane--right {
+  //     flex: 0 0 calc(70% - 12px); // Account for gap
+  //   }
+  // }
+  
+  // &.split-70-30 {
+  //   .#{b.$prefix}-layout-demo__pane--left {
+  //     flex: 0 0 calc(70% - 12px); // Account for gap
+  //   }
+    
+  //   .#{b.$prefix}-layout-demo__pane--right {
+  //     flex: 0 0 calc(30% - 12px); // Account for gap
+  //   }
+  // }
+  
+  .#{b.$prefix}-split-stack {
     flex-direction: column;
     
-    .layout-demo__panel {
+    .#{b.$prefix}-layout-demo__pane {
       flex: 1;
     }
   }
@@ -1071,38 +1134,12 @@
     flex-direction: column;
     height: 400px;
     
-    .layout-demo__panel {
+    .#{b.$prefix}-layout-demo__pane {
       flex: 1 !important;
     }
-  }
-}
-
-// Viewport size indicator
-.viewport-size-indicator {
-  background-color: t.color('tertiary-container');
-  color: t.color('on-tertiary-container');
-  padding: 12px;
-  margin: 16px 0;
-  border-radius: v.shape('small');
-  text-align: center;
-  @include m.typography('label-large');
-  transition: all 0.3s ease;
-}
-
-// Theme-specific adjustments
-[data-theme-mode="dark"] {
-  .layout-demo {
-    box-shadow: v.elevation('level-1');
-  }
-  
-  .layout-demo__grid-item,
-  .layout-demo__card {
-    &:hover {
-      box-shadow: v.elevation('level-2');
-    }
     
-    &.expanded {
-      box-shadow: v.elevation('level-3');
+    .#{b.$prefix}-layout-demo__resize-handle {
+      display: none;
     }
   }
 }
