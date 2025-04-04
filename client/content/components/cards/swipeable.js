@@ -7,7 +7,7 @@ import {
 import {
   createElement,
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
@@ -103,7 +103,7 @@ export const initSwipeableCard = (container) => {
   })
 
   // Create delete button
-  const deleteButton = createButton({
+  const deleteButton = fButton({
     text: 'Delete',
     variant: 'outlined',
     ariaLabel: 'Delete item',
@@ -112,7 +112,7 @@ export const initSwipeableCard = (container) => {
   buttonContainer.appendChild(deleteButton)
 
   // Create archive button
-  const archiveButton = createButton({
+  const archiveButton = fButton({
     text: 'Archive',
     variant: 'outlined',
     ariaLabel: 'Archive item',

@@ -1,6 +1,6 @@
 import {
   createLayout,
-  createChipSet,
+  fChipSet,
   createSwitch
 } from 'mtrl'
 
@@ -15,7 +15,6 @@ export const createColorPalettes = (container) => {
   }), container).getAll()
 
   const body = layout.body
-  const themeTitle = layout.title
 
   // Define themes with their colors
   const themes = ['ocean', 'forest', 'material', 'spring', 'summer', 'autumn', 'winter']
@@ -24,15 +23,15 @@ export const createColorPalettes = (container) => {
   const mainLayout = createLayout([
     // Theme Controls Container
     ['controlsContainer', { class: 'theme-controls-container' },
-      [createChipSet, 'themeChipSet', {
+      [fChipSet, 'themeChipSet', {
         scrollable: true,
         multiSelect: false,
         class: 'theme-chip-set'
+      }],
+      [createSwitch, 'darkModeSwitch', {
+        label: 'Dark Mode',
+        checked: document.body.getAttribute('data-theme-mode') === 'dark'
       }]
-      // [createSwitch, 'darkModeSwitch', {
-      //   label: 'Dark Mode',
-      //   checked: document.body.getAttribute('data-theme-mode') === 'dark'
-      // }]
     ],
 
     // Palettes Container (separate from controls, but in same section)
@@ -41,6 +40,8 @@ export const createColorPalettes = (container) => {
 
   // Extract components
   const { themeChipSet, darkModeSwitch, palettesContainer } = mainLayout.component
+
+  console.log('themeChipSet', themeChipSet)
 
   // Add chips to chip set
   for (let i = themes.length - 1; i >= 0; i--) {
@@ -73,10 +74,10 @@ export const createColorPalettes = (container) => {
   })
 
   // Handle dark mode toggle
-  // darkModeSwitch.on('change', () => {
-  //   const newMode = darkModeSwitch.isChecked() ? 'dark' : 'light'
-  //   document.body.setAttribute('data-theme-mode', newMode)
-  // })
+  darkModeSwitch.on('change', () => {
+    const newMode = darkModeSwitch.isChecked() ? 'dark' : 'light'
+    document.body.setAttribute('data-theme-mode', newMode)
+  })
 
   // Add CSS for styling
   // addThemeStyles()

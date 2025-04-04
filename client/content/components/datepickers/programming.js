@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDatePicker
 } from 'mtrl'
 
@@ -28,7 +28,7 @@ export const initProgramming = (container) => {
   buttonContainer.style.marginBottom = '16px'
 
   // Set Today button
-  const setTodayBtn = createButton({
+  const setTodayBtn = fButton({
     text: 'Set Today',
     variant: 'outlined'
   })
@@ -38,7 +38,7 @@ export const initProgramming = (container) => {
   })
 
   // Set Specific Date button
-  const setDateBtn = createButton({
+  const setDateBtn = fButton({
     text: 'Set to Christmas',
     variant: 'outlined'
   })
@@ -49,7 +49,7 @@ export const initProgramming = (container) => {
   })
 
   // Set Min Date button
-  const setMinDateBtn = createButton({
+  const setMinDateBtn = fButton({
     text: 'Set Min Date to Today',
     variant: 'outlined'
   })
@@ -59,7 +59,7 @@ export const initProgramming = (container) => {
   })
 
   // Clear button
-  const clearBtn = createButton({
+  const clearBtn = fButton({
     text: 'Clear Date',
     variant: 'outlined'
   })
@@ -69,7 +69,7 @@ export const initProgramming = (container) => {
   })
 
   // Open Calendar button
-  const openBtn = createButton({
+  const openBtn = fButton({
     text: 'Open Calendar',
     variant: 'outlined'
   })
@@ -79,7 +79,7 @@ export const initProgramming = (container) => {
   })
 
   // Get Value button
-  const getValueBtn = createButton({
+  const getValueBtn = fButton({
     text: 'Get Value',
     variant: 'outlined'
   })

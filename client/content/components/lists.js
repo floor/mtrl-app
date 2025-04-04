@@ -8,7 +8,7 @@ import {
   createLayout,
   createElement,
   createList,
-  createButton
+  fButton
 } from 'mtrl'
 
 const STAR_ICON = `
@@ -277,7 +277,7 @@ export const createListsLayout = (components) => [
         }
       }],
       [createElement, 'div', { class: 'mtrl-content__controls' },
-        [createButton, null, {
+        [fButton, null, {
           text: 'Toggle Disabled',
           variant: 'outlined',
           onclick: () => {
@@ -289,7 +289,7 @@ export const createListsLayout = (components) => [
             }
           }
         }],
-        [createButton, null, {
+        [fButton, null, {
           text: 'Add Item',
           variant: 'outlined',
           onclick: () => {
@@ -301,7 +301,7 @@ export const createListsLayout = (components) => [
             components.logEvent(`Added item: ${id}`)
           }
         }],
-        [createButton, null, {
+        [fButton, null, {
           text: 'Remove First Item',
           variant: 'outlined',
           onclick: () => {

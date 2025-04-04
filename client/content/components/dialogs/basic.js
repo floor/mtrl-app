@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDialog
 } from 'mtrl'
 
@@ -40,7 +40,7 @@ export const initBasic = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const openButton = createButton({
+  const openButton = fButton({
     text: 'Open Basic Dialog',
     variant: 'filled'
   })

@@ -8,7 +8,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createTextfield,
   createChipSet,
   createChip
@@ -323,7 +323,7 @@ export const initFilterChipSet = (container) => {
   })
 
   // Add a button to clear all filters
-  const clearButton = createButton({
+  const clearButton = fButton({
     text: 'Clear Filters',
     variant: 'text',
     size: 'small'
@@ -417,7 +417,7 @@ export const initInputChips = (container) => {
   })
 
   // Create an add button
-  const addButton = createButton({
+  const addButton = fButton({
     text: 'Add',
     variant: 'filled',
     size: 'small'
@@ -538,7 +538,7 @@ export const initInteractiveChipExample = (container) => {
     variant: 'outlined'
   })
 
-  const addCustomCityButton = createButton({
+  const addCustomCityButton = fButton({
     text: 'Add City',
     variant: 'outlined',
     size: 'small'

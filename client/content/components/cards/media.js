@@ -7,7 +7,7 @@ import {
 import {
   createElement,
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 import { artworks, getImageUrl } from './artwork-data'
@@ -150,13 +150,13 @@ export const initActionCards = (container) => {
     content.appendChild(alignmentNote)
 
     // Create action buttons
-    const viewButton = createButton({
+    const viewButton = fButton({
       text: 'View Details',
       variant: 'filled',
       ariaLabel: `View details about ${artwork.title}`
     }).element
 
-    const shareButton = createButton({
+    const shareButton = fButton({
       text: 'Share',
       variant: 'text',
       ariaLabel: `Share ${artwork.title}`

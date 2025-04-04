@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   createTabs,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const initProgrammaticTabs = (container) => {
@@ -32,25 +32,25 @@ export const initProgrammaticTabs = (container) => {
   controlsContainer.className = 'mtrl-content__tab-controls'
 
   // Button to select the first tab
-  const firstButton = createButton({
+  const firstButton = fButton({
     text: 'Select First',
     variant: 'outlined'
   })
 
   // Button to select the second tab
-  const secondButton = createButton({
+  const secondButton = fButton({
     text: 'Select Second',
     variant: 'outlined'
   })
 
   // Button to select the third tab
-  const thirdButton = createButton({
+  const thirdButton = fButton({
     text: 'Select Third',
     variant: 'outlined'
   })
 
   // Button to select the fourth tab
-  const fourthButton = createButton({
+  const fourthButton = fButton({
     text: 'Select Fourth',
     variant: 'outlined'
   })

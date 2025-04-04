@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 import {
@@ -132,7 +132,7 @@ export const initDisabled = (container) => {
   controlsContainer.style.gap = '8px'
   controlsContainer.style.marginBottom = '16px'
 
-  const disableAllButton = createButton({
+  const disableAllButton = fButton({
     text: 'Disable All',
     variant: 'outlined'
   })
@@ -141,7 +141,7 @@ export const initDisabled = (container) => {
     log.info('Disabled entire segmented button')
   })
 
-  const enableAllButton = createButton({
+  const enableAllButton = fButton({
     text: 'Enable All',
     variant: 'outlined'
   })
@@ -150,7 +150,7 @@ export const initDisabled = (container) => {
     log.info('Enabled entire segmented button')
   })
 
-  const disableOption2Button = createButton({
+  const disableOption2Button = fButton({
     text: 'Disable Option 2',
     variant: 'outlined'
   })
@@ -163,7 +163,7 @@ export const initDisabled = (container) => {
     }
   })
 
-  const enableOption2Button = createButton({
+  const enableOption2Button = fButton({
     text: 'Enable Option 2',
     variant: 'outlined'
   })

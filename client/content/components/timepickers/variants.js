@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createTimePicker
 } from 'mtrl'
 
@@ -79,7 +79,7 @@ export const initVariants = (container) => {
   // 3. Vertical Orientation
   const verticalContainer = createSectionContainer('Vertical Orientation', 'Default layout optimized for mobile')
 
-  const verticalButton = createButton({
+  const verticalButton = fButton({
     text: 'Open Vertical TimePicker',
     variant: 'outlined'
   })
@@ -99,7 +99,7 @@ export const initVariants = (container) => {
   // 4. Horizontal Orientation
   const horizontalContainer = createSectionContainer('Horizontal Orientation', 'Landscape layout for desktop')
 
-  const horizontalButton = createButton({
+  const horizontalButton = fButton({
     text: 'Open Horizontal TimePicker',
     variant: 'outlined'
   })

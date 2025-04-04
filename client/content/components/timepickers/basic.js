@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createTimePicker
 } from 'mtrl'
 

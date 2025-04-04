@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDatePicker
 } from 'mtrl'
 

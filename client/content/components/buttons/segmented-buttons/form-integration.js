@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 import {
@@ -188,7 +188,7 @@ export const initFormIntegration = (container) => {
   demoForm.appendChild(formatContainer)
 
   // Submit button
-  const submitButton = createButton({
+  const submitButton = fButton({
     text: 'Submit Preferences',
     variant: 'filled'
   })

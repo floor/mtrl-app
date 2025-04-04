@@ -7,7 +7,7 @@ import {
 import {
   createLayout,
   createBadge,
-  createButton
+  fButton
 } from 'mtrl'
 
 import {
@@ -32,7 +32,7 @@ export const initAttached = (container) => {
   buttonWrapper.style.alignItems = 'center'
   buttonWrapper.style.gap = '16px'
 
-  const button = createButton({
+  const button = fButton({
     text: 'Notifications'
   })
 

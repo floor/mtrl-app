@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDialog
 } from 'mtrl'
 
@@ -27,7 +27,7 @@ export const initFooterAlignments = (container) => {
 
   alignments.forEach(alignment => {
     // Create button to open dialog
-    const openButton = createButton({
+    const openButton = fButton({
       text: `${alignment.name} Alignment`,
       variant: 'outlined'
     })

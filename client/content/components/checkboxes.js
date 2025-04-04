@@ -9,7 +9,7 @@ import {
 import {
   createLayout,
   createCheckbox,
-  createButton,
+  fButton,
   createElement
 } from 'mtrl'
 
@@ -175,7 +175,7 @@ export const initIndeterminateCheckboxes = (container) => {
   controlsWrapper.style.display = 'flex'
   controlsWrapper.style.gap = '8px'
 
-  const setIndeterminateBtn = createButton({
+  const setIndeterminateBtn = fButton({
     text: 'Set Indeterminate',
     variant: 'outlined',
     size: 'small'

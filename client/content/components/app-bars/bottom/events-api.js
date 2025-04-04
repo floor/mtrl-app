@@ -6,8 +6,8 @@ import {
 import {
   createLayout,
   createBottomAppBar,
-  createButton,
-  createFab
+  fButton,
+  fFab
 } from 'mtrl'
 
 /**
@@ -71,26 +71,26 @@ export const initEventsApiBottomAppBar = (container) => {
   })
 
   // Create action buttons
-  const homeButton = createButton({
+  const homeButton = fButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>',
     variant: 'icon',
     ariaLabel: 'Home'
   })
 
-  const searchButton = createButton({
+  const searchButton = fButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Search'
   })
 
-  const notificationButton = createButton({
+  const notificationButton = fButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Notifications'
   })
 
   // Create a FAB using the proper FAB component
-  const fab = createFab({
+  const fab = fFab({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
     ariaLabel: 'Add new item',
     variant: FAB_VARIANTS.PRIMARY
@@ -139,19 +139,19 @@ export const initEventsApiBottomAppBar = (container) => {
   controlsContainer.style.marginBottom = '16px'
 
   // Toggle visibility button
-  const toggleVisibilityButton = createButton({
+  const toggleVisibilityButton = fButton({
     text: 'Toggle Visibility',
     variant: 'filled'
   })
 
   // Check visibility button
-  const checkVisibilityButton = createButton({
+  const checkVisibilityButton = fButton({
     text: 'Check Visibility',
     variant: 'outlined'
   })
 
   // Simulate scroll button (to trigger auto-hide)
-  const simulateScrollButton = createButton({
+  const simulateScrollButton = fButton({
     text: 'Simulate Scroll',
     variant: 'outlined'
   })

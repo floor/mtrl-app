@@ -6,7 +6,7 @@ import {
 import {
   createLayout,
   createExtendedFab,
-  createButton
+  fButton
 } from 'mtrl'
 
 // Icons for interaction demo
@@ -46,7 +46,7 @@ export const initInteraction = (container) => {
   buttonContainer.style.flexWrap = 'wrap'
 
   // Change icon button
-  const changeIconBtn = createButton({
+  const changeIconBtn = fButton({
     text: 'Change Icon',
     variant: 'outlined'
   })
@@ -75,7 +75,7 @@ export const initInteraction = (container) => {
   })
 
   // Lower/Raise button
-  const lowerBtn = createButton({
+  const lowerBtn = fButton({
     text: 'Lower Extended FAB',
     variant: 'outlined'
   })
@@ -94,7 +94,7 @@ export const initInteraction = (container) => {
   })
 
   // Change text button
-  const changeTextBtn = createButton({
+  const changeTextBtn = fButton({
     text: 'Change Text',
     variant: 'outlined'
   })
@@ -109,7 +109,7 @@ export const initInteraction = (container) => {
   })
 
   // Enable/Disable button
-  const disableBtn = createButton({
+  const disableBtn = fButton({
     text: 'Disable Extended FAB',
     variant: 'outlined'
   })
@@ -128,7 +128,7 @@ export const initInteraction = (container) => {
   })
 
   // Collapse/Expand button
-  const collapseBtn = createButton({
+  const collapseBtn = fButton({
     text: 'Collapse Extended FAB',
     variant: 'outlined'
   })

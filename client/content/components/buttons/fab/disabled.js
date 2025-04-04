@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createFab
+  fFab
 } from 'mtrl'
 
 /**
@@ -49,7 +49,7 @@ export const initDisabled = (container) => {
   // Create a disabled FAB for each variant
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const fab = createFab({
+    const fab = fFab({
       icon: addIcon,
       variant,
       disabled: true,
@@ -64,7 +64,7 @@ export const initDisabled = (container) => {
 
   sizes.forEach(size => {
     const text = capitalize(size)
-    const fab = createFab({
+    const fab = fFab({
       icon: addIcon,
       size,
       disabled: true,

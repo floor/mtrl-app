@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createTimePicker
 } from 'mtrl'
 
@@ -41,7 +41,7 @@ export const initProgramming = (container) => {
   buttonContainer.style.marginBottom = '16px'
 
   // Set Current Time button
-  const setCurrentBtn = createButton({
+  const setCurrentBtn = fButton({
     text: 'Set Current Time',
     variant: 'outlined'
   })
@@ -62,7 +62,7 @@ export const initProgramming = (container) => {
   })
 
   // Set Specific Time button
-  const setTimeBtn = createButton({
+  const setTimeBtn = fButton({
     text: 'Set to 8:15 AM',
     variant: 'outlined'
   })
@@ -73,7 +73,7 @@ export const initProgramming = (container) => {
   })
 
   // Toggle Format button
-  const toggleFormatBtn = createButton({
+  const toggleFormatBtn = fButton({
     text: 'Toggle 12h/24h Format',
     variant: 'outlined'
   })
@@ -89,7 +89,7 @@ export const initProgramming = (container) => {
   })
 
   // Toggle Type button
-  const toggleTypeBtn = createButton({
+  const toggleTypeBtn = fButton({
     text: 'Toggle Dial/Input Type',
     variant: 'outlined'
   })
@@ -105,7 +105,7 @@ export const initProgramming = (container) => {
   })
 
   // Open TimePicker button
-  const openBtn = createButton({
+  const openBtn = fButton({
     text: 'Open TimePicker',
     variant: 'filled'
   })

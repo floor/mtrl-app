@@ -7,7 +7,7 @@ import {
 import {
   createElement,
   createLayout
-  , createButton
+  , fButton
 } from 'mtrl'
 import { artworks, getPlaceholderUrl } from './artwork-data'
 import createCard, {
@@ -94,7 +94,7 @@ export const initHorizontalCards = (container) => {
     })
 
     // Create view button
-    const viewButton = createButton({
+    const viewButton = fButton({
       text: 'View',
       variant: 'text',
       ariaLabel: `View details about ${artwork.title}`

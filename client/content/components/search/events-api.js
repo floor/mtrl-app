@@ -7,7 +7,7 @@ import {
 import {
   createLayout,
   createSearch,
-  createButton,
+  fButton,
   createDivider,
   createElement
 } from 'mtrl'
@@ -54,27 +54,27 @@ export const initEventsAPI = (container) => {
   })
 
   // Create buttons for the demo
-  const setValueButton = createButton({
+  const setValueButton = fButton({
     text: 'Set Value to "Hello World"',
     variant: 'outlined'
   })
 
-  const clearButton = createButton({
+  const clearButton = fButton({
     text: 'Clear Search',
     variant: 'outlined'
   })
 
-  const focusButton = createButton({
+  const focusButton = fButton({
     text: 'Focus Search',
     variant: 'outlined'
   })
 
-  const placeholderButton = createButton({
+  const placeholderButton = fButton({
     text: 'Change Placeholder',
     variant: 'outlined'
   })
 
-  const submitButton = createButton({
+  const submitButton = fButton({
     text: 'Submit Search',
     variant: 'filled',
     color: 'primary'

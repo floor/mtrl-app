@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createFab
+  fFab
 } from 'mtrl'
 
 /**
@@ -70,7 +70,7 @@ export const initPositions = (container) => {
     const formattedPosition = position.replace(/_/g, '-').toLowerCase()
     const icon = icons[formattedPosition] || icons['bottom-right']
 
-    const fab = createFab({
+    const fab = fFab({
       icon,
       position: formattedPosition,
       ariaLabel: `${formattedPosition} position`
@@ -93,7 +93,7 @@ export const initPositions = (container) => {
   animatedDescription.textContent = 'This FAB demonstrates the entrance animation'
   layout.showcase.appendChild(animatedDescription)
 
-  const animatedFab = createFab({
+  const animatedFab = fFab({
     icon: icons['bottom-right'],
     animate: true,
     ariaLabel: 'Animated FAB'

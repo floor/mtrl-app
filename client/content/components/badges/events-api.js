@@ -7,7 +7,7 @@ import {
 import {
   createLayout,
   createBadge,
-  createButton
+  fButton
 } from 'mtrl'
 
 import {
@@ -149,7 +149,7 @@ export const initEventsAPI = (container) => {
   maxInput.style.padding = '8px'
   maxInput.style.width = '80px'
 
-  const setMaxButton = createButton({
+  const setMaxButton = fButton({
     text: 'Set Max',
     variant: 'outlined'
   })
@@ -176,7 +176,7 @@ export const initEventsAPI = (container) => {
   visibilityButtons.style.display = 'flex'
   visibilityButtons.style.gap = '8px'
 
-  const showButton = createButton({
+  const showButton = fButton({
     text: 'Show',
     variant: 'outlined'
   })
@@ -185,7 +185,7 @@ export const initEventsAPI = (container) => {
     badge.show()
   })
 
-  const hideButton = createButton({
+  const hideButton = fButton({
     text: 'Hide',
     variant: 'outlined'
   })
@@ -194,7 +194,7 @@ export const initEventsAPI = (container) => {
     badge.hide()
   })
 
-  const toggleButton = createButton({
+  const toggleButton = fButton({
     text: 'Toggle',
     variant: 'outlined'
   })

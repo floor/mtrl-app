@@ -8,7 +8,7 @@ import {
 import {
   createLayout,
   createElement,
-  createButton,
+  fButton,
   createTextfield,
   createProgress
 } from 'mtrl'
@@ -228,7 +228,7 @@ export const initInteractiveProgress = (container) => {
 
   // // Preset buttons
   // const createPresetButton = (value) => {
-  //   const button = createButton({
+  //   const button = fButton({
   //     text: `${value}%`,
   //     variant: 'outlined'
   //   })
@@ -245,7 +245,7 @@ export const initInteractiveProgress = (container) => {
   // [0, 25, 50, 75, 100].forEach(createPresetButton)
 
   // // Toggle determiniate/indeterminate
-  // const toggleButton = createButton({
+  // const toggleButton = fButton({
   //   text: 'Toggle Indeterminate',
   //   variant: 'filled'
   // })
@@ -267,7 +267,7 @@ export const initInteractiveProgress = (container) => {
   // controls.appendChild(toggleButton.element)
 
   // Toggle disabled state
-  const disableButton = createButton({
+  const disableButton = fButton({
     text: 'Toggle Disabled',
     variant: 'tonal'
   })

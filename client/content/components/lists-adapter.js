@@ -4,7 +4,7 @@ import {
   createElement,
   createContainer,
   createList,
-  createButton
+  fButton
 } from 'mtrl'
 import { createListManager, transforms } from '../../../../src/core/collection/list-manager'
 
@@ -25,7 +25,7 @@ const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading
     className: 'mtrl-content__navigation'
   })
 
-  const prevButton = createButton({
+  const prevButton = fButton({
     text: '← Previous',
     variant: 'outlined',
     disabled: !hasPrev || loading,
@@ -40,7 +40,7 @@ const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading
   })
   wrapper.appendChild(loadingSpan)
 
-  const nextButton = createButton({
+  const nextButton = fButton({
     text: 'Next →',
     variant: 'outlined',
     disabled: !hasNext || loading,

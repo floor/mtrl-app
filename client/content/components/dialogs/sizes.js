@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDialog
 } from 'mtrl'
 
@@ -44,7 +44,7 @@ export const initSizes = (container) => {
 
   sizes.forEach(size => {
     // Create button to open dialog
-    const openButton = createButton({
+    const openButton = fButton({
       text: `Open ${size.name} Dialog`,
       variant: 'filled'
     })

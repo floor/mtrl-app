@@ -8,7 +8,7 @@ import {
 
 import {
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const initVariants = (container) => {
@@ -18,7 +18,7 @@ export const initVariants = (container) => {
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const btn = createButton({
+    const btn = fButton({
       text: `${text} button`,
       variant,
       ripple: true

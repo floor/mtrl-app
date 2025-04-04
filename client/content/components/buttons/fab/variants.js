@@ -7,7 +7,7 @@ import {
 
 import {
   createLayout,
-  createFab
+  fFab
 } from 'mtrl'
 
 const FAB_VARIANTS = {
@@ -35,7 +35,7 @@ export const initVariants = (container) => {
 
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const fab = createFab({
+    const fab = fFab({
       icon: addIcon,
       variant,
       ariaLabel: `${text} action`

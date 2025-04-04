@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDialog
 } from 'mtrl'
 
@@ -51,7 +51,7 @@ export const initCustomButtons = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const openButton = createButton({
+  const openButton = fButton({
     text: 'Dialog with Custom Buttons',
     variant: 'filled'
   })

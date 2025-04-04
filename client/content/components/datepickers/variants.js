@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDatePicker
 } from 'mtrl'
 
@@ -52,7 +52,7 @@ export const initVariants = (container) => {
   modalLabel.textContent = 'Modal'
   modalLabel.style.marginBottom = '8px'
 
-  const openModalButton = createButton({
+  const openModalButton = fButton({
     text: 'Open Modal DatePicker',
     variant: 'outlined'
   })
@@ -76,7 +76,7 @@ export const initVariants = (container) => {
   modalInputLabel.textContent = 'Modal Input'
   modalInputLabel.style.marginBottom = '8px'
 
-  const openModalInputButton = createButton({
+  const openModalInputButton = fButton({
     text: 'Open Modal Input DatePicker',
     variant: 'outlined'
   })

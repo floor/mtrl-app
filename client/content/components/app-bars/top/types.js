@@ -6,7 +6,7 @@ import {
 import {
   createLayout,
   createTopAppBar,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const initTypesTopAppBar = (container) => {
@@ -95,7 +95,7 @@ function createTypeDemoContainer (type, typeTitle, description) {
   })
 
   // Create leading navigation button
-  const leadingIcon = createButton({
+  const leadingIcon = fButton({
     icon: type === 'center'
       ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>'
       : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
@@ -104,7 +104,7 @@ function createTypeDemoContainer (type, typeTitle, description) {
   })
 
   // Create trailing action button
-  const trailingIcon = createButton({
+  const trailingIcon = fButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>',
     variant: 'icon',
     ariaLabel: 'More options'

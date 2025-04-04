@@ -7,7 +7,7 @@ import {
   createLayout,
   createElement,
   createSnackbar,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const SNACKBAR_POSITIONS = {
@@ -37,7 +37,7 @@ export const createSnackbarsLayout = (components) => [
       id: 'basic',
       onCreate: (el) => {
         // Basic snackbar
-        const basicButton = createButton({
+        const basicButton = fButton({
           text: 'Show Basic Snackbar',
           variant: 'filled'
         })
@@ -52,7 +52,7 @@ export const createSnackbarsLayout = (components) => [
         el.appendChild(basicButton.element)
 
         // Snackbar with action
-        const actionButton = createButton({
+        const actionButton = fButton({
           text: 'Show Action Snackbar',
           variant: 'filled'
         })
@@ -81,7 +81,7 @@ export const createSnackbarsLayout = (components) => [
       id: 'positions',
       onCreate: (el) => {
         Object.values(SNACKBAR_POSITIONS).forEach(position => {
-          const button = createButton({
+          const button = fButton({
             text: `Show ${position}`,
             variant: 'filled'
           })
@@ -115,7 +115,7 @@ export const createSnackbarsLayout = (components) => [
         ]
 
         durations.forEach(({ label, value }) => {
-          const button = createButton({
+          const button = fButton({
             text: label,
             variant: 'filled'
           })

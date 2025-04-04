@@ -8,7 +8,7 @@ import {
 
 import {
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const initDisabled = (container) => {
@@ -18,7 +18,7 @@ export const initDisabled = (container) => {
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const btn = createButton({
+    const btn = fButton({
       text: `${text} Button`,
       variant,
       disabled: true

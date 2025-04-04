@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 const heartIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,7 +22,7 @@ export const initIcons = (container) => {
 
     // log.info('disabled', disabled)
 
-    const btn = createButton({
+    const btn = fButton({
       icon: heartIcon,
       iconSize: 'medium',
       ariaLabel: 'Like'

@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createButton
+  fButton
 } from 'mtrl'
 
 import {
@@ -170,7 +170,7 @@ export const initInteraction = (container) => {
   controlsContainer.style.flexWrap = 'wrap'
 
   // Select Food button
-  const selectFoodBtn = createButton({
+  const selectFoodBtn = fButton({
     text: 'Select Food',
     variant: 'outlined'
   })
@@ -180,7 +180,7 @@ export const initInteraction = (container) => {
   })
 
   // Select Shopping button
-  const selectShoppingBtn = createButton({
+  const selectShoppingBtn = fButton({
     text: 'Select Shopping',
     variant: 'outlined'
   })
@@ -190,7 +190,7 @@ export const initInteraction = (container) => {
   })
 
   // Deselect Food button
-  const deselectFoodBtn = createButton({
+  const deselectFoodBtn = fButton({
     text: 'Deselect Food',
     variant: 'outlined'
   })
@@ -200,7 +200,7 @@ export const initInteraction = (container) => {
   })
 
   // Select All button
-  const selectAllBtn = createButton({
+  const selectAllBtn = fButton({
     text: 'Select All',
     variant: 'outlined'
   })
@@ -212,7 +212,7 @@ export const initInteraction = (container) => {
   })
 
   // Clear All button
-  const clearAllBtn = createButton({
+  const clearAllBtn = fButton({
     text: 'Clear All',
     variant: 'outlined'
   })

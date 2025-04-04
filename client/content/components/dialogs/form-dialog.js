@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDialog,
   createTextfield,
   createSlider,
@@ -179,7 +179,7 @@ export const initFormDialog = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const openContactButton = createButton({
+  const openContactButton = fButton({
     text: 'Open Form Dialog',
     variant: 'filled'
   })
@@ -195,7 +195,7 @@ export const initFormDialog = (container) => {
   })
 
   // Create button to open dialog
-  const openSettingsButton = createButton({
+  const openSettingsButton = fButton({
     text: 'Open Settings Dialog',
     variant: 'filled'
   })

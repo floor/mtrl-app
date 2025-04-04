@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   createTabs,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const initDynamicTabs = (container) => {
@@ -28,13 +28,13 @@ export const initDynamicTabs = (container) => {
   controlsContainer.className = 'mtrl-content__tab-controls'
 
   // Add Tab button
-  const addButton = createButton({
+  const addButton = fButton({
     text: 'Add Tab',
     variant: 'filled'
   })
 
   // Remove Tab button
-  const removeButton = createButton({
+  const removeButton = fButton({
     text: 'Remove Last Tab',
     variant: 'outlined'
   })

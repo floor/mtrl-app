@@ -7,7 +7,7 @@ import {
 
 import {
   createLayout,
-  createFab
+  fFab
 } from 'mtrl'
 
 export const FAB_SIZES = {
@@ -41,7 +41,7 @@ export const initSizes = (container) => {
     // Use the large icon for the large FAB
     const icon = size === FAB_SIZES.LARGE ? largeAddIcon : addIcon
 
-    const fab = createFab({
+    const fab = fFab({
       icon,
       size,
       ariaLabel: `${text} size action`

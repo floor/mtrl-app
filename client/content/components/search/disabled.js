@@ -7,7 +7,7 @@ import {
 import {
   createLayout,
   createSearch,
-  createButton,
+  fButton,
   createElement
 } from 'mtrl'
 
@@ -29,7 +29,7 @@ export const initDisabled = (container) => {
   })
 
   // Create a button to toggle the disabled state
-  const toggleButton = createButton({
+  const toggleButton = fButton({
     text: 'Toggle Disabled State',
     variant: 'outlined'
   })

@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createButton
+  fButton
   , createElement
 } from 'mtrl'
 
@@ -76,7 +76,7 @@ export const initDynamicCard = (container) => {
     })
 
     // Create view button
-    const viewButton = createButton({
+    const viewButton = fButton({
       text: 'View Details',
       variant: 'filled'
     }).element
@@ -138,7 +138,7 @@ export const initDynamicCard = (container) => {
     })
 
     // Create cycle button
-    const cycleButton = createButton({
+    const cycleButton = fButton({
       text: 'Next Artwork',
       variant: 'text',
       onclick: () => {

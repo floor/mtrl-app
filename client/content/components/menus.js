@@ -8,7 +8,7 @@ import {
 import {
   createLayout,
   createMenu,
-  createButton,
+  fButton,
   createElement
 } from 'mtrl'
 
@@ -36,7 +36,7 @@ export const initBasicMenu = (container) => {
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 
-  const button = createButton({
+  const button = fButton({
     text: 'Show Basic Menu',
     variant: 'filled'
   })
@@ -70,7 +70,7 @@ export const initNestedMenu = (container) => {
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 
-  const button = createButton({
+  const button = fButton({
     text: 'Show Nested Menu',
     variant: 'tonal'
   })
@@ -119,7 +119,7 @@ export const initIconMenu = (container) => {
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 
-  const button = createButton({
+  const button = fButton({
     icon: moreIcon,
     variant: 'outlined'
   })
@@ -153,7 +153,7 @@ export const initCustomMenu = (container) => {
 
   const demoContainer = createElement({ class: 'mtrl-content__demo' })
 
-  const button = createButton({
+  const button = fButton({
     text: 'Show Custom Menu',
     variant: 'elevated'
   })

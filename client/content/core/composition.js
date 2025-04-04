@@ -876,7 +876,7 @@ export const createIconButton = (config) => createButton({
   text: null  // Icon buttons have no text by default
 });
 
-export const createFab = (config) => createButton({
+export const fFab = (config) => createButton({
   ...config,
   variant: 'fab',
   size: config.size || 'large',

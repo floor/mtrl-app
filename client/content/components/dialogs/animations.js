@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createDialog
 } from 'mtrl'
 
@@ -43,7 +43,7 @@ export const initAnimations = (container) => {
 
   animations.forEach(animation => {
     // Create button to open dialog
-    const openButton = createButton({
+    const openButton = fButton({
       text: `${animation.name} Animation`,
       variant: 'outlined'
     })

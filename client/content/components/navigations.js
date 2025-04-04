@@ -8,7 +8,7 @@ import {
   createElement,
   createLayout,
   createNavigation,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const createNavigationsContent = (container, components) => {
