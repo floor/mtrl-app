@@ -11,7 +11,6 @@ import {
 import { createColorPalettes } from './palettes'
 import { createThemeColors } from './themes'
 import { createColorState } from './state'
-import { createDynamicTheme } from './dynamic'
 
 export const createColorsContent = (content) => {
   console.log('createColorsContent', content)
@@ -21,7 +20,6 @@ export const createColorsContent = (content) => {
   }
   const container = createLayout(createContentLayout(info), content).get('body')
 
-  createDynamicTheme(container)
   createColorPalettes(container)
   createThemeColors(container)
   createColorState(container)

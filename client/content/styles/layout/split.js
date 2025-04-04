@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   createSlider,
-  createSwitch
+  fSwitch
 } from 'mtrl'
 
 export const createSplitLayout = (container) => {
@@ -24,7 +24,7 @@ export const createSplitLayout = (container) => {
     ],
     ['controls', { class: 'layout-demo__controls' },
       [createSlider, 'sliderPercent', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],
-      [createSwitch, { class: 'layout-demo__pane layout-demo__pane--right', label: 'Stack (Mobile)' }]
+      [fSwitch, { class: 'layout-demo__pane layout-demo__pane--right', label: 'Stack (Mobile)' }]
     ]
   ], layout.body)
 

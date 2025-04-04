@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createSwitch
+  fSwitch
 } from 'mtrl'
 
 export const initDisabledSwitches = (container) => {
@@ -18,14 +18,14 @@ export const initDisabledSwitches = (container) => {
   layout.body.style.alignItems = 'center'
 
   // Disabled switch
-  const disabledSwitch = createSwitch({
+  const disabledSwitch = fSwitch({
     label: 'Disabled Switch',
     disabled: true
   })
   layout.body.appendChild(disabledSwitch.element)
 
   // Disabled and checked switch
-  const disabledCheckedSwitch = createSwitch({
+  const disabledCheckedSwitch = fSwitch({
     label: 'Disabled Checked',
     disabled: true,
     checked: true

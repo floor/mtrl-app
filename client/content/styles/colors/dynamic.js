@@ -2,7 +2,7 @@ import {
   createLayout,
   createElement,
   createChipSet,
-  createSwitch
+  fSwitch
 } from 'mtrl'
 import { createContentSection } from '../../../layout/content'
 
@@ -99,7 +99,7 @@ export const createDynamicTheme = (container) => {
   themeSwitchers.appendChild(themeChips.element)
 
   // Create dark mode switch
-  const darkModeSwitch = createSwitch({
+  const darkModeSwitch = fSwitch({
     label: 'Dark Mode',
     checked: document.body.getAttribute('data-theme-mode') === 'dark',
     supportingText: 'Toggle between light and dark mode'

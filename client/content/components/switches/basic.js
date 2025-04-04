@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createSwitch
+  fSwitch
 } from 'mtrl'
 
 export const initBasicSwitches = (container) => {
@@ -18,14 +18,14 @@ export const initBasicSwitches = (container) => {
   layout.body.style.alignItems = 'center'
 
   // Default switch
-  const defaultSwitch = createSwitch({
+  const defaultSwitch = fSwitch({
     label: 'Default Switch'
   })
 
   layout.body.appendChild(defaultSwitch.element)
 
   // Checked switch
-  const checkedSwitch = createSwitch({
+  const checkedSwitch = fSwitch({
     label: 'Initially Checked',
     checked: true
   })

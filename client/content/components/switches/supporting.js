@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createSwitch
+  fSwitch
 } from 'mtrl'
 
 export const initSupportingText = (container) => {
@@ -18,14 +18,14 @@ export const initSupportingText = (container) => {
   layout.body.style.alignItems = 'center'
 
   // Default switch
-  const defaultSwitch = createSwitch({
+  const defaultSwitch = fSwitch({
     label: 'Permission manager',
     supportingText: 'App has access to your data'
   })
   layout.body.appendChild(defaultSwitch.element)
 
   // Checked switch
-  const checkedSwitch = createSwitch({
+  const checkedSwitch = fSwitch({
     label: 'Camera access',
     supportingText: 'App has access to you camera',
     checked: true

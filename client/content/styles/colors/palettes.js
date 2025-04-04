@@ -1,7 +1,7 @@
 import {
   createLayout,
   fChipSet,
-  createSwitch
+  fSwitch
 } from 'mtrl'
 
 import { createContentSection } from '../../../layout/content'
@@ -28,7 +28,7 @@ export const createColorPalettes = (container) => {
         multiSelect: false,
         class: 'theme-chip-set'
       }],
-      [createSwitch, 'darkModeSwitch', {
+      [fSwitch, 'darkModeSwitch', {
         label: 'Dark Mode',
         checked: document.body.getAttribute('data-theme-mode') === 'dark'
       }]
