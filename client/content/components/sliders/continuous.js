@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createSlider
+  fSlider
 } from 'mtrl'
 
 const callVolume = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -15,7 +15,7 @@ export const initContinuous = (container) => {
   const title = 'Continuous Slider with Label'
   const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
-  const slider = createSlider({
+  const slider = fSlider({
     label: 'Brightness',
     min: 0,
     max: 100,
@@ -29,7 +29,7 @@ export const initContinuous1000 = (container) => {
   const title = 'Continuous Slider with Label and Icon'
   const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
-  const sliderCallVolume = createSlider({
+  const sliderCallVolume = fSlider({
     label: 'Call volume',
     icon: callVolume,
     min: 0,
@@ -39,7 +39,7 @@ export const initContinuous1000 = (container) => {
     size: 'small'
   })
 
-  const sliderAlarmVolume = createSlider({
+  const sliderAlarmVolume = fSlider({
     label: 'Alarm volume',
     icon: callVolume,
     min: 0,

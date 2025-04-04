@@ -4,14 +4,14 @@ import {
 
 import {
   createLayout,
-  createSlider
+  fSlider
 } from 'mtrl'
 
 export const initEventsAPI = (container) => {
   const title = 'Using events and API'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const slider = createSlider({
+  const slider = fSlider({
     min: 0,
     max: 100,
     value: 50,

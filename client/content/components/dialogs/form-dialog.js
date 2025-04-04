@@ -7,7 +7,7 @@ import {
   fButton,
   createDialog,
   createTextfield,
-  createSlider,
+  fSlider,
   createCheckbox,
   createSnackbar
 } from 'mtrl'
@@ -54,7 +54,7 @@ const createSettingsDialog = () => {
     const formContainer = dialog.getContentElement().querySelector('#settings-form')
     formContainer.innerHTML = '' // Clear previous fields
 
-    const sliderCallVolume = createSlider({
+    const sliderCallVolume = fSlider({
       label: 'Call volume',
       icon: callVolume,
       min: 0,
@@ -64,7 +64,7 @@ const createSettingsDialog = () => {
       size: 'small'
     })
 
-    const sliderAlarmVolume = createSlider({
+    const sliderAlarmVolume = fSlider({
       label: 'Alarm volume',
       icon: alarmVolume,
       min: 0,

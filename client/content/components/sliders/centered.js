@@ -4,14 +4,14 @@ import {
 
 import {
   createLayout,
-  createSlider
+  fSlider
 } from 'mtrl'
 
 export const initCentered = (container) => {
   const title = 'Centered Slider'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const slider = createSlider({
+  const slider = fSlider({
     min: -100,
     max: 100,
     value: 0,

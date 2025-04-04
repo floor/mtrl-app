@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createSlider
+  fSlider
 } from 'mtrl'
 
 import {
@@ -15,7 +15,7 @@ export const initDiscrete = (container) => {
   const title = 'Slider with tick marks'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const slider = createSlider({
+  const slider = fSlider({
     min: 0,
     max: 5,
     value: 2,
@@ -31,7 +31,7 @@ export const initDiscreteWithLabels = (container) => {
   const title = 'Slider with tick marks and labels'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const slider = createSlider({
+  const slider = fSlider({
     min: 0,
     max: 5,
     value: 2,

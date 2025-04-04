@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createSlider,
+  fSlider,
   fSwitch
 } from 'mtrl'
 
@@ -23,7 +23,7 @@ export const createSplitLayout = (container) => {
       ['resizeHandle', { class: 'layout-demo__resize-handle' }]
     ],
     ['controls', { class: 'layout-demo__controls' },
-      [createSlider, 'sliderPercent', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],
+      [fSlider, 'sliderPercent', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],
       [fSwitch, { class: 'layout-demo__pane layout-demo__pane--right', label: 'Stack (Mobile)' }]
     ]
   ], layout.body)

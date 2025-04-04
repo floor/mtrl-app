@@ -4,14 +4,14 @@ import {
 
 import {
   createLayout,
-  createSlider
+  fSlider
 } from 'mtrl'
 
 export const initDisabled = (container) => {
   const title = 'Disabled slider'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const slider = createSlider({
+  const slider = fSlider({
     min: 0,
     max: 10,
     value: 5,

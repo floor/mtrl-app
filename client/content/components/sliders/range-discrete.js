@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createSlider
+  fSlider
 } from 'mtrl'
 
 import {
@@ -15,7 +15,7 @@ export const initRangeDiscrete = (container) => {
   const title = 'Range slider with tick marks'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const slider = createSlider({
+  const slider = fSlider({
     min: 0,
     max: 1000,
     value: 200,
