@@ -5,6 +5,7 @@ import {
 } from 'mtrl'
 
 import { createContentSection } from '../../../layout/content'
+import themeManager from '../../../core/theme/theme-manager'
 
 export const createColorPalettes = (container) => {
   // Create main layout with content section
@@ -19,6 +20,9 @@ export const createColorPalettes = (container) => {
   // Define themes with their colors
   const themes = ['ocean', 'forest', 'material', 'spring', 'summer', 'autumn', 'winter']
 
+  // Get current theme settings
+  const currentSettings = themeManager.getSettings()
+
   // Create a layout with separate containers for controls and palettes
   const mainLayout = createLayout([
     // Theme Controls Container
@@ -30,7 +34,7 @@ export const createColorPalettes = (container) => {
       }],
       [fSwitch, 'darkModeSwitch', {
         label: 'Dark Mode',
-        checked: document.body.getAttribute('data-theme-mode') === 'dark'
+        checked: currentSettings.themeMode === 'dark'
       }]
     ],
 
@@ -41,8 +45,6 @@ export const createColorPalettes = (container) => {
   // Extract components
   const { themeChipSet, darkModeSwitch, palettesContainer } = mainLayout.component
 
-  console.log('themeChipSet', themeChipSet)
-
   // Add chips to chip set
   for (let i = themes.length - 1; i >= 0; i--) {
     const name = themes[i]
@@ -50,40 +52,71 @@ export const createColorPalettes = (container) => {
       text: name,
       value: name,
       variant: 'filter',
-      class: `theme-chip theme-${name}`
+      selectable: true, // Explicitly make it selectable
+      selected: name === currentSettings.themeName, // Pre-select current theme
+      class: `theme-chip theme-${name}`,
+      // Add per-chip change handler
+      onChange: (chip) => {
+        // console.log('chip', chip)
+        chip.addClass('mtrl-chip--selected')
+      }
     })
   }
 
-  // Handle theme changes
-  themeChipSet.on('change', (selectedChips) => {
-    if (selectedChips.length > 0) {
-      console.log('selectedChips', selectedChips[0])
-      const theme = selectedChips[0]
+  // Force theme to be saved in both storage systems to keep them in sync
+  // This ensures the theme is remembered after page reload
+  const currentTheme = currentSettings.themeName || 'material'
+  themeManager.setTheme(currentTheme)
 
-      console.log('theme', theme)
+  // We'll select the theme chip after all chips are initialized
 
-      // Apply theme to the document body
-      document.body.setAttribute('data-theme', theme)
+  // Store current theme to prevent infinite event loops
+  let lastSelectedTheme = currentTheme
 
-      // // Update theme title
-      // themeTitle.textContent = `Theme Colors (${selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)} Theme)`
+  // Handle theme changes from chip selection
+  themeChipSet.on('change', (selectedValues) => {
+    if (selectedValues.length > 0) {
+      const theme = selectedValues[0]
 
-      // Update chip colors
-      // updateChipColors(themeChipSet, themes)
+      // Prevent update loop by checking if the theme actually changed
+      if (theme !== lastSelectedTheme) {
+        lastSelectedTheme = theme
+        // Use themeManager to set the theme
+        themeManager.setTheme(theme)
+      }
     }
   })
 
   // Handle dark mode toggle
   darkModeSwitch.on('change', () => {
     const newMode = darkModeSwitch.isChecked() ? 'dark' : 'light'
-    document.body.setAttribute('data-theme-mode', newMode)
+    themeManager.setThemeMode(newMode)
   })
 
-  // Add CSS for styling
-  // addThemeStyles()
+  // Listen for theme changes from elsewhere in the app
+  window.addEventListener('themechange', (event) => {
+    // Update switch state if theme mode changed elsewhere
+    const currentSwitchMode = darkModeSwitch.isChecked() ? 'dark' : 'light'
+    if (event.detail.themeMode !== currentSwitchMode) {
+      // Use the correct method for the Switch component
+      if (event.detail.themeMode === 'dark') {
+        darkModeSwitch.check()
+      } else {
+        darkModeSwitch.uncheck()
+      }
+    }
 
-  // Update chip colors initially
-  updateChipColors(themeChipSet, themes)
+    // Update chip selection if theme changed elsewhere
+    if (event.detail.themeName && event.detail.themeName !== lastSelectedTheme) {
+      // Update our tracking variable
+      lastSelectedTheme = event.detail.themeName
+      // Update the UI without triggering another change event
+      themeChipSet.selectByValue(event.detail.themeName)
+    }
+  })
+
+  // Just select the current theme - icon update is handled by each chip's onChange
+  themeChipSet.selectByValue(currentTheme)
 
   // Create palette layouts
   const palettes = [
@@ -102,7 +135,7 @@ export const createColorPalettes = (container) => {
       ]
     ]
 
-    console.log('palettesContainer', palettesContainer)
+    // console.log('palettesContainer', palettesContainer)
 
     // Create the palette layout
     const paletteLayout = createLayout(paletteStructure, palettesContainer)
@@ -151,31 +184,5 @@ export const createColorPalettes = (container) => {
         ]
       ], paletteElement)
     })
-  })
-}
-
-/**
- * Updates chip colors based on selection state
- */
-function updateChipColors (chipSet, themes) {
-  const allChips = chipSet.getChips()
-
-  allChips.forEach(chip => {
-    const chipValue = chip.getValue()
-    const theme = themes.find(t => t.name === chipValue)
-
-    if (theme) {
-      if (chip.isSelected()) {
-        // Apply selected colors
-        chip.element.style.backgroundColor = theme.selectedBackgroundColor
-        chip.element.style.color = theme.selectedTextColor
-        chip.element.style.borderColor = theme.selectedBackgroundColor
-      } else {
-        // Apply unselected colors
-        chip.element.style.backgroundColor = theme.backgroundColor
-        chip.element.style.color = '' // Reset to default text color
-        chip.element.style.borderColor = '' // Reset to default border
-      }
-    }
   })
 }

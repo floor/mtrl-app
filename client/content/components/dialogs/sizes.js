@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog
+  fDialog
 } from 'mtrl'
 
 import {
@@ -13,7 +13,7 @@ import {
 } from 'mtrl/src/components/dialog'
 
 const createSizesDialog = (size) => {
-  const dialog = createDialog({
+  const dialog = fDialog({
     title: `${size.name} Dialog`,
     content: `<p>This is a ${size.name.toLowerCase()} sized dialog.</p>
                 <p>Dialog sizes can be customized to fit different amounts of content.</p>`,

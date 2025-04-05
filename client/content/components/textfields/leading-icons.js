@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTextfield
+  fTextfield
 } from 'mtrl'
 
 // Search icon SVG for the textfields
@@ -18,7 +18,7 @@ export const initLeadingIcons = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with leading icon
-  const filled = createTextfield({
+  const filled = fTextfield({
     label: 'Search',
     placeholder: 'Search...',
     variant: 'filled',
@@ -26,7 +26,7 @@ export const initLeadingIcons = (container) => {
   })
 
   // Outlined textfield with leading icon
-  const outlined = createTextfield({
+  const outlined = fTextfield({
     label: 'Search',
     placeholder: 'Search...',
     variant: 'outlined',

@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog
+  fDialog
 } from 'mtrl'
 
 import {
@@ -13,7 +13,7 @@ import {
 } from 'mtrl/src/components/dialog'
 
 const createAnimationsDialog = (animation) => {
-  const dialog = createDialog({
+  const dialog = fDialog({
     title: `${animation.name} Animation`,
     content: `<p>This dialog uses the ${animation.name.toLowerCase()} animation style.</p>`,
     animation: animation.value,

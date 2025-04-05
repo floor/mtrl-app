@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTextfield
+  fTextfield
 } from 'mtrl'
 
 export const initTextfieldVariants = (container) => {
@@ -15,7 +15,7 @@ export const initTextfieldVariants = (container) => {
   // const filledWrapper = createElement({ class: 'mtrl-content__variant' })
 
   // Filled textfield
-  const filled = createTextfield({
+  const filled = fTextfield({
     label: 'Filled Input',
     placeholder: 'Type something...',
     variant: 'filled',
@@ -27,7 +27,7 @@ export const initTextfieldVariants = (container) => {
   // const outlinedWrapper = createElement({ class: 'mtrl-content__variant' })
 
   // Outlined textfield
-  const outlined = createTextfield({
+  const outlined = fTextfield({
     label: 'Outlined Input',
     placeholder: 'Type something...',
     variant: 'outlined',

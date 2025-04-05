@@ -10,7 +10,7 @@ import {
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -40,7 +40,7 @@ export const initInteractiveCards = (container) => {
   interactionTypes.forEach((type, index) => {
     const artwork = artworks[(index + 5) % artworks.length]
 
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: type.interactive,
       clickable: type.clickable,

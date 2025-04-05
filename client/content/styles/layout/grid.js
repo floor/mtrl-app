@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createElement
 } from 'mtrl'
 
@@ -54,7 +54,7 @@ export const createGridLayout = (container) => {
   ]
 
   gridOptions.forEach(option => {
-    const button = createButton({
+    const button = fButton({
       text: option.text,
       variant: 'outlined'
     })

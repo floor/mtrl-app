@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createBadge
+  fBadge
 } from 'mtrl'
 
 import {
@@ -53,7 +53,7 @@ export const initPositions = (container) => {
     wrapper.appendChild(box)
 
     // Then create badge attached to the box
-    const badge = createBadge({
+    const badge = fBadge({
       variant: BADGE_VARIANTS.LARGE,
       label: '8',
       position,
@@ -97,7 +97,7 @@ export const initPositions = (container) => {
     wrapper.appendChild(box)
 
     // Then create badge attached to the box
-    const badge = createBadge({
+    const badge = fBadge({
       variant: BADGE_VARIANTS.SMALL,
       position,
       target: box

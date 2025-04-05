@@ -1,5 +1,5 @@
 // src/client/content/core/layout/components.js
-import { createLayout, createElement } from 'mtrl'
+import { createLayout } from 'mtrl'
 
 /**
  * Creates the Layout Components section
@@ -110,8 +110,8 @@ const initComponentsContent = (container) => {
             class: 'mtrl-layout-code',
             text: `// Create a layout with named components
 const layout = createLayout([
-  createButton, 'saveButton', { text: 'Save' },
-  createTextfield, 'nameField', { label: 'Name' }
+  fButton, 'saveButton', { text: 'Save' },
+  fTextfield, 'nameField', { label: 'Name' }
 ]);
 
 // Direct access by component name
@@ -130,8 +130,8 @@ saveButton.on('click', () => console.log('Saving: ' + nameField.getValue()));`
             class: 'mtrl-layout-code',
             text: `// Create a layout with named components
 const layout = createLayout([
-  createButton, 'saveButton', { text: 'Save' },
-  createTextfield, 'nameField', { label: 'Name' }
+  fButton, 'saveButton', { text: 'Save' },
+  fTextfield, 'nameField', { label: 'Name' }
 ]);
 
 // Access using get() method
@@ -153,7 +153,7 @@ const layout = createLayout([
   createNavbar, 'navbar', { title: 'Dashboard' },
   createSidebar, 'sidebar', {},
   [
-    createList, 'menuList', {},
+    fList, 'menuList', {},
     [
       createListItem, 'homeItem', { text: 'Home' },
       createListItem, 'settingsItem', { text: 'Settings' }
@@ -206,11 +206,11 @@ components.settingsItem.setActive(false);`
         class: 'mtrl-layout-code',
         text: `// Create a modal dialog layout
 const modalLayout = createLayout([
-  createDialog, 'confirmDialog', { title: 'Confirm Action' },
+  fDialog, 'confirmDialog', { title: 'Confirm Action' },
   [
-    createTextfield, 'reasonField', { label: 'Reason' },
-    createButton, 'confirmBtn', { text: 'Confirm' },
-    createButton, 'cancelBtn', { text: 'Cancel' }
+    fTextfield, 'reasonField', { label: 'Reason' },
+    fButton, 'confirmBtn', { text: 'Confirm' },
+    fButton, 'cancelBtn', { text: 'Cancel' }
   ]
 ]);
 

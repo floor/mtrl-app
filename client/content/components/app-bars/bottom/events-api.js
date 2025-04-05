@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createBottomAppBar,
+  fBottomAppBar,
   fButton,
   fFab
 } from 'mtrl'
@@ -60,7 +60,7 @@ export const initEventsApiBottomAppBar = (container) => {
   demoContainer.appendChild(logContainer)
 
   // Create the bottom app bar with configuration
-  const bottomBar = createBottomAppBar({
+  const bottomBar = fBottomAppBar({
     hasFab: true,
     autoHide: true,
     transitionDuration: 300,

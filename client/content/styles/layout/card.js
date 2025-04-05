@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createElement
 } from 'mtrl'
 
@@ -71,7 +71,7 @@ export const createCardLayout = (container) => {
   ]
 
   cardOptions.forEach(option => {
-    const button = createButton({
+    const button = fButton({
       text: option.text,
       variant: 'outlined'
     })

@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createBadge,
+  fBadge,
   fButton
 } from 'mtrl'
 
@@ -35,7 +35,7 @@ export const initEventsAPI = (container) => {
   badgeDisplay.style.height = '100px'
 
   // Create the badge
-  const badge = createBadge({
+  const badge = fBadge({
     variant: BADGE_VARIANTS.LARGE,
     label: '42',
     color: BADGE_COLORS.PRIMARY,

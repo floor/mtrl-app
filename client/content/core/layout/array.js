@@ -103,13 +103,13 @@ const initArrayLayouts = (container) => {
           'row1', { tag: 'tr' },
           [
             'row1Pattern', { tag: 'td', text: 'Creator + Name + Options' },
-            'row1Structure', { tag: 'td', class: 'code', text: '[createButton, "saveBtn", { text: "Save" }]' },
+            'row1Structure', { tag: 'td', class: 'code', text: '[fButton, "saveBtn", { text: "Save" }]' },
             'row1Description', { tag: 'td', text: 'Full pattern with explicit component creator function and naming' }
           ],
           'row2', { tag: 'tr' },
           [
             'row2Pattern', { tag: 'td', text: 'Creator + Options' },
-            'row2Structure', { tag: 'td', class: 'code', text: '[createButton, { text: "Save" }]' },
+            'row2Structure', { tag: 'td', class: 'code', text: '[fButton, { text: "Save" }]' },
             'row2Description', { tag: 'td', text: 'Anonymous component with no reference name' }
           ],
           'row3', { tag: 'tr' },
@@ -121,7 +121,7 @@ const initArrayLayouts = (container) => {
           'row4', { tag: 'tr' },
           [
             'row4Pattern', { tag: 'td', text: 'Nested Children' },
-            'row4Structure', { tag: 'td', class: 'code', text: '[createCard, "card", {}, [...]]' },
+            'row4Structure', { tag: 'td', class: 'code', text: '[fCard, "card", {}, [...]]' },
             'row4Description', { tag: 'td', text: 'Component with nested children in a sub-array' }
           ],
           'row5', { tag: 'tr' },

@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch
+  fSearch
 } from 'mtrl'
 
 export const SEARCH_VARIANTS = {
@@ -37,7 +37,7 @@ export const initWithSuggestions = (container) => {
   ]
 
   // Create search with suggestions
-  const searchWithSuggestions = createSearch({
+  const searchWithSuggestions = fSearch({
     variant: SEARCH_VARIANTS.VIEW,
     placeholder: 'Search with suggestions',
     showClearButton: true,

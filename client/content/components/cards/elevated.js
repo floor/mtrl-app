@@ -7,7 +7,7 @@ import {
 import {
   createElement,
   createLayout,
-  createCard
+  fCard
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
@@ -33,7 +33,7 @@ export const initElevatedCards = (container) => {
   ;[1, 2].forEach((elevation, index) => {
     const artwork = artworks[index + 3] // Use different artworks
 
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: true,
       aria: {

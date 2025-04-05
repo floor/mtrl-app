@@ -1,7 +1,7 @@
 import {
   createLayout,
   createElement,
-  createChipSet,
+  fChipSet,
   fSwitch
 } from 'mtrl'
 import { createContentSection } from '../../../layout/content'
@@ -49,7 +49,7 @@ export const createDynamicTheme = (container) => {
   ]
 
   // Create a chip set for theme selection
-  const themeChips = createChipSet({
+  const themeChips = fChipSet({
     scrollable: true,
     multiSelect: false, // Only one theme can be active at a time
     onChange: (selectedChip, selectedChips) => {

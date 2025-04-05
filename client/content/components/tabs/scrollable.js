@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs
+  fTabs
 } from 'mtrl'
 
 export const initScrollableTabs = (container) => {
@@ -12,7 +12,7 @@ export const initScrollableTabs = (container) => {
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with many items to demonstrate scrolling
-  const tabs = createTabs({
+  const tabs = fTabs({
     scrollable: true, // Explicitly enable scrolling (though it's enabled by default)
     tabs: [
       { text: 'Home', value: 'home', state: 'active' },

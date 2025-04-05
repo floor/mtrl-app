@@ -5,11 +5,11 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog
+  fDialog
 } from 'mtrl'
 
 const createButtonsDialog = (statusMessage) => {
-  const dialog = createDialog({
+  const dialog = fDialog({
     title: 'Save Changes?',
     content: '<p>Your changes will be lost if you don\'t save them.</p>',
     buttons: [

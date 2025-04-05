@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTextfield
+  fTextfield
 } from 'mtrl'
 
 // Clear icon SVG for the textfields
@@ -18,7 +18,7 @@ export const initTrailingIcons = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with trailing icon
-  const filled = createTextfield({
+  const filled = fTextfield({
     label: 'Clear Input',
     placeholder: 'Type to clear...',
     variant: 'filled',
@@ -32,7 +32,7 @@ export const initTrailingIcons = (container) => {
   })
 
   // Outlined textfield with trailing icon
-  const outlined = createTextfield({
+  const outlined = fTextfield({
     label: 'Clear Input',
     placeholder: 'Type to clear...',
     variant: 'outlined',

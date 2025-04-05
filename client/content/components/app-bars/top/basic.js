@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTopAppBar,
+  fTopAppBar,
   fButton
 } from 'mtrl'
 
@@ -25,7 +25,7 @@ export const initBasicTopAppBar = (container) => {
   demoContainer.style.marginBottom = '16px'
 
   // Create the top app bar with default configuration
-  const topBar = createTopAppBar({
+  const topBar = fTopAppBar({
     title: 'Page Title',
     type: 'small'
   })

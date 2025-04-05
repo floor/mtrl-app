@@ -8,7 +8,7 @@ import {
 
 import {
   createLayout,
-  createCheckbox,
+  fCheckbox,
   fButton,
   createElement
 } from 'mtrl'
@@ -31,27 +31,27 @@ export const initBasicCheckboxes = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Default checkbox
-  const defaultCheckbox = createCheckbox({
+  const defaultCheckbox = fCheckbox({
     label: 'Default'
   })
   layout.body.appendChild(defaultCheckbox.element)
 
   // Checked checkbox
-  const checkedCheckbox = createCheckbox({
+  const checkedCheckbox = fCheckbox({
     label: 'Checked',
     checked: true
   })
   layout.body.appendChild(checkedCheckbox.element)
 
   // Disabled checkbox
-  const disabledCheckbox = createCheckbox({
+  const disabledCheckbox = fCheckbox({
     label: 'Disabled',
     disabled: true
   })
   layout.body.appendChild(disabledCheckbox.element)
 
   // Disabled and checked checkbox
-  const disabledCheckedCheckbox = createCheckbox({
+  const disabledCheckedCheckbox = fCheckbox({
     label: 'Disabled',
     disabled: true,
     checked: true
@@ -70,21 +70,21 @@ export const initLabelPositions = (container) => {
   // layout.body.appendChild(description)
 
   // Label at end (default)
-  const endLabelCheckbox = createCheckbox({
+  const endLabelCheckbox = fCheckbox({
     label: 'Label at End (Default)',
     labelPosition: 'end'
   })
   layout.body.appendChild(endLabelCheckbox.element)
 
   // Label at start
-  const startLabelCheckbox = createCheckbox({
+  const startLabelCheckbox = fCheckbox({
     label: 'Label at Start',
     labelPosition: 'start'
   })
   layout.body.appendChild(startLabelCheckbox.element)
 
   // Disabled with start label
-  const disabledStartLabelCheckbox = createCheckbox({
+  const disabledStartLabelCheckbox = fCheckbox({
     label: 'Disabled with Start Label',
     labelPosition: 'start',
     disabled: true
@@ -100,7 +100,7 @@ export const initIndeterminateCheckboxes = (container) => {
   const demoWrapper = createElement({ class: 'indeterminate-checkbox-demo' })
 
   // Parent checkbox (will control indeterminate state)
-  const parentCheckbox = createCheckbox({
+  const parentCheckbox = fCheckbox({
     label: 'Select All Items',
     indeterminate: true
   })
@@ -115,9 +115,9 @@ export const initIndeterminateCheckboxes = (container) => {
 
   // Child checkboxes
   const childCheckboxes = [
-    createCheckbox({ label: 'Item 1' }),
-    createCheckbox({ label: 'Item 2' }),
-    createCheckbox({ label: 'Item 3' })
+    fCheckbox({ label: 'Item 1' }),
+    fCheckbox({ label: 'Item 2' }),
+    fCheckbox({ label: 'Item 3' })
   ]
 
   // Add child checkboxes to container

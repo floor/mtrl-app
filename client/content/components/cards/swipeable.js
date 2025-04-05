@@ -11,7 +11,7 @@ import {
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -39,7 +39,7 @@ export const initSwipeableCard = (container) => {
   let deleteCount = 0
 
   // Create base card
-  const baseCard = createCard({
+  const baseCard = fCard({
     variant: CARD_VARIANTS.ELEVATED,
     aria: {
       label: 'Swipeable card demonstration',

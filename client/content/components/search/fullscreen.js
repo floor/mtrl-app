@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch,
+  fSearch,
   createElement
 } from 'mtrl'
 
@@ -19,7 +19,7 @@ export const initFullscreenView = (container) => {
   const title = 'Search View (Fullscreen Mode)'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const searchView = createSearch({
+  const searchView = fSearch({
     variant: SEARCH_VARIANTS.VIEW,
     viewMode: SEARCH_VIEW_MODES.FULLSCREEN,
     placeholder: 'Search products',

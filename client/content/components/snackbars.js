@@ -6,7 +6,7 @@ import {
 import {
   createLayout,
   createElement,
-  createSnackbar,
+  fSnackbar,
   fButton
 } from 'mtrl'
 
@@ -42,7 +42,7 @@ export const createSnackbarsLayout = (components) => [
           variant: 'filled'
         })
         basicButton.on('click', () => {
-          const snackbar = createSnackbar({
+          const snackbar = fSnackbar({
             message: 'This is a basic snackbar message',
             variant: 'basic'
           })
@@ -57,7 +57,7 @@ export const createSnackbarsLayout = (components) => [
           variant: 'filled'
         })
         actionButton.on('click', () => {
-          const snackbar = createSnackbar({
+          const snackbar = fSnackbar({
             message: 'Snackbar with action button',
             variant: 'action',
             action: 'Undo'
@@ -86,7 +86,7 @@ export const createSnackbarsLayout = (components) => [
             variant: 'filled'
           })
           button.on('click', () => {
-            const snackbar = createSnackbar({
+            const snackbar = fSnackbar({
               message: `Snackbar in ${position} position`,
               position,
               action: 'OK'
@@ -120,7 +120,7 @@ export const createSnackbarsLayout = (components) => [
             variant: 'filled'
           })
           button.on('click', () => {
-            const snackbar = createSnackbar({
+            const snackbar = fSnackbar({
               message: `${label} duration snackbar`,
               duration: value,
               action: value === 0 ? 'Dismiss' : undefined

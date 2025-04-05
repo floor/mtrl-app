@@ -3,7 +3,7 @@
 import {
   createElement,
   createContainer,
-  createList,
+  fList,
   fButton
 } from 'mtrl'
 import { createListManager, transforms } from '../../../../src/core/collection/list-manager'
@@ -66,7 +66,7 @@ export const createListsLayout = (components) => {
         [createElement, 'div', {
           class: 'mtrl-content__grid',
           onCreate: async (el) => {
-            const trackList = createList({
+            const trackList = fList({
               type: 'single',
               layout: 'vertical'
             })

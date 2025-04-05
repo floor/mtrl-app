@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch,
+  fSearch,
   createElement,
   createDivider
 } from 'mtrl'
@@ -29,14 +29,14 @@ export const initWithIcons = (container) => {
   </svg>`
 
   // Create search with one trailing icon
-  const searchOneIcon = createSearch({
+  const searchOneIcon = fSearch({
     placeholder: 'Search with voice',
     showClearButton: true,
     trailingIcon: microphoneIcon
   })
 
   // Create search with two trailing icons
-  const searchTwoIcons = createSearch({
+  const searchTwoIcons = fSearch({
     placeholder: 'Search with voice and settings',
     showClearButton: true,
     trailingIcon: microphoneIcon,

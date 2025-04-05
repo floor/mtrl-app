@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs,
+  fTabs,
   fButton
 } from 'mtrl'
 
@@ -13,7 +13,7 @@ export const initDynamicTabs = (container) => {
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with an initial set of tabs
-  const tabs = createTabs({
+  const tabs = fTabs({
     tabs: [
       { text: 'Tab 1', value: 'tab1', state: 'active' },
       { text: 'Tab 2', value: 'tab2' }

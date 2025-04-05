@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/dynamic.js
-import { createButton, createLayout } from 'mtrl'
+import { fButton, createLayout } from 'mtrl'
 
 /**
  * Creates the Dynamic Elevation section
@@ -46,7 +46,7 @@ export const initDynamicElevation = (container) => {
   ], container)
 
   // Create and add the button
-  const elevateButton = createButton({
+  const elevateButton = fButton({
     text: 'Elevate Card',
     variant: 'filled'
   })

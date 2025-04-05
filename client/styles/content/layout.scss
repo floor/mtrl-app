@@ -1024,11 +1024,13 @@
   .#{b.$prefix}-layout-demo__pane--left {
     background-color: t.color('primary-container');
     color: t.color('on-primary-container');
+    flex: 0 0 calc(50% - 12px);
   }
   
   .#{b.$prefix}-layout-demo__pane--right {
     background-color: t.color('secondary-container');
     color: t.color('on-secondary-container');
+    flex: 0 0 calc(50% - 12px);
   }
 
   // Resize handle styling
@@ -1065,8 +1067,6 @@
         height: 48px;
       }
     }
-    
-
 
     &:active {
       transition: none;

@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch,
+  fSearch,
   createElement
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ export const initBasicBar = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a basic search bar
-  const searchBar = createSearch({
+  const searchBar = fSearch({
     placeholder: 'Search',
     showClearButton: true
   })

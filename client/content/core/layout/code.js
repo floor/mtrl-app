@@ -37,31 +37,31 @@ const initCodeExamples = (container) => {
       'example1Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createButton, createTextfield } from 'mtrl';
+        text: `import { createLayout, fButton, fTextfield } from 'mtrl';
 
 // Create a login form layout with named components
 const loginLayout = createLayout([
   'loginForm', { tag: 'form', class: 'login-form' },
   [
     'title', { tag: 'h2', text: 'Log In', class: 'login-title' },
-    createTextfield, 'emailField', { 
+    fTextfield, 'emailField', { 
       label: 'Email Address', 
       type: 'email', 
       required: true 
     },
-    createTextfield, 'passwordField', { 
+    fTextfield, 'passwordField', { 
       label: 'Password', 
       type: 'password', 
       required: true 
     },
     'actions', { tag: 'div', class: 'login-actions' },
     [
-      createButton, 'loginButton', { 
+      fButton, 'loginButton', { 
         text: 'Log In', 
         variant: 'filled', 
         class: 'login-button' 
       },
-      createButton, 'forgotPasswordButton', { 
+      fButton, 'forgotPasswordButton', { 
         text: 'Forgot Password?', 
         variant: 'text' 
       }
@@ -100,11 +100,11 @@ loginButton.on('click', (event) => {
       'example2Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createCard, createButton } from 'mtrl';
+        text: `import { createLayout, fCard, fButton } from 'mtrl';
 
 // Create a data grid with a default creator for text fields
 const dataGridLayout = createLayout([
-  createCard, 'dataCard', { title: 'User Data', elevated: true },
+  fCard, 'dataCard', { title: 'User Data', elevated: true },
   [
     'tableContainer', { tag: 'div', class: 'table-container' },
     [
@@ -130,7 +130,7 @@ const dataGridLayout = createLayout([
             'row1Role', { tag: 'td', text: 'Admin' },
             'row1Actions', { tag: 'td' },
             [
-              createButton, 'row1EditButton', { 
+              fButton, 'row1EditButton', { 
                 text: 'Edit', 
                 variant: 'outlined', 
                 size: 'small' 
@@ -145,7 +145,7 @@ const dataGridLayout = createLayout([
             'row2Role', { tag: 'td', text: 'User' },
             'row2Actions', { tag: 'td' },
             [
-              createButton, 'row2EditButton', { 
+              fButton, 'row2EditButton', { 
                 text: 'Edit', 
                 variant: 'outlined', 
                 size: 'small' 
@@ -180,12 +180,12 @@ row1EditButton.on('click', () => {
       'example3Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createTopAppBar, createNavigation, createList } from 'mtrl';
+        text: `import { createLayout, fTopAppBar, createNavigation, fList } from 'mtrl';
 
 // Create application shell with object schema
 const appLayout = createLayout({
   element: {
-    creator: createTopAppBar,
+    creator: fTopAppBar,
     options: { 
       title: 'Dashboard',
       variant: 'fixed'
@@ -199,7 +199,7 @@ const appLayout = createLayout({
         },
         children: {
           navList: {
-            creator: createList,
+            creator: fList,
             options: { interactive: true },
             children: {
               homeItem: {
@@ -314,7 +314,7 @@ document.querySelector('#notifications-area').appendChild(notificationBanner);`
       'example5Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createCard, createChip } from 'mtrl';
+        text: `import { createLayout, fCard, fChip } from 'mtrl';
 
 // Sample data from API
 const products = [
@@ -329,7 +329,7 @@ const productGrid = document.getElementById('product-grid');
 // Function to create a product card layout
 const createProductCard = (product) => {
   return createLayout([
-    createCard, \`product_\${product.id}\`, { 
+    fCard, \`product_\${product.id}\`, { 
       outlined: true,
       class: 'product-card'
     },
@@ -359,7 +359,7 @@ products.forEach(product => {
   const tagsContainer = productLayout.get('productTags');
   
   product.tags.forEach(tag => {
-    const tagChip = createChip({
+    const tagChip = fChip({
       text: tag,
       variant: 'filled'
     });
@@ -391,7 +391,7 @@ document.querySelectorAll('.product-card').forEach(card => {
       'example6Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createDialog, createButton, createTextfield } from 'mtrl';
+        text: `import { createLayout, fDialog, fButton, fTextfield } from 'mtrl';
 
 // Store layout references for cleanup
 const layoutRefs = new Map();
@@ -406,7 +406,7 @@ function createModalDialog(id, title, content) {
   
   // Create new dialog layout
   const dialogLayout = createLayout([
-    createDialog, 'dialog', { 
+    fDialog, 'dialog', { 
       title: title,
       closeOnEscape: true,
       closeOnBackdrop: true,
@@ -419,11 +419,11 @@ function createModalDialog(id, title, content) {
       ],
       'actions', { tag: 'div', class: 'dialog-actions' },
       [
-        createButton, 'confirmBtn', { 
+        fButton, 'confirmBtn', { 
           text: 'Confirm', 
           variant: 'filled' 
         },
-        createButton, 'cancelBtn', { 
+        fButton, 'cancelBtn', { 
           text: 'Cancel', 
           variant: 'outlined' 
         }

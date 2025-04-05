@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs,
+  fTabs,
   fButton
 } from 'mtrl'
 
@@ -13,7 +13,7 @@ export const initProgrammaticTabs = (container) => {
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs
-  const tabs = createTabs({
+  const tabs = fTabs({
     tabs: [
       { text: 'First', value: 'first' },
       { text: 'Second', value: 'second' },

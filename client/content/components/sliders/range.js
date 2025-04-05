@@ -6,7 +6,7 @@ import {
 import {
   createLayout,
   fSlider,
-  createSnackbar
+  fSnackbar
 } from 'mtrl'
 
 import {
@@ -34,7 +34,7 @@ export const initRange = (container) => {
   // Update price display when slider changes
   priceSlider.on('change', (event) => {
     console.log('change', event.value)
-    createSnackbar({
+    fSnackbar({
       message: `Price range changed: ${event.value} - ${event.secondValue}`,
       action: duration === 0 ? 'Dismiss' : undefined,
       duration

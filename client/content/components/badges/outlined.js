@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createBadge
+  fBadge
 } from 'mtrl'
 
 import {
@@ -34,7 +34,7 @@ export const initOutlined = (container) => {
     wrapper.style.alignItems = 'center'
     wrapper.style.gap = '8px'
 
-    const badge = createBadge({
+    const badge = fBadge({
       content: '1',
       variant: BADGE_VARIANTS.OUTLINED,
       color,

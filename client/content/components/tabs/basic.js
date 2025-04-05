@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs,
+  fTabs,
   createElement
 } from 'mtrl'
 
@@ -16,7 +16,7 @@ export const initBasicTabs = (container) => {
   const box = createElement({ tag: 'div', class: 'mtrl-components__section-box' })
 
   // Create tabs with predefined items
-  const tabs = createTabs({
+  const tabs = fTabs({
     tabs: [
       { text: 'Home', value: 'home', state: 'active' },
       { text: 'Favorites', value: 'favorites' },

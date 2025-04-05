@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createBadge
+  fBadge
 } from 'mtrl'
 
 import {
@@ -40,7 +40,7 @@ export const initMax = (container) => {
     wrapper.style.alignItems = 'center'
     wrapper.style.gap = '8px'
 
-    const badge = createBadge({
+    const badge = fBadge({
       variant: BADGE_VARIANTS.LARGE,
       label: example.label,
       max: example.max,
@@ -82,7 +82,7 @@ export const initMax = (container) => {
     wrapper.style.alignItems = 'center'
     wrapper.style.gap = '8px'
 
-    const badge = createBadge({
+    const badge = fBadge({
       variant: BADGE_VARIANTS.LARGE,
       label: example.label,
       standalone: true

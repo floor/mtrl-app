@@ -9,7 +9,7 @@ import {
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+import fCard, {
   CARD_VARIANTS
 } from 'mtrl/src/components/card'
 
@@ -22,7 +22,7 @@ export const initActionCards = (container) => {
 
   // Create action cards with inline configuration
   artworks.slice(4, 6).forEach(artwork => {
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: true,
 

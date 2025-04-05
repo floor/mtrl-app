@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTextfield
+  fTextfield
 } from 'mtrl'
 
 // Icons for the textfields
@@ -22,7 +22,7 @@ export const initCombinedFeatures = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with both icons and supporting text
-  const filled = createTextfield({
+  const filled = fTextfield({
     label: 'Search',
     placeholder: 'Search...',
     variant: 'filled',
@@ -37,7 +37,7 @@ export const initCombinedFeatures = (container) => {
   })
 
   // Outlined textfield with both icons and error state
-  const outlined = createTextfield({
+  const outlined = fTextfield({
     label: 'Search',
     placeholder: 'Search...',
     variant: 'outlined',

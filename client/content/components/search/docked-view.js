@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch,
+  fSearch,
   createElement
 } from 'mtrl'
 
@@ -23,7 +23,7 @@ export const initDockedView = (container) => {
   const title = 'Search View (Docked Mode)'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const searchView = createSearch({
+  const searchView = fSearch({
     variant: SEARCH_VARIANTS.VIEW,
     viewMode: SEARCH_VIEW_MODES.DOCKED,
     placeholder: 'Search in documents',

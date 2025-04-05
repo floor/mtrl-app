@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTopAppBar,
+  fTopAppBar,
   fButton
 } from 'mtrl'
 
@@ -70,7 +70,7 @@ function createScrollDemo (behaviorType, behaviorTitle, compressible) {
   container.style.height = '400px'
 
   // Create the top app bar with appropriate configuration
-  const topBar = createTopAppBar({
+  const topBar = fTopAppBar({
     title: behaviorTitle,
     type: compressible ? 'medium' : 'small',
     scrollable: true,

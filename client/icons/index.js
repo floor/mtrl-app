@@ -7,8 +7,14 @@ import iconComponents from './components.svg'
 import iconCore from './core.svg'
 import iconGetstarted from './getstarted.svg'
 import iconStyles from './styles.svg'
+import iconCheck from './check.svg'
+import iconClose from './close.svg'
+import iconAdd from './add.svg'
+import iconFace from './face.svg'
+import iconLocation from './location.svg'
 
 export {
+  // Main icons
   iconMore,
   iconMtrl,
   iconComponents,
@@ -16,5 +22,10 @@ export {
   iconGetstarted,
   iconStyles,
   iconDark,
-  iconLight
+  iconLight,
+  iconCheck,
+  iconClose,
+  iconAdd,
+  iconFace,
+  iconLocation
 }

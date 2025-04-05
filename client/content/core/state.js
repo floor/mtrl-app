@@ -7,8 +7,8 @@ import {
 import {
   createLayout,
   createElement,
-  createButton,
-  createTextfield
+  fButton,
+  fTextfield
 } from 'mtrl'
 
 export const createStateContent = (container) => {
@@ -109,7 +109,7 @@ emitter.clear();`
   ]
 
   events.forEach(event => {
-    const button = createButton({
+    const button = fButton({
       text: `Emit "${event.name}"`,
       variant: 'filled',
       class: `emitter-button emitter-${event.color}`
@@ -258,17 +258,17 @@ store.derive('completedTodos', state =>
     class: 'store-counter__controls'
   })
 
-  const decrementButton = createButton({
+  const decrementButton = fButton({
     text: '-',
     variant: 'outlined'
   })
 
-  const incrementButton = createButton({
+  const incrementButton = fButton({
     text: '+',
     variant: 'outlined'
   })
 
-  const resetButton = createButton({
+  const resetButton = fButton({
     text: 'Reset',
     variant: 'tonal'
   })
@@ -445,12 +445,12 @@ lifecycle.destroy();`
     class: 'lifecycle-component-container'
   })
 
-  const mountButton = createButton({
+  const mountButton = fButton({
     text: 'Mount Component',
     variant: 'filled'
   })
 
-  const unmountButton = createButton({
+  const unmountButton = fButton({
     text: 'Unmount Component',
     variant: 'outlined',
     disabled: true
@@ -613,7 +613,7 @@ if (disabled.isDisabled()) {
     class: 'disabled-controls'
   })
 
-  const toggleButton = createButton({
+  const toggleButton = fButton({
     text: 'Toggle Disabled State',
     variant: 'filled'
   })
@@ -624,17 +624,17 @@ if (disabled.isDisabled()) {
   })
 
   // Create several components to demonstrate disabled state
-  const demoButton = createButton({
+  const demoButton = fButton({
     text: 'Button Component',
     variant: 'filled'
   })
 
-  const demoOutlinedButton = createButton({
+  const demoOutlinedButton = fButton({
     text: 'Outlined Button',
     variant: 'outlined'
   })
 
-  const demoTextField = createTextfield({
+  const demoTextField = fTextfield({
     label: 'Text Field',
     placeholder: 'Enter text here'
   })
@@ -801,12 +801,12 @@ const createToggleButton = (config = {}) => {
     class: 'composing-controls'
   })
 
-  const disableButton = createButton({
+  const disableButton = fButton({
     text: 'Toggle Disabled',
     variant: 'outlined'
   })
 
-  const resetButton = createButton({
+  const resetButton = fButton({
     text: 'Reset State',
     variant: 'outlined'
   })

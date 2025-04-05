@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createBottomAppBar,
+  fBottomAppBar,
   fButton,
   fFab
 } from 'mtrl'
@@ -113,7 +113,7 @@ function createFabPositionDemo (position) {
   demoContainer.appendChild(demoContent)
 
   // Create bottom app bar with FAB configuration
-  const bottomBar = createBottomAppBar({
+  const bottomBar = fBottomAppBar({
     hasFab: true,
     fabPosition: position
   })

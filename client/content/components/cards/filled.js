@@ -7,7 +7,7 @@ import {
 import {
   createElement,
   createLayout,
-  createCard
+  fCard
 } from 'mtrl'
 import { artworks } from './artwork-data'
 
@@ -32,7 +32,7 @@ export const initFilledCards = (container) => {
 
   // Create filled cards
   artworks.slice(7, 9).forEach(artwork => {
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.FILLED,
       interactive: true,
       aria: {

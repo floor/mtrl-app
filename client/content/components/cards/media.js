@@ -11,7 +11,7 @@ import {
 } from 'mtrl'
 
 import { artworks, getImageUrl } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -40,7 +40,7 @@ export const initMediaCards = (container) => {
 
   // Create media cards with different aspect ratios
   artworksByRatio.forEach(({ artwork, ratio }, index) => {
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: true,
       aria: {
@@ -113,7 +113,7 @@ export const initActionCards = (container) => {
   landscapeArtworks.forEach((artwork, index) => {
     const alignment = alignments[index]
 
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: false, // Not interactive since buttons are the interactive elements
       aria: {

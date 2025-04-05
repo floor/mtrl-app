@@ -11,7 +11,7 @@ import {
 
 import { artworks } from './artwork-data'
 
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   CARD_VARIANTS
@@ -40,7 +40,7 @@ export const initAccessibleCards = (container) => {
     const artwork = artworks[(index + 2) % artworks.length]
 
     // Create card with accessibility attributes
-    const card = createCard({
+    const card = fCard({
       variant: index === 0
         ? CARD_VARIANTS.ELEVATED
         : index === 1

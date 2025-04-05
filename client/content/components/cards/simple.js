@@ -9,7 +9,7 @@ import {
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   CARD_VARIANTS
@@ -30,7 +30,7 @@ export const initSimpleCards = (container) => {
   // Create simple cards using the first three artworks
   artworks.slice(0, 2).forEach(artwork => {
     // Create card with proper aria attributes
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.FILLED,
       aria: {
         role: 'region',

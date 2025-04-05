@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch,
+  fSearch,
   fButton,
   createDivider,
   createElement
@@ -26,7 +26,7 @@ export const initEventsAPI = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create the search component with event handlers
-  const search = createSearch({
+  const search = fSearch({
     placeholder: 'Type and submit',
     showClearButton: true,
     on: {

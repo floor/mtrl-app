@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch,
+  fSearch,
   fButton,
   createElement
 } from 'mtrl'
@@ -16,14 +16,14 @@ export const initDisabled = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Disabled search bar
-  const disabledSearch = createSearch({
+  const disabledSearch = fSearch({
     placeholder: 'Search (disabled)',
     disabled: true,
     showClearButton: true
   })
 
   // Create a search that can be toggled between enabled and disabled
-  const toggleableSearch = createSearch({
+  const toggleableSearch = fSearch({
     placeholder: 'Click button to toggle disabled state',
     showClearButton: true
   })

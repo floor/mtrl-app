@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createBottomAppBar,
+  fBottomAppBar,
   fButton,
   fFab
 } from 'mtrl'
@@ -79,7 +79,7 @@ export const initAutoHideBottomAppBar = (container) => {
   demoContainer.appendChild(statusIndicator)
 
   // Create the bottom app bar with auto-hide enabled
-  const bottomBar = createBottomAppBar({
+  const bottomBar = fBottomAppBar({
     autoHide: true,
     transitionDuration: 300,
     onVisibilityChange: (visible) => {

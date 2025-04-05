@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTextfield
+  fTextfield
 } from 'mtrl'
 
 export const initMultilineTextfield = (container) => {
@@ -13,7 +13,7 @@ export const initMultilineTextfield = (container) => {
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled multiline textfield
-  const filled = createTextfield({
+  const filled = fTextfield({
     label: 'Multiline Input',
     placeholder: 'Type multiple lines...',
     type: 'multiline',
@@ -22,7 +22,7 @@ export const initMultilineTextfield = (container) => {
   })
 
   // Outlined multiline textfield
-  const outlined = createTextfield({
+  const outlined = fTextfield({
     label: 'Multiline Input',
     placeholder: 'Type multiple lines...',
     type: 'multiline',

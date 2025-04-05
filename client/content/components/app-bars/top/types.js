@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTopAppBar,
+  fTopAppBar,
   fButton
 } from 'mtrl'
 
@@ -89,7 +89,7 @@ function createTypeDemoContainer (type, typeTitle, description) {
   }
 
   // Create the top app bar with the specific type
-  const topBar = createTopAppBar({
+  const topBar = fTopAppBar({
     title: `${typeTitle} Title`,
     type
   })

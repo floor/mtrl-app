@@ -1,7 +1,7 @@
 import {
   createLayout,
   createElement,
-  createButton
+  fButton
 } from 'mtrl'
 
 import { createContentSection } from '../../../layout/content'

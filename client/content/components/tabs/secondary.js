@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs
+  fTabs
 } from 'mtrl'
 
 export const initSecondaryTabs = (container) => {
@@ -12,7 +12,7 @@ export const initSecondaryTabs = (container) => {
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with secondary variant
-  const tabs = createTabs({
+  const tabs = fTabs({
     variant: 'secondary',
     tabs: [
       { text: 'All items', value: 'all', state: 'active' },

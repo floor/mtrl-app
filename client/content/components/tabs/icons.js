@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs,
+  fTabs,
   createElement
 } from 'mtrl'
 
@@ -28,7 +28,7 @@ export const initIconTabs = (container) => {
   </svg>`
 
   // Create tabs with icons only
-  const iconOnlyTabs = createTabs({
+  const iconOnlyTabs = fTabs({
     tabs: [
       { icon: homeIcon, value: 'home', state: 'active' },
       { icon: heartIcon, value: 'favorites' },
@@ -37,7 +37,7 @@ export const initIconTabs = (container) => {
   })
 
   // Create tabs with icons and text
-  const iconTextTabs = createTabs({
+  const iconTextTabs = fTabs({
     tabs: [
       { text: 'Home', icon: homeIcon, value: 'home', state: 'active' },
       { text: 'Favorites', icon: heartIcon, value: 'favorites' },

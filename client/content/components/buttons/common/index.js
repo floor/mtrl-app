@@ -1,11 +1,11 @@
 // src/client/content/components/button/index.js
 
 import {
-  contentLayout
+  contentLayout as fContentLayout
 } from '../../../../layout'
 
 import {
-  createLayout
+  fLayout
 } from 'mtrl'
 
 import { initVariants } from './variants'
@@ -18,7 +18,7 @@ export const createButtonsContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = fLayout(fContentLayout(info), container).component
 
   initVariants(layout.body)
   initDisabled(layout.body)

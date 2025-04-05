@@ -6,8 +6,8 @@ import {
 
 import {
   createLayout,
-  createButton,
-  createCard
+  fButton,
+  fCard
 } from 'mtrl'
 
 import { createAppRouter } from '../../core/router'
@@ -125,278 +125,278 @@ export const createStylesStructure = () => {
           }
         },
 
-        // Style Categories Grid
-        categoriesSection: {
-          options: {
-            tag: 'section',
-            className: 'content__section style-categories'
-          },
-          children: {
-            title: {
-              options: {
-                tag: 'h2',
-                className: 'content__section-title',
-                text: 'Style Categories'
-              }
-            },
-            grid: {
-              options: {
-                tag: 'div',
-                className: 'style-categories__grid'
-              },
-              children: {
-                // Colors Card
-                colorsCard: {
-                  name: 'colorsCard',
-                  creator: createCard,
-                  options: {
-                    className: 'style-card style-card--colors'
-                  }
-                },
+        // // Style Categories Grid
+        // categoriesSection: {
+        //   options: {
+        //     tag: 'section',
+        //     className: 'content__section style-categories'
+        //   },
+        //   children: {
+        //     title: {
+        //       options: {
+        //         tag: 'h2',
+        //         className: 'content__section-title',
+        //         text: 'Style Categories'
+        //       }
+        //     },
+        //     grid: {
+        //       options: {
+        //         tag: 'div',
+        //         className: 'style-categories__grid'
+        //       },
+        //       children: {
+        //         // Colors Card
+        //         colorsCard: {
+        //           name: 'colorsCard',
+        //           creator: fCard,
+        //           options: {
+        //             className: 'style-card style-card--colors'
+        //           }
+        //         },
 
-                // Typography Card
-                typographyCard: {
-                  options: {
-                    tag: 'typographyCard',
-                    className: 'style-card style-card--typography'
-                  },
-                  children: {
-                    icon: {
-                      options: {
-                        tag: 'div',
-                        className: 'style-card__icon'
-                      },
-                      children: {
-                        typographyIcon: {
-                          options: {
-                            tag: 'div',
-                            className: 'style-card__typography-icon'
-                          }
-                        }
-                      }
-                    },
-                    title: {
-                      options: {
-                        tag: 'h3',
-                        className: 'style-card__title',
-                        text: 'Typography'
-                      }
-                    },
-                    description: {
-                      options: {
-                        tag: 'p',
-                        className: 'style-card__description',
-                        text: 'Type scales and styles designed for readability, hierarchy, and rhythm across all screen sizes.'
-                      }
-                    },
-                    highlights: {
-                      options: {
-                        tag: 'ul',
-                        className: 'style-card__highlights'
-                      },
-                      children: {
-                        item1: {
-                          options: {
-                            tag: 'li',
-                            text: 'Type scale'
-                          }
-                        },
-                        item2: {
-                          options: {
-                            tag: 'li',
-                            text: 'Font stacks'
-                          }
-                        },
-                        item3: {
-                          options: {
-                            tag: 'li',
-                            text: 'Semantic styles'
-                          }
-                        }
-                      }
-                    },
-                    footer: {
-                      options: {
-                        tag: 'div',
-                        className: 'style-card__footer'
-                      },
-                      children: {
-                        button: {
-                          creator: createButton,
-                          options: {
-                            text: 'Explore Typography',
-                            variant: 'filled',
-                            className: 'style-card__button'
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
+        //         // Typography Card
+        //         typographyCard: {
+        //           options: {
+        //             tag: 'typographyCard',
+        //             className: 'style-card style-card--typography'
+        //           },
+        //           children: {
+        //             icon: {
+        //               options: {
+        //                 tag: 'div',
+        //                 className: 'style-card__icon'
+        //               },
+        //               children: {
+        //                 typographyIcon: {
+        //                   options: {
+        //                     tag: 'div',
+        //                     className: 'style-card__typography-icon'
+        //                   }
+        //                 }
+        //               }
+        //             },
+        //             title: {
+        //               options: {
+        //                 tag: 'h3',
+        //                 className: 'style-card__title',
+        //                 text: 'Typography'
+        //               }
+        //             },
+        //             description: {
+        //               options: {
+        //                 tag: 'p',
+        //                 className: 'style-card__description',
+        //                 text: 'Type scales and styles designed for readability, hierarchy, and rhythm across all screen sizes.'
+        //               }
+        //             },
+        //             highlights: {
+        //               options: {
+        //                 tag: 'ul',
+        //                 className: 'style-card__highlights'
+        //               },
+        //               children: {
+        //                 item1: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Type scale'
+        //                   }
+        //                 },
+        //                 item2: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Font stacks'
+        //                   }
+        //                 },
+        //                 item3: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Semantic styles'
+        //                   }
+        //                 }
+        //               }
+        //             },
+        //             footer: {
+        //               options: {
+        //                 tag: 'div',
+        //                 className: 'style-card__footer'
+        //               },
+        //               children: {
+        //                 button: {
+        //                   creator: fButton,
+        //                   options: {
+        //                     text: 'Explore Typography',
+        //                     variant: 'filled',
+        //                     className: 'style-card__button'
+        //                   }
+        //                 }
+        //               }
+        //             }
+        //           }
+        //         },
 
-                // Elevation Card
-                elevationCard: {
-                  options: {
-                    tag: 'elevationCard',
-                    className: 'style-card style-card--elevation'
-                  },
-                  children: {
-                    icon: {
-                      options: {
-                        tag: 'div',
-                        className: 'style-card__icon'
-                      },
-                      children: {
-                        elevationIcon: {
-                          options: {
-                            tag: 'div',
-                            className: 'style-card__elevation-icon'
-                          }
-                        }
-                      }
-                    },
-                    title: {
-                      options: {
-                        tag: 'h3',
-                        className: 'style-card__title',
-                        text: 'Elevation'
-                      }
-                    },
-                    description: {
-                      options: {
-                        tag: 'p',
-                        className: 'style-card__description',
-                        text: 'Shadow and surface systems that create depth and hierarchy through visual layers.'
-                      }
-                    },
-                    highlights: {
-                      options: {
-                        tag: 'ul',
-                        className: 'style-card__highlights'
-                      },
-                      children: {
-                        item1: {
-                          options: {
-                            tag: 'li',
-                            text: 'Elevation levels'
-                          }
-                        },
-                        item2: {
-                          options: {
-                            tag: 'li',
-                            text: 'Shadow utilities'
-                          }
-                        },
-                        item3: {
-                          options: {
-                            tag: 'li',
-                            text: 'Surface states'
-                          }
-                        }
-                      }
-                    },
-                    footer: {
-                      options: {
-                        tag: 'div',
-                        className: 'style-card__footer'
-                      },
-                      children: {
-                        button: {
-                          creator: createButton,
-                          options: {
-                            text: 'Explore Elevation',
-                            variant: 'filled',
-                            className: 'style-card__button'
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
+        //         // Elevation Card
+        //         elevationCard: {
+        //           options: {
+        //             tag: 'elevationCard',
+        //             className: 'style-card style-card--elevation'
+        //           },
+        //           children: {
+        //             icon: {
+        //               options: {
+        //                 tag: 'div',
+        //                 className: 'style-card__icon'
+        //               },
+        //               children: {
+        //                 elevationIcon: {
+        //                   options: {
+        //                     tag: 'div',
+        //                     className: 'style-card__elevation-icon'
+        //                   }
+        //                 }
+        //               }
+        //             },
+        //             title: {
+        //               options: {
+        //                 tag: 'h3',
+        //                 className: 'style-card__title',
+        //                 text: 'Elevation'
+        //               }
+        //             },
+        //             description: {
+        //               options: {
+        //                 tag: 'p',
+        //                 className: 'style-card__description',
+        //                 text: 'Shadow and surface systems that create depth and hierarchy through visual layers.'
+        //               }
+        //             },
+        //             highlights: {
+        //               options: {
+        //                 tag: 'ul',
+        //                 className: 'style-card__highlights'
+        //               },
+        //               children: {
+        //                 item1: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Elevation levels'
+        //                   }
+        //                 },
+        //                 item2: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Shadow utilities'
+        //                   }
+        //                 },
+        //                 item3: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Surface states'
+        //                   }
+        //                 }
+        //               }
+        //             },
+        //             footer: {
+        //               options: {
+        //                 tag: 'div',
+        //                 className: 'style-card__footer'
+        //               },
+        //               children: {
+        //                 button: {
+        //                   creator: fButton,
+        //                   options: {
+        //                     text: 'Explore Elevation',
+        //                     variant: 'filled',
+        //                     className: 'style-card__button'
+        //                   }
+        //                 }
+        //               }
+        //             }
+        //           }
+        //         },
 
-                // Layout Card
-                layoutCard: {
-                  options: {
-                    tag: 'layoutCard',
-                    className: 'style-card style-card--layout'
-                  },
-                  children: {
-                    icon: {
-                      options: {
-                        tag: 'div',
-                        className: 'style-card__icon'
-                      },
-                      children: {
-                        layoutIcon: {
-                          options: {
-                            tag: 'div',
-                            className: 'style-card__layout-icon'
-                          }
-                        }
-                      }
-                    },
-                    title: {
-                      options: {
-                        tag: 'h3',
-                        className: 'style-card__title',
-                        text: 'Layout'
-                      }
-                    },
-                    description: {
-                      options: {
-                        tag: 'p',
-                        className: 'style-card__description',
-                        text: 'Responsive grid systems, spacing scales, and layout patterns for consistent interfaces.'
-                      }
-                    },
-                    highlights: {
-                      options: {
-                        tag: 'ul',
-                        className: 'style-card__highlights'
-                      },
-                      children: {
-                        item1: {
-                          options: {
-                            tag: 'li',
-                            text: 'Grid system'
-                          }
-                        },
-                        item2: {
-                          options: {
-                            tag: 'li',
-                            text: 'Spacing scale'
-                          }
-                        },
-                        item3: {
-                          options: {
-                            tag: 'li',
-                            text: 'Responsive patterns'
-                          }
-                        }
-                      }
-                    },
-                    footer: {
-                      options: {
-                        tag: 'div',
-                        className: 'style-card__footer'
-                      },
-                      children: {
-                        button: {
-                          creator: createButton,
-                          options: {
-                            text: 'Explore Layout',
-                            variant: 'filled',
-                            className: 'style-card__button'
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
+        //         // Layout Card
+        //         layoutCard: {
+        //           options: {
+        //             tag: 'layoutCard',
+        //             className: 'style-card style-card--layout'
+        //           },
+        //           children: {
+        //             icon: {
+        //               options: {
+        //                 tag: 'div',
+        //                 className: 'style-card__icon'
+        //               },
+        //               children: {
+        //                 layoutIcon: {
+        //                   options: {
+        //                     tag: 'div',
+        //                     className: 'style-card__layout-icon'
+        //                   }
+        //                 }
+        //               }
+        //             },
+        //             title: {
+        //               options: {
+        //                 tag: 'h3',
+        //                 className: 'style-card__title',
+        //                 text: 'Layout'
+        //               }
+        //             },
+        //             description: {
+        //               options: {
+        //                 tag: 'p',
+        //                 className: 'style-card__description',
+        //                 text: 'Responsive grid systems, spacing scales, and layout patterns for consistent interfaces.'
+        //               }
+        //             },
+        //             highlights: {
+        //               options: {
+        //                 tag: 'ul',
+        //                 className: 'style-card__highlights'
+        //               },
+        //               children: {
+        //                 item1: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Grid system'
+        //                   }
+        //                 },
+        //                 item2: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Spacing scale'
+        //                   }
+        //                 },
+        //                 item3: {
+        //                   options: {
+        //                     tag: 'li',
+        //                     text: 'Responsive patterns'
+        //                   }
+        //                 }
+        //               }
+        //             },
+        //             footer: {
+        //               options: {
+        //                 tag: 'div',
+        //                 className: 'style-card__footer'
+        //               },
+        //               children: {
+        //                 button: {
+        //                   creator: fButton,
+        //                   options: {
+        //                     text: 'Explore Layout',
+        //                     variant: 'filled',
+        //                     className: 'style-card__button'
+        //                   }
+        //                 }
+        //               }
+        //             }
+        //           }
+        //         }
+        //       }
+        //     }
+        //   }
+        // },
 
         // Using the Style System Section
         usageSection: {

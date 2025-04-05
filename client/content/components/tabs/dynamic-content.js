@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs,
+  fTabs,
   createElement
 } from 'mtrl'
 
@@ -13,7 +13,7 @@ export const initDynamicContent = (container) => {
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs
-  const tabs = createTabs({
+  const tabs = fTabs({
     tabs: [
       { text: 'Information', value: 'info', state: 'active' },
       { text: 'Settings', value: 'settings' },

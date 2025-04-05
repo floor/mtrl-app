@@ -7,7 +7,7 @@ import {
 import {
   createLayout,
   createElement,
-  createButton
+  fButton
 } from 'mtrl'
 
 export const createCompositionContent = (container) => {
@@ -73,7 +73,7 @@ class Button extends Component {
 }
 
 // Use function composition:
-const createButton = pipe(
+const fButton = pipe(
   createBase,           // Start with core functionality
   withElement,          // Add DOM element
   withEvents,           // Add event handling
@@ -85,7 +85,7 @@ const createButton = pipe(
 );
 
 // Usage:
-const button = createButton({
+const button = fButton({
   text: 'Click Me',
   variant: 'filled',
   icon: svgIcon
@@ -737,22 +737,22 @@ document.body.appendChild(toggle.element);`
     class: 'toggle-controls'
   })
 
-  const toggleButton = createButton({
+  const toggleButton = fButton({
     text: 'Toggle',
     variant: 'filled'
   })
 
-  const checkButton = createButton({
+  const checkButton = fButton({
     text: 'Check',
     variant: 'outlined'
   })
 
-  const uncheckButton = createButton({
+  const uncheckButton = fButton({
     text: 'Uncheck',
     variant: 'outlined'
   })
 
-  const disableButton = createButton({
+  const disableButton = fButton({
     text: 'Toggle Disabled',
     variant: 'outlined'
   })
@@ -870,13 +870,13 @@ const createResponsiveButton = pipe(
 );
 
 // Component variants with specialized defaults
-export const createIconButton = (config) => createButton({
+export const createIconButton = (config) => fButton({
   ...config,
   variant: config.variant || 'icon',
   text: null  // Icon buttons have no text by default
 });
 
-export const fFab = (config) => createButton({
+export const fFab = (config) => fButton({
   ...config,
   variant: 'fab',
   size: config.size || 'large',

@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createBottomAppBar,
+  fBottomAppBar,
   fButton,
   fFab
 } from 'mtrl'
@@ -103,13 +103,13 @@ export const initCustomActionsBottomAppBar = (container) => {
   demoContainer.appendChild(contentArea)
 
   // Create bottom app bars for different modes
-  const navigationBar = createBottomAppBar({
+  const navigationBar = fBottomAppBar({
     hasFab: true
   })
 
-  const editingBar = createBottomAppBar()
+  const editingBar = fBottomAppBar()
 
-  const selectionBar = createBottomAppBar()
+  const selectionBar = fBottomAppBar()
 
   // Create navigation mode actions
   const homeButton = fButton({

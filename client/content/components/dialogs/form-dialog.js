@@ -5,11 +5,11 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog,
-  createTextfield,
+  fDialog,
+  fTextfield,
   fSlider,
-  createCheckbox,
-  createSnackbar
+  fCheckbox,
+  fSnackbar
 } from 'mtrl'
 
 const callVolume = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
@@ -21,7 +21,7 @@ const alarmVolume = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewB
   </svg>`
 
 const createSettingsDialog = () => {
-  const dialog = createDialog({
+  const dialog = fDialog({
     title: 'Settings',
     content: '<div id="settings-form" style="display: flex; flex-direction: column; gap: 16px; background-color: var(--mtrl-sys-color-surface-container-high"></div>',
     divider: true,
@@ -37,7 +37,7 @@ const createSettingsDialog = () => {
         closeDialog: false,
         onClick: () => {
           dialog.close()
-          createSnackbar({
+          fSnackbar({
             message: 'Settings saved',
             action: 'OK'
           }).show()
@@ -78,7 +78,7 @@ const createSettingsDialog = () => {
 }
 
 const createContactDialog = (nameField, emailField, phoneField, newsletterCheckbox, resultContainer) => {
-  const dialog = createDialog({
+  const dialog = fDialog({
     title: 'Create New Contact',
     content: '<div id="contact-form" style="display: flex; flex-direction: column; gap: 16px; background-color: var(--mtrl-sys-color-surface-container-high"></div>',
     divider: true,
@@ -121,7 +121,7 @@ const createContactDialog = (nameField, emailField, phoneField, newsletterCheckb
           // If valid, close dialog and show result
           if (isValid) {
             dialog.close()
-            createSnackbar({
+            fSnackbar({
               message: 'Contact saved',
               action: 'OK'
             }).show()
@@ -141,27 +141,27 @@ const createContactDialog = (nameField, emailField, phoneField, newsletterCheckb
     formContainer.innerHTML = '' // Clear previous fields
 
     // Create form fields
-    nameField = createTextfield({
+    nameField = fTextfield({
       label: 'Name',
       placeholder: 'Enter full name',
       variant: 'outlined'
       // supportingText: 'Required'
     })
 
-    emailField = createTextfield({
+    emailField = fTextfield({
       label: 'Email',
       placeholder: 'email@example.com',
       variant: 'outlined'
       // supportingText: 'Required'
     })
 
-    phoneField = createTextfield({
+    phoneField = fTextfield({
       label: 'Phone (optional)',
       placeholder: '(123) 456-7890',
       variant: 'outlined'
     })
 
-    newsletterCheckbox = createCheckbox({
+    newsletterCheckbox = fCheckbox({
       label: 'Newsletter'
     })
 

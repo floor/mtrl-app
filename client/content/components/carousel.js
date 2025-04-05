@@ -9,7 +9,7 @@ import {
 
 import {
   createLayout,
-  createCarousel
+  fCarousel
 } from 'mtrl'
 
 // Sample slide data for examples
@@ -113,7 +113,7 @@ export const createMultiBrowseCarousel = (container) => {
   // Sample slide content
 
   // Create the carousel with configuration
-  const carousel = createCarousel({
+  const carousel = fCarousel({
     layout: CAROUSEL_LAYOUTS.MULTI_BROWSE,
     scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.SNAP,
     slides: sampleSlides,
@@ -135,7 +135,7 @@ export function createUncontainedCarousel (container) {
   const title = 'Carousel'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
   // Create the carousel with uncontained layout and default scrolling
-  const carousel = createCarousel({
+  const carousel = fCarousel({
     layout: CAROUSEL_LAYOUTS.UNCONTAINED,
     scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.DEFAULT, // Standard scrolling
     slides: sampleSlides.map(slide => ({
@@ -161,7 +161,7 @@ export function createUncontainedCarousel (container) {
 export function createHeroCarousel (container, centered = false) {
   const title = 'Hero carousel'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-  const carousel = createCarousel({
+  const carousel = fCarousel({
     layout: CAROUSEL_LAYOUTS.HERO,
     scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.SNAP, // Snap scrolling recommended
     slides: sampleSlides,

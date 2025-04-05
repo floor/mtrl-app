@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createSearch,
+  fSearch,
   createElement,
   createDivider
 } from 'mtrl'
@@ -27,14 +27,14 @@ export const initWithAvatar = (container) => {
   </svg>`
 
   // Create search with avatar
-  const searchWithAvatar = createSearch({
+  const searchWithAvatar = fSearch({
     placeholder: 'Search as John Doe',
     showClearButton: true,
     avatar
   })
 
   // Create search with avatar and icon
-  const searchWithAvatarAndIcon = createSearch({
+  const searchWithAvatarAndIcon = fSearch({
     placeholder: 'Search with voice as John Doe',
     showClearButton: true,
     trailingIcon: microphoneIcon,

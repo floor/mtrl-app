@@ -6,7 +6,7 @@ import { createAppRouter } from '../../core/router'
 
 import { componentsList } from './components-list'
 
-import createCard, {
+import fCard, {
   CARD_VARIANTS
 } from 'mtrl/src/components/card'
 
@@ -137,7 +137,7 @@ const initComponentsGroup = (container, group, router) => {
  * @returns {HTMLElement} The component card element
  */
 const createComponentCard = (component, variant = CARD_VARIANTS.FILLED) => {
-  const card = createCard({
+  const card = fCard({
     variant,
     interactive: true,
     clickable: true,

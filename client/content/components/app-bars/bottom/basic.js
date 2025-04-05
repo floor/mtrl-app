@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createBottomAppBar,
+  fBottomAppBar,
   fButton
 } from 'mtrl'
 
@@ -36,7 +36,7 @@ export const initBasicBottomAppBar = (container) => {
   demoContainer.appendChild(demoContent)
 
   // Create the bottom app bar
-  const bottomBar = createBottomAppBar()
+  const bottomBar = fBottomAppBar()
 
   // Create action buttons
   const searchButton = fButton({

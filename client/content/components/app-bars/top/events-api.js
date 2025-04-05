@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTopAppBar,
+  fTopAppBar,
   fButton
 } from 'mtrl'
 
@@ -44,7 +44,7 @@ export const initEventsApiTopAppBar = (container) => {
   logContainer.innerHTML = '<div class="mtrl-content__log-entries"></div>'
 
   // Create the top app bar with configuration
-  const topBar = createTopAppBar({
+  const topBar = fTopAppBar({
     title: 'API & Events Demo',
     type: 'small',
     scrollable: true,

@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog
+  fDialog
 } from 'mtrl'
 
 import {
@@ -13,7 +13,7 @@ import {
 } from 'mtrl/src/components/dialog'
 
 const createFullscreenDialog = (size) => {
-  const dialog = createDialog({
+  const dialog = fDialog({
     title: 'Fullscreen Dialog',
     content: `
       <div style="padding: 20px 0;">

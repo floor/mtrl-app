@@ -9,7 +9,7 @@ import { initVariants as createButtonVariants } from './components/buttons/commo
 import { initRange as createRangeSlider } from './components/sliders/range'
 import { initCombinedFeatures as createTextfieldCombined } from './components/textfields/combined-features'
 import { initSupportingText as createSwitches } from './components/switches/supporting'
-import { initBasicTabs as createTabs } from './components/tabs/basic'
+import { initBasicTabs as fTabs } from './components/tabs/basic'
 
 import { initFormDialog as createDialogs } from './components/dialogs/form-dialog'
 
@@ -31,5 +31,5 @@ export const createHomeContent = (container) => {
   createTextfieldCombined(body)
   createRangeSlider(body)
   createDialogs(body)
-  createTabs(body)
+  fTabs(body)
 }

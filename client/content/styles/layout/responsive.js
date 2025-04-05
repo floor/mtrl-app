@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createButton,
+  fButton,
   createElement
 } from 'mtrl'
 
@@ -45,7 +45,7 @@ export const createResponsiveLayout = (container) => {
   ]
 
   layoutOptions.forEach(option => {
-    const button = createButton({
+    const button = fButton({
       text: option.text,
       variant: 'outlined'
     })

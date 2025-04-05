@@ -1,5 +1,5 @@
 // src/client/content/styles/typography/demo.js
-import { createLayout, createElement, createButton } from 'mtrl'
+import { createLayout, createElement, fButton } from 'mtrl'
 
 /**
  * Creates the Typography Demo section
@@ -74,13 +74,13 @@ export const initTypographyDemo = (container) => {
     class: 'mtrl-typography-demo__controls'
   })
 
-  const fontSizeControl = createButton({
+  const fontSizeControl = fButton({
     text: 'Increase Font Size',
     variant: 'outlined',
     class: 'font-size-control'
   })
 
-  const fontWeightControl = createButton({
+  const fontWeightControl = fButton({
     text: 'Toggle Font Weight',
     variant: 'outlined',
     class: 'font-weight-control'

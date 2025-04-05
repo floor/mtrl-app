@@ -11,7 +11,7 @@ import {
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -30,7 +30,7 @@ export const initDynamicCard = (container) => {
   const artwork = artworks[2] // The Persistence of Memory
 
   // Create the main card component
-  const card = createCard({
+  const card = fCard({
     variant: CARD_VARIANTS.ELEVATED
   })
 
@@ -101,7 +101,7 @@ export const initDynamicCard = (container) => {
   }, 3000)
 
   // Create a second dynamic card that cycles through artworks
-  const cycleCard = createCard({
+  const cycleCard = fCard({
     variant: CARD_VARIANTS.OUTLINED
   })
 

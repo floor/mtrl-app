@@ -1,7 +1,5 @@
 import {
-  createLayout,
-  createElement,
-  createButton
+  createLayout
 } from 'mtrl'
 
 import { createContentSection } from '../../../layout/content'
@@ -66,61 +64,37 @@ export const createThemeColors = (container) => {
     { name: 'outline-variant', label: 'Outline Variant' }
   ]
 
-  // Create container for theme colors
-  const themeColorsGrid = createElement({
-    tag: 'div',
-    class: 'color-theme-grid'
-  })
-
-  // Function to create color section title
-  const createSectionTitle = (label) => {
-    const titleElement = createElement({
+  // Create container for theme colors using createLayout
+  const themeColorsLayout = createLayout([
+    ['colorThemeGrid', {
       tag: 'div',
-      class: 'theme-color-section-title',
-      text: label
-    })
-    return titleElement
-  }
+      class: 'color-theme-grid'
+    }]
+  ], body)
 
+  const colorThemeGrid = themeColorsLayout.get('colorThemeGrid')
+
+  // Process each color
   semanticColors.forEach(color => {
-    // If this is a section title, render it differently
+    // If this is a section title, add it directly
     if (color.type === 'title') {
-      themeColorsGrid.appendChild(createSectionTitle(color.label))
+      createLayout([
+        ['sectionTitle', {
+          tag: 'div',
+          class: 'theme-color-section-title',
+          text: color.label
+        }]
+      ], colorThemeGrid)
       return
     }
 
-    // Create a color box with the semantic color
-    const colorSwatch = createElement({
-      tag: 'div',
-      class: 'theme-color-swatch',
-      style: `background-color: var(--mtrl-sys-color-${color.name});`
-    })
-
-    // Create color info container
-    const colorInfo = createElement({
-      tag: 'div',
-      class: 'theme-color__info'
-    })
-
-    // Color label
-    const colorLabel = createElement({
-      tag: 'span',
-      class: 'theme-color__label',
-      text: color.label
-    })
-
-    // Color value
-    const colorValue = createElement({
-      tag: 'span',
-      class: 'theme-color__value',
-      text: `var(--mtrl-sys-color-${color.name})`
-    })
-
     // Determine appropriate text color
     let textColor
+    let backgroundColor = `var(--mtrl-sys-color-${color.name})`
+
     if (color.name.startsWith('on-')) {
       const baseColor = color.name.substring(3)
-      colorSwatch.style.backgroundColor = `var(--mtrl-sys-color-${baseColor})`
+      backgroundColor = `var(--mtrl-sys-color-${baseColor})`
       textColor = `var(--mtrl-sys-color-${color.name})`
     } else {
       const hasMatchingOnColor = semanticColors.some(c => c.name === `on-${color.name}`)
@@ -134,14 +108,31 @@ export const createThemeColors = (container) => {
       }
     }
 
-    colorLabel.style.color = textColor
-    colorValue.style.color = textColor
-
-    colorInfo.appendChild(colorLabel)
-    colorInfo.appendChild(colorValue)
-    colorSwatch.appendChild(colorInfo)
-    themeColorsGrid.appendChild(colorSwatch)
+    // Create the color swatch using createLayout
+    createLayout([
+      ['colorSwatch', {
+        tag: 'div',
+        class: 'theme-color-swatch',
+        style: `background-color: ${backgroundColor};`
+      },
+      ['colorInfo', {
+        tag: 'div',
+        class: 'theme-color__info'
+      },
+      ['colorLabel', {
+        tag: 'span',
+        class: 'theme-color__label',
+        text: color.label,
+        style: `color: ${textColor};`
+      }],
+      ['colorValue', {
+        tag: 'span',
+        class: 'theme-color__value',
+        text: `var(--mtrl-sys-color-${color.name})`,
+        style: `color: ${textColor};`
+      }]
+      ]
+      ]
+    ], colorThemeGrid)
   })
-
-  body.appendChild(themeColorsGrid)
 }

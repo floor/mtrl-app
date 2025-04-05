@@ -10,7 +10,7 @@ import {
   , fButton
 } from 'mtrl'
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -39,7 +39,7 @@ export const initHorizontalCards = (container) => {
     })
 
     // Create the card with proper accessibility attributes
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.OUTLINED,
       fullWidth: true,
       interactive: index === 1, // Make the middle card interactive

@@ -9,7 +9,7 @@ import {
   createLayout,
   createElement,
   fButton,
-  createTextfield,
+  fTextfield,
   createProgress
 } from 'mtrl'
 
@@ -203,7 +203,7 @@ export const initInteractiveProgress = (container) => {
   layout.body.appendChild(controls)
 
   // Value input
-  const valueInput = createTextfield({
+  const valueInput = fTextfield({
     label: 'Value (0-100)',
     variant: 'outlined',
     value: '0'

@@ -4,7 +4,7 @@ import {
 
 import {
   createLayout,
-  createTabs,
+  fTabs,
   fButton
 } from 'mtrl'
 
@@ -13,7 +13,7 @@ export const initEventsAPI = (container) => {
   const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with callback handlers
-  const tabs = createTabs({
+  const tabs = fTabs({
     tabs: [
       { text: 'Dashboard', value: 'dashboard', state: 'active' },
       { text: 'Analytics', value: 'analytics' },

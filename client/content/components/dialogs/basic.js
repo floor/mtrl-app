@@ -5,11 +5,11 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog
+  fDialog
 } from 'mtrl'
 
 const createBasicDialog = () => {
-  const dialog = createDialog({
+  const dialog = fDialog({
     title: 'Basic Dialog',
     content: '<p>This is a basic dialog with a title, content, and standard buttons.</p>',
     buttons: [

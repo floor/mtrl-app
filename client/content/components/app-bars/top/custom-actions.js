@@ -5,7 +5,7 @@ import {
 
 import {
   createLayout,
-  createTopAppBar,
+  fTopAppBar,
   fButton
 } from 'mtrl'
 
@@ -86,17 +86,17 @@ export const initCustomActionsTopAppBar = (container) => {
   updateContentArea('browse')
 
   // Create top app bars for different modes
-  const browseBar = createTopAppBar({
+  const browseBar = fTopAppBar({
     title: 'Library',
     type: 'small'
   })
 
-  const editBar = createTopAppBar({
+  const editBar = fTopAppBar({
     title: 'Edit Document',
     type: 'small'
   })
 
-  const selectionBar = createTopAppBar({
+  const selectionBar = fTopAppBar({
     title: '3 Selected',
     type: 'small'
   })

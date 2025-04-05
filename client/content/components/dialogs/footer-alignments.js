@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog
+  fDialog
 } from 'mtrl'
 
 import {
@@ -33,7 +33,7 @@ export const initFooterAlignments = (container) => {
     })
 
     // Create dialog with specific footer alignment
-    const dialog = createDialog({
+    const dialog = fDialog({
       title: `${alignment.name} Footer Alignment`,
       content: `<p>This dialog has its footer buttons aligned to the ${alignment.name.toLowerCase()}.</p>`,
       footerAlignment: alignment.value,

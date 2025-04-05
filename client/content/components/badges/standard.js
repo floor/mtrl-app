@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createBadge
+  fBadge
 } from 'mtrl'
 
 import {
@@ -36,7 +36,7 @@ export const initStandard = (container) => {
     wrapper.style.alignItems = 'center'
     wrapper.style.gap = '8px'
 
-    const badge = createBadge({
+    const badge = fBadge({
       variant: BADGE_VARIANTS.LARGE,
       label: count,
       color,

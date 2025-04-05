@@ -7,7 +7,7 @@ import {
 
 import {
   createLayout,
-  createMenu,
+  fMenu,
   fButton,
   createElement
 } from 'mtrl'
@@ -41,7 +41,7 @@ export const initBasicMenu = (container) => {
     variant: 'filled'
   })
 
-  const menu = createMenu({
+  const menu = fMenu({
     items: [
       { name: 'new', text: 'New File' },
       { name: 'open', text: 'Open...' },
@@ -75,7 +75,7 @@ export const initNestedMenu = (container) => {
     variant: 'tonal'
   })
 
-  const menu = createMenu({
+  const menu = fMenu({
     items: [
       {
         name: 'format',
@@ -124,7 +124,7 @@ export const initIconMenu = (container) => {
     variant: 'outlined'
   })
 
-  const menu = createMenu({
+  const menu = fMenu({
     items: [
       { name: 'refresh', text: 'Refresh' },
       { name: 'settings', text: 'Settings' },
@@ -158,7 +158,7 @@ export const initCustomMenu = (container) => {
     variant: 'elevated'
   })
 
-  const menu = createMenu({
+  const menu = fMenu({
     items: [
       { name: 'share', text: 'Share', disabled: true },
       { name: 'download', text: 'Download' },

@@ -6,7 +6,7 @@ import {
 
 import {
   createLayout,
-  createBadge,
+  fBadge,
   fButton
 } from 'mtrl'
 
@@ -40,7 +40,7 @@ export const initAttached = (container) => {
   buttonWrapper.appendChild(button.element)
 
   // Then create badge attached to the button
-  const badge = createBadge({
+  const badge = fBadge({
     variant: BADGE_VARIANTS.LARGE,
     label: '5',
     color: BADGE_COLORS.ERROR,
@@ -69,7 +69,7 @@ export const initAttached = (container) => {
   iconWrapper.appendChild(icon)
 
   // Then create small badge attached to the icon
-  const dotBadge = createBadge({
+  const dotBadge = fBadge({
     variant: BADGE_VARIANTS.SMALL,
     color: BADGE_COLORS.PRIMARY,
     target: icon
@@ -103,7 +103,7 @@ export const initAttached = (container) => {
   avatarWrapper.appendChild(avatar)
 
   // Then create small badge attached to the avatar
-  const avatarBadge = createBadge({
+  const avatarBadge = fBadge({
     variant: BADGE_VARIANTS.SMALL,
     color: BADGE_COLORS.SUCCESS,
     target: avatar
@@ -146,7 +146,7 @@ export const initAttached = (container) => {
   navWrapper.appendChild(navItem)
 
   // Create large badge attached to the nav icon (typical MD3 use case)
-  const navBadge = createBadge({
+  const navBadge = fBadge({
     variant: BADGE_VARIANTS.LARGE,
     label: '42',
     color: BADGE_COLORS.ERROR,

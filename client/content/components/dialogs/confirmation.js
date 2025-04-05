@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   fButton,
-  createDialog
+  fDialog
 } from 'mtrl'
 
 export const initConfirmation = (container) => {
@@ -31,7 +31,7 @@ export const initConfirmation = (container) => {
 
   // Open confirmation when button is clicked
   confirmButton.on('click', async () => {
-    const dialog = createDialog()
+    const dialog = fDialog()
     const result = await dialog.confirm({
       title: 'Delete Item',
       message: 'Are you sure you want to delete this item? This action cannot be undone.',

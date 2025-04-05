@@ -1,5 +1,5 @@
 // src/client/content/core/layout/demo.js
-import { createLayout, createElement, createButton, createTextfield } from 'mtrl'
+import { createLayout, createElement, fButton, fTextfield } from 'mtrl'
 
 /**
  * Creates the Layout Demo section
@@ -103,7 +103,7 @@ const initLayoutDemo = (container) => {
   const templateSelect = demoStructure.get('templateSelect')
 
   // Add customization fields
-  const nameField = createTextfield({
+  const nameField = fTextfield({
     label: 'Title Text',
     value: 'Card Title',
     className: 'mtrl-layout-demo-textfield'
@@ -111,7 +111,7 @@ const initLayoutDemo = (container) => {
 
   demoStructure.get('nameFieldContainer').appendChild(nameField.element)
 
-  const colorField = createTextfield({
+  const colorField = fTextfield({
     label: 'Primary Color',
     value: '#6750A4',
     className: 'mtrl-layout-demo-textfield'
@@ -120,13 +120,13 @@ const initLayoutDemo = (container) => {
   demoStructure.get('colorFieldContainer').appendChild(colorField.element)
 
   // Add buttons
-  const applyButton = createButton({
+  const applyButton = fButton({
     text: 'Apply Changes',
     variant: 'filled',
     className: 'mtrl-layout-demo-apply-button'
   })
 
-  const resetButton = createButton({
+  const resetButton = fButton({
     text: 'Reset',
     variant: 'outlined',
     className: 'mtrl-layout-demo-reset-button'

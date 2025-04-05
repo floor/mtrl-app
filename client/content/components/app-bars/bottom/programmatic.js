@@ -5,9 +5,9 @@ import {
 
 import {
   createLayout,
-  createBottomAppBar,
+  fBottomAppBar,
   fButton,
-  createSnackbar,
+  fSnackbar,
   fFab
 } from 'mtrl'
 
@@ -55,7 +55,7 @@ export const initProgrammaticBottomAppBar = (container) => {
   demoContainer.appendChild(statusDisplay)
 
   // Create the bottom app bar
-  const bottomBar = createBottomAppBar({
+  const bottomBar = fBottomAppBar({
     hasFab: true
   })
 
@@ -157,7 +157,7 @@ export const initProgrammaticBottomAppBar = (container) => {
   addActionButton.on('click', () => {
     // Prevent adding too many actions
     if (actionCount >= 4) {
-      const snackbar = createSnackbar({
+      const snackbar = fSnackbar({
         message: 'Maximum of 4 actions reached'
       })
       snackbar.show()
@@ -180,7 +180,7 @@ export const initProgrammaticBottomAppBar = (container) => {
 
   removeActionButton.on('click', () => {
     if (actionCount <= 1) {
-      const snackbar = createSnackbar({
+      const snackbar = fSnackbar({
         message: 'Must have at least one action'
       })
       snackbar.show()
@@ -203,7 +203,7 @@ export const initProgrammaticBottomAppBar = (container) => {
 
   addFabButton.on('click', () => {
     if (hasFab) {
-      const snackbar = createSnackbar({
+      const snackbar = fSnackbar({
         message: 'FAB is already added'
       })
       snackbar.show()
@@ -225,7 +225,7 @@ export const initProgrammaticBottomAppBar = (container) => {
 
   removeFabButton.on('click', () => {
     if (!hasFab) {
-      const snackbar = createSnackbar({
+      const snackbar = fSnackbar({
         message: 'No FAB to remove'
       })
       snackbar.show()

@@ -7,7 +7,7 @@ import {
 
 import {
   createLayout,
-  createRadios
+  fRadios
 } from 'mtrl'
 
 export const createRadiosContent = (container) => {
@@ -27,7 +27,7 @@ export const initRadiosSizes = (container) => {
   const title = 'Radios Size'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const small = createRadios({
+  const small = fRadios({
     name: 'size1',
     options: [
       { value: 'sm', label: 'Small' },
@@ -37,7 +37,7 @@ export const initRadiosSizes = (container) => {
     ]
   })
 
-  const radios = createRadios({
+  const radios = fRadios({
     name: 'size2',
     options: [
       { value: 'sm', label: 'Small' },
@@ -47,7 +47,7 @@ export const initRadiosSizes = (container) => {
     ]
   })
 
-  const large = createRadios({
+  const large = fRadios({
     name: 'size3',
     options: [
       { value: 'sm', label: 'Small' },

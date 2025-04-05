@@ -10,7 +10,7 @@ import {
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   CARD_VARIANTS,
@@ -35,7 +35,7 @@ export const initExpandableCards = (container) => {
     { artwork: artworks[5], initialExpanded: true, title: 'Initially expanded' }
   ].forEach((item, index) => {
     // Create base card
-    const baseCard = createCard({
+    const baseCard = fCard({
       variant: index === 0 ? CARD_VARIANTS.FILLED : CARD_VARIANTS.OUTLINED,
       aria: {
         label: `Expandable card about ${item.artwork.title}`,

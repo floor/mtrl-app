@@ -32,7 +32,12 @@ $content: '#{b.$prefix}-content';
   }
 
   .#{b.$prefix}-theme-controls-container {
-      padding: 0;
+      
+
+      .#{b.$prefix}-switch {
+        position: absolute;
+      }
+
     }
 
   .#{b.$prefix}-color-palette {

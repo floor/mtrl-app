@@ -7,7 +7,7 @@ import {
 import {
   createLayout,
   createElement,
-  createList,
+  fList,
   fButton
 } from 'mtrl'
 
@@ -41,7 +41,7 @@ const initBasicList = (container) => {
   const title = 'Basic List'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const basicList = createList({
+  const basicList = fList({
     items: [
       { id: '1', headline: 'List Item 1' },
       { id: '2', headline: 'List Item 2' },
@@ -65,7 +65,7 @@ const initSingleSelectList = (container) => {
   const title = 'Single Select List'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = createList({
+  const list = fList({
     type: 'single',
     items: [
       { id: '1', headline: 'Option 1' },
@@ -93,7 +93,7 @@ const initMultiSelectList = (container) => {
   const title = 'Multi Select List'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = createList({
+  const list = fList({
     type: 'multi',
     items: [
       { id: '1', headline: 'Option 1', selected: true },
@@ -121,7 +121,7 @@ const initSectionedList = (container) => {
   const title = 'Sectioned List'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = createList({
+  const list = fList({
     sections: [
       {
         id: 'section1',
@@ -160,7 +160,7 @@ const initVerticalLayout = (container) => {
   const title = 'Vertical Layout'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = createList({
+  const list = fList({
     layout: 'vertical',
     items: [
       {
@@ -202,7 +202,7 @@ export const createListsLayout = (components) => [
       class: 'mtrl-content__grid',
       id: 'sectioned',
       onCreate: (el) => {
-        const sectionedList = createList({
+        const sectionedList = fList({
           sections: [
             {
               id: 'section1',
@@ -235,7 +235,7 @@ export const createListsLayout = (components) => [
       class: 'mtrl-content__grid',
       id: 'vertical',
       onCreate: (el) => {
-        const verticalList = createList({
+        const verticalList = fList({
           layout: 'vertical',
           items: [
             {
@@ -266,7 +266,7 @@ export const createListsLayout = (components) => [
       [createElement, 'div', {
         id: 'stateTest',
         onCreate: (el) => {
-          const list = createList({
+          const list = fList({
             type: 'single',
             items: [
               { id: '1', headline: 'Interactive Item 1' },
@@ -321,7 +321,7 @@ export const createListsLayout = (components) => [
     [createElement, 'div', {
       id: 'eventTest',
       onCreate: (el) => {
-        const list = createList({
+        const list = fList({
           items: [
             { id: '1', headline: 'Event Test Item 1' },
             { id: '2', headline: 'Event Test Item 2' }

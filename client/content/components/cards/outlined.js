@@ -10,7 +10,7 @@ import {
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
-import createCard, {
+import fCard, {
   createCardHeader,
   createCardContent,
   CARD_VARIANTS
@@ -30,7 +30,7 @@ export const initOutlinedCards = (container) => {
 
   // Create outlined cards
   artworks.slice(10, 11).forEach((artwork, index) => {
-    const card = createCard({
+    const card = fCard({
       variant: CARD_VARIANTS.OUTLINED,
       interactive: index === 1, // Make the middle card interactive
       aria: {

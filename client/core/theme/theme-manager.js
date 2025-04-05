@@ -1,6 +1,6 @@
 // src/client/core/theme/theme-manager.js
 
-import { createMenu } from 'mtrl'
+import { fMenu } from 'mtrl'
 import stateManager from '../state'
 import { iconDark, iconLight } from '../../icons/'
 
@@ -116,7 +116,7 @@ export const createThemeManager = (options = {}) => {
   }
 
   const createThemeMenu = (origin) => {
-    themesMenu = createMenu({
+    themesMenu = fMenu({
       items: config.themesMenu,
       origin
     })
