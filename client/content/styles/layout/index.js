@@ -6,7 +6,7 @@ import {
 
 // Import utility functions for layout examples
 
-import { createBasicLayout } from './basic'
+// import { createBasicLayout } from './basic'
 import { createResponsiveLayout } from './responsive'
 import { createGridLayout } from './grid'
 import { createCardLayout } from './card'
@@ -14,7 +14,7 @@ import { createSplitLayout } from './split'
 import { initializeInteractiveLayouts } from './interactive'
 
 import {
-  createLayout
+  fLayout
 } from 'mtrl'
 
 export const createLayoutStylesContent = (container) => {
@@ -23,11 +23,11 @@ export const createLayoutStylesContent = (container) => {
     title: 'Layout',
     description: 'Structured arrangements of components with responsive behavior'
   }
-  const layout = createLayout(createContentLayout(info), container).component
+  const layout = fLayout(createContentLayout(info), container).component
 
   console.log('layout', layout)
 
-  createBasicLayout(layout.body)
+  // createBasicLayout(layout.body)
   createResponsiveLayout(layout.body)
   createGridLayout(layout.body)
   createCardLayout(layout.body)

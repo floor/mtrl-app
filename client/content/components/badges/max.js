@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fBadge
 } from 'mtrl'
 
@@ -16,7 +16,7 @@ import {
 export const initMax = (container) => {
   const title = 'Badges with Maximum Value'
   const subtitle = 'badge truncation (max 4 characters, including "+")'
-  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
   const badgeContainer = document.createElement('div')
   badgeContainer.style.display = 'flex'

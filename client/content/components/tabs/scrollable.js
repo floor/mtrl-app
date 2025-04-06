@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fTabs
 } from 'mtrl'
 
 export const initScrollableTabs = (container) => {
   const title = 'Scrollable Tabs'
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with many items to demonstrate scrolling
   const tabs = fTabs({

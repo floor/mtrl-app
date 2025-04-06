@@ -1,12 +1,12 @@
 // src/client/content/styles/typography/demo.js
-import { createLayout, createElement, fButton } from 'mtrl'
+import { fLayout, createElement, fButton } from 'mtrl'
 
 /**
  * Creates the Typography Demo section
  * @param {HTMLElement} container - Parent container
  */
 export const createTypographyDemoSection = (container) => {
-  const sectionStructure = createLayout([
+  const sectionStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Typography Demo' },
@@ -31,59 +31,59 @@ export const initTypographyDemo = (container) => {
   // Create a typography demo with interactive elements
   const demoContent = createElement({
     tag: 'div',
-    class: 'mtrl-typography-demo__content'
+    className: 'typography-demo__content'
   })
 
   // Headline
   const headline = createElement({
     tag: 'h1',
-    class: 'mtrl-type-headline-large',
+    className: 'type-headline-large',
     text: 'Typography in mtrl'
   })
 
   // Subheadline
   const subheadline = createElement({
     tag: 'h2',
-    class: 'mtrl-type-headline-small',
+    className: 'type-headline-small',
     text: 'Create a consistent reading experience'
   })
 
   // Body text
   const bodyText = createElement({
     tag: 'p',
-    class: 'mtrl-type-body-medium',
+    className: 'type-body-medium',
     text: 'Good typography makes the reading experience comfortable and helps create clear hierarchies. The mtrl framework provides a comprehensive typography system that helps maintain consistent type styles across your application.'
   })
 
   // Quote
   const quote = createElement({
     tag: 'blockquote',
-    class: 'mtrl-typography-demo__quote',
+    className: 'typography-demo__quote',
     text: '"Typography is what language looks like."'
   })
 
   const quoteAttribution = createElement({
     tag: 'cite',
-    class: 'mtrl-type-body-small',
+    className: 'type-body-small',
     text: '— Ellen Lupton'
   })
 
   // Controls
   const controls = createElement({
     tag: 'div',
-    class: 'mtrl-typography-demo__controls'
+    className: 'typography-demo__controls'
   })
 
   const fontSizeControl = fButton({
     text: 'Increase Font Size',
     variant: 'outlined',
-    class: 'font-size-control'
+    className: 'font-size-control'
   })
 
   const fontWeightControl = fButton({
     text: 'Toggle Font Weight',
     variant: 'outlined',
-    class: 'font-weight-control'
+    className: 'font-weight-control'
   })
 
   fontSizeControl.on('click', () => {

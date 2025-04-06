@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fTopAppBar,
   fButton
 } from 'mtrl'
@@ -12,7 +12,7 @@ import {
 export const initScrollBehaviorTopAppBar = (container) => {
   const title = 'Scroll Behavior'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = fLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component

@@ -7,7 +7,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fCheckbox,
   fButton,
   createElement
@@ -19,7 +19,7 @@ export const createCheckboxesContent = (container) => {
     description: 'Checkboxes let users select one or more items from a list, or turn an item on or off'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = fLayout(componentsLayout(info), container).component
 
   initBasicCheckboxes(layout.body)
   initLabelPositions(layout.body)
@@ -28,7 +28,7 @@ export const createCheckboxesContent = (container) => {
 
 export const initBasicCheckboxes = (container) => {
   const title = 'Basic Checkboxes'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Default checkbox
   const defaultCheckbox = fCheckbox({
@@ -61,7 +61,7 @@ export const initBasicCheckboxes = (container) => {
 
 export const initLabelPositions = (container) => {
   const title = 'Label Positions'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a description element
   // const description = createElement({ tag: 'p', class: 'section-description' })
@@ -94,7 +94,7 @@ export const initLabelPositions = (container) => {
 
 export const initIndeterminateCheckboxes = (container) => {
   const title = 'Indeterminate State'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a wrapper for the demo
   const demoWrapper = createElement({ class: 'indeterminate-checkbox-demo' })

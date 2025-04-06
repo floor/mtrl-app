@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   fDialog
 } from 'mtrl'
@@ -31,7 +31,7 @@ const createAnimationsDialog = (animation) => {
 export const initAnimations = (container) => {
   const title = 'Dialog Animations'
   const description = 'Dialogs can use different animation styles when opening and closing'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create a dialog for each animation type
   const animations = [

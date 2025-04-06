@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSearch,
   createElement
 } from 'mtrl'
@@ -21,7 +21,7 @@ export const SEARCH_VARIANTS = {
 
 export const initDockedView = (container) => {
   const title = 'Search View (Docked Mode)'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const searchView = fSearch({
     variant: SEARCH_VARIANTS.VIEW,
@@ -51,7 +51,7 @@ export const initDockedView = (container) => {
   ]
 
   // Create the demo
-  const demo = createLayout(demoStructure, layout.body).component
+  const demo = fLayout(demoStructure, layout.body).component
 
   // Add the search component to its container
   demo.searchContainer.appendChild(searchView.element)

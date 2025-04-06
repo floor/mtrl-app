@@ -5,7 +5,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  fLayout,
   createElement,
   fList,
   fButton
@@ -28,7 +28,7 @@ export const createListsContent = (container, components) => {
     description: 'Lists are continuous, vertical indexes of text and images'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = fLayout(componentsLayout(info), container).component
 
   initBasicList(layout.body)
   initSingleSelectList(layout.body)
@@ -39,7 +39,7 @@ export const createListsContent = (container, components) => {
 
 const initBasicList = (container) => {
   const title = 'Basic List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const basicList = fList({
     items: [
@@ -63,7 +63,7 @@ const initBasicList = (container) => {
 
 const initSingleSelectList = (container) => {
   const title = 'Single Select List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const list = fList({
     type: 'single',
@@ -91,7 +91,7 @@ const initSingleSelectList = (container) => {
 
 const initMultiSelectList = (container) => {
   const title = 'Multi Select List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const list = fList({
     type: 'multi',
@@ -119,7 +119,7 @@ const initMultiSelectList = (container) => {
 
 const initSectionedList = (container) => {
   const title = 'Sectioned List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const list = fList({
     sections: [
@@ -158,7 +158,7 @@ const initSectionedList = (container) => {
 
 const initVerticalLayout = (container) => {
   const title = 'Vertical Layout'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const list = fList({
     layout: 'vertical',

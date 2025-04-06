@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/usage.js
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 
 /**
  * Initializes the elevation usage examples
@@ -31,7 +31,7 @@ export const createElevationUsageSection = (container) => {
   ]
 
   usageExamples.forEach(example => {
-    createLayout([
+    fLayout([
       'container', { tag: 'div', class: 'usage-container' },
       [
         'component', { tag: 'div', class: `component-example elevation-${example.elevation}` },

@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSwitch
 } from 'mtrl'
 
 export const initDisabledSwitches = (container) => {
   const title = 'Disabled'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   layout.body.style.flexDirection = 'column'
   layout.body.style.gap = '10px'

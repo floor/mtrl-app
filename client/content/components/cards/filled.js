@@ -6,7 +6,7 @@ import {
 
 import {
   createElement,
-  createLayout,
+  fLayout,
   fCard
 } from 'mtrl'
 import { artworks } from './artwork-data'
@@ -28,7 +28,7 @@ export const initFilledCards = (container) => {
   const title = 'Filled Cards'
   const description = 'Cards with filled background color using MD3 surface-container-highest'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create filled cards
   artworks.slice(7, 9).forEach(artwork => {

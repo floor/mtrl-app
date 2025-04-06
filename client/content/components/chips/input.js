@@ -1,6 +1,6 @@
 // src/client/content/components/chips/input.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { createLayout, fChip, fTextfield, fButton } from 'mtrl'
+import { fLayout, fChip, fTextfield, fButton } from 'mtrl'
 import { iconFace, iconClose } from '../../../icons'
 
 // Define prefix for CSS classes
@@ -13,7 +13,7 @@ const PREFIX = 'mtrl'
 export const initInputChips = (container) => {
   const title = 'Input Chips'
   const subtitle = 'Use with Textfield for tag/recipient input'
-  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the input chips
   const inputChipSetContainer = document.createElement('div')

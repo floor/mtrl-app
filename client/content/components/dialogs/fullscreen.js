@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   fDialog
 } from 'mtrl'
@@ -43,7 +43,7 @@ const createFullscreenDialog = (size) => {
 export const initFullscreen = (container) => {
   const title = 'Fullscreen Dialog'
   const description = 'A fullscreen dialog for immersive experiences or mobile interfaces'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
   const openButton = fButton({

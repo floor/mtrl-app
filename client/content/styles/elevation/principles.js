@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/principles.js
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 
 /**
  * Initializes the elevation principles section
@@ -26,7 +26,7 @@ export const createElevationPrinciplesSection = (container) => {
   ]
 
   principles.forEach(principle => {
-    const cardStructure = createLayout([
+    const cardStructure = fLayout([
       'card', { tag: 'div', class: 'principle-card' },
       [
         'example', { tag: 'div', class: `principle-example ${principle.exampleClass}` },
@@ -44,7 +44,7 @@ export const createElevationPrinciplesSection = (container) => {
     if (principle.exampleClass === 'elevation-principle-shadow') {
       // Shadow demonstration with multiple elevated surfaces
       for (let i = 0; i < 3; i++) {
-        createLayout([
+        fLayout([
           'surface', {
             tag: 'div',
             class: `demo-surface elevation-${i + 1}`,
@@ -54,7 +54,7 @@ export const createElevationPrinciplesSection = (container) => {
       }
     } else if (principle.exampleClass === 'elevation-principle-hierarchy') {
       // Hierarchy demonstration with stacked elements
-      createLayout([
+      fLayout([
         'primary', {
           tag: 'div',
           class: 'demo-surface demo-primary elevation-4',
@@ -74,7 +74,7 @@ export const createElevationPrinciplesSection = (container) => {
     } else if (principle.exampleClass === 'elevation-principle-surface') {
       // Surface color shifts with elevation
       for (let i = 0; i < 4; i++) {
-        createLayout([
+        fLayout([
           'surface', {
             tag: 'div',
             class: `demo-surface surface-level-${i}`,

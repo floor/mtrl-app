@@ -1,12 +1,12 @@
 // src/client/content/core/layout/components.js
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 
 /**
  * Creates the Layout Components section
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutComponentsSection = (container) => {
-  const sectionStructure = createLayout([
+  const sectionStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Component Management' },
@@ -29,7 +29,7 @@ export const createLayoutComponentsSection = (container) => {
  */
 const initComponentsContent = (container) => {
   // Create component lifecycle visualization
-  createLayout([
+  fLayout([
     'lifecycleContainer', { tag: 'div', class: 'mtrl-layout-lifecycle' },
     [
       'lifecycleTitle', { tag: 'h3', class: 'mtrl-layout-lifecycle-title', text: 'Component Lifecycle' },
@@ -90,7 +90,7 @@ const initComponentsContent = (container) => {
   ], container)
 
   // Create component access example
-  createLayout([
+  fLayout([
     'accessContainer', { tag: 'div', class: 'mtrl-layout-access' },
     [
       'accessTitle', { tag: 'h3', class: 'mtrl-layout-access-title', text: 'Component Access Methods' },
@@ -109,7 +109,7 @@ const initComponentsContent = (container) => {
             tag: 'pre',
             class: 'mtrl-layout-code',
             text: `// Create a layout with named components
-const layout = createLayout([
+const layout = fLayout([
   fButton, 'saveButton', { text: 'Save' },
   fTextfield, 'nameField', { label: 'Name' }
 ]);
@@ -129,7 +129,7 @@ saveButton.on('click', () => console.log('Saving: ' + nameField.getValue()));`
             tag: 'pre',
             class: 'mtrl-layout-code',
             text: `// Create a layout with named components
-const layout = createLayout([
+const layout = fLayout([
   fButton, 'saveButton', { text: 'Save' },
   fTextfield, 'nameField', { label: 'Name' }
 ]);
@@ -149,7 +149,7 @@ const missingComponent = layout.get('nonExistentComponent'); // null`
             tag: 'pre',
             class: 'mtrl-layout-code',
             text: `// Create a complex layout
-const layout = createLayout([
+const layout = fLayout([
   createNavbar, 'navbar', { title: 'Dashboard' },
   createSidebar, 'sidebar', {},
   [
@@ -192,7 +192,7 @@ components.settingsItem.setActive(false);`
   })
 
   // Create component destruction visualization
-  createLayout([
+  fLayout([
     'destructionContainer', { tag: 'div', class: 'mtrl-layout-destruction' },
     [
       'destructionTitle', { tag: 'h3', class: 'mtrl-layout-destruction-title', text: 'Component Cleanup' },
@@ -205,7 +205,7 @@ components.settingsItem.setActive(false);`
         tag: 'pre',
         class: 'mtrl-layout-code',
         text: `// Create a modal dialog layout
-const modalLayout = createLayout([
+const modalLayout = fLayout([
   fDialog, 'confirmDialog', { title: 'Confirm Action' },
   [
     fTextfield, 'reasonField', { label: 'Reason' },
@@ -233,7 +233,7 @@ modalLayout.get('cancelBtn').on('click', () => {
   ], container)
 
   // Best practices box
-  createLayout([
+  fLayout([
     'bestPractices', { tag: 'div', class: 'mtrl-layout-best-practices' },
     [
       'bestPracticesTitle', { tag: 'h3', text: 'Component Management Best Practices' },

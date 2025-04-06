@@ -6,7 +6,7 @@ import {
 
 import {
   createElement,
-  createLayout
+  fLayout
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
@@ -26,7 +26,7 @@ export const initOutlinedCards = (container) => {
   const title = 'Outlined Cards'
   const description = 'Cards with outline border using MD3 outline color token'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create outlined cards
   artworks.slice(10, 11).forEach((artwork, index) => {

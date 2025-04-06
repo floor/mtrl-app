@@ -1,12 +1,12 @@
 // src/client/content/core/layout/array.js
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 
 /**
  * Creates the Array-based Layout section
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutArraySection = (container) => {
-  const sectionStructure = createLayout([
+  const sectionStructure = fLayout([
     'section', { tag: 'section', class: 'content__section' },
     [
       'title', { tag: 'h2', class: 'content__section-title', text: 'Array-based Layout' },
@@ -29,7 +29,7 @@ export const createLayoutArraySection = (container) => {
  */
 const initArrayLayouts = (container) => {
   // Create visual representation of array-based layout structure
-  createLayout([
+  fLayout([
     'arrayStructure', { tag: 'div', class: 'layout-structure' },
     [
       'structureTitle', { tag: 'h3', class: 'layout-structure-title', text: 'Array-based Schema Structure' },
@@ -83,7 +83,7 @@ const initArrayLayouts = (container) => {
   ], container)
 
   // Create a table showing different patterns for array-based layouts
-  createLayout([
+  fLayout([
     'patternContainer', { tag: 'div', class: 'layout-patterns' },
     [
       'patternTitle', { tag: 'h3', class: 'layout-patterns-title', text: 'Common Patterns for Array Schema' },
@@ -136,7 +136,7 @@ const initArrayLayouts = (container) => {
   ], container)
 
   // Example showing array-to-DOM mapping
-  createLayout([
+  fLayout([
     'visualExample', { tag: 'div', class: 'layout-visual-example' },
     [
       'exampleTitle', { tag: 'h3', class: 'layout-example-title', text: 'From Schema to DOM' },
@@ -213,7 +213,7 @@ const initArrayLayouts = (container) => {
   ], container)
 
   // Add a performance tip box
-  createLayout([
+  fLayout([
     'tipBox', { tag: 'div', class: 'layout-tip-box' },
     [
       'tipIcon', { tag: 'span', class: 'material-icons', text: 'tips_and_updates' },

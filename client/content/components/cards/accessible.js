@@ -6,7 +6,7 @@ import {
 
 import {
   createElement,
-  createLayout
+  fLayout
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
@@ -27,7 +27,7 @@ export const initAccessibleCards = (container) => {
   const title = 'Accessible Cards'
   const description = 'Cards with enhanced accessibility features and ARIA attributes'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create accessible card examples
   const accessibilityFeatures = [

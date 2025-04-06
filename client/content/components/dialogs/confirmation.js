@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   fDialog
 } from 'mtrl'
@@ -11,7 +11,7 @@ import {
 export const initConfirmation = (container) => {
   const title = 'Confirmation Dialog'
   const description = 'A simple confirmation dialog using the confirm() method'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
   const confirmButton = fButton({

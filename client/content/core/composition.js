@@ -5,7 +5,7 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
+  fLayout,
   createElement,
   fButton
 } from 'mtrl'
@@ -15,9 +15,9 @@ export const createCompositionContent = (container) => {
     title: 'Composition',
     description: 'Build complex components through function composition and feature mixing'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = fLayout(contentLayout(info), container).component
 
-  const ui = createLayout(createCompositionLayout(), layout.body).component
+  const ui = fLayout(createCompositionLayout(), layout.body).component
 
   initCompositionPatterns(ui)
   initPipeFunction(ui)

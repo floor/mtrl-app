@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton
 } from 'mtrl'
 
@@ -43,7 +43,7 @@ const categoryIcons = {
 
 export const initInteraction = (container) => {
   const title = 'Interactive Behavior'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = fLayout(createComponentsSectionLayout({
     title,
     description: 'Demonstrates the interactive behaviors and events of segmented buttons.',
     class: 'noflex'

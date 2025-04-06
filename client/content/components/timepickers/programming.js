@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   createTimePicker
 } from 'mtrl'
@@ -13,7 +13,7 @@ import {
 export const initProgramming = (container) => {
   const title = 'Programmatic Control'
   const description = 'Control the TimePicker programmatically using its API'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create a time picker
   const timePicker = createTimePicker({

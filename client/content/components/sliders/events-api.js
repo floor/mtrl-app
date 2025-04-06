@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSlider
 } from 'mtrl'
 
 export const initEventsAPI = (container) => {
   const title = 'Using events and API'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const slider = fSlider({
     min: 0,

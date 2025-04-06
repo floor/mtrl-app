@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fTopAppBar,
   fButton
 } from 'mtrl'
@@ -12,7 +12,7 @@ import {
 export const initBasicTopAppBar = (container) => {
   const title = 'Basic Top App Bar'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create a demo content container
   const demoContainer = document.createElement('div')

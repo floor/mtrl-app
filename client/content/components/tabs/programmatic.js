@@ -3,14 +3,14 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fTabs,
   fButton
 } from 'mtrl'
 
 export const initProgrammaticTabs = (container) => {
   const title = 'Programmatic Control'
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs
   const tabs = fTabs({

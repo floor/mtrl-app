@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   createExtendedFab,
   fButton
 } from 'mtrl'
@@ -26,7 +26,7 @@ const deleteIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="2
 
 export const initInteraction = (container) => {
   const title = 'Extended FAB Interaction'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = fLayout(createComponentsSectionLayout({
     title,
     description: 'Demonstrates interactive behaviors of the Extended FAB.'
   }), container).component

@@ -1,12 +1,12 @@
 // src/client/content/styles/typography/code.js
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 
 /**
  * Creates the Typography Code section
  * @param {HTMLElement} container - Parent container
  */
 export const createTypographyCodeSection = (container) => {
-  const sectionStructure = createLayout([
+  const sectionStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Using Typography in Code' },

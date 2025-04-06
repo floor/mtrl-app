@@ -1,6 +1,6 @@
 // src/client/content/core/layout/index.js
 import { contentLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 import { createLayoutBasicsSection } from './basics'
 import { createLayoutArraySection } from './array'
 import { createLayoutObjectSection } from './object'
@@ -19,7 +19,7 @@ export const createLayoutContent = (container) => {
   }
 
   // Create the main layout
-  const structure = createLayout(contentLayout(info), container)
+  const structure = fLayout(contentLayout(info), container)
 
   // Get the layout body for adding content sections
   const contentBody = structure.get('body')

@@ -4,7 +4,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fTextfield
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ const searchIcon = `<svg viewBox="0 0 24 24" width="24" height="24">
 
 export const initLeadingIcons = (container) => {
   const title = 'Textfields with Leading Icons'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with leading icon
   const filled = fTextfield({

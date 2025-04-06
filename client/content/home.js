@@ -14,7 +14,7 @@ import { initBasicTabs as fTabs } from './components/tabs/basic'
 import { initFormDialog as createDialogs } from './components/dialogs/form-dialog'
 
 import {
-  createLayout
+  fLayout
 } from 'mtrl'
 
 export const createHomeContent = (container) => {
@@ -23,7 +23,7 @@ export const createHomeContent = (container) => {
     description: 'A functional TypeScript/Javascript component library with composable architecture'
   }
 
-  const body = createLayout(createHomeLayout(info), container).get('body')
+  const body = fLayout(createHomeLayout(info), container).get('body')
 
   createColorPalettes(body)
   createButtonVariants(body)

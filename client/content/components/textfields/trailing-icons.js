@@ -4,7 +4,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fTextfield
 } from 'mtrl'
 
@@ -15,7 +15,7 @@ const clearIcon = `<svg viewBox="0 0 24 24" width="24" height="24">
 
 export const initTrailingIcons = (container) => {
   const title = 'Textfields with Trailing Icons'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with trailing icon
   const filled = fTextfield({

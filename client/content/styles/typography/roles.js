@@ -1,12 +1,12 @@
 // src/client/content/styles/typography/roles.js
-import { createLayout, createElement } from 'mtrl'
+import { fLayout, createElement } from 'mtrl'
 
 /**
  * Creates the Typography Roles section
  * @param {HTMLElement} container - Parent container
  */
 export const createTypeRolesSection = (container) => {
-  const sectionStructure = createLayout([
+  const sectionStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Typography Roles' },

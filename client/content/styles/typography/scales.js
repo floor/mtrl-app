@@ -1,5 +1,5 @@
 // src/client/content/styles/typography/scales.js
-import { createLayout, createElement } from 'mtrl'
+import { fLayout, createElement } from 'mtrl'
 
 /**
  * Creates the Typography Scales section
@@ -7,7 +7,7 @@ import { createLayout, createElement } from 'mtrl'
  */
 export const createTypographyScalesSection = (container) => {
   // Create Display & Headline Scales Section
-  const displayScalesStructure = createLayout([
+  const displayScalesStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Type Scales: Display & Headline' },
@@ -21,7 +21,7 @@ export const createTypographyScalesSection = (container) => {
   ], container)
 
   // Create Body & Label Scales Section
-  const bodyScalesStructure = createLayout([
+  const bodyScalesStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Type Scales: Body & Label' },

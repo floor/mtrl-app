@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   createElement
 } from 'mtrl'
 
 export const createCardLayout = (container) => {
-  const layout = createLayout(createContentSection({
+  const layout = fLayout(createContentSection({
     title: 'Card Layout',
     description: 'Layout for displaying card-based content with different options for handling card heights.',
     class: 'theme-colors'
@@ -21,6 +21,30 @@ export const createCardLayout = (container) => {
 
   // Create 3 cards with different content
   const cardContents = [
+    {
+      title: 'Card 1',
+      content: 'Fixed height card with some content'
+    },
+    {
+      title: 'Card 2',
+      content: 'This card has more content to demonstrate how the layout handles different content lengths across cards in the same container.'
+    },
+    {
+      title: 'Card 3',
+      content: 'Another card with different content length'
+    },
+    {
+      title: 'Card 1',
+      content: 'Fixed height card with some content'
+    },
+    {
+      title: 'Card 2',
+      content: 'This card has more content to demonstrate how the layout handles different content lengths across cards in the same container.'
+    },
+    {
+      title: 'Card 3',
+      content: 'Another card with different content length'
+    },
     {
       title: 'Card 1',
       content: 'Fixed height card with some content'

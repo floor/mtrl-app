@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSlider
 } from 'mtrl'
 
@@ -13,7 +13,7 @@ import {
 
 export const initVertical = (container) => {
   const title = 'Vertical slider'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const slider = fSlider({
     min: 0,

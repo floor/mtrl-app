@@ -3,34 +3,18 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   createElement
 } from 'mtrl'
 
 export const createResponsiveLayout = (container) => {
   console.log('createResponsiveLayout', container)
-  const layout = createLayout(createContentSection({
+  const layout = fLayout(createContentSection({
     title: 'Responsive Layout',
     description: 'Layout that adapts to different screen sizes. Use the buttons to toggle between different layouts.',
     class: 'theme-colors'
   }), container).getAll()
-
-  console.log('layout.body', layout.body)
-
-  const responsiveContainer = createElement({
-    class: 'layout-demo responsive-layout'
-  })
-
-  // Create example content
-  for (let i = 1; i <= 4; i++) {
-    const box = createElement({
-      tag: 'div',
-      class: 'layout-demo__box',
-      text: `Item ${i}`
-    })
-    responsiveContainer.appendChild(box)
-  }
 
   // Create buttons to toggle different responsive layouts
   const controls = createElement({
@@ -60,9 +44,24 @@ export const createResponsiveLayout = (container) => {
     controls.appendChild(button.element)
   })
 
+  console.log('layout.body', layout.body)
+
+  const responsiveContainer = createElement({
+    class: 'layout-demo responsive-layout'
+  })
+
+  // Create example content
+  for (let i = 1; i <= 4; i++) {
+    const box = createElement({
+      tag: 'div',
+      class: 'layout-demo__box',
+      text: `Item ${i}`
+    })
+    responsiveContainer.appendChild(box)
+  }
+
   // Default to stack layout
   responsiveContainer.classList.add('stack')
-
-  layout.body.appendChild(responsiveContainer)
   layout.body.appendChild(controls)
+  layout.body.appendChild(responsiveContainer)
 }

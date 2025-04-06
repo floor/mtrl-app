@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   createTimePicker
 } from 'mtrl'
@@ -59,7 +59,7 @@ const createBasicTimePicker = (container) => {
 export const initBasic = (container) => {
   const title = 'Basic TimePicker'
   const description = 'A simple time picker with dial and input modes'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create the basic time picker
   createBasicTimePicker(layout.body)

@@ -3,12 +3,12 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   createElement
 } from 'mtrl'
 
 export const createBasicLayout = (container) => {
-  const layout = createLayout(createContentSection({
+  const layout = fLayout(createContentSection({
     title: 'Basic Layout Structure',
     description: 'A standard layout with header, sidebar, main content, and footer.',
     class: 'theme-colors'

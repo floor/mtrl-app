@@ -1,7 +1,7 @@
 // src/client/content/components/sliders/index.js
 
 import { componentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 import { initContinuous, initContinuous1000 } from './continuous'
 import { initCentered } from './centered'
 import { initRange } from './range'
@@ -16,7 +16,7 @@ export const createSlidersContent = (container) => {
     description: 'Let users make selections from a range of values'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = fLayout(componentsLayout(info), container).component
 
   initContinuous(layout.body)
   initContinuous1000(layout.body)

@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSearch,
   fButton,
   createElement
@@ -13,7 +13,7 @@ import {
 
 export const initDisabled = (container) => {
   const title = 'Disabled Search'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Disabled search bar
   const disabledSearch = fSearch({
@@ -76,7 +76,7 @@ export const initDisabled = (container) => {
   ]
 
   // Create the demo layout
-  const demo = createLayout(demoStructure, layout.body).component
+  const demo = fLayout(demoStructure, layout.body).component
 
   // Add components to their containers
   demo.disabledContainer.appendChild(disabledSearch.element)

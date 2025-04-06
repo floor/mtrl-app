@@ -1,6 +1,6 @@
 // src/client/content/styles/typography/index.js
 import { contentLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 import { createTypographyScalesSection } from './scales'
 import { createTypeRolesSection } from './roles'
 import { createFontWeightsSection } from './weights'
@@ -18,7 +18,7 @@ export const createTypographyContent = (container) => {
   }
 
   // Create the main layout
-  const layout = createLayout(contentLayout(info), container)
+  const layout = fLayout(contentLayout(info), container)
 
   // Get the layout body for adding content sections
   const contentBody = layout.get('body')

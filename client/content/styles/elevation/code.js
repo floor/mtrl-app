@@ -1,12 +1,12 @@
 // src/client/content/styles/elevation/code.js
-import { createLayout } from 'mtrl'
+import { fLayout } from 'mtrl'
 
 /**
  * Creates the Elevation Code section
  * @param {HTMLElement} container - Parent container
  */
 export const createElevationCodeSection = (container) => {
-  const sectionStructure = createLayout([
+  const sectionStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Using Elevation in Code' },

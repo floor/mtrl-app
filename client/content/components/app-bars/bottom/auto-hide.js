@@ -4,7 +4,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fBottomAppBar,
   fButton,
   fFab
@@ -27,7 +27,7 @@ export const FAB_VARIANTS = {
 export const initAutoHideBottomAppBar = (container) => {
   const title = 'Auto-Hide on Scroll'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = fLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component

@@ -1,6 +1,6 @@
 // src/client/content/components/chips/chipset.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { createLayout, fChip } from 'mtrl'
+import { fLayout, fChip } from 'mtrl'
 
 // Define prefix for CSS classes
 const PREFIX = 'mtrl'
@@ -13,7 +13,7 @@ export const initChipSet = (container) => {
   const title = 'Chip Set'
   const subtitle = 'Scrollable horizontal chip set'
 
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = fLayout(createComponentsSectionLayout({
     title,
     subtitle
   }), container).component

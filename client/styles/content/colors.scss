@@ -32,10 +32,12 @@ $content: '#{b.$prefix}-content';
   }
 
   .#{b.$prefix}-theme-controls-container {
-      
-
+      display: flex;
       .#{b.$prefix}-switch {
-        position: absolute;
+        // position: absolute;
+      }
+      .#{b.$prefix}-switch {
+        // position: absolute;
       }
 
     }

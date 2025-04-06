@@ -3,24 +3,26 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSlider,
   fSwitch
 } from 'mtrl'
 
 export const createSplitLayout = (container) => {
   console.log('createSplitLayout', container)
-  const layout = createLayout(createContentSection({
+  const layout = fLayout(createContentSection({
     title: 'Split Layout',
     description: 'Two-pane layout with adjustable split ratios and resizable divider.',
     class: 'theme-colors'
   }), container).getAll()
 
-  const splitLayout = createLayout([
-    ['splitContainer', { class: 'layout-demo split-layout split-50-50' },
-      ['leftPane', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],
-      ['rightPane', { class: 'layout-demo__pane layout-demo__pane--right', text: 'Right Pane' }],
-      ['resizeHandle', { class: 'layout-demo__resize-handle' }]
+  const splitLayout = fLayout([
+    [{ class: 'layout-demo split-demo' },
+      ['splitContainer', { class: 'split-layout split-50-50' },
+        ['leftPane', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],
+        ['rightPane', { class: 'layout-demo__pane layout-demo__pane--right', text: 'Right Pane' }],
+        ['resizeHandle', { class: 'layout-demo__resize-handle' }]
+      ]
     ],
     ['controls', { class: 'layout-demo__controls' },
       [fSlider, 'sliderPercent', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],

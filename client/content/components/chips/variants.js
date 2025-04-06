@@ -1,7 +1,7 @@
 // src/client/content/components/chips/variants.js
 import { capitalize } from '../../../core/utils'
 import { createComponentsSectionLayout } from '../../../layout'
-import { createLayout, fChipSet } from 'mtrl'
+import { fLayout, fChips } from 'mtrl'
 
 /**
  * Initializes the chip variants section
@@ -9,7 +9,7 @@ import { createLayout, fChipSet } from 'mtrl'
  */
 export const initChipVariants = (container) => {
   const title = 'Chip Variants'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // List of all available variants
   const variants = [
@@ -24,7 +24,7 @@ export const initChipVariants = (container) => {
 
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const chip = fChipSet({
+    const chip = fChips({
       text: `${text} Chip`,
       variant
     })

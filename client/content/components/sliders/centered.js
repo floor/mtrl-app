@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSlider
 } from 'mtrl'
 
 export const initCentered = (container) => {
   const title = 'Centered Slider'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const slider = fSlider({
     min: -100,

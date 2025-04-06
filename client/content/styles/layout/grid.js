@@ -3,14 +3,14 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fButton,
   createElement
 } from 'mtrl'
 
 export const createGridLayout = (container) => {
   console.log('createGridLayout', container)
-  const layout = createLayout(createContentSection({
+  const layout = fLayout(createContentSection({
     title: 'Responsive Layout',
     description: '',
     class: 'theme-colors'
@@ -72,6 +72,6 @@ export const createGridLayout = (container) => {
   // Default to 3-column grid
   gridContainer.classList.add('columns-3')
 
-  body.appendChild(gridContainer)
   body.appendChild(controls)
+  body.appendChild(gridContainer)
 }

@@ -6,7 +6,7 @@ import {
 
 import {
   createElement,
-  createLayout,
+  fLayout,
   fCard
 } from 'mtrl'
 
@@ -27,7 +27,7 @@ export const initElevatedCards = (container) => {
   const title = 'Elevated Cards'
   const description = 'Cards with shadow elevation effect following MD3 elevation system (levels 1, 2, and 4)'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create elevated cards with increasing elevation levels
   ;[1, 2].forEach((elevation, index) => {

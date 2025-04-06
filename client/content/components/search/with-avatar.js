@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSearch,
   createElement,
   createDivider
@@ -13,7 +13,7 @@ import {
 
 export const initWithAvatar = (container) => {
   const title = 'Search Bar with Avatar'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Define avatar
   const avatar = '<img src="https://i.pravatar.cc/100" alt="User avatar">'
@@ -67,7 +67,7 @@ export const initWithAvatar = (container) => {
   ]
 
   // Create the demo
-  const demo = createLayout(demoStructure, layout.body).component
+  const demo = fLayout(demoStructure, layout.body).component
 
   // // Add divider
   // const divider = createDivider()

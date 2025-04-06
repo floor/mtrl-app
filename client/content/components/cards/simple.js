@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout
+  fLayout
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
@@ -25,7 +25,7 @@ export const initSimpleCards = (container) => {
   const title = 'Simple Cards'
   const description = 'Basic cards with title and text content following MD3 specifications'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create simple cards using the first three artworks
   artworks.slice(0, 2).forEach(artwork => {

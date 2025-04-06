@@ -1,5 +1,5 @@
 import {
-  createLayout,
+  fLayout,
   createElement,
   fButton
 } from 'mtrl'

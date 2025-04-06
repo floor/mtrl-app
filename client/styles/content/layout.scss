@@ -695,7 +695,8 @@
   margin-bottom: 24px;
   border-radius: v.shape('medium');
   overflow: hidden;
-  box-shadow: v.elevation('level-1');
+  // box-shadow: v.elevation('level-1');
+  background-color: var(--mtrl-sys-color-surface-bright);
   transition: all 0.3s ease;
 }
 
@@ -771,7 +772,7 @@
 // Responsive Layout
 .responsive-layout {
   padding: 24px;
-  background-color: t.color('surface-container-low');
+  background-color: var(--mtrl-sys-color-surface-bright);
   
   .layout-demo__box {
     background-color: t.color('primary-container');
@@ -787,12 +788,19 @@
     &:hover {
       box-shadow: v.elevation('level-2');
     }
+
+    &::last-child {
+      margin-bottom: 0;
+    }
+
   }
   
   // Stack layout (default)
   &.stack {
     display: flex;
     flex-direction: column;
+    border-radius: 12px;
+    background-color: var(--mtrl-sys-color-surface-bright);
   }
   
   // Row layout
@@ -826,7 +834,6 @@
   display: grid;
   gap: 16px;
   padding: 24px;
-  background-color: t.color('surface-container-low');
   
   .layout-demo__grid-item {
     background-color: t.color('secondary-container');
@@ -909,7 +916,6 @@
   display: grid;
   gap: 24px;
   padding: 24px;
-  background-color: t.color('surface-container-low');
   
   .layout-demo__card {
     background-color: t.color('surface');
@@ -1001,6 +1007,17 @@
 }
 
 // Split Layout section with improved styling
+.#{b.$prefix}-layout-demo.#{b.$prefix}-split-demo {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 24px;
+  background-color: var(--mtrl-sys-color-surface-bright);
+  transition: all 0.3s ease;  
+}
+
+// 
 .#{b.$prefix}-split-layout {
   display: flex;
   height: 300px;
@@ -1010,6 +1027,8 @@
   box-shadow: none; // Remove shadow
   border-radius: 0; // Remove border radius
   
+
+
   .#{b.$prefix}-layout-demo__pane {
     display: flex;
     align-items: center;

@@ -1,6 +1,6 @@
 // src/client/content/components/chips/filter.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { createLayout, fChip, fButton } from 'mtrl'
+import { fLayout, fChip, fButton } from 'mtrl'
 import { iconCheck } from '../../../icons'
 
 // Define prefix for CSS classes
@@ -12,7 +12,7 @@ const PREFIX = 'mtrl'
  */
 export const initFilterChipSet = (container) => {
   const title = 'Filter Chip Set'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Example label
   const label = document.createElement('p')

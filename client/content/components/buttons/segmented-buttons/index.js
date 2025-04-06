@@ -5,7 +5,7 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout
+  fLayout
 } from 'mtrl'
 
 import { initVariants } from './variants'
@@ -21,7 +21,7 @@ export const createSegmentedButtonsContent = (container) => {
     description: 'Segmented buttons help people select options, switch views, or sort elements. They contain two to five segments, each functioning as a distinct action. Segmented buttons can be used as an alternative to tabs, radio buttons, or standalone buttons when the options are closely related.'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = fLayout(componentsLayout(info), container).component
 
   initVariants(layout.body)
   initSelectionModes(layout.body)

@@ -5,14 +5,14 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   createTimePicker
 } from 'mtrl'
 
 export const initFormats = (container) => {
   const title = 'Time Formats'
   const description = 'TimePicker supports 12-hour and 24-hour time formats'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create grid layout for different formats
   const grid = document.createElement('div')

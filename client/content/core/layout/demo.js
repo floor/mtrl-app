@@ -1,12 +1,12 @@
 // src/client/content/core/layout/demo.js
-import { createLayout, createElement, fButton, fTextfield } from 'mtrl'
+import { fLayout, createElement, fButton, fTextfield } from 'mtrl'
 
 /**
  * Creates the Layout Demo section
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutDemoSection = (container) => {
-  const sectionStructure = createLayout([
+  const sectionStructure = fLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Interactive Demo' },
@@ -29,7 +29,7 @@ export const createLayoutDemoSection = (container) => {
  */
 const initLayoutDemo = (container) => {
   // Create the demo UI
-  const demoStructure = createLayout([
+  const demoStructure = fLayout([
     'demoContent', { tag: 'div', class: 'mtrl-layout-demo-content' },
     [
       'controlsPanel', { tag: 'div', class: 'mtrl-layout-demo-controls' },
@@ -497,7 +497,7 @@ const initLayoutDemo = (container) => {
         schema = eval(`(${schemaText})`)
 
         // Create layout and append to preview
-        const layout = createLayout(schema)
+        const layout = fLayout(schema)
         preview.appendChild(layout.element)
       }
 

@@ -4,7 +4,7 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
+  fLayout,
   fSlider,
   fSnackbar
 } from 'mtrl'
@@ -15,7 +15,7 @@ import {
 
 export const initRange = (container) => {
   const title = 'Price Range Filter'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = fLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
   const priceSlider = fSlider({
     min: 0,
