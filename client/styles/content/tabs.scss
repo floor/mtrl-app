@@ -25,7 +25,7 @@ $content: '#{b.$prefix}-content';
     // border: 1px solid t.color('outline-variant');
     border-radius: 0 0 8px 8px;
     margin-top: -1px;
-    background-color: t.color('surface');
+    // background-color: t.color('surface');
     &.hidden {
       display: none;
     }

@@ -1,4 +1,4 @@
-import { fLayout, fChips, fSwitch } from 'mtrl'
+import { fLayout, fChips, fChip } from 'mtrl'
 import { createContentSection } from '../../../layout/content'
 import themeManager from '../../../core/theme/theme-manager'
 
@@ -22,82 +22,60 @@ export const createColorPalettes = (container) => {
   const mainLayout = fLayout([
     ['controlsContainer', { class: 'theme-controls-container' },
       [fChips, 'themeChipSet', {
-        scrollable: true,
-        multiSelect: true, // Enable multiple selection
+        scrollable: false,
+        multiSelect: false, // Enable multiple selection
         class: 'theme-chip-set',
-        label: 'Select Theme'
+        label: 'Select Theme',
+        onChange: (values) => {
+          themeChangeHandler(values[0])
+        }
       }],
-      [fSwitch, 'darkModeSwitch', {
-        label: 'Dark Mode',
-        checked: currentSettings.themeMode === 'dark',
-        class: 'dark-mode-switch'
+      [fChip, 'darkModeChip', {
+        text: 'Dark Mode',
+        variant: 'filter', // Add a variant that supports selection
+        selectable: true, // Explicitly make it selectable
+        selected: currentSettings.themeMode === 'dark',
+        class: 'dark-mode-chip',
+        onChange: (isSelected, chip) => { // Use onChange instead of onSelect
+          darkmodeChangeHandler(isSelected) // Pass the boolean selection state
+        }
       }]
     ],
     ['palettesContainer', { class: 'color-palettes-container' }]
   ], body)
 
   // Extract components
-  const { themeChipSet, darkModeSwitch, palettesContainer } = mainLayout.component
+  const { themeChipSet, darkModeChip, palettesContainer } = mainLayout.component
 
   // Store current theme to prevent infinite event loops
-  let isProcessingThemeChange = false
   let lastSelectedTheme = currentSettings.themeName || 'material'
   let lastThemeMode = currentSettings.themeMode || 'light'
 
-  // Handle theme changes from chip selection
-  themeChipSet.on('change', (selectedValues) => {
-    console.log('themeChipSet change', selectedValues)
+  const themeChangeHandler = (theme) => {
+    if (!theme) return
 
-    // If we're already processing a theme change, don't trigger another one
-    if (isProcessingThemeChange) return
+    // Prevent update loop by checking if the theme actually changed
+    if (theme !== lastSelectedTheme) {
+      lastSelectedTheme = theme
 
-    // In multi-select mode, we need to handle multiple selections
-    if (selectedValues.length > 0) {
-      // Get the primary theme - for simplicity, we'll use the first selected value
-      // In a real implementation, you might want to combine themes or handle them differently
-      const primaryTheme = selectedValues[0]
-
-      // Prevent update loop by checking if the theme actually changed
-      if (primaryTheme !== lastSelectedTheme) {
-        lastSelectedTheme = primaryTheme
-
-        // Set flag to prevent event loops
-        isProcessingThemeChange = true
-
-        // Use themeManager to set the theme but maintain the current mode
-        themeManager.setTheme(primaryTheme, lastThemeMode)
-
-        // Reset flag after a short delay to allow other events to finish
-        setTimeout(() => {
-          isProcessingThemeChange = false
-        }, 50)
-      }
+      // Use themeManager to set the theme but maintain the current mode
+      themeManager.setTheme(theme, lastThemeMode)
     }
-  })
+  }
 
-  // Handle dark mode toggle
-  darkModeSwitch.on('change', () => {
-    // If we're already processing a theme change, don't trigger another one
-    if (isProcessingThemeChange) return
+  const darkmodeChangeHandler = (isSelected) => {
+    // console.log('darkmodeChangeHandler', isSelected)
 
-    const newMode = darkModeSwitch.isChecked() ? 'dark' : 'light'
+    const newMode = isSelected ? 'dark' : 'light'
 
     // Prevent update loop by checking if the mode actually changed
     if (newMode !== lastThemeMode) {
       lastThemeMode = newMode
 
-      // Set flag to prevent event loops
-      isProcessingThemeChange = true
-
       // Use themeManager to set the theme mode but maintain the current theme
       themeManager.setThemeMode(newMode)
-
-      // Reset flag after a short delay to allow other events to finish
-      setTimeout(() => {
-        isProcessingThemeChange = false
-      }, 50)
     }
-  })
+  }
 
   // Add chips to chip set
   for (let i = 0; i < themes.length; i++) {
@@ -108,11 +86,7 @@ export const createColorPalettes = (container) => {
       variant: 'filter',
       selectable: true, // Explicitly make it selectable
       selected: name === lastSelectedTheme, // Pre-select current theme
-      class: `theme-chip theme-${name}`,
-      // Handle individual chip selection changes (if needed)
-      onChange: (isSelected, chip) => {
-        console.log(`Chip ${chip.getText()} is now ${isSelected ? 'selected' : 'deselected'}`)
-      }
+      class: `theme-chip theme-${name}`
     })
   }
 
@@ -122,39 +96,26 @@ export const createColorPalettes = (container) => {
 
   // Listen for theme changes from elsewhere in the app
   window.addEventListener('themechange', (event) => {
-    console.log('themechange', event)
-
-    // Only process if we're not already handling a change
-    if (isProcessingThemeChange) return
-
-    // Set flag to prevent event loops
-    isProcessingThemeChange = true
+    // console.log('themechange', event)
 
     // Update tracking variables and UI for theme name if changed
     if (event.detail.themeName && event.detail.themeName !== lastSelectedTheme) {
       lastSelectedTheme = event.detail.themeName
 
-      // For multi-select, we need to be careful not to clear other selections
-      // Pass false to prevent triggering another change event
       themeChipSet.selectByValue(event.detail.themeName, false)
     }
 
-    // Update tracking variables and UI for theme mode if changed
     if (event.detail.themeMode && event.detail.themeMode !== lastThemeMode) {
       lastThemeMode = event.detail.themeMode
       // Update the switch without triggering cascading events
       const isDark = event.detail.themeMode === 'dark'
-      darkModeSwitch.setChecked(isDark, false)
+      darkModeChip.setSelected(isDark)
     }
-
-    // Reset the flag after a short delay
-    setTimeout(() => {
-      isProcessingThemeChange = false
-    }, 50)
   })
 
   // Create palette layouts
   const tones = [10, 30, 50, 70, 90]
+  // const tones = [90, 70, 50, 30, 10]
 
   const palettes = [
     { name: 'primary', label: 'Primary', tones },

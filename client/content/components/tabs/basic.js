@@ -13,7 +13,7 @@ export const initBasicTabs = (container) => {
 
   const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
-  const box = createElement({ tag: 'div', class: 'mtrl-components__section-box' })
+  const box = createElement({ tag: 'div', class: 'mtrl-components__section-1box' })
 
   // Create tabs with predefined items
   const tabs = fTabs({

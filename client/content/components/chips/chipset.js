@@ -11,11 +11,11 @@ const PREFIX = 'mtrl'
  */
 export const initChipSet = (container) => {
   const title = 'Chip Set'
-  const subtitle = 'Scrollable horizontal chip set'
+  const description = 'Scrollable horizontal chip set'
 
   const layout = fLayout(createComponentsSectionLayout({
     title,
-    subtitle
+    description
   }), container).component
 
   // Define chips with unique values

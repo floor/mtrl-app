@@ -33,8 +33,9 @@ $content: '#{b.$prefix}-content';
 
   .#{b.$prefix}-theme-controls-container {
       display: flex;
-      .#{b.$prefix}-switch {
-        // position: absolute;
+      gap: 12px;
+      .#{b.$prefix}-dark-mode-chip {
+        margin-top: 40px
       }
       .#{b.$prefix}-switch {
         // position: absolute;
