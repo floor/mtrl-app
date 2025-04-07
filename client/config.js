@@ -50,8 +50,8 @@ export const navigationLayout = {
     items: [
       { id: 'events', label: 'Events', path: '/core/events' },
       { id: 'state', label: 'State', path: '/core/state' },
-      { id: 'composition', label: 'Composition', path: '/core/composition' },
-      { id: 'layout', label: 'Layout', path: '/core/layout' }
+      { id: 'composition', label: 'Composition', path: '/core/composition' }
+      // { id: 'layout', label: 'Layout', path: '/core/layout' }
     ]
   },
 

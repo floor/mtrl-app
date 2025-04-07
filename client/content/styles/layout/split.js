@@ -25,12 +25,18 @@ export const createSplitLayout = (container) => {
       ]
     ],
     ['controls', { class: 'layout-demo__controls' },
-      [fSlider, 'sliderPercent', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],
-      [fSwitch, { class: 'layout-demo__pane layout-demo__pane--right', label: 'Stack (Mobile)' }]
+      [fSlider, 'slider', {
+        min: 10,
+        max: 90,
+        value: 50,
+        step: 1,
+        label: 'Split Ratio'
+      }]
+      // [fSwitch, 'mobileSwitch', { label: 'Stack (Mobile)' }]
     ]
   ], layout.body)
 
-  const { splitContainer, leftPane, rightPane, resizeHandle } = splitLayout.component
+  const { splitContainer, leftPane, rightPane, resizeHandle, mobileSwitch, slider } = splitLayout.component
 
   // Default to 50/50 split
   splitContainer.classList.add('split-50-50')
@@ -48,7 +54,9 @@ export const createSplitLayout = (container) => {
     splitContainer,
     leftPane,
     rightPane,
-    resizeHandle
+    resizeHandle,
+    slider,
+    mobileSwitch
   )
 }
 
@@ -93,15 +101,35 @@ function updateHandlePosition (container, leftPane, handle) {
 }
 
 /**
+ * Updates split panes based on a percentage value
+ */
+function updateSplitByPercentage (container, leftPane, rightPane, handle, percentage) {
+  // Ensure percentage is within bounds
+  const safePercentage = Math.max(10, Math.min(90, percentage))
+
+  // Remove any preset split classes
+  container.classList.remove('split-50-50', 'split-30-70', 'split-70-30')
+
+  // Update pane sizes
+  leftPane.style.flex = `0 0 calc(${safePercentage}% - 12px)`
+  rightPane.style.flex = `0 0 calc(${100 - safePercentage}% - 12px)`
+
+  // Update handle position
+  handle.style.left = `calc(${safePercentage}% - 12px)`
+
+  console.log(`Split updated to ${safePercentage}/${100 - safePercentage}`)
+}
+
+/**
  * Sets up the resize handle functionality using direct event handlers
  */
-function initResizeHandling (container, leftPane, rightPane, handle) {
+function initResizeHandling (container, leftPane, rightPane, handle, slider, mobileSwitch) {
   if (!container || !leftPane || !rightPane || !handle) {
     console.error('Missing required elements for resize handling')
     return
   }
 
-  console.log('Initializing resize handling with direct handlers')
+  // console.log('Initializing resize handling with direct handlers')
 
   // Variables to track resize state
   let isDragging = false
@@ -109,7 +137,7 @@ function initResizeHandling (container, leftPane, rightPane, handle) {
   // Use direct handler approach for more reliable event handling
   handle.onmousedown = function (e) {
     e.preventDefault()
-    console.log('Resize handle: drag started')
+    // console.log('Resize handle: drag started')
 
     isDragging = true
     document.body.style.cursor = 'col-resize'
@@ -131,14 +159,12 @@ function initResizeHandling (container, leftPane, rightPane, handle) {
         10,
         Math.min(90, ((initialLeftWidth + deltaX) / containerWidth) * 100)
       )
-      const newRightWidthPercent = 100 - newLeftWidthPercent
 
-      // Update pane sizes
-      leftPane.style.flex = `0 0 calc(${newLeftWidthPercent}% - 12px)`
-      rightPane.style.flex = `0 0 calc(${newRightWidthPercent}% - 12px)`
+      // Update panes based on percentage
+      updateSplitByPercentage(container, leftPane, rightPane, handle, newLeftWidthPercent)
 
-      // Update handle position to match
-      handle.style.left = `calc(${newLeftWidthPercent}% - 12px)`
+      // Update slider value to match the current split
+      slider.setValue(Math.round(newLeftWidthPercent))
     }
 
     // Handle mouse up - end dragging
@@ -155,6 +181,31 @@ function initResizeHandling (container, leftPane, rightPane, handle) {
     }
   }
 
+  // Connect slider to split panes
+  slider.on('change', (event) => {
+    const value = event.value
+    // console.log('slider change', value)
+    updateSplitByPercentage(container, leftPane, rightPane, handle, value)
+  })
+
+  if (mobileSwitch) {
+    mobileSwitch.on('change', (value) => {
+    // console.log('mobile change', value)
+      if (value) {
+      // When switched to mobile/stacked mode
+        container.classList.add('mtrl-split-stacked')
+        // Disable the slider temporarily
+        slider.disable()
+      } else {
+      // When switched back to normal mode
+        container.classList.remove('mtrl-split-stacked')
+        // Re-enable the slider
+        slider.enable()
+        // Apply current slider value
+        updateSplitByPercentage(container, leftPane, rightPane, handle, slider.getValue())
+      }
+    })
+  }
   // Add click handler to verify events are reaching the handle
   handle.onclick = function () {
     console.log('Resize handle clicked!')
@@ -165,6 +216,6 @@ function initResizeHandling (container, leftPane, rightPane, handle) {
     updateHandlePosition(container, leftPane, handle)
   }
 
-  // Initial positioning
-  updateHandlePosition(container, leftPane, handle)
+  // Initial positioning based on slider value
+  updateSplitByPercentage(container, leftPane, rightPane, handle, slider.getValue())
 }
