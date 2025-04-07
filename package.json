@@ -10,7 +10,7 @@
   "author": "floor",
   "license": "MIT License",
   "main": "index.js",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "scripts": {
     "start": "pm2 start ecosystem.config.js",
     "stop": "pm2 stop mtrl-app",
@@ -29,7 +29,7 @@
     "bun-types": "^1.2.5",
     "compression": "^1.8.0",
     "ejs": "^3.1.10",
-    "mtrl": "^0.3.2"
+    "mtrl": "^0.3.3"
   },
   "devDependencies": {
     "sass": "^1.83.4",
