@@ -19,7 +19,6 @@ export const contentLayout = (info) => [
       [{ tag: 'a', text: 'GitHub', className: 'content-link', href: 'https://github.com/floor/mtrl', target: '_blank' }],
       [{ tag: 'a', text: 'X', className: 'content-link', href: 'https://x.com/mtrllib', target: '_blank' }]
     ]
-
   ]
 ]
 

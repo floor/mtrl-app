@@ -29,22 +29,21 @@ export const initSelectableChips = (container) => {
     const chip = fChip({
       text: capitalize(variant),
       variant,
-      selected: variant === 'filter', // Pre-select the filter variant
-      leadingIcon: variant === 'filter' ? iconCheck : null
+      selected: variant === 'filter' // Pre-select the filter variant
     })
 
     // Add click handler to toggle selection using component API
     chip.on('click', () => {
       chip.toggleSelected()
 
-      // Update icon for filter chips
-      if (variant === 'filter') {
-        if (chip.isSelected()) {
-          chip.setLeadingIcon(iconCheck)
-        } else {
-          chip.setLeadingIcon('')
-        }
-      }
+      // // Update icon for filter chips
+      // if (variant === 'filter') {
+      //   if (chip.isSelected()) {
+      //     chip.setLeadingIcon(iconCheck)
+      //   } else {
+      //     chip.setLeadingIcon('')
+      //   }
+      // }
     })
 
     chipsContainer.appendChild(chip.element)

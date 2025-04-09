@@ -2,7 +2,7 @@
 
 import {
   componentsLayout
-} from '../../layout'
+} from '../../../layout'
 
 import {
   createElement,

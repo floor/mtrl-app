@@ -1,8 +1,8 @@
-// src/client/layout/lists.js
+// src/client/layout/lists/index.js
 import {
   componentsLayout,
   createComponentsSectionLayout
-} from '../../layout'
+} from '../../../layout'
 
 import {
   fLayout,
@@ -10,6 +10,10 @@ import {
   fList,
   fButton
 } from 'mtrl'
+
+import {
+  createListsLayout
+} from './adapter'
 
 const STAR_ICON = `
 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -35,6 +39,8 @@ export const createListsContent = (container, components) => {
   initMultiSelectList(layout.body)
   initSectionedList(layout.body)
   initVerticalLayout(layout.body)
+  initVerticalLayout(layout.body)
+  // initListsAdapter(layout.body)
 }
 
 const initBasicList = (container) => {
@@ -193,144 +199,148 @@ const initVerticalLayout = (container) => {
   })
 }
 
-export const createListsLayout = (components) => [
+const initListsAdapter = (container) => {
+  const layout = fLayout(createListsLayout(), container).component
+}
 
-  // Sectioned List
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Sectioned List' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'sectioned',
-      onCreate: (el) => {
-        const sectionedList = fList({
-          sections: [
-            {
-              id: 'section1',
-              title: 'Section 1',
-              items: [
-                { id: '1', headline: 'Item 1.1' },
-                { id: '2', headline: 'Item 1.2' }
-              ]
-            },
-            {
-              id: 'section2',
-              title: 'Section 2',
-              items: [
-                { id: '3', headline: 'Item 2.1' },
-                { id: '4', headline: 'Item 2.2' }
-              ]
-            }
-          ]
-        })
+// export const createListsLayout = (components) => [
 
-        el.appendChild(sectionedList.element)
-      }
-    }]
-  ],
+//   // Sectioned List
+//   [createElement, 'section', { class: 'mtrl-content__section' },
+//     [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Sectioned List' }],
+//     [createElement, 'div', {
+//       class: 'mtrl-content__grid',
+//       id: 'sectioned',
+//       onCreate: (el) => {
+//         const sectionedList = fList({
+//           sections: [
+//             {
+//               id: 'section1',
+//               title: 'Section 1',
+//               items: [
+//                 { id: '1', headline: 'Item 1.1' },
+//                 { id: '2', headline: 'Item 1.2' }
+//               ]
+//             },
+//             {
+//               id: 'section2',
+//               title: 'Section 2',
+//               items: [
+//                 { id: '3', headline: 'Item 2.1' },
+//                 { id: '4', headline: 'Item 2.2' }
+//               ]
+//             }
+//           ]
+//         })
 
-  // Vertical Layout List
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Vertical Layout' }],
-    [createElement, 'div', {
-      class: 'mtrl-content__grid',
-      id: 'vertical',
-      onCreate: (el) => {
-        const verticalList = fList({
-          layout: 'vertical',
-          items: [
-            {
-              id: '1',
-              headline: 'Primary Text',
-              supportingText: 'Secondary text that provides more details',
-              leading: USER_ICON
-            },
-            {
-              id: '2',
-              headline: 'Another Item',
-              supportingText: 'With supporting text and metadata',
-              leading: STAR_ICON,
-              meta: 'Meta'
-            }
-          ]
-        })
+//         el.appendChild(sectionedList.element)
+//       }
+//     }]
+//   ],
 
-        el.appendChild(verticalList.element)
-      }
-    }]
-  ],
+//   // Vertical Layout List
+//   [createElement, 'section', { class: 'mtrl-content__section' },
+//     [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Vertical Layout' }],
+//     [createElement, 'div', {
+//       class: 'mtrl-content__grid',
+//       id: 'vertical',
+//       onCreate: (el) => {
+//         const verticalList = fList({
+//           layout: 'vertical',
+//           items: [
+//             {
+//               id: '1',
+//               headline: 'Primary Text',
+//               supportingText: 'Secondary text that provides more details',
+//               leading: USER_ICON
+//             },
+//             {
+//               id: '2',
+//               headline: 'Another Item',
+//               supportingText: 'With supporting text and metadata',
+//               leading: STAR_ICON,
+//               meta: 'Meta'
+//             }
+//           ]
+//         })
 
-  // Interactive States Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Interactive States' }],
-    [createElement, 'div', { class: 'mtrl-content__grid' },
-      [createElement, 'div', {
-        id: 'stateTest',
-        onCreate: (el) => {
-          const list = fList({
-            type: 'single',
-            items: [
-              { id: '1', headline: 'Interactive Item 1' },
-              { id: '2', headline: 'Interactive Item 2' }
-            ]
-          })
-          el.appendChild(list.element)
-        }
-      }],
-      [createElement, 'div', { class: 'mtrl-content__controls' },
-        [fButton, null, {
-          text: 'Toggle Disabled',
-          variant: 'outlined',
-          onclick: () => {
-            const list = window.testList
-            if (list.element.disabled) {
-              list.enable()
-            } else {
-              list.disable()
-            }
-          }
-        }],
-        [fButton, null, {
-          text: 'Add Item',
-          variant: 'outlined',
-          onclick: () => {
-            const id = `new-${Date.now()}`
-            window.testList.addItem({
-              id,
-              headline: `New Item ${id}`
-            })
-            components.logEvent(`Added item: ${id}`)
-          }
-        }],
-        [fButton, null, {
-          text: 'Remove First Item',
-          variant: 'outlined',
-          onclick: () => {
-            const firstId = window.testList.items.keys().next().value
-            if (firstId) {
-              window.testList.removeItem(firstId)
-            }
-          }
-        }]
-      ]
-    ]
-  ],
+//         el.appendChild(verticalList.element)
+//       }
+//     }]
+//   ],
 
-  // Event Handling Section
-  [createElement, 'section', { class: 'mtrl-content__section' },
-    [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Event Handling' }],
-    [createElement, 'div', {
-      id: 'eventTest',
-      onCreate: (el) => {
-        const list = fList({
-          items: [
-            { id: '1', headline: 'Event Test Item 1' },
-            { id: '2', headline: 'Event Test Item 2' }
-          ]
-        })
+//   // Interactive States Section
+//   [createElement, 'section', { class: 'mtrl-content__section' },
+//     [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Interactive States' }],
+//     [createElement, 'div', { class: 'mtrl-content__grid' },
+//       [createElement, 'div', {
+//         id: 'stateTest',
+//         onCreate: (el) => {
+//           const list = fList({
+//             type: 'single',
+//             items: [
+//               { id: '1', headline: 'Interactive Item 1' },
+//               { id: '2', headline: 'Interactive Item 2' }
+//             ]
+//           })
+//           el.appendChild(list.element)
+//         }
+//       }],
+//       [createElement, 'div', { class: 'mtrl-content__controls' },
+//         [fButton, null, {
+//           text: 'Toggle Disabled',
+//           variant: 'outlined',
+//           onclick: () => {
+//             const list = window.testList
+//             if (list.element.disabled) {
+//               list.enable()
+//             } else {
+//               list.disable()
+//             }
+//           }
+//         }],
+//         [fButton, null, {
+//           text: 'Add Item',
+//           variant: 'outlined',
+//           onclick: () => {
+//             const id = `new-${Date.now()}`
+//             window.testList.addItem({
+//               id,
+//               headline: `New Item ${id}`
+//             })
+//             components.logEvent(`Added item: ${id}`)
+//           }
+//         }],
+//         [fButton, null, {
+//           text: 'Remove First Item',
+//           variant: 'outlined',
+//           onclick: () => {
+//             const firstId = window.testList.items.keys().next().value
+//             if (firstId) {
+//               window.testList.removeItem(firstId)
+//             }
+//           }
+//         }]
+//       ]
+//     ]
+//   ],
 
-        el.appendChild(list.element)
-      }
-    }],
-    [createElement, 'div', { id: 'eventLog', class: 'mtrl-content__event-log' }]
-  ]
-]
+//   // Event Handling Section
+//   [createElement, 'section', { class: 'mtrl-content__section' },
+//     [createElement, 'h2', { class: 'mtrl-content__section-title', text: 'Event Handling' }],
+//     [createElement, 'div', {
+//       id: 'eventTest',
+//       onCreate: (el) => {
+//         const list = fList({
+//           items: [
+//             { id: '1', headline: 'Event Test Item 1' },
+//             { id: '2', headline: 'Event Test Item 2' }
+//           ]
+//         })
+
+//         el.appendChild(list.element)
+//       }
+//     }],
+//     [createElement, 'div', { id: 'eventLog', class: 'mtrl-content__event-log' }]
+//   ]
+// ]

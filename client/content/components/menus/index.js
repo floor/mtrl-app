@@ -3,7 +3,7 @@
 import {
   componentsLayout,
   createComponentsSectionLayout
-} from '../../layout'
+} from '../../../layout'
 
 import {
   fLayout,

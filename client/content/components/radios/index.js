@@ -3,7 +3,7 @@
 import {
   componentsLayout,
   createComponentsSectionLayout
-} from '../../layout'
+} from '../../../layout'
 
 import {
   fLayout,
@@ -18,42 +18,40 @@ export const createRadiosContent = (container) => {
 
   const layout = fLayout(componentsLayout(info), container).getAll()
 
-  console.log('layout', layout)
-
-  initRadiosSizes(layout.body)
+  initRadios(layout.body)
 }
 
-export const initRadiosSizes = (container) => {
-  const title = 'Radios Size'
+export const initRadios = (container) => {
+  const title = 'Radios'
   const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   const small = fRadios({
     name: 'size1',
     options: [
-      { value: 'sm', label: 'Small' },
-      { value: 'md', label: 'Medium' },
-      { value: 'lg', label: 'Large' },
-      { value: 'xl', label: 'Extra Large' }
+      { value: 'sm', label: 'Option 1' },
+      { value: 'md', label: 'Option 2' },
+      { value: 'lg', label: 'Option 3' },
+      { value: 'xl', label: 'Option 4' }
     ]
   })
 
   const radios = fRadios({
     name: 'size2',
     options: [
-      { value: 'sm', label: 'Small' },
-      { value: 'md', label: 'Medium' },
-      { value: 'lg', label: 'Large' },
-      { value: 'xl', label: 'Extra Large' }
+      { value: 'sm', label: 'Option 1' },
+      { value: 'md', label: 'Option 2' },
+      { value: 'lg', label: 'Option 3' },
+      { value: 'xl', label: 'Option 4' }
     ]
   })
 
   const large = fRadios({
     name: 'size3',
     options: [
-      { value: 'sm', label: 'Small' },
-      { value: 'md', label: 'Medium' },
-      { value: 'lg', label: 'Large' },
-      { value: 'xl', label: 'Extra Large' }
+      { value: 'sm', label: 'Option 1' },
+      { value: 'md', label: 'Option 2' },
+      { value: 'lg', label: 'Option 3' },
+      { value: 'xl', label: 'Option 4' }
     ]
   })
 

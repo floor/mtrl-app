@@ -1,10 +1,8 @@
-// src/client/content/components/checkboxes.js
-import { capitalize } from '../../core/utils'
-
+// src/client/content/components/checkboxes/index.js
 import {
   componentsLayout,
   createComponentsSectionLayout
-} from '../../layout'
+} from '../../../layout'
 
 import {
   fLayout,

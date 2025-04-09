@@ -2,11 +2,11 @@
 
 import {
   createElement,
-  createContainer,
   fList,
   fButton
 } from 'mtrl'
-import { createListManager, transforms } from '../../../../src/core/collection/list-manager'
+
+import { createListManager, transforms } from 'mtrl/src/core/collection/list-manager'
 
 // const STAR_ICON = `
 // <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -54,7 +54,7 @@ const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading
 
 export const createListsLayout = (components) => {
   return [
-    [createContainer, { class: 'mtrl-content__container' },
+    [createElement, { class: 'mtrl-content__container' },
       // Header
       [createElement, 'header', { class: 'mtrl-content__header' },
         [createElement, 'h1', { class: 'mtrl-content__title', content: 'Radio Lists' }]
