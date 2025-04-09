@@ -28,7 +28,8 @@ export const initInteraction = (container) => {
   const title = 'Extended FAB Interaction'
   const layout = fLayout(createComponentsSectionLayout({
     title,
-    description: 'Demonstrates interactive behaviors of the Extended FAB.'
+    description: 'Demonstrates interactive behaviors of the Extended FAB.',
+    class: 'noflex'
   }), container).component
 
   // Create the main Extended FAB

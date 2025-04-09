@@ -53,20 +53,20 @@ export const initDisabled = (container) => {
     layout.showcase.appendChild(document.createElement('br'))
   })
 
-  // Show different width options in disabled state
-  const disabledWidthTitle = document.createElement('h3')
-  disabledWidthTitle.textContent = 'Disabled Width Options'
-  layout.showcase.appendChild(disabledWidthTitle)
+  // // Show different width options in disabled state
+  // const disabledWidthTitle = document.createElement('h3')
+  // disabledWidthTitle.textContent = 'Disabled Width Options'
+  // layout.showcase.appendChild(disabledWidthTitle)
 
   // Container for width examples
-  const widthContainer = document.createElement('div')
-  widthContainer.style.width = '100%'
-  widthContainer.style.maxWidth = '400px'
-  widthContainer.style.border = '1px dashed #ccc'
-  widthContainer.style.padding = '20px'
-  widthContainer.style.display = 'flex'
-  widthContainer.style.flexDirection = 'column'
-  widthContainer.style.gap = '20px'
+  // const widthContainer = document.createElement('div')
+  // widthContainer.style.width = '100%'
+  // widthContainer.style.maxWidth = '400px'
+  // widthContainer.style.border = '1px dashed #ccc'
+  // widthContainer.style.padding = '20px'
+  // widthContainer.style.display = 'flex'
+  // widthContainer.style.flexDirection = 'column'
+  // widthContainer.style.gap = '20px'
 
   // Fixed width disabled
   const fixedFab = createExtendedFab({
@@ -86,8 +86,8 @@ export const initDisabled = (container) => {
     ariaLabel: 'Disabled fluid width'
   })
 
-  widthContainer.appendChild(fixedFab.element)
-  widthContainer.appendChild(fluidFab.element)
+  // widthContainer.appendChild(fixedFab.element)
+  // widthContainer.appendChild(fluidFab.element)
 
-  layout.showcase.appendChild(widthContainer)
+  // layout.showcase.appendChild(widthContainer)
 }

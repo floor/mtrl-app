@@ -20,7 +20,8 @@ export const initCollapse = (container) => {
   const title = 'Extended FAB Collapse on Scroll'
   const layout = fLayout(createComponentsSectionLayout({
     title,
-    description: 'Extended FABs can automatically collapse to a standard FAB when scrolling down and expand when scrolling up. This provides persistent access to the action while minimizing screen space usage.'
+    description: 'Extended FABs can automatically collapse to a standard FAB when scrolling down and expand when scrolling up. This provides persistent access to the action while minimizing screen space usage.',
+    class: 'noflex'
   }), container).component
 
   // Create a demo container with scrollable content
@@ -41,7 +42,7 @@ export const initCollapse = (container) => {
     <p>Scroll down to see the FAB collapse into a standard FAB.</p>
     <p>Scroll back up to see it expand again.</p>
     <p>This behavior is useful in long scrolling views to save space while still providing access to the primary action.</p>
-    <div style="height: 400px; background: linear-gradient(#f5f5f5, #e0e0e0); margin: 20px 0; display: flex; align-items: center; justify-content: center;">
+    <div style="height: 400px; margin: 20px 0; display: flex; align-items: center; justify-content: center;">
       Scrollable Content
     </div>
     <p>When you scroll to the bottom, the Extended FAB should be expanded again.</p>

@@ -31,7 +31,7 @@ const largeAddIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height=
 
 export const initSizes = (container) => {
   const title = 'FAB Sizes'
-  const layout = fLayout(createComponentsSectionLayout({ title, class: 'noflex' }), container).component
+  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
 
   // Convert the enum to an array of strings
   const sizes = Object.values(FAB_SIZES)

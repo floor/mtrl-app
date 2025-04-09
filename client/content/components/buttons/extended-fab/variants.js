@@ -56,25 +56,25 @@ export const initVariants = (container) => {
     layout.showcase.appendChild(document.createElement('br'))
   })
 
-  // Also show variants with icon at the end
-  const iconEndTitle = document.createElement('h3')
-  iconEndTitle.textContent = 'Icon Position - End'
-  layout.showcase.appendChild(iconEndTitle)
+  // // Also show variants with icon at the end
+  // const iconEndTitle = document.createElement('h3')
+  // iconEndTitle.textContent = 'Icon Position - End'
+  // layout.showcase.appendChild(iconEndTitle)
 
-  variants.forEach(variant => {
-    const text = capitalize(variant)
-    const extendedFab = createExtendedFab({
-      icon: addIcon,
-      text: 'Create',
-      variant,
-      iconPosition: 'end',
-      ariaLabel: `${text} action with end icon`
-    })
+  // variants.forEach(variant => {
+  //   const text = capitalize(variant)
+  //   const extendedFab = createExtendedFab({
+  //     icon: addIcon,
+  //     text: 'Create',
+  //     variant,
+  //     iconPosition: 'end',
+  //     ariaLabel: `${text} action with end icon`
+  //   })
 
-    layout.showcase.appendChild(extendedFab.element)
+  //   layout.showcase.appendChild(extendedFab.element)
 
-    // Add some spacing between the items
-    layout.showcase.appendChild(document.createElement('br'))
-    layout.showcase.appendChild(document.createElement('br'))
-  })
+  //   // Add some spacing between the items
+  //   layout.showcase.appendChild(document.createElement('br'))
+  //   layout.showcase.appendChild(document.createElement('br'))
+  // })
 }
