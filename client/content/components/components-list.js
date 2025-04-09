@@ -21,6 +21,14 @@ export const componentsList = [
         path: 'components/buttons/fab'
       },
       {
+        id: 'extended-fab',
+        title: 'Extended FAB',
+        description: 'Extended FABs are more prominent and provide clearer action guidance than standard FABs.',
+        features: ['Standard', 'Contained', 'Toggle', 'With tooltip'],
+        examples: 'Segmented buttons help people select options, switch views, or sort elements.',
+        path: 'components/buttons/extended-fab'
+      },
+      {
         id: 'segmented-button',
         title: 'Segmented Button',
         description: 'Help people select options, switch views, or sort elements.',
@@ -28,13 +36,7 @@ export const componentsList = [
         examples: 'Use for related but mutually exclusive choices.',
         path: 'components/buttons/segmented-buttons'
       },
-      {
-        id: 'icon-buttons',
-        title: 'Icon Buttons',
-        description: 'Help people take minor actions with one tap.',
-        features: ['Standard', 'Contained', 'Toggle', 'With tooltip'],
-        examples: 'Use for secondary actions that can be represented by a recognizable icon.'
-      },
+
       {
         id: 'chips',
         title: 'Chips',
