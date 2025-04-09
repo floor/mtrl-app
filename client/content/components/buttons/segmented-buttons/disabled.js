@@ -75,7 +75,7 @@ export const initDisabled = (container) => {
   const partialDisabledResult = document.createElement('div')
   partialDisabledResult.className = 'result-panel'
   partialDisabledResult.style.padding = '12px'
-  partialDisabledResult.style.backgroundColor = '#f5f5f5'
+  partialDisabledResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   partialDisabledResult.style.borderRadius = '4px'
   partialDisabledResult.style.marginBottom = '20px'
   partialDisabledResult.textContent = 'Current selection: Standard'

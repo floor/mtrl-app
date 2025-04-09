@@ -34,7 +34,7 @@ export const initSelectionModes = (container) => {
   const singleSelectResult = document.createElement('div')
   singleSelectResult.className = 'result-panel'
   singleSelectResult.style.padding = '12px'
-  singleSelectResult.style.backgroundColor = '#f5f5f5'
+  singleSelectResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   singleSelectResult.style.borderRadius = '4px'
   singleSelectResult.style.marginBottom = '20px'
   singleSelectResult.textContent = 'Selected view: List'
@@ -108,7 +108,7 @@ export const initSelectionModes = (container) => {
   const multiSelectResult = document.createElement('div')
   multiSelectResult.className = 'result-panel'
   multiSelectResult.style.padding = '12px'
-  multiSelectResult.style.backgroundColor = '#f5f5f5'
+  multiSelectResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   multiSelectResult.style.borderRadius = '4px'
   multiSelectResult.style.marginBottom = '20px'
   multiSelectResult.textContent = 'Selected filters: None'

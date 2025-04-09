@@ -114,7 +114,7 @@ export const initIconsOptions = (container) => {
   const iconOnlyResult = document.createElement('div')
   iconOnlyResult.className = 'result-panel'
   iconOnlyResult.style.padding = '12px'
-  iconOnlyResult.style.backgroundColor = '#f5f5f5'
+  iconOnlyResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   iconOnlyResult.style.borderRadius = '4px'
   iconOnlyResult.style.marginBottom = '20px'
   iconOnlyResult.textContent = 'Selected transport: car'
@@ -168,7 +168,7 @@ export const initIconsOptions = (container) => {
   const iconTextResult = document.createElement('div')
   iconTextResult.className = 'result-panel'
   iconTextResult.style.padding = '12px'
-  iconTextResult.style.backgroundColor = '#f5f5f5'
+  iconTextResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   iconTextResult.style.borderRadius = '4px'
   iconTextResult.style.marginBottom = '20px'
   iconTextResult.textContent = 'Selected period: day'

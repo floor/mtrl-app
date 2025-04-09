@@ -132,9 +132,12 @@ $components: '#{b.$prefix}-components';
       align-items: start; // Prevents grid items from stretching
       gap: 20px;
       // transform: scale(.85);
-      @include c.typography('headline-small');
+      // @include c.typography('headline-small');
       color: t.color('on-surface');
       margin: 0 0 16px; 
+      &.#{b.$prefix}-noflex {
+        display: inline-block;
+      }
     }
     &-box {
       // gap: 20px;

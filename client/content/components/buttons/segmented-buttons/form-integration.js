@@ -205,7 +205,7 @@ export const initFormIntegration = (container) => {
   layout.showcase.appendChild(formResultTitle)
 
   const formResult = document.createElement('pre')
-  formResult.style.backgroundColor = '#f5f5f5'
+  formResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   formResult.style.padding = '16px'
   formResult.style.borderRadius = '4px'
   formResult.style.overflow = 'auto'
@@ -237,7 +237,7 @@ export const initFormIntegration = (container) => {
   implementationNotes.appendChild(notesList)
 
   const codeExample = document.createElement('pre')
-  codeExample.style.backgroundColor = '#f0f0f0'
+  codeExample.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   codeExample.style.padding = '12px'
   codeExample.style.borderRadius = '4px'
   codeExample.style.overflow = 'auto'

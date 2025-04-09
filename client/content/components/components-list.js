@@ -20,14 +20,14 @@ export const componentsList = [
         examples: 'Use FABs for the primary action in an application or screen.',
         path: 'components/buttons/fab'
       },
-      // {
-      //   id: 'segmented-button',
-      //   title: 'Segmented Button',
-      //   description: 'Help people select options, switch views, or sort elements.',
-      //   features: ['Multiple selection', 'Single selection', 'Icon variants'],
-      //   examples: 'Use for related but mutually exclusive choices.',
-      //   path: 'components/buttons/segmented-buttons'
-      // },
+      {
+        id: 'segmented-button',
+        title: 'Segmented Button',
+        description: 'Help people select options, switch views, or sort elements.',
+        features: ['Multiple selection', 'Single selection', 'Icon variants'],
+        examples: 'Use for related but mutually exclusive choices.',
+        path: 'components/buttons/segmented-buttons'
+      },
       {
         id: 'icon-buttons',
         title: 'Icon Buttons',

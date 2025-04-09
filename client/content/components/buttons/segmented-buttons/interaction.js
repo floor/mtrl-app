@@ -62,7 +62,7 @@ export const initInteraction = (container) => {
   const eventResult = document.createElement('div')
   eventResult.className = 'result-panel'
   eventResult.style.padding = '12px'
-  eventResult.style.backgroundColor = '#f5f5f5'
+  eventResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   eventResult.style.borderRadius = '4px'
   eventResult.style.marginBottom = '20px'
   eventResult.style.fontFamily = 'monospace'
@@ -136,7 +136,7 @@ export const initInteraction = (container) => {
   const programmaticResult = document.createElement('div')
   programmaticResult.className = 'result-panel'
   programmaticResult.style.padding = '12px'
-  programmaticResult.style.backgroundColor = '#f5f5f5'
+  programmaticResult.style.backgroundColor = 'var(--mtrl-sys-color-surface-container-highest)'
   programmaticResult.style.borderRadius = '4px'
   programmaticResult.style.marginBottom = '20px'
   programmaticResult.textContent = 'Current selection: None'

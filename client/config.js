@@ -87,8 +87,8 @@ export const navigationLayout = {
         items: [
           { id: 'common', label: 'Common', path: '/components/buttons/common' },
           { id: 'fab', label: 'FAB', path: '/components/buttons/fab' },
-          { id: 'extended-fab', label: 'Extended FAB', path: '/components/buttons/extended-fab' }
-          // { id: 'segmented-buttons', label: 'Segmented Buttons', path: '/components/buttons/segmented-buttons' }
+          { id: 'extended-fab', label: 'Extended FAB', path: '/components/buttons/extended-fab' },
+          { id: 'segmented-buttons', label: 'Segmented Buttons', path: '/components/buttons/segmented-buttons' }
         ]
       },
       { id: 'cards', label: 'Cards', path: '/components/cards' },

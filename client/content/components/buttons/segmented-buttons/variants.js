@@ -56,7 +56,8 @@ export const initVariants = (container) => {
       { text: 'Weekly', value: 'weekly' },
       { text: 'Monthly', value: 'monthly' },
       { text: 'Yearly', value: 'yearly' }
-    ]
+    ],
+    density: 'compact'
   })
 
   const textManyContainer = document.createElement('div')
