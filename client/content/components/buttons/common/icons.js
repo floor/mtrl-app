@@ -1,36 +1,71 @@
-// src/client/content/components/button/icons.js
-
+// src/client/content/components/button/icons.ts
+/**
+ * Button icons showcase implementation
+ * Demonstrates usage of various icon buttons with different states
+ * @module src/client/content/components/button/icons
+ */
 import {
   createComponentsSectionStructure
 } from '../../../../structure'
-
 import {
   fLayout,
   fButton
 } from 'mtrl'
+import { iconDownload, iconBookmark, iconLike, iconSend } from '../../../../icons'
 
-const heartIcon = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/>
-</svg>`
+/**
+ * Icon button definitions with their labels
+ * @type {Array<{icon: string, label: string}>}
+ */
+const iconButtons = [
+  { icon: iconLike, label: 'Like' },
+  { icon: iconBookmark, label: 'Bookmark' }
+]
 
+/**
+ * Button definitions with text and icons
+ * @type {Array<{icon: string, label: string}>}
+ */
+const iconLabelButtons = [
+  { icon: iconDownload, label: 'Download' },
+  { icon: iconSend, label: 'Send' }
+]
+
+/**
+ * Initializes icon button showcase
+ * @param {HTMLElement} container - DOM element to render the showcase
+ */
 export const initIcons = (container) => {
   const title = 'Buttons icons'
   const structure = fLayout(createComponentsSectionStructure({ title }), container).component
   const states = ['enabled', 'disabled']
-  states.forEach(state => {
-    const disabled = state === 'enabled'
+  const variants = ['filled', 'elevated']
 
-    // log.info('disabled', disabled)
+  // Create icon-only buttons in enabled and disabled states
+  iconButtons.forEach((buttonDef) => {
+    states.forEach(state => {
+      const disabled = state === 'disabled'
+      const btn = fButton({
+        icon: buttonDef.icon,
+        iconSize: 'medium',
+        ariaLabel: buttonDef.label
+      })
 
-    const btn = fButton({
-      icon: heartIcon,
+      if (disabled) btn.disable()
+      structure.showcase.appendChild(btn.element)
+    })
+  })
+
+  // Create buttons with icons and text in different variants
+  iconLabelButtons.forEach((buttonDef, i) => {
+    const labelBtn = fButton({
+      icon: buttonDef.icon,
+      text: buttonDef.label,
       iconSize: 'medium',
-      ariaLabel: 'Like'
+      ariaLabel: buttonDef.label,
+      variant: variants[i]
     })
 
-    if (!disabled) btn.disable()
-
-    // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-    structure.showcase.appendChild(btn.element)
+    structure.showcase.appendChild(labelBtn.element)
   })
 }

@@ -22,6 +22,9 @@ $components: '#{b.$prefix}-components';
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     justify-items: start;
     gap: 20px;
+    .#{b.$prefix}-card {
+      width: initial;
+    }
   }
 
   &-flex__container {
