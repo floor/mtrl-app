@@ -5,12 +5,13 @@ import {
 import {
   fLayout,
   fChips,
-  fChip,
-  createElement
+  createElement,
+  addClass,
+  removeClass
 } from 'mtrl'
 
 export const createResponsiveLayout = (container) => {
-  console.log('createResponsiveLayout', container)
+  console.log('aaqcreateResponsiveLayout', container)
   const layout = fLayout(createContentSection({
     title: 'Responsive Layout',
     description: 'Layout that adapts to different screen sizes. Use the chips to toggle between different layouts.',
@@ -33,7 +34,7 @@ export const createResponsiveLayout = (container) => {
   }
 
   // Default to stack layout
-  responsiveContainer.classList.add('stack')
+  addClass(responsiveContainer, 'layout--stack')
 
   // Create layout with containers for controls and responsive demo
   const mainLayout = fLayout([
@@ -55,13 +56,13 @@ export const createResponsiveLayout = (container) => {
 
   // Define layout options
   const layoutOptions = [
-    { text: 'Stack', value: 'stack' },
-    { text: 'Row', value: 'row' },
-    { text: 'Grid', value: 'grid' }
+    { text: 'Stack', value: 'layout--stack' },
+    { text: 'Row', value: 'layout--row' },
+    { text: 'Grid', value: 'layout--grid' }
   ]
 
   // Current layout tracking
-  let currentLayout = 'stack'
+  let currentLayout = 'layout--stack'
 
   const layoutChangeHandler = (layout) => {
     if (!layout) return
@@ -69,9 +70,9 @@ export const createResponsiveLayout = (container) => {
     // Prevent update if layout hasn't changed
     if (layout !== currentLayout) {
       // Remove existing layout classes
-      responsiveContainer.classList.remove('stack', 'row', 'grid')
+      removeClass(responsiveContainer, 'layout--stack layout--row layout--grid')
       // Add the selected layout class
-      responsiveContainer.classList.add(layout)
+      addClass(responsiveContainer, layout)
       // Update current layout
       currentLayout = layout
     }

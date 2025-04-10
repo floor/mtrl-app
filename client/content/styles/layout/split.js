@@ -5,7 +5,9 @@ import {
 import {
   fLayout,
   fSlider,
-  fSwitch
+  fSwitch,
+  addClass,
+  removeClass
 } from 'mtrl'
 
 export const createSplitLayout = (container) => {
@@ -39,7 +41,7 @@ export const createSplitLayout = (container) => {
   const { splitContainer, leftPane, rightPane, resizeHandle, mobileSwitch, slider } = splitLayout.component
 
   // Default to 50/50 split
-  splitContainer.classList.add('split-50-50')
+  addClass(splitContainer, 'split-50-50')
 
   // Initialize resize functionality when the DOM is fully loaded
   console.log('Setting up resize handling for', {
@@ -71,19 +73,19 @@ function updateHandlePosition (container, leftPane, handle) {
 
   try {
     // For the 50/50 split, position at 50%
-    if (container.classList.contains('split-50-50')) {
+    if (addClass(container, 'split-50-50')) {
       handle.style.left = 'calc(50% - 12px)'
       return
     }
 
     // For the 30/70 split, position at 30%
-    if (container.classList.contains('split-30-70')) {
+    if (addClass(container, 'split-30-70')) {
       handle.style.left = 'calc(30% - 12px)'
       return
     }
 
     // For the 70/30 split, position at 70%
-    if (container.classList.contains('split-70-30')) {
+    if (addClass(container, 'split-70-30')) {
       handle.style.left = 'calc(70% - 12px)'
       return
     }
@@ -108,7 +110,7 @@ function updateSplitByPercentage (container, leftPane, rightPane, handle, percen
   const safePercentage = Math.max(10, Math.min(90, percentage))
 
   // Remove any preset split classes
-  container.classList.remove('split-50-50', 'split-30-70', 'split-70-30')
+  removeClass(container, 'split-50-50 split-30-70 split-70-30')
 
   // Update pane sizes
   leftPane.style.flex = `0 0 calc(${safePercentage}% - 12px)`
@@ -141,7 +143,7 @@ function initResizeHandling (container, leftPane, rightPane, handle, slider, mob
 
     isDragging = true
     document.body.style.cursor = 'col-resize'
-    container.classList.add('resizing')
+    addClass(container, 'resizing')
 
     // Get initial mouse position and container dimensions
     const startX = e.clientX
@@ -164,16 +166,17 @@ function initResizeHandling (container, leftPane, rightPane, handle, slider, mob
       updateSplitByPercentage(container, leftPane, rightPane, handle, newLeftWidthPercent)
 
       // Update slider value to match the current split
-      slider.setValue(Math.round(newLeftWidthPercent))
     }
 
     // Handle mouse up - end dragging
     document.onmouseup = function () {
       console.log('Resize handle: drag ended')
 
+      // slider.setValue(Math.round(newLeftWidthPercent))
+
       isDragging = false
       document.body.style.cursor = ''
-      container.classList.remove('resizing')
+      removeClass(container, 'resizing')
 
       // Clean up event listeners
       document.onmousemove = null
@@ -193,12 +196,12 @@ function initResizeHandling (container, leftPane, rightPane, handle, slider, mob
     // console.log('mobile change', value)
       if (value) {
       // When switched to mobile/stacked mode
-        container.classList.add('mtrl-split-stacked')
+        addClass(container, 'split-stacked')
         // Disable the slider temporarily
         slider.disable()
       } else {
       // When switched back to normal mode
-        container.classList.remove('mtrl-split-stacked')
+        removeClass(container, 'split-stacked')
         // Re-enable the slider
         slider.enable()
         // Apply current slider value

@@ -5,8 +5,8 @@ import {
 import {
   fLayout,
   fChips,
-  fChip,
-  createElement
+  createElement,
+  addClass, removeClass
 } from 'mtrl'
 
 export const createGridLayout = (container) => {
@@ -51,16 +51,16 @@ export const createGridLayout = (container) => {
   // Extract chip set component
   const { gridChipSet } = mainLayout.component
 
-  // Define grid options
+  // Define grid options using the new layout system class naming
   const gridOptions = [
-    { text: '3-Column', value: 'columns-3' },
-    { text: '2-Column', value: 'columns-2' },
-    { text: 'Dense', value: 'dense' },
-    { text: 'Auto-fit', value: 'auto-fit' }
+    { text: '3-Column', value: 'layout--grid-cols-3' },
+    { text: '2-Column', value: 'layout--grid-cols-2' },
+    { text: 'Dense', value: 'layout--grid-dense' },
+    { text: 'Auto-fit', value: 'layout--grid' } // Default auto-fit behavior
   ]
 
   // Current grid layout tracking
-  let currentGrid = 'columns-3'
+  let currentGrid = 'layout--grid-cols-3'
 
   const gridChangeHandler = (grid) => {
     if (!grid) return
@@ -68,9 +68,13 @@ export const createGridLayout = (container) => {
     // Prevent update if grid layout hasn't changed
     if (grid !== currentGrid) {
       // Remove existing grid classes
-      gridContainer.classList.remove('columns-3', 'columns-2', 'dense', 'auto-fit')
+      removeClass(gridContainer, 'layout--grid-cols-3 layout--grid-cols-2 layout--grid-dense layout--grid')
       // Add the selected grid class
-      gridContainer.classList.add(grid)
+      addClass(gridContainer, grid)
+      // For auto-fit, we need to add the base grid class if it's not already there
+      if (grid === 'layout--grid' && !gridContainer.classList.contains('layout--grid')) {
+        addClass(gridContainer, 'layout--grid')
+      }
       // Update current grid layout
       currentGrid = grid
     }
@@ -87,8 +91,8 @@ export const createGridLayout = (container) => {
     })
   })
 
-  // Default to 3-column grid
-  gridContainer.classList.add('columns-3')
+  // Default to 3-column grid using the new class name
+  addClass(gridContainer, 'layout--grid-cols-3')
 
   // Add the grid container after the controls
   body.appendChild(gridContainer)

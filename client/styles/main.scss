@@ -15,7 +15,8 @@
 @use 'mtrl/src/styles/themes/greenbeige';
 @use 'mtrl/src/styles/themes/sageivory';
 @use 'mtrl/src/styles/themes/browngreen';
-@use 'mtrl/src/core/build/ripple' as ripple;
+@use 'mtrl/src/styles/utilities/ripple' as ripple;
+@use 'mtrl/src/styles/utilities/layout' as layout;
 
 @use 'mtrl/src/styles/components/button' as button;
 @use 'mtrl/src/styles/components/fab' as fab;
@@ -53,7 +54,7 @@
 @use './content/typography';
 @use './content/styles';
 @use './content/colors';
-@use './content/layout';
+@use './content/layout' as l;
 @use './content/elevation';
 @use './content/progress' as p;
 @use './content/events';

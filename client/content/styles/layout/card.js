@@ -5,8 +5,8 @@ import {
 import {
   fLayout,
   fChips,
-  fChip,
-  createElement
+  createElement,
+  addClass, removeClass
 } from 'mtrl'
 
 export const createCardLayout = (container) => {
@@ -101,15 +101,15 @@ export const createCardLayout = (container) => {
     cardContainer.appendChild(card)
   })
 
-  // Define card layout options
+  // Define card layout options using the new layout system classes
   const cardOptions = [
-    { text: 'Equal Height', value: 'equal-height' },
-    { text: 'Auto Height', value: 'auto-height' },
-    { text: 'Masonry', value: 'masonry' }
+    { text: 'Equal Height', value: 'layout--grid' },
+    { text: 'Auto Height', value: 'layout--grid layout--grid-auto-height' },
+    { text: 'Masonry', value: 'layout--masonry' }
   ]
 
   // Current card layout tracking
-  let currentCardLayout = 'equal-height'
+  let currentCardLayout = 'layout--grid'
 
   const cardChangeHandler = (layout) => {
     if (!layout) return
@@ -117,9 +117,9 @@ export const createCardLayout = (container) => {
     // Prevent update if card layout hasn't changed
     if (layout !== currentCardLayout) {
       // Remove existing card layout classes
-      cardContainer.classList.remove('equal-height', 'auto-height', 'masonry')
+      removeClass(cardContainer, 'layout--grid layout--grid-align-start layout--masonry layout--grid-auto-height')
       // Add the selected card layout class
-      cardContainer.classList.add(layout)
+      addClass(cardContainer, layout)
       // Update current card layout
       currentCardLayout = layout
     }
@@ -136,8 +136,11 @@ export const createCardLayout = (container) => {
     })
   })
 
-  // Default to equal height
-  cardContainer.classList.add('equal-height')
+  // Set default grid gap for cards
+  addClass(cardContainer, 'layout--grid-gap-6')
+
+  // Default to equal height grid
+  addClass(cardContainer, 'layout--grid')
 
   // Add the card container after the controls (controls are already in the layout)
   layout.body.appendChild(cardContainer)
