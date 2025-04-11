@@ -7,30 +7,30 @@
 @use 'mtrl/src/styles/abstract/config' as c;
 
 // State examples
-.state-explanation {
+.#{b.$prefix}-state-explanation {
   margin-bottom: 24px;
 }
 
-.state-explanation__text {
+.#{b.$prefix}-state-explanation__text {
   font-size: 1rem;
   line-height: 1.5;
   color: t.color('on-surface-variant');
 }
 
-.state-example {
+.#{b.$prefix}-state-example {
   background-color: t.color('surface-container-low');
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 32px;
 }
 
-.state-example__title {
+.#{b.$prefix}-state-example__title {
   margin-top: 0;
   margin-bottom: 16px;
   font-weight: 500;
 }
 
-.state-example__code {
+.#{b.$prefix}-state-example__code {
   background-color: t.color('surface-container');
   padding: 16px;
   border-radius: 8px;
@@ -39,50 +39,50 @@
   margin-bottom: 24px;
 }
 
-.state-example__demo {
+.#{b.$prefix}-state-example__demo {
   background-color: t.color('surface-container-high');
   border-radius: 8px;
   padding: 16px;
 }
 
 // Emitter styles
-.emitter-demo {
+.#{b.$prefix}-emitter-demo {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.emitter-section-title {
+.#{b.$prefix}-emitter-section-title {
   font-weight: 500;
   margin-bottom: 12px;
 }
 
-.emitter-publishers {
+.#{b.$prefix}-emitter-publishers {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
 }
 
-.emitter-button {
+.#{b.$prefix}-emitter-button {
   margin-right: 8px;
   
-  &.emitter-error {
+  &.#{b.$prefix}-emitter-error {
     background-color: t.color('error');
     color: t.color('on-error');
   }
   
-  &.emitter-primary {
+  &.#{b.$prefix}-emitter-primary {
     background-color: t.color('primary');
     color: t.color('on-primary');
   }
   
-  &.emitter-tertiary {
+  &.#{b.$prefix}-emitter-tertiary {
     background-color: t.color('tertiary');
     color: t.color('on-tertiary');
   }
 }
 
-.emitter-log {
+.#{b.$prefix}-emitter-log {
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
@@ -90,12 +90,12 @@
   margin-top: 8px;
 }
 
-.emitter-log__header {
+.#{b.$prefix}-emitter-log__header {
   font-weight: 500;
   margin-bottom: 8px;
 }
 
-.emitter-log__entry {
+.#{b.$prefix}-emitter-log__entry {
   font-family: monospace;
   padding: 4px 8px;
   margin-bottom: 4px;
@@ -115,20 +115,20 @@
 }
 
 // Store styles
-.store-demo {
+.#{b.$prefix}-store-demo {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.store-counter__controls {
+.#{b.$prefix}-store-counter__controls {
   display: flex;
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
 }
 
-.store-counter__display {
+.#{b.$prefix}-store-counter__display {
   min-width: 60px;
   height: 60px;
   display: flex;
@@ -141,18 +141,18 @@
   border: 1px solid t.color('outline-variant');
 }
 
-.store-derived {
+.#{b.$prefix}-store-derived {
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
 }
 
-.store-derived__title {
+.#{b.$prefix}-store-derived__title {
   font-weight: 500;
   margin-bottom: 12px;
 }
 
-.store-derived__value {
+.#{b.$prefix}-store-derived__value {
   margin-bottom: 8px;
   
   strong {
@@ -172,19 +172,19 @@
 }
 
 // Lifecycle styles
-.lifecycle-demo {
+.#{b.$prefix}-lifecycle-demo {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.lifecycle-component-container {
+.#{b.$prefix}-lifecycle-component-container {
   margin: 24px 0;
   display: flex;
   justify-content: center;
 }
 
-.lifecycle-component {
+.#{b.$prefix}-lifecycle-component {
   width: 240px;
   height: 120px;
   display: flex;
@@ -208,12 +208,12 @@
   }
 }
 
-.lifecycle-component__content {
+.#{b.$prefix}-lifecycle-component__content {
   text-align: center;
   font-weight: 500;
 }
 
-.lifecycle-pulse {
+.#{b.$prefix}-lifecycle-pulse {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -237,36 +237,36 @@
   }
 }
 
-.lifecycle-log {
+.#{b.$prefix}-lifecycle-log {
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
   min-height: 100px;
 }
 
-.lifecycle-log__header {
+.#{b.$prefix}-lifecycle-log__header {
   font-weight: 500;
   margin-bottom: 8px;
 }
 
-.lifecycle-log__entry {
+.#{b.$prefix}-lifecycle-log__entry {
   font-family: monospace;
   padding: 4px 0;
   border-bottom: 1px solid t.color('outline-variant');
 }
 
 // Disabled styles
-.disabled-demo {
+.#{b.$prefix}-disabled-demo {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.disabled-controls {
+.#{b.$prefix}-disabled-controls {
   margin-bottom: 12px;
 }
 
-.disabled-components {
+.#{b.$prefix}-disabled-components {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -276,13 +276,13 @@
 }
 
 // Composing state styles
-.composing-demo {
+.#{b.$prefix}-composing-demo {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.toggle-button {
+.#{b.$prefix}-toggle-button {
   padding: 12px 24px;
   border-radius: 50px;
   border: none;
@@ -305,39 +305,39 @@
   }
 }
 
-.toggle-status {
+.#{b.$prefix}-toggle-status {
   text-align: center;
   font-weight: 500;
   margin-bottom: 16px;
 }
 
-.composing-controls {
+.#{b.$prefix}-composing-controls {
   display: flex;
   gap: 12px;
   justify-content: center;
   margin-bottom: 16px;
 }
 
-.composing-log {
+.#{b.$prefix}-composing-log {
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
   min-height: 100px;
 }
 
-.composing-log__header {
+.#{b.$prefix}-composing-log__header {
   font-weight: 500;
   margin-bottom: 8px;
 }
 
-.composing-log__entry {
+.#{b.$prefix}-composing-log__entry {
   font-family: monospace;
   padding: 4px 0;
   border-bottom: 1px solid t.color('outline-variant');
 }
 
 // Code examples
-.code-block {
+.#{b.$prefix}-code-block {
   background-color: t.color('surface-container');
   padding: 16px;
   border-radius: 8px;
@@ -348,15 +348,15 @@
 
 // Responsive adjustments
 @include c.breakpoint-down('md') {
-  .store-counter__controls {
+  .#{b.$prefix}-store-counter__controls {
     flex-wrap: wrap;
   }
   
-  .emitter-publishers {
+  .#{b.$prefix}-emitter-publishers {
     flex-direction: column;
   }
   
-  .state-example__code {
+  .#{b.$prefix}-state-example__code {
     font-size: 0.85rem;
   }
 }

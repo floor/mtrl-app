@@ -492,43 +492,35 @@ export const withDisabled = (config) => (component) => {
   const features = [
     {
       name: 'withText',
-      description: 'Adds text rendering capabilities',
-      icon: '📝'
+      description: 'Adds text rendering capabilities'
     },
     {
       name: 'withIcon',
-      description: 'Adds icon support',
-      icon: '🖼️'
+      description: 'Adds icon support'
     },
     {
       name: 'withEvents',
-      description: 'Adds event handling system',
-      icon: '🔔'
+      description: 'Adds event handling system'
     },
     {
       name: 'withDisabled',
-      description: 'Adds disabled state management',
-      icon: '🚫'
+      description: 'Adds disabled state management'
     },
     {
       name: 'withVariant',
-      description: 'Adds style variant support',
-      icon: '🎨'
+      description: 'Adds style variant support'
     },
     {
       name: 'withSize',
-      description: 'Adds size variation support',
-      icon: '📏'
+      description: 'Adds size variation support'
     },
     {
       name: 'withRipple',
-      description: 'Adds ripple effect on interaction',
-      icon: '💧'
+      description: 'Adds ripple effect on interaction'
     },
     {
       name: 'withLifecycle',
-      description: 'Adds lifecycle management',
-      icon: '⏱️'
+      description: 'Adds lifecycle management'
     }
   ]
 
