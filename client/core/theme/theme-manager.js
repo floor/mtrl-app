@@ -115,27 +115,48 @@ export const createThemeManager = (options = {}) => {
     }
   }
 
-  const createThemeMenu = (origin) => {
+  /**
+   * Creates or toggles the theme menu
+   * @param {Object} origin - Origin element for the menu
+   * @private
+   */
+  const toggleThemeMenu = (anchor) => {
+    // If menu exists and is visible, hide it
+    if (themesMenu && themesMenu.isVisible()) {
+      themesMenu.hide()
+      return
+    }
+
+    // If menu exists but is not visible, reposition and show it
+    // if (themesMenu) {
+    //   themesMenu.position(anchor.element, { align: 'center' }).show()
+    //   return
+    // }
+
+    // Otherwise create a new menu
     themesMenu = createMenu({
       items: config.themesMenu,
-      origin
+      anchor: anchor.element
     })
 
-    themesMenu.position(origin.element)
-
-    themesMenu.show()
-
-    document.body.appendChild(themesMenu.element)
-
-    themesMenu.show()
-
-    themesMenu.on('select', ({ name }) => {
-      setTheme(name)
-      themesMenu.destroy()
-      themesMenu = null
+    // Set up the menu selection handler
+    themesMenu.on('select', (event) => {
+      setTheme(event.itemId)
+      // themesMenu.hide() // Just hide the menu instead of destroying it
     })
 
-    return themesMenu
+    // Set up the close handler to clean up references
+    themesMenu.on('close', () => {
+      // Don't destroy the menu, just update our tracking of visibility
+    })
+
+    // Position and show the menu
+    // themesMenu.position(origin.element, { align: 'center' }).show()
+
+    // Set the currently selected theme if the menu supports it
+    if (themesMenu.setSelected && themeSettings.themeName) {
+      themesMenu.setSelected(themeSettings.themeName)
+    }
   }
 
   /**
@@ -144,18 +165,23 @@ export const createThemeManager = (options = {}) => {
    */
   const initializeThemeMenu = () => {
     // Handle different possible component formats
-    const origin = ui.moreMenu
+    // const origin = ui.moreMenu
+
+    themesMenu = createMenu({
+      items: config.themesMenu,
+      anchor: ui.moreMenu.element
+    })
+
+    // Set up the menu selection handler
+    themesMenu.on('select', (event) => {
+      setTheme(event.itemId)
+      // themesMenu.hide() // Just hide the menu instead of destroying it
+    })
 
     // Set up click handler for the menu button
-    origin.on('click', () => {
-      console.log('origin', origin)
-      if (themesMenu) return
-
-      themesMenu = createThemeMenu(origin)
-      if (themesMenu.setSelected && themeSettings.themeName) {
-        themesMenu.setSelected(themeSettings.themeName)
-      }
-    })
+    // origin.on('click', () => {
+    //   toggleThemeMenu(origin)
+    // })
   }
 
   /**

@@ -26,7 +26,7 @@ $content: '#{b.$prefix}-content';
     border-radius: 0 0 8px 8px;
     margin-top: -1px;
     // background-color: t.color('surface');
-    &.hidden {
+    &.#{b.$prefix}-hidden {
       display: none;
     }
   }

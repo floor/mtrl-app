@@ -27,81 +27,26 @@
 .#{b.$prefix}-responsive-layout {
   padding: 24px;
   background-color: var(--mtrl-sys-color-surface-bright);
-  
-  .#{b.$prefix}-layout-demo__box {
-    background-color: t.color('primary-container');
-    color: t.color('on-primary-container');
-    border-radius: v.shape('small');
-    padding: 24px;
-    text-align: center;
-    @include m.typography('body-large');
-    box-shadow: v.elevation('level-1');
-    transition: all 0.3s ease;
-    
-    &:hover {
-      box-shadow: v.elevation('level-2');
-    }
-  }
-  
-  // Using the new layout system classes
-  &.#{b.$prefix}-layout--stack {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  
-  &.#{b.$prefix}-layout--row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 16px;
-    
-    .#{b.$prefix}-layout-demo__box {
-      flex: 1;
-      min-width: 200px;
-    }
-  }
-  
-  &.#{b.$prefix}-layout--grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-  }
 }
+
 
 // Grid Layout
 .#{b.$prefix}-grid-layout {
-  display: grid;
-  gap: 16px;
   padding: 24px;
-  
-  // Content styling for grid items (appearance only)
-  .#{b.$prefix}-layout-demo__grid-item {
-    background-color: t.color('secondary-container');
-    color: t.color('on-secondary-container');
-    border-radius: v.shape('small');
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    @include m.typography('title-large');
-    box-shadow: v.elevation('level-1');
-    transition: all 0.3s ease;
-    cursor: pointer;
-    aspect-ratio: 1 / 1;
-    
-    &:hover {
-      box-shadow: v.elevation('level-2');
-      transform: translateY(-2px);
-    }
-    
-    &.#{b.$prefix}-expanded {
-      background-color: t.color('tertiary-container');
-      color: t.color('on-tertiary-container');
-      z-index: 1;
-    }
-  }
 }
+
+
+.#{b.$prefix}-layout-demo__box {
+  background-color: t.color('primary-container');
+  color: t.color('on-primary-container');
+  border-radius: v.shape('small');
+  padding: 24px;
+  text-align: center;
+  @include m.typography('body-large');
+  // box-shadow: v.elevation('level-1');
+  transition: all 0.3s ease;
+}
+
 
 // Card Layout
 .#{b.$prefix}-card-layout {

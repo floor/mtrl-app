@@ -1,44 +1,72 @@
+// src/examples/card.js
+import { createContentSection } from '../../../layout'
 import {
-  createContentSection
-} from '../../../layout'
+  applyLayoutClasses,
+  cleanupLayoutClasses
+} from 'mtrl/src/core/layout'
+import { fLayout, fChips } from 'mtrl'
 
-import {
-  fLayout,
-  fChips,
-  createElement,
-  addClass, removeClass
-} from 'mtrl'
-
+/**
+ * Creates a card layout demo with different card layout options
+ *
+ * @param {HTMLElement} container - Container element to append to
+ * @returns {Object} The created layout
+ */
 export const createCardLayout = (container) => {
-  const layout = fLayout(createContentSection({
+  // Create the content section with title and description
+  const sectionLayout = fLayout(createContentSection({
     title: 'Card Layout',
     description: 'Layout for displaying card-based content with different options for handling card heights.',
     class: 'theme-colors'
-  }), container).getAll()
+  }), container)
 
-  // Create layout with containers for controls and card demo
-  const mainLayout = fLayout([
-    ['controlsContainer', { class: 'layout-demo__controls' },
-      [fChips, 'cardChipSet', {
+  const body = sectionLayout.get('body')
+
+  // Create controls with fLayout and layout option
+  const controlsLayout = fLayout([
+    'controlsContainer', {
+      tag: 'div',
+      class: 'layout-demo__controls',
+      // Use layout configuration option
+      layout: {
+        type: 'row',
+        justify: 'center',
+        align: 'center'
+      }
+    },
+    [
+      // Create chip set
+      fChips, 'cardChipSet', {
         scrollable: false,
         multiSelect: false,
         class: 'card-chip-set',
         label: 'Select Card Layout',
-        onChange: (values) => {
-          cardChangeHandler(values[0])
-        }
-      }]
+        onChange: (values) => cardChangeHandler(values[0])
+      }
     ]
-  ], layout.body)
+  ], body)
 
-  // Extract chip set component
-  const { cardChipSet } = mainLayout.component
+  // Get chip set component
+  const cardChipSet = controlsLayout.get('cardChipSet')
 
-  const cardContainer = createElement({
-    class: 'layout-demo card-layout'
-  })
+  // Create card container with fLayout and layout option
+  const cardLayout = fLayout([
+    'cardContainer', {
+      tag: 'div',
+      class: 'layout-demo card-layout',
+      // Use layout configuration option
+      layout: {
+        type: 'grid',
+        columns: 3,
+        gap: 6
+      }
+    }
+  ], body)
 
-  // Create 3 cards with different content
+  // Get card container element
+  const cardContainer = cardLayout.get('cardContainer')
+
+  // Content for the sample cards
   const cardContents = [
     {
       title: 'Card 1',
@@ -53,79 +81,97 @@ export const createCardLayout = (container) => {
       content: 'Another card with different content length'
     },
     {
-      title: 'Card 1',
+      title: 'Card 4',
       content: 'Fixed height card with some content'
     },
     {
-      title: 'Card 2',
+      title: 'Card 5',
       content: 'This card has more content to demonstrate how the layout handles different content lengths across cards in the same container.'
     },
     {
-      title: 'Card 3',
-      content: 'Another card with different content length'
-    },
-    {
-      title: 'Card 1',
-      content: 'Fixed height card with some content'
-    },
-    {
-      title: 'Card 2',
-      content: 'This card has more content to demonstrate how the layout handles different content lengths across cards in the same container.'
-    },
-    {
-      title: 'Card 3',
+      title: 'Card 6',
       content: 'Another card with different content length'
     }
   ]
 
-  cardContents.forEach(cardData => {
-    const card = createElement({
-      tag: 'div',
-      class: 'layout-demo__card'
-    })
-
-    const cardHeader = createElement({
-      tag: 'div',
-      class: 'layout-demo__card-header',
-      text: cardData.title
-    })
-
-    const cardContent = createElement({
-      tag: 'div',
-      class: 'layout-demo__card-content',
-      text: cardData.content
-    })
-
-    card.appendChild(cardHeader)
-    card.appendChild(cardContent)
-    cardContainer.appendChild(card)
+  // Create cards using fLayout with layout options
+  cardContents.forEach((cardData, index) => {
+    const cardStructure = fLayout([
+      `card${index}`, {
+        tag: 'div',
+        class: 'layout-demo__card',
+        // Use layout configuration for stack layout
+        layout: {
+          type: 'stack',
+          gap: 2
+        }
+      },
+      [
+        `header${index}`, {
+          tag: 'div',
+          class: 'layout-demo__card-header',
+          text: cardData.title
+        },
+        `content${index}`, {
+          tag: 'div',
+          class: 'layout-demo__card-content',
+          text: cardData.content
+        }
+      ]
+    ], cardContainer)
   })
 
-  // Define card layout options using the new layout system classes
+  // Define card layout options with configuration objects
   const cardOptions = [
-    { text: 'Equal Height', value: 'layout--grid' },
-    { text: 'Auto Height', value: 'layout--grid layout--grid-auto-height' },
-    { text: 'Masonry', value: 'layout--masonry' }
+    {
+      text: 'Equal Height',
+      value: 'equal-height',
+      config: {
+        type: 'grid',
+        columns: 3,
+        gap: 6
+      }
+    },
+    {
+      text: 'Auto Height',
+      value: 'auto-height',
+      config: {
+        type: 'grid',
+        columns: 3,
+        gap: 6,
+        autoHeight: true
+      }
+    }
   ]
 
-  // Current card layout tracking
-  let currentCardLayout = 'layout--grid'
+  // Track current card layout
+  let currentCardLayout = 'equal-height'
 
+  /**
+   * Handler for card layout changes with proper class cleanup
+   * @param {string} layout - Layout option value
+   */
   const cardChangeHandler = (layout) => {
-    if (!layout) return
+    if (!layout || layout === currentCardLayout) return
 
-    // Prevent update if card layout hasn't changed
-    if (layout !== currentCardLayout) {
-      // Remove existing card layout classes
-      removeClass(cardContainer, 'layout--grid layout--grid-align-start layout--masonry layout--grid-auto-height')
-      // Add the selected card layout class
-      addClass(cardContainer, layout)
-      // Update current card layout
-      currentCardLayout = layout
-    }
+    // Find the selected configuration
+    const option = cardOptions.find(opt => opt.value === layout)
+    if (!option) return
+
+    // First clean up any existing layout classes
+    cleanupLayoutClasses(cardContainer)
+
+    // Then apply the new layout configuration
+    applyLayoutClasses(cardContainer, option.config, false) // false = don't clean up again
+
+    // Update current layout tracking
+    currentCardLayout = layout
+
+    // For debugging - log the container classes after change
+    console.log('Card layout classes after change:', cardContainer.className)
   }
 
-  // Add chips to chip set
+  // Add chips to the chip set
   cardOptions.forEach(option => {
     cardChipSet.addChip({
       text: option.text,
@@ -136,12 +182,5 @@ export const createCardLayout = (container) => {
     })
   })
 
-  // Set default grid gap for cards
-  addClass(cardContainer, 'layout--grid-gap-6')
-
-  // Default to equal height grid
-  addClass(cardContainer, 'layout--grid')
-
-  // Add the card container after the controls (controls are already in the layout)
-  layout.body.appendChild(cardContainer)
+  return sectionLayout
 }

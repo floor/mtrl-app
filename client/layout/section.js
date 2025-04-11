@@ -17,7 +17,7 @@ export const sectionTitleLayout = (i) => [
 ]
 
 export const sectionTitleDescriptionLayout = (i) => [
-  ['section', { class: 'content__section ${i.class}' },
+  ['section', { class: `content__section ${i.class}` },
     ['head', { id: 'head', class: `content__section__head ${i.headClass}` },
       ['title', { tag: 'h2', class: 'section__title', text: i.title }],
       ['decription', { tag: 'p', class: 'section__text', text: i.description }]

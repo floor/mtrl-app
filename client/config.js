@@ -119,17 +119,16 @@ export const navigationLayout = {
 }
 
 export const themesMenu = [
-  { name: 'material', text: 'Material' },
-  { name: 'spring', text: 'Spring' },
-  { name: 'summer', text: 'Summer' },
-  { name: 'autumn', text: 'Autumn' },
-  { name: 'winter', text: 'Winter' },
-  { name: 'ocean', text: 'Ocean' },
-  { name: 'forest', text: 'Forest' },
-  { name: 'sunset', text: 'Sunset' },
-  { name: 'bluekhaki', text: 'Blue Khaki' },
-  { name: 'brownbeige', text: 'Brown Beige' },
-  { name: 'tealcaramel', text: 'Teal Caramel' }
+  { id: 'ocean', text: 'Ocean' },
+  { id: 'forest', text: 'Forest' },
+  { id: 'spring', text: 'Spring' },
+  { id: 'summer', text: 'Summer' },
+  { id: 'autumn', text: 'Autumn' },
+  { id: 'winter', text: 'Winter' },
+  { id: 'material', text: 'Material' }
+  // { name: 'bluekhaki', text: 'Blue Khaki' },
+  // { name: 'brownbeige', text: 'Brown Beige' },
+  // { name: 'tealcaramel', text: 'Teal Caramel' }
 ]
 
 // export const themesMenu = [

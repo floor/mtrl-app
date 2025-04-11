@@ -1,86 +1,128 @@
+// src/examples/responsive.js
+import { createContentSection } from '../../../layout'
 import {
-  createContentSection
-} from '../../../layout'
+  applyLayoutClasses,
+  cleanupLayoutClasses
+} from 'mtrl/src/core/layout'
+import { fLayout, fChips } from 'mtrl'
 
-import {
-  fLayout,
-  fChips,
-  createElement,
-  addClass,
-  removeClass
-} from 'mtrl'
-
+/**
+ * Creates a responsive layout demo that adapts to different screen sizes
+ *
+ * @param {HTMLElement} container - Container element to append to
+ * @returns {Object} The created layout
+ */
 export const createResponsiveLayout = (container) => {
-  console.log('aaqcreateResponsiveLayout', container)
-  const layout = fLayout(createContentSection({
+  // Create the content section with title and description
+  const sectionLayout = fLayout(createContentSection({
     title: 'Responsive Layout',
     description: 'Layout that adapts to different screen sizes. Use the chips to toggle between different layouts.',
     class: 'theme-colors'
-  }), container).getAll()
+  }), container)
 
-  // Create a responsive container
-  const responsiveContainer = createElement({
-    class: 'layout-demo responsive-layout'
-  })
+  const body = sectionLayout.get('body')
 
-  // Create example content
-  for (let i = 1; i <= 4; i++) {
-    const box = createElement({
+  // Create controls layout with fLayout and layout option
+  const controlsLayout = fLayout([
+    'controlsContainer', {
       tag: 'div',
-      class: 'layout-demo__box',
-      text: `Item ${i}`
-    })
-    responsiveContainer.appendChild(box)
+      class: 'layout-demo__controls',
+      // Use layout configuration option
+      layout: { type: 'row', justify: 'center', align: 'center' }
+    },
+    [fChips, 'layoutType', {
+      scrollable: false,
+      multiSelect: false,
+      label: 'Layout Type',
+      onChange: (values) => layoutChangeHandler(values[0])
+    }],
+    [fChips, 'layoutChipSet2', {
+      scrollable: false,
+      multiSelect: false,
+      label: 'Layout Gap',
+      onChange: (values) => layoutChangeHandler(values[0])
+    }]
+  ], body)
+
+  // Get chip set component
+  const layoutType = controlsLayout.get('layoutType')
+
+  // Create responsive container using fLayout with layout option
+  const responsiveLayout = fLayout([
+    'responsiveContainer', {
+      tag: 'div',
+      class: 'layout-demo responsive-layout',
+      // Use layout configuration instead of raw classes
+      layout: { type: 'stack', gap: 'md' }
+    }
+  ], body)
+
+  // Get responsive container element
+  const responsiveContainer = responsiveLayout.get('responsiveContainer')
+
+  // Create example content boxes
+  for (let i = 1; i <= 10; i++) {
+    // Create box with fLayout
+    fLayout([
+      `box${i}`, {
+        tag: 'div',
+        class: 'layout-demo__box',
+        text: `Item ${i}`
+      }
+    ], responsiveContainer)
   }
 
-  // Default to stack layout
-  addClass(responsiveContainer, 'layout--stack')
-
-  // Create layout with containers for controls and responsive demo
-  const mainLayout = fLayout([
-    ['controlsContainer', { class: 'layout-demo__controls' },
-      [fChips, 'layoutChipSet', {
-        scrollable: false,
-        multiSelect: false,
-        class: 'layout-chip-set',
-        label: 'Select Layout',
-        onChange: (values) => {
-          layoutChangeHandler(values[0])
-        }
-      }]
-    ]
-  ], layout.body)
-
-  // Extract chip set component
-  const { layoutChipSet } = mainLayout.component
-
-  // Define layout options
+  // Define layout options with configuration objects
   const layoutOptions = [
-    { text: 'Stack', value: 'layout--stack' },
-    { text: 'Row', value: 'layout--row' },
-    { text: 'Grid', value: 'layout--grid' }
+    {
+      text: 'Stack',
+      value: 'stack',
+      config: { type: 'stack', gap: 'md', align: 'stretch' }
+    },
+    {
+      text: 'Row',
+      value: 'row',
+      config: { type: 'row', gap: 'md', mobileStack: true, justify: 'between' }
+    },
+    {
+      text: 'Grid 2 Cols',
+      value: 'grid-2',
+      config: { type: 'grid', columns: 2, gap: 'md' }
+    },
+    {
+      text: 'Grid 3 Cols',
+      value: 'grid-3',
+      config: { type: 'grid', columns: 3, gap: 'md' }
+    },
+    {
+      text: 'Grid 4 Cols',
+      value: 'grid-4',
+      config: { type: 'grid', columns: 4, gap: 'md' }
+    }
   ]
 
-  // Current layout tracking
-  let currentLayout = 'layout--stack'
+  // Track current layout
+  let currentLayout = 'stack'
 
+  /**
+   * Handler for layout changes with proper class cleanup
+   * @param {string} layout - Layout option value
+   */
   const layoutChangeHandler = (layout) => {
-    if (!layout) return
+    console.log('layoutChangeHandler', layout)
+    if (!layout || layout === currentLayout) return
 
-    // Prevent update if layout hasn't changed
-    if (layout !== currentLayout) {
-      // Remove existing layout classes
-      removeClass(responsiveContainer, 'layout--stack layout--row layout--grid')
-      // Add the selected layout class
-      addClass(responsiveContainer, layout)
-      // Update current layout
-      currentLayout = layout
-    }
+    // Find the selected configuration
+    const option = layoutOptions.find(opt => opt.value === layout)
+    if (!option) return
+    cleanupLayoutClasses(responsiveContainer)
+    applyLayoutClasses(responsiveContainer, option.config, false) // false = don't clean up again
+    currentLayout = layout
   }
 
-  // Add chips to chip set
+  // Add chips to the chip set
   layoutOptions.forEach(option => {
-    layoutChipSet.addChip({
+    layoutType.addChip({
       text: option.text,
       value: option.value,
       variant: 'filter',
@@ -89,6 +131,5 @@ export const createResponsiveLayout = (container) => {
     })
   })
 
-  // Add the responsive container after the controls
-  layout.body.appendChild(responsiveContainer)
+  return sectionLayout
 }

@@ -7,30 +7,30 @@
 @use 'mtrl/src/styles/abstract/config' as c;
 
 // Event examples
-.event-explanation {
+.#{b.$prefix}-event-explanation {
   margin-bottom: 24px;
 }
 
-.event-explanation__text {
+.#{b.$prefix}-event-explanation__text {
   font-size: 1rem;
   line-height: 1.5;
   color: t.color('on-surface-variant');
 }
 
-.event-example {
+.#{b.$prefix}-event-example {
   background-color: t.color('surface-container-low');
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 32px;
 }
 
-.event-example__title {
+.#{b.$prefix}-event-example__title {
   margin-top: 0;
   margin-bottom: 16px;
   font-weight: 500;
 }
 
-.event-example__code {
+.#{b.$prefix}-event-example__code {
   background-color: t.color('surface-container');
   padding: 16px;
   border-radius: 8px;
@@ -39,52 +39,52 @@
   margin-bottom: 24px;
 }
 
-.event-example__demo {
+.#{b.$prefix}-event-example__demo {
   background-color: t.color('surface-container-high');
   border-radius: 8px;
   padding: 16px;
 }
 
 // Event log styles
-.event-log {
+.#{b.$prefix}-event-log {
   margin-top: 16px;
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
 }
 
-.event-log__title {
+.#{b.$prefix}-event-log__title {
   font-weight: 500;
   margin-bottom: 8px;
 }
 
-.event-log__entry {
+.#{b.$prefix}-event-log__entry {
   font-family: monospace;
   padding: 4px 0;
   border-bottom: 1px solid t.color('outline-variant');
 }
 
 // Event bus demo
-.event-bus-demo {
+.#{b.$prefix}-event-bus-demo {
   display: flex;
   gap: 24px;
   margin-top: 16px;
 }
 
-.event-bus-sender,
-.event-bus-receiver {
+.#{b.$prefix}-event-bus-sender,
+.#{b.$prefix}-event-bus-receiver {
   flex: 1;
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
 }
 
-.event-bus-title {
+.#{b.$prefix}-event-bus-title {
   font-weight: 500;
   margin-bottom: 16px;
 }
 
-.event-bus-content {
+.#{b.$prefix}-event-bus-content {
   margin-top: 16px;
   padding: 16px;
   background-color: t.color('surface-container');
@@ -93,7 +93,7 @@
 }
 
 // Touch gestures demo
-.gesture-area {
+.#{b.$prefix}-gesture-area {
   background-color: t.color('primary-container');
   color: t.color('on-primary-container');
   padding: 32px;
@@ -109,35 +109,35 @@
   }
 }
 
-.gesture-log {
+.#{b.$prefix}-gesture-log {
   margin-top: 16px;
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
 }
 
-.gesture-log__title {
+.#{b.$prefix}-gesture-log__title {
   font-weight: 500;
   margin-bottom: 8px;
 }
 
-.gesture-log__entry {
+.#{b.$prefix}-gesture-log__entry {
   font-family: monospace;
   padding: 4px 0;
   border-bottom: 1px solid t.color('outline-variant');
 }
 
 // Event delegation demo
-.delegation-container {
+.#{b.$prefix}-delegation-container {
   margin-bottom: 16px;
 }
 
-.delegation-title {
+.#{b.$prefix}-delegation-title {
   margin-bottom: 12px;
   font-weight: 500;
 }
 
-.delegation-list {
+.#{b.$prefix}-delegation-list {
   list-style: none;
   padding: 0;
   margin: 0 0 16px 0;
@@ -146,7 +146,7 @@
   overflow: hidden;
 }
 
-.delegation-item {
+.#{b.$prefix}-delegation-item {
   padding: 12px 16px;
   border-bottom: 1px solid t.color('outline-variant');
   cursor: pointer;
@@ -161,42 +161,42 @@
   }
 }
 
-.delegation-log {
+.#{b.$prefix}-delegation-log {
   margin-top: 16px;
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
 }
 
-.delegation-log__title {
+.#{b.$prefix}-delegation-log__title {
   font-weight: 500;
   margin-bottom: 8px;
 }
 
-.delegation-log__entry {
+.#{b.$prefix}-delegation-log__entry {
   font-family: monospace;
   padding: 4px 0;
   border-bottom: 1px solid t.color('outline-variant');
 }
 
 // Performance utilities demo
-.perf-demo {
+.#{b.$prefix}-perf-demo {
   margin-top: 16px;
 }
 
-.search-container {
+.#{b.$prefix}-search-container {
   background-color: t.color('surface');
   border-radius: 8px;
   padding: 16px;
 }
 
-.search-label {
+.#{b.$prefix}-search-label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
 }
 
-.search-input {
+.#{b.$prefix}-search-input {
   width: 100%;
   padding: 8px 12px;
   border: 1px solid t.color('outline');
@@ -206,7 +206,7 @@
   margin-bottom: 16px;
 }
 
-.search-results {
+.#{b.$prefix}-search-results {
   padding: 12px;
   background-color: t.color('surface-container');
   border-radius: 4px;
@@ -216,7 +216,7 @@
 }
 
 // Best practices
-.best-practices-list {
+.#{b.$prefix}-best-practices-list {
   padding-left: 16px;
 
   li {
@@ -226,7 +226,7 @@
 }
 
 // Code examples
-.code-block {
+.#{b.$prefix}-code-block {
   background-color: t.color('surface-container');
   padding: 16px;
   border-radius: 8px;
@@ -237,16 +237,16 @@
 
 // Responsive adjustments
 @include c.breakpoint-down('md') {
-  .event-bus-demo {
+  .#{b.$prefix}-event-bus-demo {
     flex-direction: column;
   }
   
-  .event-bus-sender,
-  .event-bus-receiver {
+  .#{b.$prefix}-event-bus-sender,
+  .#{b.$prefix}-event-bus-receiver {
     margin-bottom: 16px;
   }
   
-  .event-example__code {
+  .#{b.$prefix}-event-example__code {
     font-size: 0.85rem;
   }
 }

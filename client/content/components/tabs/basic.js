@@ -3,71 +3,48 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTabs,
-  createElement
+  createLayout,
+  createTabs,
+  addClass,
+  removeClass
 } from 'mtrl'
 
 export const initBasicTabs = (container) => {
   const title = 'Tabs'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
-  const box = createElement({ tag: 'div', class: 'mtrl-components__section-1box' })
+  const tabsLayout = createLayout([
+    [createTabs, 'tabs', {
+      tabs: [
+        { text: 'Home', value: 'home', state: 'active' },
+        { text: 'Favorites', value: 'favorites' },
+        { text: 'Profile', value: 'profile' }
+      ]
+    }],
+    ['home', { tag: 'div', class: 'content__tab-panel', attrs: { id: 'panel-home' } }],
+    ['favorites', { tag: 'div', class: 'content__tab-panel hidden', attrs: { id: 'panel-favorites' } }],
+    ['profile', { tag: 'div', class: 'content__tab-panel hidden', attrs: { id: 'panel-profile' } }]
+  ], layout.body)
 
-  // Create tabs with predefined items
-  const tabs = fTabs({
-    tabs: [
-      { text: 'Home', value: 'home', state: 'active' },
-      { text: 'Favorites', value: 'favorites' },
-      { text: 'Profile', value: 'profile' }
-    ]
-  })
+  const { tabs, home, favorites, profile } = tabsLayout.component
+  home.innerHTML = '<p>Welcome to the home tab content.</p>'
+  favorites.innerHTML = '<p>Your favorites would be displayed here.</p>'
+  profile.innerHTML = '<p>Your profile information would appear here.</p>'
 
-  // Home content
-  const homeContent = createElement({
-    tag: 'div',
-    class: 'mtrl-content__tab-panel',
-    id: 'tab-home'
-  })
-  homeContent.innerHTML = '<p>Welcome to the home tab content.</p>'
-
-  // Favorites content
-  const favoritesContent = createElement({
-    tag: 'div',
-    class: 'mtrl-content__tab-panel hidden',
-    id: 'tab-favorites'
-  })
-  favoritesContent.innerHTML = '<p>Your favorites would be displayed here.</p>'
-
-  // Profile content
-  const profileContent = createElement({
-    tag: 'div',
-    class: 'mtrl-content__tab-panel hidden',
-    id: 'tab-profile'
-  })
-  profileContent.innerHTML = '<p>Your profile information would appear here.</p>'
-
-  // Add content panels to container
-  box.appendChild(homeContent)
-  box.appendChild(favoritesContent)
-  box.appendChild(profileContent)
+  const panels = [home, favorites, profile]
 
   // Handle tab changes
   tabs.on('change', (e) => {
-    console.log('change', e)
+    console.log('change', e.value)
     // Hide all panels
-    const panels = box.querySelectorAll('.mtrl-content__tab-panel')
-    panels.forEach(panel => panel.classList.add('hidden'))
+    panels.forEach(panel => addClass(panel, 'hidden'))
 
     // Show the selected panel
-    const selectedPanel = box.querySelector(`#tab-${e.value}`)
+    const selectedPanel = layout.body.querySelector(`#panel-${e.value}`)
+    console.log('selectedPanel', selectedPanel)
     if (selectedPanel) {
-      selectedPanel.classList.remove('hidden')
+      removeClass(selectedPanel, 'hidden')
     }
   })
-
-  // Add tabs and content to the layout
-  layout.body.appendChild(tabs.element)
-  layout.body.appendChild(box)
 }

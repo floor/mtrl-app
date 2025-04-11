@@ -29,8 +29,8 @@ export const createLayoutStylesContent = (container) => {
 
   // createBasicLayout(layout.body)
   createResponsiveLayout(layout.body)
-  createGridLayout(layout.body)
-  createCardLayout(layout.body)
+  // createGridLayout(layout.body)
+  // createCardLayout(layout.body)
   createSplitLayout(layout.body)
 
   // Initialize interactive elements after creating all layout components

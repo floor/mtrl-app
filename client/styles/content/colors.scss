@@ -155,32 +155,32 @@ $content: '#{b.$prefix}-content';
     // box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   }
 
-  .theme-color__info {
+  .#{b.$prefix}-theme-color__info {
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   
-  .theme-color__label {
+  .#{b.$prefix}-theme-color__label {
     font-weight: 500;
     font-size: 1.1rem;
   }
   
-  .theme-color__value {
+  .#{b.$prefix}-theme-color__value {
     font-size: 0.85rem;
     opacity: 0.8;
   }
   
   // State colors - updated to better display state examples
-  .color-state-grid {
+  .#{b.$prefix}-color-state-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 24px;
     margin-top: 24px;
   }
   
-  .state-color-container {
+  .#{b.$prefix}-state-color-container {
     border-radius: f.get-shape('medium');
     padding: 16px;
     background-color: t.color('surface-container-low');
@@ -194,7 +194,7 @@ $content: '#{b.$prefix}-content';
   
 
 
-  .state-color-example {
+  .#{b.$prefix}-state-color-example {
     height: 50px;
     display: flex;
     align-items: center;
@@ -207,22 +207,22 @@ $content: '#{b.$prefix}-content';
     background-color: t.color('primary');
     color: t.color('on-primary');
     
-    &.state-hover {
+    &.#{b.$prefix}-state-hover {
       background-color: var(--mtrl-sys-state-primary-hover, color-mix(in srgb, var(--mtrl-sys-color-primary) 92%, white));
     }
     
-    &.state-focus {
+    &.#{b.$prefix}-state-focus {
       background-color: t.color('primary');
       outline: 2px solid t.color('outline');
       outline-offset: 2px;
     }
     
-    &.state-active {
+    &.#{b.$prefix}-state-active {
       background-color: var(--mtrl-sys-state-primary-active, color-mix(in srgb, var(--mtrl-sys-color-primary) 88%, white));
       transform: scale(0.98);
     }
     
-    &.state-disabled {
+    &.#{b.$prefix}-state-disabled {
       background-color: var(--mtrl-sys-state-disabled, rgba(0, 0, 0, 0.12));
       color: var(--mtrl-sys-color-on-disabled, rgba(0, 0, 0, 0.38));
       cursor: not-allowed;
@@ -230,29 +230,29 @@ $content: '#{b.$prefix}-content';
     }
   }
   
-  .state-color-info {
+  .#{b.$prefix}-state-color-info {
     margin-top: 12px;
   }
   
-  .state-color-label {
+  .#{b.$prefix}-state-color-label {
     font-weight: 500;
     margin-bottom: 8px;
     color: t.color('on-surface');
   }
   
-  .state-color-value {
+  .#{b.$prefix}-state-color-value {
     font-size: 0.85rem;
     color: t.color('on-surface-variant');
     line-height: 1.4;
   }
   
   // Theme preview
-  .theme-preview-container {
+  .#{b.$prefix}-theme-preview-container {
     margin-top: 24px;
     margin-bottom: 32px;
   }
   
-  .theme-preview-card {
+  .#{b.$prefix}-theme-preview-card {
     border-radius: f.get-shape('medium');
     padding: 24px;
     background-color: t.color('surface-container');
@@ -260,20 +260,20 @@ $content: '#{b.$prefix}-content';
     transition: background-color 0.3s ease;
   }
   
-  .theme-preview-title {
+  .#{b.$prefix}-theme-preview-title {
     margin-top: 0;
     margin-bottom: 24px;
     @include c.typography('headline-small');
   }
   
-  .theme-color-chips {
+  .#{b.$prefix}-theme-color-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 24px;
   }
   
-  .theme-color-chip {
+  .#{b.$prefix}-theme-color-chip {
     padding: 8px 16px;
     border-radius: f.get-shape('full');
     font-weight: 500;
@@ -294,19 +294,19 @@ $content: '#{b.$prefix}-content';
     }
   }
   
-  .theme-demo-content {
+  .#{b.$prefix}-theme-demo-content {
     background-color: t.color('surface');
     border-radius: f.get-shape('small');
     padding: 16px;
     transition: background-color 0.3s ease;
   }
   
-  .theme-demo-heading {
+  .#{b.$prefix}-theme-demo-heading {
     margin-bottom: 16px;
     font-weight: 500;
   }
   
-  .theme-demo-button {
+  .#{b.$prefix}-theme-demo-button {
     padding: 8px 16px;
     border-radius: f.get-shape('full');
     background-color: t.color('primary');
@@ -321,7 +321,7 @@ $content: '#{b.$prefix}-content';
     }
   }
   
-  .theme-demo-input {
+  .#{b.$prefix}-theme-demo-input {
     padding: 8px 12px;
     border-radius: f.get-shape('small');
     border: 1px solid t.color('outline');
@@ -334,69 +334,8 @@ $content: '#{b.$prefix}-content';
     }
   }
   
-  .theme-switchers {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  
-  .theme-button {
-    &.active-theme {
-      outline: 2px solid t.color('secondary');
-      outline-offset: 2px;
-    }
-    
-    // Theme-specific button styles
-    &.theme-ocean {
-      background-color: #006493;
-      color: white;
-    }
-    
-    &.theme-forest {
-      background-color: #3f4f2f;
-      color: white;
-    }
-    
-    &.theme-sunset {
-      background-color: #b34700;
-      color: white;
-    }
-    
-    &.theme-spring {
-      background-color: #006e2b;
-      color: white;
-    }
-
-    &.theme-summer {
-      background-color: #4196cb;
-      color: white;
-    }
-
-    &.theme-autumn {
-      background-color: #795548;
-      color: white;
-    }
-    
-    &.theme-material {
-      background-color: #6442d6;
-      color: white;
-    }
-  }
-  
-  .dark-mode-container {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-top: 16px;
-  }
-  
-  .dark-mode-label {
-    font-weight: 500;
-  }
-  
   // Code examples
-  .code-examples {
+  .#{b.$prefix}-code-examples {
     h3 {
       margin-top: 24px;
       margin-bottom: 12px;
@@ -404,7 +343,7 @@ $content: '#{b.$prefix}-content';
     }
   }
   
-  .code-block {
+  .#{b.$prefix}-code-block {
     background-color: t.color('surface-container-high');
     padding: 16px;
     border-radius: f.get-shape('small');
@@ -421,7 +360,7 @@ $content: '#{b.$prefix}-content';
   }
   
   // Neutral color section styling
-  .neutrals-explanation {
+  .#{b.$prefix}-neutrals-explanation {
     margin: 20px 0;
     padding: 16px;
     background-color: t.color('surface-container-low');
