@@ -10,7 +10,7 @@ import {
   fButton,
   fSnackbar
 } from 'mtrl'
-import { iconSend, iconSpinner, iconCheck } from '../../../../icons'
+import { sendIcon, spinnerIcon, checkIcon } from '../../../../icons'
 
 /**
  * Initializes spinner button example
@@ -22,22 +22,22 @@ export const initSpinnerButton = (container) => {
   // Create a regular button
   const button = fButton({
     text: 'Send',
-    // icon: iconSend,
+    // icon: sendIcon,
     variant: 'filled'
   })
 
   // Add click handler to toggle spinner
   button.on('click', () => {
     button.element.classList.add('spinner-button', 'loading')
-    button.icon.setIcon(iconSpinner)
+    button.icon.setIcon(spinnerIcon)
 
     button.disable()
 
     setTimeout(() => {
       button.element.classList.remove('loading')
 
-      if (iconCheck) {
-        button.icon.setIcon(iconCheck)
+      if (checkIcon) {
+        button.icon.setIcon(checkIcon)
       } else {
         button.icon.clearIcon()
       }

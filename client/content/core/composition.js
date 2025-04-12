@@ -716,10 +716,10 @@ document.body.appendChild(toggle.element);`
     tag: 'button',
     class: 'custom-toggle',
     html: `
-      <div class="custom-toggle__track">
-        <div class="custom-toggle__thumb"></div>
+      <div class="mtrl-custom-toggle__track">
+        <div class="mtrl-custom-toggle__thumb"></div>
       </div>
-      <span class="custom-toggle__text">Dark Mode</span>
+      <span class="mtrl-custom-toggle__text">Dark Mode</span>
     `
   })
 
@@ -756,34 +756,34 @@ document.body.appendChild(toggle.element);`
   toggle.addEventListener('click', () => {
     if (!isDisabled) {
       isChecked = !isChecked
-      toggle.classList.toggle('custom-toggle--checked', isChecked)
+      toggle.classList.toggle('mtrl-custom-toggle--checked', isChecked)
     }
   })
 
   toggleButton.on('click', () => {
     if (!isDisabled) {
       isChecked = !isChecked
-      toggle.classList.toggle('custom-toggle--checked', isChecked)
+      toggle.classList.toggle('mtrl-custom-toggle--checked', isChecked)
     }
   })
 
   checkButton.on('click', () => {
     if (!isDisabled && !isChecked) {
       isChecked = true
-      toggle.classList.add('custom-toggle--checked')
+      toggle.classList.add('mtrl-custom-toggle--checked')
     }
   })
 
   uncheckButton.on('click', () => {
     if (!isDisabled && isChecked) {
       isChecked = false
-      toggle.classList.remove('custom-toggle--checked')
+      toggle.classList.remove('mtrl-custom-toggle--checked')
     }
   })
 
   disableButton.on('click', () => {
     isDisabled = !isDisabled
-    toggle.classList.toggle('custom-toggle--disabled', isDisabled)
+    toggle.classList.toggle('mtrl-custom-toggle--disabled', isDisabled)
   })
 
   // Assemble the demo

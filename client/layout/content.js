@@ -1,4 +1,4 @@
-import { iconMtrl } from '../icons'
+import { mtrlIcon } from '../icons'
 
 export const contentLayout = (info) => [
   ['head', { class: 'content__header' },
@@ -10,7 +10,7 @@ export const contentLayout = (info) => [
   ['body', { class: 'content__body' }],
   ['foot', { class: 'content__footer' },
     [{ tag: 'section', className: 'content__footer-section' },
-      [{ html: iconMtrl, className: 'content-logo' }],
+      [{ html: mtrlIcon, className: 'content-logo' }],
       [{ tag: 'p', id: 'decription', className: 'components__description', text: 'mtrl is a lightweight, composable TypeScript/JavaScript component library inspired by Material Design principles. Built with zero dependencies, MTRL provides a robust foundation for creating modern web interfaces with an emphasis on performance, type safety, and accessibility.' }]
     ],
     [{ tag: 'section', className: 'content__footer-section content__footer-link' },
@@ -49,7 +49,7 @@ export const createContentLayout = (info) => {
         section1: {
           options: { tag: 'section', className: 'content__footer-section' },
           children: {
-            mtrl: { options: { html: iconMtrl, className: 'content-logo' } },
+            mtrl: { options: { html: mtrlIcon, className: 'content-logo' } },
             description: { options: { tag: 'p', id: 'decription', className: 'components__description', text: 'mtrl is a lightweight, composable TypeScript/JavaScript component library inspired by Material Design principles. Built with zero dependencies, MTRL provides a robust foundation for creating modern web interfaces with an emphasis on performance, type safety, and accessibility.' } }
           }
         },

@@ -11,15 +11,15 @@ import {
   fLayout,
   fButton
 } from 'mtrl'
-import { iconDownload, iconBookmark, iconLike, iconSend } from '../../../../icons'
+import { downloadIcon, bookmarkIcon, likeIcon, sendIcon } from '../../../../icons'
 
 /**
  * Icon button definitions with their labels
  * @type {Array<{icon: string, label: string}>}
  */
 const iconButtons = [
-  { icon: iconLike, label: 'Like' },
-  { icon: iconBookmark, label: 'Bookmark' }
+  { icon: likeIcon, label: 'Like' },
+  { icon: bookmarkIcon, label: 'Bookmark' }
 ]
 
 /**
@@ -27,8 +27,8 @@ const iconButtons = [
  * @type {Array<{icon: string, label: string}>}
  */
 const iconLabelButtons = [
-  { icon: iconDownload, label: 'Download' },
-  { icon: iconSend, label: 'Send' }
+  { icon: downloadIcon, label: 'Download' },
+  { icon: sendIcon, label: 'Send' }
 ]
 
 /**

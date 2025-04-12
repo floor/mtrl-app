@@ -1,4 +1,4 @@
-import { iconMtrl } from '../icons'
+import { mtrlIcon } from '../icons'
 
 export const createComponentsStructure = (info) => {
   return {
@@ -24,7 +24,7 @@ export const createComponentsStructure = (info) => {
             section: {
               options: { tag: 'section', className: 'content__footer-section' },
               children: {
-                mtrl: { options: { html: iconMtrl, className: 'components__title', text: info.title } },
+                mtrl: { options: { html: mtrlIcon, className: 'components__title', text: info.title } },
                 description: { options: { tag: 'p', id: 'decription', className: 'components__description' } }
               }
             }

@@ -44,8 +44,8 @@ const card = createElement({
 });
 
 // Dynamically changing elevation
-element.classList.remove('elevation-1');
-element.classList.add('elevation-3');`
+element.classList.remove('mtrl-elevation-1');
+element.classList.add('mtrl-elevation-3');`
         }
       ]
     ]

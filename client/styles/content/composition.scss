@@ -304,11 +304,11 @@
   }
   
   &--checked {
-    .custom-toggle__track {
+    .#{b.$prefix}-custom-toggle__track {
       background-color: rgba(t.color('primary'), 0.5);
     }
     
-    .custom-toggle__thumb {
+    .#{b.$prefix}-custom-toggle__thumb {
       transform: translateX(16px);
       background-color: t.color('primary');
     }
@@ -351,7 +351,7 @@
     grid-template-columns: 1fr;
   }
   
-  .toggle-controls {
+  .#{b.$prefix}-toggle-controls {
     flex-direction: column;
     align-items: stretch;
   }

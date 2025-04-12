@@ -36,7 +36,7 @@ export const initPositionsMenu = (container) => {
   const { button1, button2, button3, button4, button5, button6 } = buttons.component
 
   const menu1 = createMenu({
-    anchor: button1.element,
+    anchor: button1,
     items: [
       { name: 'refresh', text: 'Refresh' },
       { name: 'settings', text: 'Settings' },
@@ -49,7 +49,7 @@ export const initPositionsMenu = (container) => {
   })
 
   const menu2 = createMenu({
-    anchor: button2.element,
+    anchor: button2,
     items: [
       { name: 'refresh', text: 'Refresh' },
       { name: 'settings', text: 'Settings' },
@@ -62,7 +62,7 @@ export const initPositionsMenu = (container) => {
   })
 
   const menu3 = createMenu({
-    anchor: button3.element,
+    anchor: button3,
     items: [
       { name: 'refresh', text: 'Refresh' },
       { name: 'settings', text: 'Settings' },
@@ -74,7 +74,7 @@ export const initPositionsMenu = (container) => {
   })
 
   const menu4 = createMenu({
-    anchor: button4.element,
+    anchor: button4,
     items: [
       { name: 'refresh', text: 'Refresh' },
       { name: 'settings', text: 'Settings' },
@@ -86,7 +86,7 @@ export const initPositionsMenu = (container) => {
   })
 
   const menu5 = createMenu({
-    anchor: button5.element,
+    anchor: button5,
     items: [
       { name: 'refresh', text: 'Refresh' },
       { name: 'settings', text: 'Settings' },
@@ -98,7 +98,7 @@ export const initPositionsMenu = (container) => {
   })
 
   const menu6 = createMenu({
-    anchor: button6.element,
+    anchor: button6,
     items: [
       { name: 'refresh', text: 'Refresh' },
       { name: 'settings', text: 'Settings' },

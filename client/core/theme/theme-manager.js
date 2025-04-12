@@ -2,7 +2,7 @@
 
 import { createMenu } from 'mtrl'
 import stateManager from '../state'
-import { iconDark, iconLight } from '../../icons/'
+import { darkIcon, lightIcon } from '../../icons/'
 
 /**
  * Creates a theme manager for handling application theming and dark mode
@@ -20,8 +20,8 @@ export const createThemeManager = (options = {}) => {
     themeAttribute: 'data-theme',
     modeAttribute: 'data-theme-mode',
     modeToggleIcons: {
-      light: iconLight,
-      dark: iconDark
+      light: lightIcon,
+      dark: darkIcon
     },
     ...options
   }

@@ -1,13 +1,13 @@
 // src/client/config.js
 
 import {
-  iconMtrl,
-  iconComponents,
-  iconGetstarted,
-  iconStyles,
-  iconCore,
-  iconMore,
-  iconDark
+  mtrlIcon,
+  componentsIcon,
+  getStartedIcon,
+  stylesIcon,
+  codeIcon,
+  themesIcon,
+  darkIcon
 } from './icons'
 
 import {
@@ -16,8 +16,8 @@ import {
 
 export const appLayout = [
   ['content', { tag: 'div', className: 'content' }],
-  [createButton, 'moreMenu', { icon: iconMore, class: 'more-menu', variant: 'outlined', ariaLabel: 'Themes' }],
-  [createButton, 'toggleDarkmode', { icon: iconDark, class: 'toggle-darkmode', variant: 'outlined', ariaLabel: 'Darkmode' }]
+  [createButton, 'moreMenu', { icon: themesIcon, class: 'more-menu', variant: 'outlined', ariaLabel: 'Themes' }],
+  [createButton, 'toggleDarkmode', { icon: darkIcon, class: 'toggle-darkmode', variant: 'outlined', ariaLabel: 'Darkmode' }]
 ]
 
 // Navigation structure for the new Navigation System
@@ -25,7 +25,7 @@ export const navigationLayout = {
   // Home section
   home: {
     label: 'Home',
-    icon: iconMtrl
+    icon: mtrlIcon
     // items: [
     //   { id: 'overview', label: 'Overview', path: '/home' }, // Path to home root
     //   { id: 'about', label: 'About', path: '/home/about' }
@@ -35,7 +35,7 @@ export const navigationLayout = {
   // Get Started section
   // getstarted: {
   //   label: 'Get Started',
-  //   icon: iconGetstarted
+  //   icon: getStartedIcon
   //   // items: [
   //   //   { id: 'installation', label: 'Installation', path: '/getstarted' }, // Path to getstarted root
   //   //   { id: 'usage', label: 'Usage', path: '/getstarted/usage' },
@@ -46,7 +46,7 @@ export const navigationLayout = {
   // Core section
   core: {
     label: 'Core',
-    icon: iconCore,
+    icon: codeIcon,
     items: [
       { id: 'events', label: 'Events', path: '/core/events' },
       { id: 'state', label: 'State', path: '/core/state' },
@@ -58,7 +58,7 @@ export const navigationLayout = {
   // Styles section
   styles: {
     label: 'Styles',
-    icon: iconStyles,
+    icon: stylesIcon,
     items: [
       { id: 'colors', label: 'Colors', path: '/styles/colors' },
       { id: 'typography', label: 'Typography', path: '/styles/typography' },
@@ -70,7 +70,7 @@ export const navigationLayout = {
   // Components section
   components: {
     label: 'Components',
-    icon: iconComponents,
+    icon: componentsIcon,
     items: [
       {
         id: 'appbars',
@@ -109,8 +109,10 @@ export const navigationLayout = {
       { id: 'progress', label: 'Progress', path: '/components/progress' },
       { id: 'radios', label: 'Radio Buttons', path: '/components/radios' },
       { id: 'search', label: 'Search', path: '/components/search' },
+      { id: 'selects', label: 'Selects', path: '/components/selects' },
       { id: 'sliders', label: 'Sliders', path: '/components/sliders' },
       { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
+
       { id: 'switches', label: 'Switches', path: '/components/switches' },
       { id: 'tabs', label: 'Tabs', path: '/components/tabs' },
       { id: 'textfields', label: 'Textfields', path: '/components/textfields' }

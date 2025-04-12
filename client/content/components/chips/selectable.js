@@ -2,7 +2,7 @@
 import { capitalize } from '../../../core/utils'
 import { createComponentsSectionLayout } from '../../../layout'
 import { fLayout, fChip } from 'mtrl'
-import { iconCheck } from '../../../icons'
+import { checkIcon } from '../../../icons'
 
 /**
  * Initializes selectable chips section
@@ -39,7 +39,7 @@ export const initSelectableChips = (container) => {
       // // Update icon for filter chips
       // if (variant === 'filter') {
       //   if (chip.isSelected()) {
-      //     chip.setLeadingIcon(iconCheck)
+      //     chip.setLeadingIcon(checkIcon)
       //   } else {
       //     chip.setLeadingIcon('')
       //   }

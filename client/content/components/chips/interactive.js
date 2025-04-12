@@ -1,7 +1,7 @@
 // src/client/content/components/chips/interactive.js
 import { createComponentsSectionLayout } from '../../../layout'
 import { fLayout, fChip, fTextfield, fButton } from 'mtrl'
-import { iconLocation } from '../../../icons'
+import { locationIcon } from '../../../icons'
 
 /**
  * Initializes an interactive chip example with city selection
@@ -50,7 +50,7 @@ export const initInteractiveChipExample = (container) => {
     const chip = fChip({
       text: config.text,
       variant: 'assist',
-      leadingIcon: iconLocation,
+      leadingIcon: locationIcon,
       value: config.value
     })
 
@@ -111,7 +111,7 @@ export const initInteractiveChipExample = (container) => {
       const customChip = fChip({
         text: cityName,
         variant: 'assist',
-        leadingIcon: iconLocation,
+        leadingIcon: locationIcon,
         value: cityName.toLowerCase().replace(/\s+/g, '-'),
         selected: true
       })

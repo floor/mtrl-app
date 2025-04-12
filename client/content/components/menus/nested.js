@@ -18,7 +18,7 @@ export const initNestedMenu = (container) => {
   })
 
   const menu = createMenu({
-    anchor: button.element,
+    anchor: button,
     items: [
       {
         name: 'format',

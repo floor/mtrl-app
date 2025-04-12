@@ -1,7 +1,7 @@
 // src/client/content/components/chips/input.js
 import { createComponentsSectionLayout } from '../../../layout'
 import { fLayout, fChip, fTextfield, fButton } from 'mtrl'
-import { iconFace, iconClose } from '../../../icons'
+import { faceIcon, closeIcon } from '../../../icons'
 
 // Define prefix for CSS classes
 const PREFIX = 'mtrl'
@@ -41,8 +41,8 @@ export const initInputChips = (container) => {
     const chip = fChip({
       text: email,
       variant: 'input',
-      leadingIcon: iconFace,
-      trailingIcon: iconClose,
+      leadingIcon: faceIcon,
+      trailingIcon: closeIcon,
       value: email
     })
 

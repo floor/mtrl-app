@@ -13,7 +13,7 @@ export const createColorPalettes = (container) => {
   const body = layout.body
 
   // Define themes with their colors
-  const themes = ['ocean', 'forest', 'material', 'spring', 'summer', 'autumn', 'winter']
+  const themes = ['ocean', 'forest', 'spring', 'summer', 'autumn', 'winter', 'material']
 
   // Get current theme settings
   const currentSettings = themeManager.getSettings()

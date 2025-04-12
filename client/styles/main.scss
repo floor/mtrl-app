@@ -9,12 +9,6 @@
 @use 'mtrl/src/styles/themes/summer';
 @use 'mtrl/src/styles/themes/autumn';
 @use 'mtrl/src/styles/themes/winter';
-@use 'mtrl/src/styles/themes/bluekhaki';
-@use 'mtrl/src/styles/themes/brownbeige';
-@use 'mtrl/src/styles/themes/tealcaramel';
-@use 'mtrl/src/styles/themes/greenbeige';
-@use 'mtrl/src/styles/themes/sageivory';
-@use 'mtrl/src/styles/themes/browngreen';
 @use 'mtrl/src/styles/utilities/ripple' as ripple;
 @use 'mtrl/src/styles/utilities/layout' as layout;
 
@@ -42,6 +36,7 @@
 @use 'mtrl/src/styles/components/badge' as badge;
 @use 'mtrl/src/styles/components/bottom-app-bar' as bottom-app-bar;
 @use 'mtrl/src/styles/components/slider' as slider;
+@use 'mtrl/src/styles/components/select' as select;
 @use 'mtrl/src/styles/components/switch' as switch;
 @use 'mtrl/src/styles/components/tabs' as tabs;
 @use 'mtrl/src/styles/components/textfield' as textfield;

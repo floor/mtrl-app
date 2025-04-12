@@ -1,7 +1,7 @@
 // src/client/content/components/chips/filter.js
 import { createComponentsSectionLayout } from '../../../layout'
 import { fLayout, fChip, fButton } from 'mtrl'
-import { iconCheck } from '../../../icons'
+import { checkIcon } from '../../../icons'
 
 // Define prefix for CSS classes
 const PREFIX = 'mtrl'
@@ -48,7 +48,7 @@ export const initFilterChipSet = (container) => {
 
       // Update the checkmark icon based on selection state
       if (chip.isSelected()) {
-        chip.setLeadingIcon(iconCheck)
+        chip.setLeadingIcon(checkIcon)
       } else {
         chip.setLeadingIcon('')
       }

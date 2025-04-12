@@ -18,7 +18,7 @@ export const initCustomMenu = (container) => {
   })
 
   const menu = createMenu({
-    anchor: button.element,
+    anchor: button,
     items: [
       { name: 'share', text: 'Share', disabled: true },
       { name: 'download', text: 'Download' },

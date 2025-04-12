@@ -47,6 +47,7 @@ const ROUTE_MODULE_MAP = {
   'components/search': () => import('../../content/components/search'),
   'components/sliders': () => import('../../content/components/sliders'),
   'components/snackbars': () => import('../../content/components/snackbars'),
+  'components/selects': () => import('../../content/components/selects'),
   'components/switches': () => import('../../content/components/switches'),
   'components/tabs': () => import('../../content/components/tabs'),
   'components/textfields': () => import('../../content/components/textfields'),

@@ -18,7 +18,7 @@ export const initBasicMenu = (container) => {
   })
 
   const menu = createMenu({
-    anchor: button.element,
+    anchor: button,
     items: [
       { name: 'new', text: 'New File' },
       { name: 'open', text: 'Open...' },
