@@ -9,11 +9,14 @@ import {
 } from 'mtrl'
 
 import { initTextfieldVariants } from './variants'
-import { initMultilineTextfield } from './multiline'
+
 import { initLeadingIcons } from './leading-icons'
 import { initTrailingIcons } from './trailing-icons'
+import { initPrefix } from './prefix'
+import { initSuffix } from './suffix'
 import { initSupportingText } from './supporting-text'
 import { initCombinedFeatures } from './combined-features'
+// import { initMultilineTextfield } from './multiline'
 
 export const createTextfieldsContent = (container) => {
   const info = {
@@ -27,7 +30,9 @@ export const createTextfieldsContent = (container) => {
   initTextfieldVariants(layout.body)
   initLeadingIcons(layout.body)
   initTrailingIcons(layout.body)
+  initPrefix(layout.body)
+  initSuffix(layout.body)
   initSupportingText(layout.body)
   initCombinedFeatures(layout.body)
-  initMultilineTextfield(layout.body)
+  // initMultilineTextfield(layout.body)
 }

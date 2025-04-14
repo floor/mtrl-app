@@ -41,7 +41,8 @@ export const initInteractiveChipExample = (container) => {
   const resultText = document.createElement('p')
   resultText.textContent = 'Please select a city'
   resultText.style.padding = '8px'
-  resultText.style.backgroundColor = '#f5f5f5'
+  resultText.style.backgroundColor = 'var(--mtrl-sys-color-primary)'
+  resultText.style.color = 'var(--mtrl-sys-color-on-primary)'
   resultText.style.borderRadius = '4px'
 
   // Create and add city chips
@@ -71,10 +72,12 @@ export const initInteractiveChipExample = (container) => {
 
       if (chip.isSelected()) {
         resultText.textContent = `You selected: ${chip.getText()}`
-        resultText.style.backgroundColor = '#e3f2fd' // Light blue background
+        resultText.style.backgroundColor = 'var(--mtrl-sys-color-tertiary-container)' // Light blue background
+        resultText.style.color = 'var(--mtrl-sys-on-color-tertiary-container)'
       } else {
         resultText.textContent = 'Please select a city'
-        resultText.style.backgroundColor = '#f5f5f5' // Default gray background
+        resultText.style.color = 'var(--mtrl-sys-on-color-surface-bright)'
+        resultText.style.backgroundColor = 'var(--mtrl-sys-color-surface-bright)' // Default gray background
       }
     })
   })
@@ -85,6 +88,7 @@ export const initInteractiveChipExample = (container) => {
   customCityContainer.style.flexDirection = 'column'
   customCityContainer.style.gap = '8px'
   customCityContainer.style.marginTop = '16px'
+  customCityContainer.style.backgroundColor = 'var(--mtrl-sys-color-surface-bright)'
 
   const customCityLabel = document.createElement('p')
   customCityLabel.textContent = 'Or enter your own city:'

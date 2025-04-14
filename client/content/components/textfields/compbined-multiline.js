@@ -18,8 +18,8 @@ export const initMultilineTextfield = (container) => {
     placeholder: 'Type multiple lines...',
     type: 'multiline',
     variant: 'filled',
-    maxHeight: 200
-    // supportingText: 'Filled multiline'
+    maxHeight: 200,
+    supportingText: 'Filled multiline'
   })
 
   // Outlined multiline textfield
@@ -28,8 +28,8 @@ export const initMultilineTextfield = (container) => {
     placeholder: 'Type multiple lines...',
     type: 'multiline',
     variant: 'outlined',
-    maxHeight: 200
-    // supportingText: 'Outlined multiline'
+    maxHeight: 200,
+    supportingText: 'Outlined multiline'
   })
 
   // Add multiline textfields to the layout

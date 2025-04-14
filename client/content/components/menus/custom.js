@@ -28,13 +28,6 @@ export const initCustomMenu = (container) => {
     ]
   })
 
-  button.on('click', () => {
-    menu.show().position(button.element, {
-      align: 'center',
-      vAlign: 'bottom'
-    })
-  })
-
   menu.on('select', ({ name, text }) => {
     console.log(`Selected from custom menu: ${name} (${text})`)
   })
