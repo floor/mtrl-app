@@ -199,7 +199,7 @@ export const initFormDialog = (container) => {
 
   // Create button to open dialog
   const openSettingsButton = fButton({
-    text: 'Settings',
+    // text: 'Settings',
     icon: settingsIcon,
     variant: 'filled'
   })

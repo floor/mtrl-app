@@ -3,31 +3,23 @@ import {
 } from '../../../layout'
 
 import {
+  countries
+} from '../../../data'
+
+import {
   createLayout,
   createSelect
 } from 'mtrl'
 
-export const initBasicSelect = (container) => {
-  const title = 'Basic Select'
+export const initLongMenu = (container) => {
+  const title = 'Long Menu Select'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-
-  const formatOptions = [
-    { id: 'bold', text: 'Bold' },
-    { id: 'italic', text: 'Italic' },
-    { id: 'underline', text: 'Underline' }
-  ]
-
-  const paragraphOptions = [
-    { id: 'align-left', text: 'Align Left' },
-    { id: 'align-center', text: 'Center' },
-    { id: 'align-right', text: 'Align Right' }
-
-  ]
 
   // Create a basic select component with all countries
   const filled = createSelect({
-    label: 'Format',
-    options: formatOptions
+    label: 'Country',
+    supportingText: 'Select a country',
+    options: countries
   })
 
   filled.element.style.maxWidth = '240px'
@@ -38,9 +30,10 @@ export const initBasicSelect = (container) => {
   })
 
   const outlined = createSelect({
-    label: 'Paragraph',
+    label: 'Country',
     variant: 'outlined',
-    options: paragraphOptions
+    supportingText: 'Select a country',
+    options: countries
   })
 
   outlined.element.style.maxWidth = '240px'

@@ -3,31 +3,24 @@ import {
 } from '../../../layout'
 
 import {
+  organisation,
+  location
+} from '../../../data'
+
+import {
   createLayout,
   createSelect
 } from 'mtrl'
 
-export const initBasicSelect = (container) => {
-  const title = 'Basic Select'
+export const initSubmenu = (container) => {
+  const title = 'Select with nested menu'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
-
-  const formatOptions = [
-    { id: 'bold', text: 'Bold' },
-    { id: 'italic', text: 'Italic' },
-    { id: 'underline', text: 'Underline' }
-  ]
-
-  const paragraphOptions = [
-    { id: 'align-left', text: 'Align Left' },
-    { id: 'align-center', text: 'Center' },
-    { id: 'align-right', text: 'Align Right' }
-
-  ]
 
   // Create a basic select component with all countries
   const filled = createSelect({
-    label: 'Format',
-    options: formatOptions
+    label: 'Position',
+    supportingText: 'Select a position',
+    options: organisation
   })
 
   filled.element.style.maxWidth = '240px'
@@ -38,9 +31,10 @@ export const initBasicSelect = (container) => {
   })
 
   const outlined = createSelect({
-    label: 'Paragraph',
+    label: 'Location',
     variant: 'outlined',
-    options: paragraphOptions
+    supportingText: 'Select a location',
+    options: location
   })
 
   outlined.element.style.maxWidth = '240px'

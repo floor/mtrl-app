@@ -1,8 +1,7 @@
 // src/client/content/components/chips/selectable.js
 import { capitalize } from '../../../core/utils'
 import { createComponentsSectionLayout } from '../../../layout'
-import { fLayout, fChip } from 'mtrl'
-import { checkIcon } from '../../../icons'
+import { createLayout, createChip } from 'mtrl'
 
 /**
  * Initializes selectable chips section
@@ -10,7 +9,7 @@ import { checkIcon } from '../../../icons'
  */
 export const initSelectableChips = (container) => {
   const title = 'Selectable Chips'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a selection chips container
   const chipsContainer = document.createElement('div')
@@ -26,21 +25,21 @@ export const initSelectableChips = (container) => {
   ]
 
   selectableVariants.forEach(variant => {
-    const chip = fChip({
+    const chip = createChip({
       text: capitalize(variant),
       variant,
+      selectable: true,
       selected: variant === 'filter' // Pre-select the filter variant
     })
 
     // Add click handler to toggle selection using component API
     chip.on('click', () => {
-      chip.toggleSelected()
+      console.log('variant', variant)
+      console.log('selected', variant === 'filter')
 
       // // Update icon for filter chips
-      // if (variant === 'filter') {
-      //   if (chip.isSelected()) {
-      //     chip.setLeadingIcon(checkIcon)
-      //   } else {
+      // if (variant !== 'filter') {
+      //     chip.toggleSelected()
       //     chip.setLeadingIcon('')
       //   }
       // }

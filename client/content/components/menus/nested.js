@@ -8,6 +8,10 @@ import {
   createButton
 } from 'mtrl'
 
+import {
+  location
+} from '../../../data'
+
 export const initNestedMenu = (container) => {
   const title = 'Nested Menu'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
@@ -45,9 +49,20 @@ export const initNestedMenu = (container) => {
     ]
   })
 
+  const button2 = createButton({
+    text: 'Show Nested Menu',
+    variant: 'tonal'
+  })
+
+  const menu2 = createMenu({
+    anchor: button2,
+    items: location
+  })
+
   menu.on('select', ({ name, text }) => {
     console.log(`Selected nested item: ${name} (${text})`)
   })
 
   layout.body.appendChild(button.element)
+  layout.body.appendChild(button2.element)
 }

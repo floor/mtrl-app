@@ -6,7 +6,7 @@ import { fLayout } from 'mtrl'
 import { initChipVariants } from './variants'
 import { initChipWithIcons } from './icons'
 import { initSelectableChips } from './selectable'
-import { initChipSet } from './chipset'
+// import { initChipSet } from './chipset'
 import { initFilterChipSet } from './filter'
 import { initInputChips } from './input'
 import { initInteractiveChipExample } from './interactive'
@@ -26,7 +26,7 @@ export const createChipsContent = (container) => {
   initChipVariants(layout.body)
   initChipWithIcons(layout.body)
   initSelectableChips(layout.body)
-  initChipSet(layout.body)
+  // initChipSet(layout.body)
   initFilterChipSet(layout.body)
   initInputChips(layout.body)
   initInteractiveChipExample(layout.body)

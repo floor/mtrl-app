@@ -121,9 +121,9 @@ export const createThemeManager = (options = {}) => {
    * @private
    */
   const toggleThemeMenu = (anchor) => {
-    // If menu exists and is visible, hide it
-    if (themesMenu && themesMenu.isVisible()) {
-      themesMenu.hide()
+    // If menu exists and is not visible, show it
+    if (themesMenu && !themesMenu.isVisible()) {
+      themesMenu.show()
       return
     }
 
@@ -146,17 +146,17 @@ export const createThemeManager = (options = {}) => {
     })
 
     // Set up the close handler to clean up references
-    themesMenu.on('close', () => {
-      // Don't destroy the menu, just update our tracking of visibility
-    })
+    // themesMenu.on('close', () => {
+    //   // Don't destroy the menu, just update our tracking of visibility
+    // })
 
-    // Position and show the menu
-    // themesMenu.position(origin.element, { align: 'center' }).show()
+    // // Position and show the menu
+    // // themesMenu.position(origin.element, { align: 'center' }).show()
 
-    // Set the currently selected theme if the menu supports it
-    if (themesMenu.setSelected && themeSettings.themeName) {
-      themesMenu.setSelected(themeSettings.themeName)
-    }
+    // // Set the currently selected theme if the menu supports it
+    // if (themesMenu.setSelected && themeSettings.themeName) {
+    //   themesMenu.setSelected(themeSettings.themeName)
+    // }
   }
 
   /**

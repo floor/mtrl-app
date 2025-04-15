@@ -1,7 +1,6 @@
 // src/client/content/components/chips/filter.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { fLayout, fChip, fButton } from 'mtrl'
-import { checkIcon } from '../../../icons'
+import { createLayout, createChip, createButton } from 'mtrl'
 
 // Define prefix for CSS classes
 const PREFIX = 'mtrl'
@@ -12,7 +11,7 @@ const PREFIX = 'mtrl'
  */
 export const initFilterChipSet = (container) => {
   const title = 'Filter Chip Set'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Example label
   const label = document.createElement('p')
@@ -38,7 +37,7 @@ export const initFilterChipSet = (container) => {
   // Create and add chips to the set
   const filterChips = []
   filterChipConfigs.forEach(config => {
-    const chip = fChip(config)
+    const chip = createChip(config)
     filterSetContainer.appendChild(chip.element)
     filterChips.push(chip)
 
@@ -47,11 +46,11 @@ export const initFilterChipSet = (container) => {
       chip.toggleSelected()
 
       // Update the checkmark icon based on selection state
-      if (chip.isSelected()) {
-        chip.setLeadingIcon(checkIcon)
-      } else {
-        chip.setLeadingIcon('')
-      }
+      // if (chip.isSelected()) {
+      //   chip.setLeadingIcon(checkIcon)
+      // } else {
+      //   chip.setLeadingIcon('')
+      // }
 
       // Log the selected filters
       const selectedChips = filterChips.filter(c => c.isSelected())
@@ -60,7 +59,7 @@ export const initFilterChipSet = (container) => {
   })
 
   // Add a button to clear all filters
-  const clearButton = fButton({
+  const clearButton = createButton({
     text: 'Clear Filters',
     variant: 'text',
     size: 'small'
