@@ -3,18 +3,18 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
-  fDialog
+  createLayout,
+  createButton,
+  createDialog
 } from 'mtrl'
 
 export const initConfirmation = (container) => {
   const title = 'Confirmation Dialog'
   const description = 'A simple confirmation dialog using the confirm() method'
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const confirmButton = fButton({
+  const confirmButton = createButton({
     text: 'Open Confirmation Dialog',
     variant: 'filled'
   })
@@ -31,7 +31,7 @@ export const initConfirmation = (container) => {
 
   // Open confirmation when button is clicked
   confirmButton.on('click', async () => {
-    const dialog = fDialog()
+    const dialog = createDialog()
     const result = await dialog.confirm({
       title: 'Delete Item',
       message: 'Are you sure you want to delete this item? This action cannot be undone.',

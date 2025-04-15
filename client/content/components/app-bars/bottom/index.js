@@ -1,7 +1,7 @@
 // src/client/content/components/app-bars/bottom/index.js
 
 import { componentsLayout } from '../../../../layout'
-import { fLayout } from 'mtrl'
+import { createLayout } from 'mtrl'
 import { initBasicBottomAppBar } from './basic'
 import { initWithFabBottomAppBar } from './with-fab'
 import { initAutoHideBottomAppBar } from './auto-hide'
@@ -17,7 +17,7 @@ export const createBottomAppBarsContent = (container) => {
 
   container.classList.add('mtrl-components-bottom-app-bar')
 
-  const layout = fLayout(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicBottomAppBar(layout.body)
   initWithFabBottomAppBar(layout.body)

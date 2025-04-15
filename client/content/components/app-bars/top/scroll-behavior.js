@@ -4,15 +4,15 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fTopAppBar,
-  fButton
+  createLayout,
+  createTopAppBar,
+  createButton
 } from 'mtrl'
 
 export const initScrollBehaviorTopAppBar = (container) => {
   const title = 'Scroll Behavior'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component
@@ -70,7 +70,7 @@ function createScrollDemo (behaviorType, behaviorTitle, compressible) {
   container.style.height = '400px'
 
   // Create the top app bar with appropriate configuration
-  const topBar = fTopAppBar({
+  const topBar = createTopAppBar({
     title: behaviorTitle,
     type: compressible ? 'medium' : 'small',
     scrollable: true,
@@ -78,14 +78,14 @@ function createScrollDemo (behaviorType, behaviorTitle, compressible) {
   })
 
   // Create leading navigation button
-  const backButton = fButton({
+  const backButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
     variant: 'icon',
     ariaLabel: 'Back'
   })
 
   // Create trailing action button
-  const moreButton = fButton({
+  const moreButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>',
     variant: 'icon',
     ariaLabel: 'More options'

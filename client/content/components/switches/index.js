@@ -9,7 +9,7 @@ import { initDisabledSwitches } from './disabled'
 import { initSupportingText } from './supporting'
 
 import {
-  fLayout
+  createLayout
 } from 'mtrl'
 
 // const CHECK_ICON = `
@@ -27,7 +27,7 @@ export const createSwitchesContent = (container) => {
     description: 'Switches toggle the selection of an item on or off'
   }
 
-  const layout = fLayout(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicSwitches(layout.body)
   initSupportingText(layout.body)

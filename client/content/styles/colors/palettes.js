@@ -1,10 +1,10 @@
-import { fLayout, fChips, fChip } from 'mtrl'
+import { createLayout, createChips, createChip } from 'mtrl'
 import { createContentSection } from '../../../layout/content'
 import themeManager from '../../../core/theme/theme-manager'
 
 export const createColorPalettes = (container) => {
   // Create main layout with content section
-  const layout = fLayout(createContentSection({
+  const layout = createLayout(createContentSection({
     title: 'Theme Colors',
     description: 'Theme colors provide semantic meaning and are used consistently across components.',
     class: 'color-palettes'
@@ -19,9 +19,9 @@ export const createColorPalettes = (container) => {
   const currentSettings = themeManager.getSettings()
 
   // Create a layout with separate containers for controls and palettes
-  const mainLayout = fLayout([
+  const mainLayout = createLayout([
     ['controlsContainer', { class: 'theme-controls-container' },
-      [fChips, 'themeChipSet', {
+      [createChips, 'themeChipSet', {
         scrollable: false,
         multiSelect: false, // Enable multiple selection
         class: 'theme-chip-set',
@@ -30,7 +30,7 @@ export const createColorPalettes = (container) => {
           themeChangeHandler(values[0])
         }
       }],
-      [fChip, 'darkModeChip', {
+      [createChip, 'darkModeChip', {
         text: 'Dark Mode',
         variant: 'filter', // Add a variant that supports selection
         selectable: true, // Explicitly make it selectable
@@ -124,7 +124,7 @@ export const createColorPalettes = (container) => {
     { name: 'error', label: 'Error', tones }
   ]
 
-  // Create each palette using fLayout
+  // Create each palette using createLayout
   palettes.forEach(palette => {
     // Define the structure of the palette layout
     const paletteStructure = [
@@ -134,10 +134,10 @@ export const createColorPalettes = (container) => {
     ]
 
     // Create the palette layout
-    const paletteLayout = fLayout(paletteStructure, palettesContainer)
+    const paletteLayout = createLayout(paletteStructure, palettesContainer)
     const paletteElement = paletteLayout.get('palette')
 
-    // Create swatches for each tone using fLayout
+    // Create swatches for each tone using createLayout
     palette.tones.forEach(tone => {
       // Determine color value based on tone
       let backgroundColor, variableName
@@ -159,7 +159,7 @@ export const createColorPalettes = (container) => {
       const textColor = tone < 50 ? 'var(--mtrl-sys-color-on-surface)' : 'var(--mtrl-sys-color-surface)'
 
       // Create the swatch layout
-      fLayout([
+      createLayout([
         ['swatch', { tag: 'div', class: 'color-swatch', style: `background-color: ${backgroundColor};` },
           ['tone', { tag: 'div', class: 'color-swatch__tone', text: `${palette.name}-${tone}`, style: `color: ${textColor};` }],
           ['value', { tag: 'div', class: 'color-swatch__value', text: variableName, style: `color: ${textColor};` }]

@@ -4,8 +4,8 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 
 import {
@@ -15,7 +15,7 @@ import {
 
 export const initDisabled = (container) => {
   const title = 'Disabled State'
-  const layout = fLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Segmented buttons and individual segments can be disabled to indicate that they are not interactive.',
     class: 'noflex'
@@ -132,7 +132,7 @@ export const initDisabled = (container) => {
   controlsContainer.style.gap = '8px'
   controlsContainer.style.marginBottom = '16px'
 
-  const disableAllButton = fButton({
+  const disableAllButton = createButton({
     text: 'Disable All',
     variant: 'outlined'
   })
@@ -141,7 +141,7 @@ export const initDisabled = (container) => {
     log.info('Disabled entire segmented button')
   })
 
-  const enableAllButton = fButton({
+  const enableAllButton = createButton({
     text: 'Enable All',
     variant: 'outlined'
   })
@@ -150,7 +150,7 @@ export const initDisabled = (container) => {
     log.info('Enabled entire segmented button')
   })
 
-  const disableOption2Button = fButton({
+  const disableOption2Button = createButton({
     text: 'Disable Option 2',
     variant: 'outlined'
   })
@@ -163,7 +163,7 @@ export const initDisabled = (container) => {
     }
   })
 
-  const enableOption2Button = fButton({
+  const enableOption2Button = createButton({
     text: 'Enable Option 2',
     variant: 'outlined'
   })

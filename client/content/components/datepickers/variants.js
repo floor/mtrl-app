@@ -3,8 +3,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
+  createLayout,
+  createButton,
   createDatePicker
 } from 'mtrl'
 
@@ -22,7 +22,7 @@ const DATEPICKER_VARIANTS = {
 export const initVariants = (container) => {
   const title = 'DatePicker Variants'
   const sectionDescription = 'DatePickers come in three variants: docked, modal, and modal input'
-  const layout = fLayout(createComponentsSectionLayout({ title, description: sectionDescription }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description: sectionDescription }), container).component
 
   // Create grid layout for variants
   const grid = document.createElement('div')
@@ -52,7 +52,7 @@ export const initVariants = (container) => {
   modalLabel.textContent = 'Modal'
   modalLabel.style.marginBottom = '8px'
 
-  const openModalButton = fButton({
+  const openModalButton = createButton({
     text: 'Open Modal DatePicker',
     variant: 'outlined'
   })
@@ -76,7 +76,7 @@ export const initVariants = (container) => {
   modalInputLabel.textContent = 'Modal Input'
   modalInputLabel.style.marginBottom = '8px'
 
-  const openModalInputButton = fButton({
+  const openModalInputButton = createButton({
     text: 'Open Modal Input DatePicker',
     variant: 'outlined'
   })

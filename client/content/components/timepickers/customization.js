@@ -5,14 +5,14 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createTimePicker
 } from 'mtrl'
 
 export const initCustomization = (container) => {
   const title = 'Customized TimePickers'
   const description = 'Customize the appearance and behavior of TimePickers'
-  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create grid layout for customized examples
   const grid = document.createElement('div')

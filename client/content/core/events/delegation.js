@@ -1,6 +1,6 @@
 import {
-  fLayout,
-  fButton,
+  createLayout,
+  createButton,
   createElement
 } from 'mtrl'
 
@@ -83,7 +83,7 @@ events.on('change', delegate('input[type="checkbox"]', (event, target) => {
     itemList.appendChild(item)
   })
 
-  const addItemButton = fButton({
+  const addItemButton = createButton({
     text: 'Add New Item',
     variant: 'outlined'
   })

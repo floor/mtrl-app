@@ -4,8 +4,8 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 
 import {
@@ -43,7 +43,7 @@ const categoryIcons = {
 
 export const initInteraction = (container) => {
   const title = 'Interactive Behavior'
-  const layout = fLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Demonstrates the interactive behaviors and events of segmented buttons.',
     class: 'noflex'
@@ -170,7 +170,7 @@ export const initInteraction = (container) => {
   controlsContainer.style.flexWrap = 'wrap'
 
   // Select Food button
-  const selectFoodBtn = fButton({
+  const selectFoodBtn = createButton({
     text: 'Select Food',
     variant: 'outlined'
   })
@@ -180,7 +180,7 @@ export const initInteraction = (container) => {
   })
 
   // Select Shopping button
-  const selectShoppingBtn = fButton({
+  const selectShoppingBtn = createButton({
     text: 'Select Shopping',
     variant: 'outlined'
   })
@@ -190,7 +190,7 @@ export const initInteraction = (container) => {
   })
 
   // Deselect Food button
-  const deselectFoodBtn = fButton({
+  const deselectFoodBtn = createButton({
     text: 'Deselect Food',
     variant: 'outlined'
   })
@@ -200,7 +200,7 @@ export const initInteraction = (container) => {
   })
 
   // Select All button
-  const selectAllBtn = fButton({
+  const selectAllBtn = createButton({
     text: 'Select All',
     variant: 'outlined'
   })
@@ -212,7 +212,7 @@ export const initInteraction = (container) => {
   })
 
   // Clear All button
-  const clearAllBtn = fButton({
+  const clearAllBtn = createButton({
     text: 'Clear All',
     variant: 'outlined'
   })

@@ -8,8 +8,8 @@ import {
 } from '../../layout'
 
 import {
-  fLayout,
-  fCarousel
+  createLayout,
+  createCarousel
 } from 'mtrl'
 
 // Sample slide data for examples
@@ -100,7 +100,7 @@ export const createCarouselContent = (container) => {
     description: 'Carousels show a collection of items that can be scrolled on and off the screen'
   }
 
-  const layout = fLayout(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   createMultiBrowseCarousel(layout.body)
   createUncontainedCarousel(layout.body)
@@ -109,11 +109,11 @@ export const createCarouselContent = (container) => {
 
 export const createMultiBrowseCarousel = (container) => {
   const title = 'Carousel'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
   // Sample slide content
 
   // Create the carousel with configuration
-  const carousel = fCarousel({
+  const carousel = createCarousel({
     layout: CAROUSEL_LAYOUTS.MULTI_BROWSE,
     scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.SNAP,
     slides: sampleSlides,
@@ -133,9 +133,9 @@ export const createMultiBrowseCarousel = (container) => {
 
 export function createUncontainedCarousel (container) {
   const title = 'Carousel'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
   // Create the carousel with uncontained layout and default scrolling
-  const carousel = fCarousel({
+  const carousel = createCarousel({
     layout: CAROUSEL_LAYOUTS.UNCONTAINED,
     scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.DEFAULT, // Standard scrolling
     slides: sampleSlides.map(slide => ({
@@ -160,8 +160,8 @@ export function createUncontainedCarousel (container) {
  */
 export function createHeroCarousel (container, centered = false) {
   const title = 'Hero carousel'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
-  const carousel = fCarousel({
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const carousel = createCarousel({
     layout: CAROUSEL_LAYOUTS.HERO,
     scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.SNAP, // Snap scrolling recommended
     slides: sampleSlides,

@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fBadge
+  createLayout,
+  createBadge
 } from 'mtrl'
 
 import {
@@ -16,7 +16,7 @@ import {
 
 export const initPositions = (container) => {
   const title = 'Badge Positions'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const badgeContainer = document.createElement('div')
   badgeContainer.style.display = 'flex'
@@ -53,7 +53,7 @@ export const initPositions = (container) => {
     wrapper.appendChild(box)
 
     // Then create badge attached to the box
-    const badge = fBadge({
+    const badge = createBadge({
       variant: BADGE_VARIANTS.LARGE,
       label: '8',
       position,
@@ -97,7 +97,7 @@ export const initPositions = (container) => {
     wrapper.appendChild(box)
 
     // Then create badge attached to the box
-    const badge = fBadge({
+    const badge = createBadge({
       variant: BADGE_VARIANTS.SMALL,
       position,
       target: box

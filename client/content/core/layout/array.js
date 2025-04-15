@@ -1,12 +1,12 @@
 // src/client/content/core/layout/array.js
-import { fLayout } from 'mtrl'
+import { createLayout } from 'mtrl'
 
 /**
  * Creates the Array-based Layout section
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutArraySection = (container) => {
-  const sectionStructure = fLayout([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'content__section' },
     [
       'title', { tag: 'h2', class: 'content__section-title', text: 'Array-based Layout' },
@@ -29,7 +29,7 @@ export const createLayoutArraySection = (container) => {
  */
 const initArrayLayouts = (container) => {
   // Create visual representation of array-based layout structure
-  fLayout([
+  createLayout([
     'arrayStructure', { tag: 'div', class: 'layout-structure' },
     [
       'structureTitle', { tag: 'h3', class: 'layout-structure-title', text: 'Array-based Schema Structure' },
@@ -83,7 +83,7 @@ const initArrayLayouts = (container) => {
   ], container)
 
   // Create a table showing different patterns for array-based layouts
-  fLayout([
+  createLayout([
     'patternContainer', { tag: 'div', class: 'layout-patterns' },
     [
       'patternTitle', { tag: 'h3', class: 'layout-patterns-title', text: 'Common Patterns for Array Schema' },
@@ -103,13 +103,13 @@ const initArrayLayouts = (container) => {
           'row1', { tag: 'tr' },
           [
             'row1Pattern', { tag: 'td', text: 'Creator + Name + Options' },
-            'row1Structure', { tag: 'td', class: 'code', text: '[fButton, "saveBtn", { text: "Save" }]' },
+            'row1Structure', { tag: 'td', class: 'code', text: '[createButton, "saveBtn", { text: "Save" }]' },
             'row1Description', { tag: 'td', text: 'Full pattern with explicit component creator function and naming' }
           ],
           'row2', { tag: 'tr' },
           [
             'row2Pattern', { tag: 'td', text: 'Creator + Options' },
-            'row2Structure', { tag: 'td', class: 'code', text: '[fButton, { text: "Save" }]' },
+            'row2Structure', { tag: 'td', class: 'code', text: '[createButton, { text: "Save" }]' },
             'row2Description', { tag: 'td', text: 'Anonymous component with no reference name' }
           ],
           'row3', { tag: 'tr' },
@@ -121,7 +121,7 @@ const initArrayLayouts = (container) => {
           'row4', { tag: 'tr' },
           [
             'row4Pattern', { tag: 'td', text: 'Nested Children' },
-            'row4Structure', { tag: 'td', class: 'code', text: '[fCard, "card", {}, [...]]' },
+            'row4Structure', { tag: 'td', class: 'code', text: '[createCard, "card", {}, [...]]' },
             'row4Description', { tag: 'td', text: 'Component with nested children in a sub-array' }
           ],
           'row5', { tag: 'tr' },
@@ -136,7 +136,7 @@ const initArrayLayouts = (container) => {
   ], container)
 
   // Example showing array-to-DOM mapping
-  fLayout([
+  createLayout([
     'visualExample', { tag: 'div', class: 'layout-visual-example' },
     [
       'exampleTitle', { tag: 'h3', class: 'layout-example-title', text: 'From Schema to DOM' },
@@ -213,7 +213,7 @@ const initArrayLayouts = (container) => {
   ], container)
 
   // Add a performance tip box
-  fLayout([
+  createLayout([
     'tipBox', { tag: 'div', class: 'layout-tip-box' },
     [
       'tipIcon', { tag: 'span', class: 'material-icons', text: 'tips_and_updates' },

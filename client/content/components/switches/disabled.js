@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSwitch
+  createLayout,
+  createSwitch
 } from 'mtrl'
 
 export const initDisabledSwitches = (container) => {
   const title = 'Disabled'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   layout.body.style.flexDirection = 'column'
   layout.body.style.gap = '10px'
@@ -18,14 +18,14 @@ export const initDisabledSwitches = (container) => {
   layout.body.style.alignItems = 'center'
 
   // Disabled switch
-  const disabledSwitch = fSwitch({
+  const disabledSwitch = createSwitch({
     label: 'Disabled Switch',
     disabled: true
   })
   layout.body.appendChild(disabledSwitch.element)
 
   // Disabled and checked switch
-  const disabledCheckedSwitch = fSwitch({
+  const disabledCheckedSwitch = createSwitch({
     label: 'Disabled Checked',
     disabled: true,
     checked: true

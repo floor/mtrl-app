@@ -5,31 +5,31 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSearch,
-  fButton,
+  createLayout,
+  createSearch,
+  createButton,
   createElement
 } from 'mtrl'
 
 export const initDisabled = (container) => {
   const title = 'Disabled Search'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Disabled search bar
-  const disabledSearch = fSearch({
+  const disabledSearch = createSearch({
     placeholder: 'Search (disabled)',
     disabled: true,
     showClearButton: true
   })
 
   // Create a search that can be toggled between enabled and disabled
-  const toggleableSearch = fSearch({
+  const toggleableSearch = createSearch({
     placeholder: 'Click button to toggle disabled state',
     showClearButton: true
   })
 
   // Create a button to toggle the disabled state
-  const toggleButton = fButton({
+  const toggleButton = createButton({
     text: 'Toggle Disabled State',
     variant: 'outlined'
   })
@@ -76,7 +76,7 @@ export const initDisabled = (container) => {
   ]
 
   // Create the demo layout
-  const demo = fLayout(demoStructure, layout.body).component
+  const demo = createLayout(demoStructure, layout.body).component
 
   // Add components to their containers
   demo.disabledContainer.appendChild(disabledSearch.element)

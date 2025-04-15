@@ -1,6 +1,6 @@
 // src/client/content/components/chips/icons.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { fLayout, fChip } from 'mtrl'
+import { createLayout, createChip } from 'mtrl'
 import { faceIcon, closeIcon, locationIcon, addIcon } from '../../../icons'
 
 /**
@@ -9,10 +9,10 @@ import { faceIcon, closeIcon, locationIcon, addIcon } from '../../../icons'
  */
 export const initChipWithIcons = (container) => {
   const title = 'Chips with Icons'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Example with leading icon
-  const leadingIconChip = fChip({
+  const leadingIconChip = createChip({
     text: 'Leading Icon',
     leadingIcon: faceIcon,
     variant: 'filled'
@@ -20,7 +20,7 @@ export const initChipWithIcons = (container) => {
   layout.body.appendChild(leadingIconChip.element)
 
   // Example with trailing icon
-  const trailingIconChip = fChip({
+  const trailingIconChip = createChip({
     text: 'Trailing Icon',
     trailingIcon: closeIcon,
     variant: 'filled',
@@ -31,7 +31,7 @@ export const initChipWithIcons = (container) => {
   layout.body.appendChild(trailingIconChip.element)
 
   // Example with both icons
-  const bothIconsChip = fChip({
+  const bothIconsChip = createChip({
     text: 'Both Icons',
     leadingIcon: locationIcon,
     trailingIcon: closeIcon,
@@ -40,7 +40,7 @@ export const initChipWithIcons = (container) => {
   layout.body.appendChild(bothIconsChip.element)
 
   // Example with icon only
-  const iconOnlyChip = fChip({
+  const iconOnlyChip = createChip({
     leadingIcon: addIcon,
     variant: 'elevated'
   })

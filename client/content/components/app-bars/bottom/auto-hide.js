@@ -4,10 +4,10 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fBottomAppBar,
-  fButton,
-  fFab
+  createLayout,
+  createBottomAppBar,
+  createButton,
+  createFab
 } from 'mtrl'
 
 /**
@@ -27,7 +27,7 @@ export const FAB_VARIANTS = {
 export const initAutoHideBottomAppBar = (container) => {
   const title = 'Auto-Hide on Scroll'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component
@@ -79,7 +79,7 @@ export const initAutoHideBottomAppBar = (container) => {
   demoContainer.appendChild(statusIndicator)
 
   // Create the bottom app bar with auto-hide enabled
-  const bottomBar = fBottomAppBar({
+  const bottomBar = createBottomAppBar({
     autoHide: true,
     transitionDuration: 300,
     onVisibilityChange: (visible) => {
@@ -93,26 +93,26 @@ export const initAutoHideBottomAppBar = (container) => {
   })
 
   // Create action buttons
-  const searchButton = fButton({
+  const searchButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Search'
   })
 
-  const favoriteButton = fButton({
+  const favoriteButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Favorite'
   })
 
-  const shareButton = fButton({
+  const shareButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Share'
   })
 
   // Create a FAB using the dedicated FAB component
-  const fab = fFab({
+  const fab = createFab({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
     ariaLabel: 'Add new item',
     variant: FAB_VARIANTS.PRIMARY

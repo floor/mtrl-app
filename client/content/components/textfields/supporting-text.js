@@ -4,23 +4,23 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTextfield
+  createLayout,
+  createTextfield
 } from 'mtrl'
 
 export const initSupportingText = (container) => {
   const title = 'Textfields with Supporting Text'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with supporting text
-  const filled = fTextfield({
+  const filled = createTextfield({
     label: 'Username',
     variant: 'filled',
     supportingText: 'Between 3-20 characters'
   })
 
   // Outlined textfield with supporting text
-  const outlined = fTextfield({
+  const outlined = createTextfield({
     label: 'Password',
     type: 'password',
     variant: 'outlined',
@@ -28,7 +28,7 @@ export const initSupportingText = (container) => {
   })
 
   // Textfield with error state and supporting text
-  const error = fTextfield({
+  const error = createTextfield({
     label: 'Email',
     type: 'email',
     variant: 'outlined',

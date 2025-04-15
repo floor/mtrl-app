@@ -5,11 +5,11 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout
+  createLayout
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
-import fCard, {
+import createCard, {
   createCardHeader,
   createCardContent,
   CARD_VARIANTS
@@ -25,12 +25,12 @@ export const initSimpleCards = (container) => {
   const title = 'Simple Cards'
   const description = 'Basic cards with title and text content following MD3 specifications'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create simple cards using the first three artworks
   artworks.slice(0, 2).forEach(artwork => {
     // Create card with proper aria attributes
-    const card = fCard({
+    const card = createCard({
       variant: CARD_VARIANTS.FILLED,
       aria: {
         role: 'region',

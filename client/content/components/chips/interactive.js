@@ -1,6 +1,6 @@
 // src/client/content/components/chips/interactive.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { fLayout, fChip, fTextfield, fButton } from 'mtrl'
+import { createLayout, createChip, createTextfield, createButton } from 'mtrl'
 import { locationIcon } from '../../../icons'
 
 /**
@@ -10,7 +10,7 @@ import { locationIcon } from '../../../icons'
 export const initInteractiveChipExample = (container) => {
   const title = 'Interactive Chip Example'
   const subtitle = 'City selection with feedback'
-  const layout = fLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the example
   const demoContainer = document.createElement('div')
@@ -48,7 +48,7 @@ export const initInteractiveChipExample = (container) => {
   // Create and add city chips
   const cityChips = []
   cityConfigs.forEach(config => {
-    const chip = fChip({
+    const chip = createChip({
       text: config.text,
       variant: 'assist',
       leadingIcon: locationIcon,
@@ -93,12 +93,12 @@ export const initInteractiveChipExample = (container) => {
   const customCityLabel = document.createElement('p')
   customCityLabel.textContent = 'Or enter your own city:'
 
-  const customCityInput = fTextfield({
+  const customCityInput = createTextfield({
     label: 'Custom city',
     variant: 'outlined'
   })
 
-  const addCustomCityButton = fButton({
+  const addCustomCityButton = createButton({
     text: 'Add City',
     variant: 'outlined',
     size: 'small'
@@ -112,7 +112,7 @@ export const initInteractiveChipExample = (container) => {
       cityChips.forEach(c => c.setSelected(false))
 
       // Add the new city chip
-      const customChip = fChip({
+      const customChip = createChip({
         text: cityName,
         variant: 'assist',
         leadingIcon: locationIcon,

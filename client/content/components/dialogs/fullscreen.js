@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
-  fDialog
+  createLayout,
+  createButton,
+  createDialog
 } from 'mtrl'
 
 import {
@@ -13,7 +13,7 @@ import {
 } from 'mtrl/src/components/dialog'
 
 const createFullscreenDialog = (size) => {
-  const dialog = fDialog({
+  const dialog = createDialog({
     title: 'Fullscreen Dialog',
     content: `
       <div style="padding: 20px 0;">
@@ -43,10 +43,10 @@ const createFullscreenDialog = (size) => {
 export const initFullscreen = (container) => {
   const title = 'Fullscreen Dialog'
   const description = 'A fullscreen dialog for immersive experiences or mobile interfaces'
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const openButton = fButton({
+  const openButton = createButton({
     text: 'Open Fullscreen Dialog',
     variant: 'filled'
   })

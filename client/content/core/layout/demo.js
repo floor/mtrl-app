@@ -1,12 +1,12 @@
 // src/client/content/core/layout/demo.js
-import { fLayout, createElement, fButton, fTextfield } from 'mtrl'
+import { createLayout, createElement, createButton, createTextfield } from 'mtrl'
 
 /**
  * Creates the Layout Demo section
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutDemoSection = (container) => {
-  const sectionStructure = fLayout([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Interactive Demo' },
@@ -29,7 +29,7 @@ export const createLayoutDemoSection = (container) => {
  */
 const initLayoutDemo = (container) => {
   // Create the demo UI
-  const demoStructure = fLayout([
+  const demoStructure = createLayout([
     'demoContent', { tag: 'div', class: 'mtrl-layout-demo-content' },
     [
       'controlsPanel', { tag: 'div', class: 'mtrl-layout-demo-controls' },
@@ -103,7 +103,7 @@ const initLayoutDemo = (container) => {
   const templateSelect = demoStructure.get('templateSelect')
 
   // Add customization fields
-  const nameField = fTextfield({
+  const nameField = createTextfield({
     label: 'Title Text',
     value: 'Card Title',
     className: 'mtrl-layout-demo-textfield'
@@ -111,7 +111,7 @@ const initLayoutDemo = (container) => {
 
   demoStructure.get('nameFieldContainer').appendChild(nameField.element)
 
-  const colorField = fTextfield({
+  const colorField = createTextfield({
     label: 'Primary Color',
     value: '#6750A4',
     className: 'mtrl-layout-demo-textfield'
@@ -120,13 +120,13 @@ const initLayoutDemo = (container) => {
   demoStructure.get('colorFieldContainer').appendChild(colorField.element)
 
   // Add buttons
-  const applyButton = fButton({
+  const applyButton = createButton({
     text: 'Apply Changes',
     variant: 'filled',
     className: 'mtrl-layout-demo-apply-button'
   })
 
-  const resetButton = fButton({
+  const resetButton = createButton({
     text: 'Reset',
     variant: 'outlined',
     className: 'mtrl-layout-demo-reset-button'
@@ -497,7 +497,7 @@ const initLayoutDemo = (container) => {
         schema = eval(`(${schemaText})`)
 
         // Create layout and append to preview
-        const layout = fLayout(schema)
+        const layout = createLayout(schema)
         preview.appendChild(layout.element)
       }
 

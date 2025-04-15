@@ -6,7 +6,7 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createExtendedFab
 } from 'mtrl'
 
@@ -28,7 +28,7 @@ const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
 
 export const initDisabled = (container) => {
   const title = 'Extended FAB Disabled'
-  const layout = fLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Disabled Extended FABs are visually distinct and non-interactive.'
   }), container).component

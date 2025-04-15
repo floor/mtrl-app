@@ -1,7 +1,7 @@
 import {
-  fLayout,
+  createLayout,
   createElement,
-  fButton
+  createButton
 } from 'mtrl'
 
 export const initEventBus = (ui) => {
@@ -73,7 +73,7 @@ unsubscribe();`
     text: 'Component A (Publisher)'
   })
 
-  const publishButton = fButton({
+  const publishButton = createButton({
     text: 'Send Message',
     variant: 'filled'
   })

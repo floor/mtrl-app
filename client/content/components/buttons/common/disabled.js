@@ -7,18 +7,18 @@ import {
 } from '../../../../structure'
 
 import {
-  fLayout,
-  fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 
 export const initDisabled = (container) => {
   const title = 'Buttons Disabled'
-  const structure = fLayout(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
 
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const btn = fButton({
+    const btn = createButton({
       text: `${text} Button`,
       variant,
       disabled: true

@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fBadge
+  createLayout,
+  createBadge
 } from 'mtrl'
 
 import {
@@ -16,7 +16,7 @@ import {
 
 export const initDot = (container) => {
   const title = 'Small Dot Badges'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const badgeContainer = document.createElement('div')
   badgeContainer.style.display = 'flex'
@@ -34,7 +34,7 @@ export const initDot = (container) => {
     wrapper.style.alignItems = 'center'
     wrapper.style.gap = '8px'
 
-    const badge = fBadge({
+    const badge = createBadge({
       variant: BADGE_VARIANTS.SMALL,
       color,
       standalone: true

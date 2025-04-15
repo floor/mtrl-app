@@ -4,15 +4,15 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fTopAppBar,
-  fButton
+  createLayout,
+  createTopAppBar,
+  createButton
 } from 'mtrl'
 
 export const initTypesTopAppBar = (container) => {
   const title = 'Top App Bar Types'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component
@@ -89,13 +89,13 @@ function createTypeDemoContainer (type, typeTitle, description) {
   }
 
   // Create the top app bar with the specific type
-  const topBar = fTopAppBar({
+  const topBar = createTopAppBar({
     title: `${typeTitle} Title`,
     type
   })
 
   // Create leading navigation button
-  const leadingIcon = fButton({
+  const leadingIcon = createButton({
     icon: type === 'center'
       ? '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>'
       : '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
@@ -104,7 +104,7 @@ function createTypeDemoContainer (type, typeTitle, description) {
   })
 
   // Create trailing action button
-  const trailingIcon = fButton({
+  const trailingIcon = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>',
     variant: 'icon',
     ariaLabel: 'More options'

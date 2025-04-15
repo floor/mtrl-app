@@ -4,9 +4,9 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSlider,
-  fSnackbar
+  createLayout,
+  createSlider,
+  createSnackbar
 } from 'mtrl'
 
 import {
@@ -15,9 +15,9 @@ import {
 
 export const initRange = (container) => {
   const title = 'Price Range Filter'
-  const layout = fLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
 
-  const priceSlider = fSlider({
+  const priceSlider = createSlider({
     min: 0,
     max: 1000,
     value: 200,
@@ -34,7 +34,7 @@ export const initRange = (container) => {
   // Update price display when slider changes
   priceSlider.on('change', (event) => {
     console.log('change', event.value)
-    fSnackbar({
+    createSnackbar({
       message: `Price range changed: ${event.value} - ${event.secondValue}`,
       action: duration === 0 ? 'Dismiss' : undefined,
       duration

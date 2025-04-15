@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSwitch
+  createLayout,
+  createSwitch
 } from 'mtrl'
 
 export const initSupportingText = (container) => {
   const title = 'Switches with supporting text'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   layout.body.style.flexDirection = 'column'
   layout.body.style.gap = '10px'
@@ -18,14 +18,14 @@ export const initSupportingText = (container) => {
   layout.body.style.alignItems = 'center'
 
   // Default switch
-  const defaultSwitch = fSwitch({
+  const defaultSwitch = createSwitch({
     label: 'Permission manager',
     supportingText: 'App has access to your data'
   })
   layout.body.appendChild(defaultSwitch.element)
 
   // Checked switch
-  const checkedSwitch = fSwitch({
+  const checkedSwitch = createSwitch({
     label: 'Camera access',
     supportingText: 'App has access to you camera',
     checked: true

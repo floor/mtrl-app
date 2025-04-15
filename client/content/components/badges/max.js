@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fBadge
+  createLayout,
+  createBadge
 } from 'mtrl'
 
 import {
@@ -16,7 +16,7 @@ import {
 export const initMax = (container) => {
   const title = 'Badges with Maximum Value'
   const subtitle = 'badge truncation (max 4 characters, including "+")'
-  const layout = fLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
   const badgeContainer = document.createElement('div')
   badgeContainer.style.display = 'flex'
@@ -40,7 +40,7 @@ export const initMax = (container) => {
     wrapper.style.alignItems = 'center'
     wrapper.style.gap = '8px'
 
-    const badge = fBadge({
+    const badge = createBadge({
       variant: BADGE_VARIANTS.LARGE,
       label: example.label,
       max: example.max,
@@ -82,7 +82,7 @@ export const initMax = (container) => {
     wrapper.style.alignItems = 'center'
     wrapper.style.gap = '8px'
 
-    const badge = fBadge({
+    const badge = createBadge({
       variant: BADGE_VARIANTS.LARGE,
       label: example.label,
       standalone: true

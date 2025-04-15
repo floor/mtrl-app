@@ -3,14 +3,14 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTabs,
+  createLayout,
+  createTabs,
   createElement
 } from 'mtrl'
 
 export const initIconTabs = (container) => {
   const title = 'Tabs with Icons'
-  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Define SVG icons
   const homeIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -28,7 +28,7 @@ export const initIconTabs = (container) => {
   </svg>`
 
   // Create tabs with icons only
-  const iconOnlyTabs = fTabs({
+  const iconOnlyTabs = createTabs({
     tabs: [
       { icon: homeIcon, value: 'home', state: 'active' },
       { icon: heartIcon, value: 'favorites' },
@@ -37,7 +37,7 @@ export const initIconTabs = (container) => {
   })
 
   // Create tabs with icons and text
-  const iconTextTabs = fTabs({
+  const iconTextTabs = createTabs({
     tabs: [
       { text: 'Home', icon: homeIcon, value: 'home', state: 'active' },
       { text: 'Favorites', icon: heartIcon, value: 'favorites' },

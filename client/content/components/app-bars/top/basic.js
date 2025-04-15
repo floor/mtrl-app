@@ -4,15 +4,15 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fTopAppBar,
-  fButton
+  createLayout,
+  createTopAppBar,
+  createButton
 } from 'mtrl'
 
 export const initBasicTopAppBar = (container) => {
   const title = 'Basic Top App Bar'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create a demo content container
   const demoContainer = document.createElement('div')
@@ -25,26 +25,26 @@ export const initBasicTopAppBar = (container) => {
   demoContainer.style.marginBottom = '16px'
 
   // Create the top app bar with default configuration
-  const topBar = fTopAppBar({
+  const topBar = createTopAppBar({
     title: 'Page Title',
     type: 'small'
   })
 
   // Create leading navigation button (back button)
-  const backButton = fButton({
+  const backButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
     variant: 'icon',
     ariaLabel: 'Back'
   })
 
   // Create trailing action buttons
-  const searchButton = fButton({
+  const searchButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Search'
   })
 
-  const moreButton = fButton({
+  const moreButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>',
     variant: 'icon',
     ariaLabel: 'More options'

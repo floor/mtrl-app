@@ -6,8 +6,8 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fFab
+  createLayout,
+  createFab
 } from 'mtrl'
 
 export const FAB_SIZES = {
@@ -31,7 +31,7 @@ const largeAddIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height=
 
 export const initSizes = (container) => {
   const title = 'FAB Sizes'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Convert the enum to an array of strings
   const sizes = Object.values(FAB_SIZES)
@@ -41,7 +41,7 @@ export const initSizes = (container) => {
     // Use the large icon for the large FAB
     const icon = size === FAB_SIZES.LARGE ? largeAddIcon : addIcon
 
-    const fab = fFab({
+    const fab = createFab({
       icon,
       size,
       ariaLabel: `${text} size action`

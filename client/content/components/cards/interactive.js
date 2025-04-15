@@ -5,12 +5,12 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createElement
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import fCard, {
+import createCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -27,7 +27,7 @@ export const initInteractiveCards = (container) => {
   const title = 'Interactive Cards'
   const description = 'Cards that respond to user interaction with hover effects and ripples'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Card interaction types to showcase
   const interactionTypes = [
@@ -40,7 +40,7 @@ export const initInteractiveCards = (container) => {
   interactionTypes.forEach((type, index) => {
     const artwork = artworks[(index + 5) % artworks.length]
 
-    const card = fCard({
+    const card = createCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: type.interactive,
       clickable: type.clickable,

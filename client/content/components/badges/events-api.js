@@ -5,9 +5,9 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fBadge,
-  fButton
+  createLayout,
+  createBadge,
+  createButton
 } from 'mtrl'
 
 import {
@@ -18,7 +18,7 @@ import {
 export const initEventsAPI = (container) => {
   const title = 'Badge API Demo'
   const subtitle = 'Try out the badge API methods'
-  const layout = fLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the badge and controls
   const demoContainer = document.createElement('div')
@@ -35,7 +35,7 @@ export const initEventsAPI = (container) => {
   badgeDisplay.style.height = '100px'
 
   // Create the badge
-  const badge = fBadge({
+  const badge = createBadge({
     variant: BADGE_VARIANTS.LARGE,
     label: '42',
     color: BADGE_COLORS.PRIMARY,
@@ -149,7 +149,7 @@ export const initEventsAPI = (container) => {
   maxInput.style.padding = '8px'
   maxInput.style.width = '80px'
 
-  const setMaxButton = fButton({
+  const setMaxButton = createButton({
     text: 'Set Max',
     variant: 'outlined'
   })
@@ -176,7 +176,7 @@ export const initEventsAPI = (container) => {
   visibilityButtons.style.display = 'flex'
   visibilityButtons.style.gap = '8px'
 
-  const showButton = fButton({
+  const showButton = createButton({
     text: 'Show',
     variant: 'outlined'
   })
@@ -185,7 +185,7 @@ export const initEventsAPI = (container) => {
     badge.show()
   })
 
-  const hideButton = fButton({
+  const hideButton = createButton({
     text: 'Hide',
     variant: 'outlined'
   })
@@ -194,7 +194,7 @@ export const initEventsAPI = (container) => {
     badge.hide()
   })
 
-  const toggleButton = fButton({
+  const toggleButton = createButton({
     text: 'Toggle',
     variant: 'outlined'
   })

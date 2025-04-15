@@ -1,6 +1,6 @@
 // src/client/content/components/chips/input.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { fLayout, fChip, fTextfield, fButton } from 'mtrl'
+import { createLayout, createChip, createTextfield, createButton } from 'mtrl'
 import { faceIcon, closeIcon } from '../../../icons'
 
 // Define prefix for CSS classes
@@ -13,7 +13,7 @@ const PREFIX = 'mtrl'
 export const initInputChips = (container) => {
   const title = 'Input Chips'
   const subtitle = 'Use with Textfield for tag/recipient input'
-  const layout = fLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
 
   // Create a container for the input chips
   const inputChipSetContainer = document.createElement('div')
@@ -38,7 +38,7 @@ export const initInputChips = (container) => {
   const addEmailChip = (email) => {
     if (!email) return null
 
-    const chip = fChip({
+    const chip = createChip({
       text: email,
       variant: 'input',
       leadingIcon: faceIcon,
@@ -76,13 +76,13 @@ export const initInputChips = (container) => {
   inputGroup.style.gap = '8px'
 
   // Create a textfield for entering new emails
-  const emailInput = fTextfield({
+  const emailInput = createTextfield({
     label: 'Add email address',
     variant: 'outlined'
   })
 
   // Create an add button
-  const addButton = fButton({
+  const addButton = createButton({
     text: 'Add',
     variant: 'filled',
     size: 'small'

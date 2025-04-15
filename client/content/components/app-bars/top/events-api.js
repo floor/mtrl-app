@@ -4,15 +4,15 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fTopAppBar,
-  fButton
+  createLayout,
+  createTopAppBar,
+  createButton
 } from 'mtrl'
 
 export const initEventsApiTopAppBar = (container) => {
   const title = 'Events & API Methods'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component
@@ -44,7 +44,7 @@ export const initEventsApiTopAppBar = (container) => {
   logContainer.innerHTML = '<div class="mtrl-content__log-entries"></div>'
 
   // Create the top app bar with configuration
-  const topBar = fTopAppBar({
+  const topBar = createTopAppBar({
     title: 'API & Events Demo',
     type: 'small',
     scrollable: true,
@@ -55,20 +55,20 @@ export const initEventsApiTopAppBar = (container) => {
   })
 
   // Create leading navigation button
-  const backButton = fButton({
+  const backButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
     variant: 'icon',
     ariaLabel: 'Back'
   })
 
   // Create trailing action buttons
-  const searchButton = fButton({
+  const searchButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Search'
   })
 
-  const moreButton = fButton({
+  const moreButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>',
     variant: 'icon',
     ariaLabel: 'More options'
@@ -116,17 +116,17 @@ export const initEventsApiTopAppBar = (container) => {
   controlsContainer.style.right = '16px'
 
   // Create control buttons
-  const setTitleButton = fButton({
+  const setTitleButton = createButton({
     text: 'Change Title',
     variant: 'filled'
   })
 
-  const toggleScrollButton = fButton({
+  const toggleScrollButton = createButton({
     text: 'Toggle Scroll State',
     variant: 'outlined'
   })
 
-  const switchTypeButton = fButton({
+  const switchTypeButton = createButton({
     text: 'Switch Type',
     variant: 'outlined'
   })

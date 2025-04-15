@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSearch,
+  createLayout,
+  createSearch,
   createElement
 } from 'mtrl'
 
@@ -18,10 +18,10 @@ import {
 
 export const initTransition = (container) => {
   const title = 'Search Bar to View Mode Transition'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Create a search bar that will expand into view mode
-  const searchBar = fSearch({
+  const searchBar = createSearch({
     placeholder: 'Search with voice',
     trailingIcon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>',
     showClearButton: true,
@@ -91,7 +91,7 @@ export const initTransition = (container) => {
   ]
 
   // Create the demo
-  const demo = fLayout(demoStructure, layout.body).component
+  const demo = createLayout(demoStructure, layout.body).component
 
   // Add the search component to its container
   demo.searchContainer.appendChild(searchBar.element)

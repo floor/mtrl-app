@@ -3,22 +3,22 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSlider,
-  fSwitch,
+  createLayout,
+  createSlider,
+  createSwitch,
   addClass,
   removeClass
 } from 'mtrl'
 
 export const createSplitLayout = (container) => {
   console.log('createSplitLayout', container)
-  const layout = fLayout(createContentSection({
+  const layout = createLayout(createContentSection({
     title: 'Split Layout',
     description: 'Two-pane layout with adjustable split ratios and resizable divider.',
     class: 'theme-colors'
   }), container).getAll()
 
-  const splitLayout = fLayout([
+  const splitLayout = createLayout([
     [{ class: 'layout-demo split-demo' },
       ['splitContainer', { class: 'split-layout split-50-50' },
         ['leftPane', { class: 'layout-demo__pane layout-demo__pane--left', text: 'Left Pane' }],
@@ -27,14 +27,14 @@ export const createSplitLayout = (container) => {
       ]
     ],
     ['controls', { class: 'layout-demo__controls' },
-      [fSlider, 'slider', {
+      [createSlider, 'slider', {
         min: 10,
         max: 90,
         value: 50,
         step: 1,
         label: 'Split Ratio'
       }]
-      // [fSwitch, 'mobileSwitch', { label: 'Stack (Mobile)' }]
+      // [createSwitch, 'mobileSwitch', { label: 'Stack (Mobile)' }]
     ]
   ], layout.body)
 

@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
-  fDialog
+  createLayout,
+  createButton,
+  createDialog
 } from 'mtrl'
 
 import {
@@ -15,7 +15,7 @@ import {
 export const initFooterAlignments = (container) => {
   const title = 'Footer Alignments'
   const description = 'Dialog buttons can be aligned in different ways within the footer'
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create a dialog for each footer alignment
   const alignments = [
@@ -27,13 +27,13 @@ export const initFooterAlignments = (container) => {
 
   alignments.forEach(alignment => {
     // Create button to open dialog
-    const openButton = fButton({
+    const openButton = createButton({
       text: `${alignment.name} Alignment`,
       variant: 'outlined'
     })
 
     // Create dialog with specific footer alignment
-    const dialog = fDialog({
+    const dialog = createDialog({
       title: `${alignment.name} Footer Alignment`,
       content: `<p>This dialog has its footer buttons aligned to the ${alignment.name.toLowerCase()}.</p>`,
       footerAlignment: alignment.value,

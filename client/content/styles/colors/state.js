@@ -1,13 +1,13 @@
 import {
-  fLayout,
+  createLayout,
   createElement,
-  fButton
+  createButton
 } from 'mtrl'
 
 import { createContentSection } from '../../../layout/content'
 
 export const createColorState = (container) => {
-  const body = fLayout(createContentSection({
+  const body = createLayout(createContentSection({
     title: 'State Colors',
     description: 'State colors communicate the status of components and provide visual feedback for interactions.',
     class: 'state-colors'

@@ -1,7 +1,7 @@
 // src/client/core/app-manager.js
 
 import { createEventManager, setupErrorBoundary } from './events'
-import { fLayout } from 'mtrl'
+import { createLayout } from 'mtrl'
 import { createRouter } from './router/service'
 import themeManager from './theme/theme-manager'
 import { createNavigationSystem } from 'mtrl/src/components/navigation/system'
@@ -93,7 +93,7 @@ export const createApp = (options = {}) => {
 
     // Initialize layout with the container
     const container = options.container || document.body
-    const layoutResult = fLayout(appLayout, container)
+    const layoutResult = createLayout(appLayout, container)
 
     // Create layout manager
     layoutManager = createLayoutManager({

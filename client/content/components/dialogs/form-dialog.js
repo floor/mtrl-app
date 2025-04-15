@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
-  fDialog,
-  fTextfield,
-  fSlider,
-  fCheckbox,
-  fSnackbar
+  createLayout,
+  createButton,
+  createDialog,
+  createTextfield,
+  createSlider,
+  createCheckbox,
+  createSnackbar
 } from 'mtrl'
 
 import { settingsIcon, addIcon } from '../../../icons'
@@ -23,7 +23,7 @@ const alarmVolume = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewB
   </svg>`
 
 const createSettingsDialog = () => {
-  const dialog = fDialog({
+  const dialog = createDialog({
     title: 'Settings',
     content: '<div id="settings-form" style="display: flex; flex-direction: column; gap: 16px; background-color: var(--mtrl-sys-color-surface-container-high"></div>',
     divider: true,
@@ -39,7 +39,7 @@ const createSettingsDialog = () => {
         closeDialog: false,
         onClick: () => {
           dialog.close()
-          fSnackbar({
+          createSnackbar({
             message: 'Settings saved',
             action: 'OK'
           }).show()
@@ -56,7 +56,7 @@ const createSettingsDialog = () => {
     const formContainer = dialog.getContentElement().querySelector('#settings-form')
     formContainer.innerHTML = '' // Clear previous fields
 
-    const sliderCallVolume = fSlider({
+    const sliderCallVolume = createSlider({
       label: 'Call volume',
       icon: callVolume,
       min: 0,
@@ -66,7 +66,7 @@ const createSettingsDialog = () => {
       size: 'small'
     })
 
-    const sliderAlarmVolume = fSlider({
+    const sliderAlarmVolume = createSlider({
       label: 'Alarm volume',
       icon: alarmVolume,
       min: 0,
@@ -80,7 +80,7 @@ const createSettingsDialog = () => {
 }
 
 const createContactDialog = (nameField, emailField, phoneField, newsletterCheckbox, resultContainer) => {
-  const dialog = fDialog({
+  const dialog = createDialog({
     title: 'Create New Contact',
     content: '<div id="contact-form" style="display: flex; flex-direction: column; gap: 16px; background-color: var(--mtrl-sys-color-surface-container-high"></div>',
     divider: true,
@@ -123,7 +123,7 @@ const createContactDialog = (nameField, emailField, phoneField, newsletterCheckb
           // If valid, close dialog and show result
           if (isValid) {
             dialog.close()
-            fSnackbar({
+            createSnackbar({
               message: 'Contact saved',
               action: 'OK'
             }).show()
@@ -143,27 +143,27 @@ const createContactDialog = (nameField, emailField, phoneField, newsletterCheckb
     formContainer.innerHTML = '' // Clear previous fields
 
     // Create form fields
-    nameField = fTextfield({
+    nameField = createTextfield({
       label: 'Name',
       placeholder: 'Enter full name',
       variant: 'outlined'
       // supportingText: 'Required'
     })
 
-    emailField = fTextfield({
+    emailField = createTextfield({
       label: 'Email',
       placeholder: 'email@example.com',
       variant: 'outlined'
       // supportingText: 'Required'
     })
 
-    phoneField = fTextfield({
+    phoneField = createTextfield({
       label: 'Phone (optional)',
       placeholder: '(123) 456-7890',
       variant: 'outlined'
     })
 
-    newsletterCheckbox = fCheckbox({
+    newsletterCheckbox = createCheckbox({
       label: 'Favorites'
     })
 
@@ -178,10 +178,10 @@ const createContactDialog = (nameField, emailField, phoneField, newsletterCheckb
 export const initFormDialog = (container) => {
   const title = 'Form Dialog'
   const description = 'A dialog containing form elements for user input'
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const openContactButton = fButton({
+  const openContactButton = createButton({
     text: 'New contact',
     icon: addIcon,
     variant: 'filled'
@@ -198,7 +198,7 @@ export const initFormDialog = (container) => {
   })
 
   // Create button to open dialog
-  const openSettingsButton = fButton({
+  const openSettingsButton = createButton({
     // text: 'Settings',
     icon: settingsIcon,
     variant: 'filled'

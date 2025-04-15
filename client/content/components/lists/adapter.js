@@ -2,8 +2,8 @@
 
 import {
   createElement,
-  fList,
-  fButton
+  createList,
+  createButton
 } from 'mtrl'
 
 import { createListManager, transforms } from 'mtrl/src/core/collection/list-manager'
@@ -25,7 +25,7 @@ const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading
     className: 'mtrl-content__navigation'
   })
 
-  const prevButton = fButton({
+  const prevButton = createButton({
     text: '← Previous',
     variant: 'outlined',
     disabled: !hasPrev || loading,
@@ -40,7 +40,7 @@ const createNavigation = (container, { hasNext, hasPrev, onNext, onPrev, loading
   })
   wrapper.appendChild(loadingSpan)
 
-  const nextButton = fButton({
+  const nextButton = createButton({
     text: 'Next →',
     variant: 'outlined',
     disabled: !hasNext || loading,
@@ -66,7 +66,7 @@ export const createListsLayout = (components) => {
         [createElement, 'div', {
           class: 'mtrl-content__grid',
           onCreate: async (el) => {
-            const trackList = fList({
+            const trackList = createList({
               type: 'single',
               layout: 'vertical'
             })

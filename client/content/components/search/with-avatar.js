@@ -5,15 +5,15 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSearch,
+  createLayout,
+  createSearch,
   createElement,
   createDivider
 } from 'mtrl'
 
 export const initWithAvatar = (container) => {
   const title = 'Search Bar with Avatar'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Define avatar
   const avatar = '<img src="https://i.pravatar.cc/100" alt="User avatar">'
@@ -27,14 +27,14 @@ export const initWithAvatar = (container) => {
   </svg>`
 
   // Create search with avatar
-  const searchWithAvatar = fSearch({
+  const searchWithAvatar = createSearch({
     placeholder: 'Search as John Doe',
     showClearButton: true,
     avatar
   })
 
   // Create search with avatar and icon
-  const searchWithAvatarAndIcon = fSearch({
+  const searchWithAvatarAndIcon = createSearch({
     placeholder: 'Search with voice as John Doe',
     showClearButton: true,
     trailingIcon: microphoneIcon,
@@ -67,7 +67,7 @@ export const initWithAvatar = (container) => {
   ]
 
   // Create the demo
-  const demo = fLayout(demoStructure, layout.body).component
+  const demo = createLayout(demoStructure, layout.body).component
 
   // // Add divider
   // const divider = createDivider()

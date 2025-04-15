@@ -5,8 +5,8 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fFab
+  createLayout,
+  createFab
 } from 'mtrl'
 
 /**
@@ -42,14 +42,14 @@ const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
 
 export const initDisabled = (container) => {
   const title = 'FAB Disabled'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const variants = Object.values(FAB_VARIANTS)
 
   // Create a disabled FAB for each variant
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const fab = fFab({
+    const fab = createFab({
       icon: addIcon,
       variant,
       disabled: true,
@@ -64,7 +64,7 @@ export const initDisabled = (container) => {
 
   sizes.forEach(size => {
     const text = capitalize(size)
-    const fab = fFab({
+    const fab = createFab({
       icon: addIcon,
       size,
       disabled: true,

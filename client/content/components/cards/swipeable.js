@@ -6,12 +6,12 @@ import {
 
 import {
   createElement,
-  fLayout,
-  fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import fCard, {
+import createCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -29,7 +29,7 @@ export const initSwipeableCard = (container) => {
   const title = 'Swipeable Cards'
   const description = 'Cards with swipe gesture interactions and accessible alternatives'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create a swipeable card
   const artwork = artworks[8] // American Gothic
@@ -39,7 +39,7 @@ export const initSwipeableCard = (container) => {
   let deleteCount = 0
 
   // Create base card
-  const baseCard = fCard({
+  const baseCard = createCard({
     variant: CARD_VARIANTS.ELEVATED,
     aria: {
       label: 'Swipeable card demonstration',
@@ -103,7 +103,7 @@ export const initSwipeableCard = (container) => {
   })
 
   // Create delete button
-  const deleteButton = fButton({
+  const deleteButton = createButton({
     text: 'Delete',
     variant: 'outlined',
     ariaLabel: 'Delete item',
@@ -112,7 +112,7 @@ export const initSwipeableCard = (container) => {
   buttonContainer.appendChild(deleteButton)
 
   // Create archive button
-  const archiveButton = fButton({
+  const archiveButton = createButton({
     text: 'Archive',
     variant: 'outlined',
     ariaLabel: 'Archive item',

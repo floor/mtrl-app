@@ -4,16 +4,16 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTextfield
+  createLayout,
+  createTextfield
 } from 'mtrl'
 
 export const initSuffix = (container) => {
   const title = 'Textfields with suffix text'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with leading icon
-  const filled = fTextfield({
+  const filled = createTextfield({
     label: 'Weight',
     placeholder: 'Weight...',
     variant: 'filled',
@@ -21,7 +21,7 @@ export const initSuffix = (container) => {
   })
 
   // Outlined textfield with leading icon
-  const outlined = fTextfield({
+  const outlined = createTextfield({
     label: 'Weight',
     placeholder: 'Weight...',
     variant: 'outlined',

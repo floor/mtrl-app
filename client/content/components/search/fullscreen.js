@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSearch,
+  createLayout,
+  createSearch,
   createElement
 } from 'mtrl'
 
@@ -17,9 +17,9 @@ import {
 
 export const initFullscreenView = (container) => {
   const title = 'Search View (Fullscreen Mode)'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const searchView = fSearch({
+  const searchView = createSearch({
     variant: SEARCH_VARIANTS.VIEW,
     viewMode: SEARCH_VIEW_MODES.FULLSCREEN,
     placeholder: 'Search products',
@@ -63,7 +63,7 @@ export const initFullscreenView = (container) => {
   ]
 
   // Create the demo
-  const demo = fLayout(demoStructure, layout.body).component
+  const demo = createLayout(demoStructure, layout.body).component
 
   // Add the search component to its container
   demo.searchContainer.appendChild(searchView.element)

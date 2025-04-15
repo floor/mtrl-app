@@ -1,12 +1,12 @@
 // src/client/content/styles/typography/demo.js
-import { fLayout, createElement, fButton } from 'mtrl'
+import { createLayout, createElement, createButton } from 'mtrl'
 
 /**
  * Creates the Typography Demo section
  * @param {HTMLElement} container - Parent container
  */
 export const createTypographyDemoSection = (container) => {
-  const sectionStructure = fLayout([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Typography Demo' },
@@ -74,13 +74,13 @@ export const initTypographyDemo = (container) => {
     className: 'typography-demo__controls'
   })
 
-  const fontSizeControl = fButton({
+  const fontSizeControl = createButton({
     text: 'Increase Font Size',
     variant: 'outlined',
     className: 'font-size-control'
   })
 
-  const fontWeightControl = fButton({
+  const fontWeightControl = createButton({
     text: 'Toggle Font Weight',
     variant: 'outlined',
     className: 'font-weight-control'

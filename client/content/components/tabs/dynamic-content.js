@@ -3,17 +3,17 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTabs,
+  createLayout,
+  createTabs,
   createElement
 } from 'mtrl'
 
 export const initDynamicContent = (container) => {
   const title = 'Dynamic Content'
-  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs
-  const tabs = fTabs({
+  const tabs = createTabs({
     tabs: [
       { text: 'Information', value: 'info', state: 'active' },
       { text: 'Settings', value: 'settings' },

@@ -5,9 +5,9 @@ import {
 } from '../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createElement,
-  fButton
+  createButton
 } from 'mtrl'
 
 export const createCompositionContent = (container) => {
@@ -15,9 +15,9 @@ export const createCompositionContent = (container) => {
     title: 'Composition',
     description: 'Build complex components through function composition and feature mixing'
   }
-  const layout = fLayout(contentLayout(info), container).component
+  const layout = createLayout(contentLayout(info), container).component
 
-  const ui = fLayout(createCompositionLayout(), layout.body).component
+  const ui = createLayout(createCompositionLayout(), layout.body).component
 
   initCompositionPatterns(ui)
   initPipeFunction(ui)
@@ -73,7 +73,7 @@ class Button extends Component {
 }
 
 // Use function composition:
-const fButton = pipe(
+const createButton = pipe(
   createBase,           // Start with core functionality
   withElement,          // Add DOM element
   withEvents,           // Add event handling
@@ -85,7 +85,7 @@ const fButton = pipe(
 );
 
 // Usage:
-const button = fButton({
+const button = createButton({
   text: 'Click Me',
   variant: 'filled',
   icon: svgIcon
@@ -729,22 +729,22 @@ document.body.appendChild(toggle.element);`
     class: 'toggle-controls'
   })
 
-  const toggleButton = fButton({
+  const toggleButton = createButton({
     text: 'Toggle',
     variant: 'filled'
   })
 
-  const checkButton = fButton({
+  const checkButton = createButton({
     text: 'Check',
     variant: 'outlined'
   })
 
-  const uncheckButton = fButton({
+  const uncheckButton = createButton({
     text: 'Uncheck',
     variant: 'outlined'
   })
 
-  const disableButton = fButton({
+  const disableButton = createButton({
     text: 'Toggle Disabled',
     variant: 'outlined'
   })
@@ -862,13 +862,13 @@ const createResponsiveButton = pipe(
 );
 
 // Component variants with specialized defaults
-export const createIconButton = (config) => fButton({
+export const createIconButton = (config) => createButton({
   ...config,
   variant: config.variant || 'icon',
   text: null  // Icon buttons have no text by default
 });
 
-export const fFab = (config) => fButton({
+export const createFab = (config) => createButton({
   ...config,
   variant: 'fab',
   size: config.size || 'large',

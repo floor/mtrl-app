@@ -3,15 +3,15 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
+  createLayout,
+  createButton,
   createDatePicker
 } from 'mtrl'
 
 export const initProgramming = (container) => {
   const title = 'Programmatic Control'
   const description = 'Control the DatePicker programmatically using its API'
-  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create a date picker
   const datePicker = createDatePicker({
@@ -28,7 +28,7 @@ export const initProgramming = (container) => {
   buttonContainer.style.marginBottom = '16px'
 
   // Set Today button
-  const setTodayBtn = fButton({
+  const setTodayBtn = createButton({
     text: 'Set Today',
     variant: 'outlined'
   })
@@ -38,7 +38,7 @@ export const initProgramming = (container) => {
   })
 
   // Set Specific Date button
-  const setDateBtn = fButton({
+  const setDateBtn = createButton({
     text: 'Set to Christmas',
     variant: 'outlined'
   })
@@ -49,7 +49,7 @@ export const initProgramming = (container) => {
   })
 
   // Set Min Date button
-  const setMinDateBtn = fButton({
+  const setMinDateBtn = createButton({
     text: 'Set Min Date to Today',
     variant: 'outlined'
   })
@@ -59,7 +59,7 @@ export const initProgramming = (container) => {
   })
 
   // Clear button
-  const clearBtn = fButton({
+  const clearBtn = createButton({
     text: 'Clear Date',
     variant: 'outlined'
   })
@@ -69,7 +69,7 @@ export const initProgramming = (container) => {
   })
 
   // Open Calendar button
-  const openBtn = fButton({
+  const openBtn = createButton({
     text: 'Open Calendar',
     variant: 'outlined'
   })
@@ -79,7 +79,7 @@ export const initProgramming = (container) => {
   })
 
   // Get Value button
-  const getValueBtn = fButton({
+  const getValueBtn = createButton({
     text: 'Get Value',
     variant: 'outlined'
   })

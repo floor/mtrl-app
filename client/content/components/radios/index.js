@@ -6,8 +6,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fRadios
+  createLayout,
+  createRadios
 } from 'mtrl'
 
 export const createRadiosContent = (container) => {
@@ -16,16 +16,16 @@ export const createRadiosContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = fLayout(componentsLayout(info), container).getAll()
+  const layout = createLayout(componentsLayout(info), container).getAll()
 
   initRadios(layout.body)
 }
 
 export const initRadios = (container) => {
   const title = 'Radios'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const small = fRadios({
+  const small = createRadios({
     name: 'size1',
     options: [
       { value: 'sm', label: 'Option 1' },
@@ -35,7 +35,7 @@ export const initRadios = (container) => {
     ]
   })
 
-  const radios = fRadios({
+  const radios = createRadios({
     name: 'size2',
     options: [
       { value: 'sm', label: 'Option 1' },
@@ -45,7 +45,7 @@ export const initRadios = (container) => {
     ]
   })
 
-  const large = fRadios({
+  const large = createRadios({
     name: 'size3',
     options: [
       { value: 'sm', label: 'Option 1' },

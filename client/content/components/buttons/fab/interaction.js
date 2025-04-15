@@ -4,9 +4,9 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fFab,
-  fButton
+  createLayout,
+  createFab,
+  createButton
 } from 'mtrl'
 
 // Icons for interaction demo
@@ -26,13 +26,13 @@ const deleteIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="2
 
 export const initInteraction = (container) => {
   const title = 'FAB Interaction'
-  const layout = fLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Demonstrates interactive behaviors of the FAB.'
   }), container).component
 
   // Create the main FAB
-  const fab = fFab({
+  const fab = createFab({
     icon: addIcon,
     ariaLabel: 'Interactive FAB demo'
   })
@@ -45,7 +45,7 @@ export const initInteraction = (container) => {
   buttonContainer.style.flexWrap = 'wrap'
 
   // Change icon button
-  const changeIconBtn = fButton({
+  const changeIconBtn = createButton({
     text: 'Change Icon',
     variant: 'outlined'
   })
@@ -71,7 +71,7 @@ export const initInteraction = (container) => {
   })
 
   // Lower/Raise button
-  const lowerBtn = fButton({
+  const lowerBtn = createButton({
     text: 'Lower FAB',
     variant: 'outlined'
   })
@@ -90,7 +90,7 @@ export const initInteraction = (container) => {
   })
 
   // Enable/Disable button
-  const disableBtn = fButton({
+  const disableBtn = createButton({
     text: 'Disable FAB',
     variant: 'outlined'
   })

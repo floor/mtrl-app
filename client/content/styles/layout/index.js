@@ -14,7 +14,7 @@ import { createSplitLayout } from './split'
 import { initializeInteractiveLayouts } from './interactive'
 
 import {
-  fLayout
+  createLayout
 } from 'mtrl'
 
 export const createLayoutStylesContent = (container) => {
@@ -23,7 +23,7 @@ export const createLayoutStylesContent = (container) => {
     title: 'Layout',
     description: 'Structured arrangements of components with responsive behavior'
   }
-  const layout = fLayout(createContentLayout(info), container).component
+  const layout = createLayout(createContentLayout(info), container).component
 
   console.log('layout', layout)
 

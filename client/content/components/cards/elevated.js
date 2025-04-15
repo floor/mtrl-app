@@ -6,8 +6,8 @@ import {
 
 import {
   createElement,
-  fLayout,
-  fCard
+  createLayout,
+  createCard
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
@@ -27,13 +27,13 @@ export const initElevatedCards = (container) => {
   const title = 'Elevated Cards'
   const description = 'Cards with shadow elevation effect following MD3 elevation system (levels 1, 2, and 4)'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create elevated cards with increasing elevation levels
   ;[1, 2].forEach((elevation, index) => {
     const artwork = artworks[index + 3] // Use different artworks
 
-    const card = fCard({
+    const card = createCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: true,
       aria: {

@@ -5,7 +5,7 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout
+  createLayout
 } from 'mtrl'
 
 import { createColorPalettes } from './palettes'
@@ -18,7 +18,7 @@ export const createColorsContent = (content) => {
     title: 'Colors',
     description: 'The color system helps create a consistent look across your UI'
   }
-  const container = fLayout(createContentLayout(info), content).get('body')
+  const container = createLayout(createContentLayout(info), content).get('body')
 
   createColorPalettes(container)
   createThemeColors(container)

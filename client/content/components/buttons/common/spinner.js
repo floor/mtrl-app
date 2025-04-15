@@ -6,9 +6,9 @@ import {
   createComponentsSectionStructure
 } from '../../../../structure'
 import {
-  fLayout,
-  fButton,
-  fSnackbar
+  createLayout,
+  createButton,
+  createSnackbar
 } from 'mtrl'
 import { sendIcon, spinnerIcon, checkIcon } from '../../../../icons'
 
@@ -17,10 +17,10 @@ import { sendIcon, spinnerIcon, checkIcon } from '../../../../icons'
  */
 export const initSpinnerButton = (container) => {
   const title = 'Button with spinner'
-  const structure = fLayout(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
 
   // Create a regular button
-  const button = fButton({
+  const button = createButton({
     text: 'Send',
     // icon: sendIcon,
     variant: 'filled'

@@ -6,12 +6,12 @@ import {
 
 import {
   createElement,
-  fLayout,
-  fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 
 import { artworks, getImageUrl } from './artwork-data'
-import fCard, {
+import createCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -29,7 +29,7 @@ export const initMediaCards = (container) => {
   const title = 'Media Cards'
   const description = 'Cards with images and different aspect ratios'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Select artworks that work well with different aspect ratios
   const artworksByRatio = [
@@ -40,7 +40,7 @@ export const initMediaCards = (container) => {
 
   // Create media cards with different aspect ratios
   artworksByRatio.forEach(({ artwork, ratio }, index) => {
-    const card = fCard({
+    const card = createCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: true,
       aria: {
@@ -97,7 +97,7 @@ export const initActionCards = (container) => {
   const title = 'Action Cards'
   const description = 'Cards with interactive buttons and different action alignments'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Different action alignments to showcase
   const alignments = [
@@ -113,7 +113,7 @@ export const initActionCards = (container) => {
   landscapeArtworks.forEach((artwork, index) => {
     const alignment = alignments[index]
 
-    const card = fCard({
+    const card = createCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: false, // Not interactive since buttons are the interactive elements
       aria: {
@@ -150,13 +150,13 @@ export const initActionCards = (container) => {
     content.appendChild(alignmentNote)
 
     // Create action buttons
-    const viewButton = fButton({
+    const viewButton = createButton({
       text: 'View Details',
       variant: 'filled',
       ariaLabel: `View details about ${artwork.title}`
     }).element
 
-    const shareButton = fButton({
+    const shareButton = createButton({
       text: 'Share',
       variant: 'text',
       ariaLabel: `Share ${artwork.title}`

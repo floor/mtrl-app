@@ -4,8 +4,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTextfield
+  createLayout,
+  createTextfield
 } from 'mtrl'
 
 // Icons for the textfields
@@ -19,10 +19,10 @@ const clearIcon = `<svg viewBox="0 0 24 24" width="24" height="24">
 
 export const initCombinedFeatures = (container) => {
   const title = 'Textfields with Combined Features'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with both icons and supporting text
-  const filled = fTextfield({
+  const filled = createTextfield({
     label: 'Search',
     placeholder: 'Search...',
     variant: 'filled',
@@ -37,7 +37,7 @@ export const initCombinedFeatures = (container) => {
   })
 
   // Outlined textfield with both icons and error state
-  const outlined = fTextfield({
+  const outlined = createTextfield({
     label: 'Search',
     placeholder: 'Search...',
     variant: 'outlined',

@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSearch,
+  createLayout,
+  createSearch,
   createElement
 } from 'mtrl'
 
@@ -17,9 +17,9 @@ export const SEARCH_VARIANTS = {
 
 export const initBasicView = (container) => {
   const title = 'Search View (Full Screen Mode)'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const searchView = fSearch({
+  const searchView = createSearch({
     variant: SEARCH_VARIANTS.VIEW,
     placeholder: 'Search items',
     showClearButton: true,
@@ -43,7 +43,7 @@ export const initBasicView = (container) => {
   ]
 
   // Create the demo
-  const demo = fLayout(demoStructure, layout.body).component
+  const demo = createLayout(demoStructure, layout.body).component
 
   // Add the search component to its container
   demo.searchContainer.appendChild(searchView.element)

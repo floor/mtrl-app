@@ -4,15 +4,15 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fTopAppBar,
-  fButton
+  createLayout,
+  createTopAppBar,
+  createButton
 } from 'mtrl'
 
 export const initCustomActionsTopAppBar = (container) => {
   const title = 'Custom Actions & Context'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component
@@ -86,91 +86,91 @@ export const initCustomActionsTopAppBar = (container) => {
   updateContentArea('browse')
 
   // Create top app bars for different modes
-  const browseBar = fTopAppBar({
+  const browseBar = createTopAppBar({
     title: 'Library',
     type: 'small'
   })
 
-  const editBar = fTopAppBar({
+  const editBar = createTopAppBar({
     title: 'Edit Document',
     type: 'small'
   })
 
-  const selectionBar = fTopAppBar({
+  const selectionBar = createTopAppBar({
     title: '3 Selected',
     type: 'small'
   })
 
   // Create browse mode actions
-  const backButton = fButton({
+  const backButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
     variant: 'icon',
     ariaLabel: 'Back'
   })
 
-  const searchButton = fButton({
+  const searchButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Search'
   })
 
-  const filterButton = fButton({
+  const filterButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>',
     variant: 'icon',
     ariaLabel: 'Filter'
   })
 
-  const moreButton = fButton({
+  const moreButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>',
     variant: 'icon',
     ariaLabel: 'More options'
   })
 
   // Create edit mode actions
-  const closeButton = fButton({
+  const closeButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Close'
   })
 
-  const saveButton = fButton({
+  const saveButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>',
     variant: 'icon',
     ariaLabel: 'Save'
   })
 
-  const undoButton = fButton({
+  const undoButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Undo'
   })
 
-  const formatButton = fButton({
+  const formatButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Format'
   })
 
   // Create selection mode actions
-  const closeSelectionButton = fButton({
+  const closeSelectionButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Cancel selection'
   })
 
-  const selectAllButton = fButton({
+  const selectAllButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Select all'
   })
 
-  const deleteButton = fButton({
+  const deleteButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Delete'
   })
 
-  const shareSelectionButton = fButton({
+  const shareSelectionButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Share selection'
@@ -215,7 +215,7 @@ export const initCustomActionsTopAppBar = (container) => {
   ]
 
   modes.forEach(mode => {
-    const button = fButton({
+    const button = createButton({
       text: mode.name,
       variant: mode.value === 'browse' ? 'filled' : 'outlined'
     })

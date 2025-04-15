@@ -3,7 +3,7 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createDatePicker
 } from 'mtrl'
 
@@ -18,7 +18,7 @@ const DATEPICKER_SELECTION_MODES = {
 export const initRange = (container) => {
   const title = 'Date Range Selection'
   const description = 'Select a start and end date for a date range'
-  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create date range picker
   const rangePicker = createDatePicker({

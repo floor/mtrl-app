@@ -5,10 +5,10 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createElement,
-  fList,
-  fButton
+  createList,
+  createButton
 } from 'mtrl'
 
 import {
@@ -32,7 +32,7 @@ export const createListsContent = (container, components) => {
     description: 'Lists are continuous, vertical indexes of text and images'
   }
 
-  const layout = fLayout(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
   initBasicList(layout.body)
   initSingleSelectList(layout.body)
@@ -45,9 +45,9 @@ export const createListsContent = (container, components) => {
 
 const initBasicList = (container) => {
   const title = 'Basic List'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const basicList = fList({
+  const basicList = createList({
     items: [
       { id: '1', headline: 'List Item 1' },
       { id: '2', headline: 'List Item 2' },
@@ -69,9 +69,9 @@ const initBasicList = (container) => {
 
 const initSingleSelectList = (container) => {
   const title = 'Single Select List'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = fList({
+  const list = createList({
     type: 'single',
     items: [
       { id: '1', headline: 'Option 1' },
@@ -97,9 +97,9 @@ const initSingleSelectList = (container) => {
 
 const initMultiSelectList = (container) => {
   const title = 'Multi Select List'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = fList({
+  const list = createList({
     type: 'multi',
     items: [
       { id: '1', headline: 'Option 1', selected: true },
@@ -125,9 +125,9 @@ const initMultiSelectList = (container) => {
 
 const initSectionedList = (container) => {
   const title = 'Sectioned List'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = fList({
+  const list = createList({
     sections: [
       {
         id: 'section1',
@@ -164,9 +164,9 @@ const initSectionedList = (container) => {
 
 const initVerticalLayout = (container) => {
   const title = 'Vertical Layout'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const list = fList({
+  const list = createList({
     layout: 'vertical',
     items: [
       {
@@ -200,7 +200,7 @@ const initVerticalLayout = (container) => {
 }
 
 const initListsAdapter = (container) => {
-  const layout = fLayout(createListsLayout(), container).component
+  const layout = createLayout(createListsLayout(), container).component
 }
 
 // export const createListsLayout = (components) => [
@@ -212,7 +212,7 @@ const initListsAdapter = (container) => {
 //       class: 'mtrl-content__grid',
 //       id: 'sectioned',
 //       onCreate: (el) => {
-//         const sectionedList = fList({
+//         const sectionedList = createList({
 //           sections: [
 //             {
 //               id: 'section1',
@@ -245,7 +245,7 @@ const initListsAdapter = (container) => {
 //       class: 'mtrl-content__grid',
 //       id: 'vertical',
 //       onCreate: (el) => {
-//         const verticalList = fList({
+//         const verticalList = createList({
 //           layout: 'vertical',
 //           items: [
 //             {
@@ -276,7 +276,7 @@ const initListsAdapter = (container) => {
 //       [createElement, 'div', {
 //         id: 'stateTest',
 //         onCreate: (el) => {
-//           const list = fList({
+//           const list = createList({
 //             type: 'single',
 //             items: [
 //               { id: '1', headline: 'Interactive Item 1' },
@@ -287,7 +287,7 @@ const initListsAdapter = (container) => {
 //         }
 //       }],
 //       [createElement, 'div', { class: 'mtrl-content__controls' },
-//         [fButton, null, {
+//         [createButton, null, {
 //           text: 'Toggle Disabled',
 //           variant: 'outlined',
 //           onclick: () => {
@@ -299,7 +299,7 @@ const initListsAdapter = (container) => {
 //             }
 //           }
 //         }],
-//         [fButton, null, {
+//         [createButton, null, {
 //           text: 'Add Item',
 //           variant: 'outlined',
 //           onclick: () => {
@@ -311,7 +311,7 @@ const initListsAdapter = (container) => {
 //             components.logEvent(`Added item: ${id}`)
 //           }
 //         }],
-//         [fButton, null, {
+//         [createButton, null, {
 //           text: 'Remove First Item',
 //           variant: 'outlined',
 //           onclick: () => {
@@ -331,7 +331,7 @@ const initListsAdapter = (container) => {
 //     [createElement, 'div', {
 //       id: 'eventTest',
 //       onCreate: (el) => {
-//         const list = fList({
+//         const list = createList({
 //           items: [
 //             { id: '1', headline: 'Event Test Item 1' },
 //             { id: '2', headline: 'Event Test Item 2' }

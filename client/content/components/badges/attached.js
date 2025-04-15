@@ -5,9 +5,9 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fBadge,
-  fButton
+  createLayout,
+  createBadge,
+  createButton
 } from 'mtrl'
 
 import {
@@ -17,7 +17,7 @@ import {
 
 export const initAttached = (container) => {
   const title = 'Badges Attached to Elements'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   const badgeContainer = document.createElement('div')
   badgeContainer.style.display = 'flex'
@@ -32,7 +32,7 @@ export const initAttached = (container) => {
   buttonWrapper.style.alignItems = 'center'
   buttonWrapper.style.gap = '16px'
 
-  const button = fButton({
+  const button = createButton({
     text: 'Notifications'
   })
 
@@ -40,7 +40,7 @@ export const initAttached = (container) => {
   buttonWrapper.appendChild(button.element)
 
   // Then create badge attached to the button
-  const badge = fBadge({
+  const badge = createBadge({
     variant: BADGE_VARIANTS.LARGE,
     label: '5',
     color: BADGE_COLORS.ERROR,
@@ -69,7 +69,7 @@ export const initAttached = (container) => {
   iconWrapper.appendChild(icon)
 
   // Then create small badge attached to the icon
-  const dotBadge = fBadge({
+  const dotBadge = createBadge({
     variant: BADGE_VARIANTS.SMALL,
     color: BADGE_COLORS.PRIMARY,
     target: icon
@@ -103,7 +103,7 @@ export const initAttached = (container) => {
   avatarWrapper.appendChild(avatar)
 
   // Then create small badge attached to the avatar
-  const avatarBadge = fBadge({
+  const avatarBadge = createBadge({
     variant: BADGE_VARIANTS.SMALL,
     color: BADGE_COLORS.SUCCESS,
     target: avatar
@@ -146,7 +146,7 @@ export const initAttached = (container) => {
   navWrapper.appendChild(navItem)
 
   // Create large badge attached to the nav icon (typical MD3 use case)
-  const navBadge = fBadge({
+  const navBadge = createBadge({
     variant: BADGE_VARIANTS.LARGE,
     label: '42',
     color: BADGE_COLORS.ERROR,

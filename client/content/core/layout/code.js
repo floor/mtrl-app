@@ -1,12 +1,12 @@
 // src/client/content/core/layout/code.js
-import { fLayout } from 'mtrl'
+import { createLayout } from 'mtrl'
 
 /**
  * Creates the Layout Code Examples section
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutCodeSection = (container) => {
-  const sectionStructure = fLayout([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Code Examples' },
@@ -29,7 +29,7 @@ export const createLayoutCodeSection = (container) => {
  */
 const initCodeExamples = (container) => {
   // Example 1: Basic Usage
-  fLayout([
+  createLayout([
     'example1', { tag: 'div', class: 'mtrl-layout-code-example' },
     [
       'example1Title', { tag: 'h3', text: 'Basic Usage' },
@@ -37,31 +37,31 @@ const initCodeExamples = (container) => {
       'example1Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { fLayout, fButton, fTextfield } from 'mtrl';
+        text: `import { createLayout, createButton, createTextfield } from 'mtrl';
 
 // Create a login form layout with named components
-const loginLayout = fLayout([
+const loginLayout = createLayout([
   'loginForm', { tag: 'form', class: 'login-form' },
   [
     'title', { tag: 'h2', text: 'Log In', class: 'login-title' },
-    fTextfield, 'emailField', { 
+    createTextfield, 'emailField', { 
       label: 'Email Address', 
       type: 'email', 
       required: true 
     },
-    fTextfield, 'passwordField', { 
+    createTextfield, 'passwordField', { 
       label: 'Password', 
       type: 'password', 
       required: true 
     },
     'actions', { tag: 'div', class: 'login-actions' },
     [
-      fButton, 'loginButton', { 
+      createButton, 'loginButton', { 
         text: 'Log In', 
         variant: 'filled', 
         class: 'login-button' 
       },
-      fButton, 'forgotPasswordButton', { 
+      createButton, 'forgotPasswordButton', { 
         text: 'Forgot Password?', 
         variant: 'text' 
       }
@@ -92,7 +92,7 @@ loginButton.on('click', (event) => {
   ], container)
 
   // Example 2: Advanced Layout with Default Creator
-  fLayout([
+  createLayout([
     'example2', { tag: 'div', class: 'mtrl-layout-code-example' },
     [
       'example2Title', { tag: 'h3', text: 'Advanced Layout with Default Creator' },
@@ -100,11 +100,11 @@ loginButton.on('click', (event) => {
       'example2Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { fLayout, fCard, fButton } from 'mtrl';
+        text: `import { createLayout, createCard, createButton } from 'mtrl';
 
 // Create a data grid with a default creator for text fields
-const dataGridLayout = fLayout([
-  fCard, 'dataCard', { title: 'User Data', elevated: true },
+const dataGridLayout = createLayout([
+  createCard, 'dataCard', { title: 'User Data', elevated: true },
   [
     'tableContainer', { tag: 'div', class: 'table-container' },
     [
@@ -130,7 +130,7 @@ const dataGridLayout = fLayout([
             'row1Role', { tag: 'td', text: 'Admin' },
             'row1Actions', { tag: 'td' },
             [
-              fButton, 'row1EditButton', { 
+              createButton, 'row1EditButton', { 
                 text: 'Edit', 
                 variant: 'outlined', 
                 size: 'small' 
@@ -145,7 +145,7 @@ const dataGridLayout = fLayout([
             'row2Role', { tag: 'td', text: 'User' },
             'row2Actions', { tag: 'td' },
             [
-              fButton, 'row2EditButton', { 
+              createButton, 'row2EditButton', { 
                 text: 'Edit', 
                 variant: 'outlined', 
                 size: 'small' 
@@ -172,7 +172,7 @@ row1EditButton.on('click', () => {
   ], container)
 
   // Example 3: Object-based Layout
-  fLayout([
+  createLayout([
     'example3', { tag: 'div', class: 'mtrl-layout-code-example' },
     [
       'example3Title', { tag: 'h3', text: 'Object-based Layout' },
@@ -180,12 +180,12 @@ row1EditButton.on('click', () => {
       'example3Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { fLayout, fTopAppBar, createNavigation, fList } from 'mtrl';
+        text: `import { createLayout, createTopAppBar, createNavigation, createList } from 'mtrl';
 
 // Create application shell with object schema
-const appLayout = fLayout({
+const appLayout = createLayout({
   element: {
-    creator: fTopAppBar,
+    creator: createTopAppBar,
     options: { 
       title: 'Dashboard',
       variant: 'fixed'
@@ -199,7 +199,7 @@ const appLayout = fLayout({
         },
         children: {
           navList: {
-            creator: fList,
+            creator: createList,
             options: { interactive: true },
             children: {
               homeItem: {
@@ -242,7 +242,7 @@ const appLayout = fLayout({
 });
 
 // Add content to the content area
-const contentLayout = fLayout([
+const contentLayout = createLayout([
   'heading', { tag: 'h1', text: 'Welcome to the Dashboard' },
   'description', { 
     tag: 'p', 
@@ -261,7 +261,7 @@ appLayout.get('analyticsItem').addEventListener('click', () => {
   ], container)
 
   // Example 4: HTML String Layout
-  fLayout([
+  createLayout([
     'example4', { tag: 'div', class: 'mtrl-layout-code-example' },
     [
       'example4Title', { tag: 'h3', text: 'HTML String Layout' },
@@ -269,10 +269,10 @@ appLayout.get('analyticsItem').addEventListener('click', () => {
       'example4Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { fLayout } from 'mtrl';
+        text: `import { createLayout } from 'mtrl';
 
 // Create a notification layout from HTML string
-const notificationLayout = fLayout(\`
+const notificationLayout = createLayout(\`
   <div class="notification-banner">
     <div class="notification-icon">
       <span class="material-icons">info</span>
@@ -306,7 +306,7 @@ document.querySelector('#notifications-area').appendChild(notificationBanner);`
   ], container)
 
   // Example 5: Dynamic Layout Creation
-  fLayout([
+  createLayout([
     'example5', { tag: 'div', class: 'mtrl-layout-code-example' },
     [
       'example5Title', { tag: 'h3', text: 'Dynamic Layout Creation' },
@@ -314,7 +314,7 @@ document.querySelector('#notifications-area').appendChild(notificationBanner);`
       'example5Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { fLayout, fCard, fChip } from 'mtrl';
+        text: `import { createLayout, createCard, createChip } from 'mtrl';
 
 // Sample data from API
 const products = [
@@ -328,8 +328,8 @@ const productGrid = document.getElementById('product-grid');
 
 // Function to create a product card layout
 const createProductCard = (product) => {
-  return fLayout([
-    fCard, \`product_\${product.id}\`, { 
+  return createLayout([
+    createCard, \`product_\${product.id}\`, { 
       outlined: true,
       class: 'product-card'
     },
@@ -359,7 +359,7 @@ products.forEach(product => {
   const tagsContainer = productLayout.get('productTags');
   
   product.tags.forEach(tag => {
-    const tagChip = fChip({
+    const tagChip = createChip({
       text: tag,
       variant: 'filled'
     });
@@ -383,7 +383,7 @@ document.querySelectorAll('.product-card').forEach(card => {
   ], container)
 
   // Example 6: Layout Management and Cleanup
-  fLayout([
+  createLayout([
     'example6', { tag: 'div', class: 'mtrl-layout-code-example' },
     [
       'example6Title', { tag: 'h3', text: 'Layout Management and Cleanup' },
@@ -391,7 +391,7 @@ document.querySelectorAll('.product-card').forEach(card => {
       'example6Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { fLayout, fDialog, fButton, fTextfield } from 'mtrl';
+        text: `import { createLayout, createDialog, createButton, createTextfield } from 'mtrl';
 
 // Store layout references for cleanup
 const layoutRefs = new Map();
@@ -405,8 +405,8 @@ function createModalDialog(id, title, content) {
   }
   
   // Create new dialog layout
-  const dialogLayout = fLayout([
-    fDialog, 'dialog', { 
+  const dialogLayout = createLayout([
+    createDialog, 'dialog', { 
       title: title,
       closeOnEscape: true,
       closeOnBackdrop: true,
@@ -419,11 +419,11 @@ function createModalDialog(id, title, content) {
       ],
       'actions', { tag: 'div', class: 'dialog-actions' },
       [
-        fButton, 'confirmBtn', { 
+        createButton, 'confirmBtn', { 
           text: 'Confirm', 
           variant: 'filled' 
         },
-        fButton, 'cancelBtn', { 
+        createButton, 'cancelBtn', { 
           text: 'Cancel', 
           variant: 'outlined' 
         }
@@ -487,7 +487,7 @@ window.addEventListener('beforeunload', () => {
   ], container)
 
   // Best Practices
-  fLayout([
+  createLayout([
     'bestPractices', { tag: 'div', class: 'mtrl-layout-best-practices-box' },
     [
       'title', { tag: 'h3', text: 'Best Practices for Layout Module' },

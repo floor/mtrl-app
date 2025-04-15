@@ -1,12 +1,12 @@
 // src/client/content/components/index.js
 import { createContentLayout } from '../../layout'
-import { createElement, fLayout } from 'mtrl'
-// import { fLayout } from 'mtrl/src/core/structure'
+import { createElement, createLayout } from 'mtrl'
+// import { createLayout } from 'mtrl/src/core/structure'
 import { createAppRouter } from '../../core/router'
 
 import { componentsList } from './components-list'
 
-import fCard, {
+import createCard, {
   CARD_VARIANTS
 } from 'mtrl/src/components/card'
 
@@ -27,7 +27,7 @@ export const createComponentsContent = (container, options = {}) => {
   }
 
   // Create layout
-  const structure = fLayout(createContentLayout(info), container).component
+  const structure = createLayout(createContentLayout(info), container).component
 
   componentsList.forEach((group, index) => {
     initComponentsGroup(structure.body, group, router)
@@ -137,7 +137,7 @@ const initComponentsGroup = (container, group, router) => {
  * @returns {HTMLElement} The component card element
  */
 const createComponentCard = (component, variant = CARD_VARIANTS.FILLED) => {
-  const card = fCard({
+  const card = createCard({
     variant,
     interactive: true,
     clickable: true,

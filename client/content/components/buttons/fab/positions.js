@@ -4,8 +4,8 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fFab
+  createLayout,
+  createFab
 } from 'mtrl'
 
 /**
@@ -46,7 +46,7 @@ const icons = {
 
 export const initPositions = (container) => {
   const title = 'FAB Positions'
-  const layout = fLayout(createComponentsSectionLayoutInfo({
+  const layout = createLayout(createComponentsSectionLayoutInfo({
     title,
     description: 'These FABs demonstrate positioning. In a real application, they would be fixed to the viewport.'
   }), container).component
@@ -70,7 +70,7 @@ export const initPositions = (container) => {
     const formattedPosition = position.replace(/_/g, '-').toLowerCase()
     const icon = icons[formattedPosition] || icons['bottom-right']
 
-    const fab = fFab({
+    const fab = createFab({
       icon,
       position: formattedPosition,
       ariaLabel: `${formattedPosition} position`
@@ -93,7 +93,7 @@ export const initPositions = (container) => {
   animatedDescription.textContent = 'This FAB demonstrates the entrance animation'
   layout.showcase.appendChild(animatedDescription)
 
-  const animatedFab = fFab({
+  const animatedFab = createFab({
     icon: icons['bottom-right'],
     animate: true,
     ariaLabel: 'Animated FAB'

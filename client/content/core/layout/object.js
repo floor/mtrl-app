@@ -1,12 +1,12 @@
 // src/client/content/core/layout/object.js
-import { fLayout, createElement } from 'mtrl'
+import { createLayout, createElement } from 'mtrl'
 
 /**
  * Creates the Object-based Layout section
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutObjectSection = (container) => {
-  const sectionStructure = fLayout([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Object-based Layout' },
@@ -29,7 +29,7 @@ export const createLayoutObjectSection = (container) => {
  */
 const initObjectLayouts = (container) => {
   // Create visual representation of object-based layout structure
-  fLayout([
+  createLayout([
     'objectStructure', { tag: 'div', class: 'mtrl-layout-structure' },
     [
       'structureTitle', { tag: 'h3', class: 'mtrl-layout-structure-title', text: 'Object-based Schema Structure' },
@@ -87,7 +87,7 @@ const initObjectLayouts = (container) => {
   ], container)
 
   // Example showing object-to-DOM mapping
-  fLayout([
+  createLayout([
     'visualExample', { tag: 'div', class: 'mtrl-layout-visual-example' },
     [
       'exampleTitle', { tag: 'h3', class: 'mtrl-layout-example-title', text: 'From Object Schema to DOM' },
@@ -185,7 +185,7 @@ const initObjectLayouts = (container) => {
   ], container)
 
   // Comparison table between array and object schemas
-  fLayout([
+  createLayout([
     'comparisonTable', { tag: 'div', class: 'mtrl-layout-comparison' },
     [
       'comparisonTitle', { tag: 'h3', class: 'mtrl-layout-comparison-title', text: 'Object vs Array Schema Comparison' },
@@ -244,7 +244,7 @@ const initObjectLayouts = (container) => {
   ], container)
 
   // Add a usage tip box
-  fLayout([
+  createLayout([
     'tipBox', { tag: 'div', class: 'mtrl-layout-tip-box' },
     [
       'tipIcon', { tag: 'span', class: 'material-icons', text: 'tips_and_updates' },

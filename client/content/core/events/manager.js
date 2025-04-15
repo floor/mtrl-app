@@ -1,6 +1,6 @@
 import {
   createElement,
-  fButton
+  createButton
 } from 'mtrl'
 
 export const initEventManager = (ui) => {
@@ -60,7 +60,7 @@ component.lifecycle.destroy = () => {
     class: 'event-example__demo'
   })
 
-  const demoButton = fButton({
+  const demoButton = createButton({
     text: 'Try Me',
     variant: 'filled'
   })

@@ -5,9 +5,9 @@ import {
 } from '../../structure'
 
 import {
-  fLayout,
-  fButton,
-  fCard
+  createLayout,
+  createButton,
+  createCard
 } from 'mtrl'
 
 import { createAppRouter } from '../../core/router'
@@ -18,9 +18,9 @@ export const createStylesContent = (container) => {
     title: 'Styling System',
     description: 'A comprehensive design system for consistent, accessible, and beautiful interfaces'
   }
-  const layout = fLayout(createContentStructure(info), container).component
+  const layout = createLayout(createContentStructure(info), container).component
 
-  const ui = fLayout(createStylesStructure(), layout.body).component
+  const ui = createLayout(createStylesStructure(), layout.body).component
 
   // Initialize the style card click handlers
   initStyleCardHandlers(ui)
@@ -148,7 +148,7 @@ export const createStylesStructure = () => {
         //         // Colors Card
         //         colorsCard: {
         //           name: 'colorsCard',
-        //           creator: fCard,
+        //           creator: createCard,
         //           options: {
         //             className: 'style-card style-card--colors'
         //           }
@@ -222,7 +222,7 @@ export const createStylesStructure = () => {
         //               },
         //               children: {
         //                 button: {
-        //                   creator: fButton,
+        //                   creator: createButton,
         //                   options: {
         //                     text: 'Explore Typography',
         //                     variant: 'filled',
@@ -302,7 +302,7 @@ export const createStylesStructure = () => {
         //               },
         //               children: {
         //                 button: {
-        //                   creator: fButton,
+        //                   creator: createButton,
         //                   options: {
         //                     text: 'Explore Elevation',
         //                     variant: 'filled',
@@ -382,7 +382,7 @@ export const createStylesStructure = () => {
         //               },
         //               children: {
         //                 button: {
-        //                   creator: fButton,
+        //                   creator: createButton,
         //                   options: {
         //                     text: 'Explore Layout',
         //                     variant: 'filled',

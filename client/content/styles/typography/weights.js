@@ -1,12 +1,12 @@
 // src/client/content/styles/typography/weights.js
-import { fLayout, createElement } from 'mtrl'
+import { createLayout, createElement } from 'mtrl'
 
 /**
  * Creates the Font Weights section
  * @param {HTMLElement} container - Parent container
  */
 export const createFontWeightsSection = (container) => {
-  const sectionStructure = fLayout([
+  const sectionStructure = createLayout([
     'section', { tag: 'section', class: 'mtrl-content__section' },
     [
       'title', { tag: 'h2', class: 'mtrl-content__section-title', text: 'Font Weights' },

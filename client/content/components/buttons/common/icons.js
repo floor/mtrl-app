@@ -8,8 +8,8 @@ import {
   createComponentsSectionStructure
 } from '../../../../structure'
 import {
-  fLayout,
-  fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 import { downloadIcon, bookmarkIcon, likeIcon, sendIcon } from '../../../../icons'
 
@@ -37,7 +37,7 @@ const iconLabelButtons = [
  */
 export const initIcons = (container) => {
   const title = 'Buttons icons'
-  const structure = fLayout(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
   const states = ['enabled', 'disabled']
   const variants = ['filled', 'elevated']
 
@@ -45,7 +45,7 @@ export const initIcons = (container) => {
   iconButtons.forEach((buttonDef) => {
     states.forEach(state => {
       const disabled = state === 'disabled'
-      const btn = fButton({
+      const btn = createButton({
         icon: buttonDef.icon,
         iconSize: 'medium',
         ariaLabel: buttonDef.label
@@ -58,7 +58,7 @@ export const initIcons = (container) => {
 
   // Create buttons with icons and text in different variants
   iconLabelButtons.forEach((buttonDef, i) => {
-    const labelBtn = fButton({
+    const labelBtn = createButton({
       icon: buttonDef.icon,
       text: buttonDef.label,
       iconSize: 'medium',

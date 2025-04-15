@@ -1,5 +1,5 @@
 // src/client/content/core/layout/basics.js
-import { fLayout, createElement } from 'mtrl'
+import { createLayout, createElement } from 'mtrl'
 import {
   sectionTitleDescriptionLayout
 } from '../../../layout'
@@ -9,7 +9,7 @@ import {
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutBasicsSection = (container) => {
-  const section = fLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(sectionTitleDescriptionLayout({
     title: 'Basic Layout',
     description: 'The Layout Module provides a declarative approach to building UI.',
     bodyClass: 'grid'
@@ -100,10 +100,10 @@ const initLayoutFeatures = (body) => {
     }
   ]
 
-  const containerCards = fLayout(['container'], body)
+  const containerCards = createLayout(['container'], body)
 
   features.forEach(feature => {
-    fLayout(
+    createLayout(
       ['featureCard', { tag: 'div', class: 'mtrl-layout-feature-card' },
         ['iconContainer', { tag: 'div', class: 'mtrl-layout-feature-icon' },
           ['icon', { tag: 'div', html: svgIcons[feature.icon] }],
@@ -121,7 +121,7 @@ const initLayoutFeatures = (body) => {
     class: 'mtrl-layout-flow-diagram'
   })
 
-  fLayout(
+  createLayout(
     ['diagram', { tag: 'div', class: 'mtrl-layout-diagram-container' },
       ['diagramTitle', { tag: 'h3', class: 'mtrl-layout-diagram-title', text: 'Layout Creation Flow' }],
       ['step1', { tag: 'div', class: 'mtrl-layout-diagram-step' },

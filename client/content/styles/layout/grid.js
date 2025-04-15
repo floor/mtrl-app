@@ -4,7 +4,7 @@ import {
   applyLayoutClasses,
   cleanupLayoutClasses
 } from 'mtrl/src/core/layout'
-import { fLayout, fElement, fChips } from 'mtrl'
+import { createLayout, createElement, createChips } from 'mtrl'
 
 /**
  * Creates a responsive grid layout demo
@@ -14,7 +14,7 @@ import { fLayout, fElement, fChips } from 'mtrl'
  */
 export const createGridLayout = (container) => {
   // Create the content section with title and description
-  const layout = fLayout(createContentSection({
+  const layout = createLayout(createContentSection({
     title: 'Grid Layout',
     description: 'CSS Grid-based layout with various configurations.',
     class: 'theme-colors'
@@ -22,8 +22,8 @@ export const createGridLayout = (container) => {
 
   const body = layout.get('body')
 
-  // Create grid layout using fLayout for structure with layout options
-  const gridLayout = fLayout([
+  // Create grid layout using createLayout for structure with layout options
+  const gridLayout = createLayout([
     // Create the grid container as root
     'gridContainer', {
       tag: 'div',
@@ -42,7 +42,7 @@ export const createGridLayout = (container) => {
 
   // Create a 3x3 grid of items
   for (let i = 1; i <= 9; i++) {
-    const gridItem = fElement({
+    const gridItem = createElement({
       tag: 'div',
       class: 'layout-demo__box',
       text: `${i}`
@@ -50,8 +50,8 @@ export const createGridLayout = (container) => {
     gridContainer.appendChild(gridItem)
   }
 
-  // Create controls layout with chip set using fLayout
-  const controlsLayout = fLayout([
+  // Create controls layout with chip set using createLayout
+  const controlsLayout = createLayout([
     'controlsContainer', {
       tag: 'div',
       class: 'layout-demo__controls',
@@ -64,7 +64,7 @@ export const createGridLayout = (container) => {
     },
     [
       // Add chip set inside the controls
-      fChips, 'gridChipSet', {
+      createChips, 'gridChipSet', {
         scrollable: false,
         multiSelect: false,
         class: 'grid-chip-set',

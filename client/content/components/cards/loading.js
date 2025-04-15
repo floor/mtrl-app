@@ -5,12 +5,12 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createElement
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import fCard, {
+import createCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -26,13 +26,13 @@ export const initLoadingCard = async (container) => {
   const title = 'Loading Cards'
   const description = 'Cards with loading state and placeholder content'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create two cards - one loading, one showing loaded content
   const artwork = artworks[1] // The Starry Night
 
   // Card 1: Always in loading state
-  const baseCard1 = fCard({
+  const baseCard1 = createCard({
     variant: CARD_VARIANTS.FILLED
   })
 
@@ -75,7 +75,7 @@ export const initLoadingCard = async (container) => {
   loadingCard.element.appendChild(placeholderContent)
 
   // Card 2: Will transition from loading to loaded
-  const baseCard2 = fCard({
+  const baseCard2 = createCard({
     variant: CARD_VARIANTS.ELEVATED
   })
 

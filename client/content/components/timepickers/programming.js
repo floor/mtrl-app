@@ -5,15 +5,15 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
+  createLayout,
+  createButton,
   createTimePicker
 } from 'mtrl'
 
 export const initProgramming = (container) => {
   const title = 'Programmatic Control'
   const description = 'Control the TimePicker programmatically using its API'
-  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Create a time picker
   const timePicker = createTimePicker({
@@ -41,7 +41,7 @@ export const initProgramming = (container) => {
   buttonContainer.style.marginBottom = '16px'
 
   // Set Current Time button
-  const setCurrentBtn = fButton({
+  const setCurrentBtn = createButton({
     text: 'Set Current Time',
     variant: 'outlined'
   })
@@ -62,7 +62,7 @@ export const initProgramming = (container) => {
   })
 
   // Set Specific Time button
-  const setTimeBtn = fButton({
+  const setTimeBtn = createButton({
     text: 'Set to 8:15 AM',
     variant: 'outlined'
   })
@@ -73,7 +73,7 @@ export const initProgramming = (container) => {
   })
 
   // Toggle Format button
-  const toggleFormatBtn = fButton({
+  const toggleFormatBtn = createButton({
     text: 'Toggle 12h/24h Format',
     variant: 'outlined'
   })
@@ -89,7 +89,7 @@ export const initProgramming = (container) => {
   })
 
   // Toggle Type button
-  const toggleTypeBtn = fButton({
+  const toggleTypeBtn = createButton({
     text: 'Toggle Dial/Input Type',
     variant: 'outlined'
   })
@@ -105,7 +105,7 @@ export const initProgramming = (container) => {
   })
 
   // Open TimePicker button
-  const openBtn = fButton({
+  const openBtn = createButton({
     text: 'Open TimePicker',
     variant: 'filled'
   })

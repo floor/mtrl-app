@@ -6,8 +6,8 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fFab
+  createLayout,
+  createFab
 } from 'mtrl'
 
 const FAB_VARIANTS = {
@@ -28,14 +28,14 @@ const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
 
 export const initVariants = (container) => {
   const title = 'FAB Variants'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Convert the enum to an array of strings
   const variants = Object.values(FAB_VARIANTS)
 
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const fab = fFab({
+    const fab = createFab({
       icon: addIcon,
       variant,
       ariaLabel: `${text} action`

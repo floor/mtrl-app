@@ -6,11 +6,11 @@ import {
 
 import {
   createElement,
-  fLayout
-  , fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import fCard, {
+import createCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -28,7 +28,7 @@ export const initHorizontalCards = (container) => {
   const title = 'Horizontal Cards'
   const description = 'Cards with custom horizontal layout for list views'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create horizontal cards
   artworks.slice(7, 10).forEach((artwork, index) => {
@@ -39,7 +39,7 @@ export const initHorizontalCards = (container) => {
     })
 
     // Create the card with proper accessibility attributes
-    const card = fCard({
+    const card = createCard({
       variant: CARD_VARIANTS.OUTLINED,
       fullWidth: true,
       interactive: index === 1, // Make the middle card interactive
@@ -94,7 +94,7 @@ export const initHorizontalCards = (container) => {
     })
 
     // Create view button
-    const viewButton = fButton({
+    const viewButton = createButton({
       text: 'View',
       variant: 'text',
       ariaLabel: `View details about ${artwork.title}`

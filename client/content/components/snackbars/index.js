@@ -4,10 +4,10 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createElement,
-  fSnackbar,
-  fButton
+  createSnackbar,
+  createButton
 } from 'mtrl'
 
 export const SNACKBAR_POSITIONS = {
@@ -21,9 +21,9 @@ export const createSnackbarsContent = (container, components) => {
     title: 'Snackbars',
     description: 'Show short updates about app processes at the bottom of the screen'
   }
-  const layout = fLayout(componentsLayout(info), container).component
+  const layout = createLayout(componentsLayout(info), container).component
 
-  const ui = fLayout(createSnackbarsLayout(), layout.body).component
+  const ui = createLayout(createSnackbarsLayout(), layout.body).component
   console.info('ui', ui)
 }
 
@@ -37,12 +37,12 @@ export const createSnackbarsLayout = (components) => [
       id: 'basic',
       onCreate: (el) => {
         // Basic snackbar
-        const basicButton = fButton({
+        const basicButton = createButton({
           text: 'Show Basic Snackbar',
           variant: 'filled'
         })
         basicButton.on('click', () => {
-          const snackbar = fSnackbar({
+          const snackbar = createSnackbar({
             message: 'This is a basic snackbar message',
             variant: 'basic'
           })
@@ -52,12 +52,12 @@ export const createSnackbarsLayout = (components) => [
         el.appendChild(basicButton.element)
 
         // Snackbar with action
-        const actionButton = fButton({
+        const actionButton = createButton({
           text: 'Show Action Snackbar',
           variant: 'filled'
         })
         actionButton.on('click', () => {
-          const snackbar = fSnackbar({
+          const snackbar = createSnackbar({
             message: 'Snackbar with action button',
             variant: 'action',
             action: 'Undo'
@@ -81,12 +81,12 @@ export const createSnackbarsLayout = (components) => [
       id: 'positions',
       onCreate: (el) => {
         Object.values(SNACKBAR_POSITIONS).forEach(position => {
-          const button = fButton({
+          const button = createButton({
             text: `Show ${position}`,
             variant: 'filled'
           })
           button.on('click', () => {
-            const snackbar = fSnackbar({
+            const snackbar = createSnackbar({
               message: `Snackbar in ${position} position`,
               position,
               action: 'OK'
@@ -115,12 +115,12 @@ export const createSnackbarsLayout = (components) => [
         ]
 
         durations.forEach(({ label, value }) => {
-          const button = fButton({
+          const button = createButton({
             text: label,
             variant: 'filled'
           })
           button.on('click', () => {
-            const snackbar = fSnackbar({
+            const snackbar = createSnackbar({
               message: `${label} duration snackbar`,
               duration: value,
               action: value === 0 ? 'Dismiss' : undefined

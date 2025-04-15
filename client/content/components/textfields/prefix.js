@@ -4,16 +4,16 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTextfield
+  createLayout,
+  createTextfield
 } from 'mtrl'
 
 export const initPrefix = (container) => {
   const title = 'Textfields with prefix text'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Filled textfield with leading icon
-  const filled = fTextfield({
+  const filled = createTextfield({
     label: 'Amount',
     placeholder: 'Amount...',
     variant: 'filled',
@@ -21,7 +21,7 @@ export const initPrefix = (container) => {
   })
 
   // Outlined textfield with leading icon
-  const outlined = fTextfield({
+  const outlined = createTextfield({
     label: 'Amount',
     placeholder: 'Amount...',
     variant: 'outlined',

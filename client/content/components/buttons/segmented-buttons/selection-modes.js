@@ -4,8 +4,8 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fButton
+  createLayout,
+  createButton
 } from 'mtrl'
 
 import {
@@ -15,7 +15,7 @@ import {
 
 export const initSelectionModes = (container) => {
   const title = 'Selection Modes'
-  const layout = fLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Segmented buttons support two selection modes: single-select and multi-select.',
     class: 'noflex'
@@ -72,19 +72,19 @@ export const initSelectionModes = (container) => {
   singleSelectControls.style.gap = '8px'
   singleSelectControls.style.marginBottom = '40px'
 
-  const selectListBtn = fButton({
+  const selectListBtn = createButton({
     text: 'Select List',
     variant: 'outlined'
   })
   selectListBtn.on('click', () => singleSelectButton.select('list'))
 
-  const selectGridBtn = fButton({
+  const selectGridBtn = createButton({
     text: 'Select Grid',
     variant: 'outlined'
   })
   selectGridBtn.on('click', () => singleSelectButton.select('grid'))
 
-  const selectMapBtn = fButton({
+  const selectMapBtn = createButton({
     text: 'Select Map',
     variant: 'outlined'
   })
@@ -154,7 +154,7 @@ export const initSelectionModes = (container) => {
   multiSelectControls.style.marginBottom = '40px'
   multiSelectControls.style.flexWrap = 'wrap'
 
-  const selectAllBtn = fButton({
+  const selectAllBtn = createButton({
     text: 'Select All',
     variant: 'outlined'
   })
@@ -164,7 +164,7 @@ export const initSelectionModes = (container) => {
     })
   })
 
-  const clearAllBtn = fButton({
+  const clearAllBtn = createButton({
     text: 'Clear All',
     variant: 'outlined'
   })
@@ -174,7 +174,7 @@ export const initSelectionModes = (container) => {
     })
   })
 
-  const toggleBreakfastBtn = fButton({
+  const toggleBreakfastBtn = createButton({
     text: 'Toggle Breakfast',
     variant: 'outlined'
   })

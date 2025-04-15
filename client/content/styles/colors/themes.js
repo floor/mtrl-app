@@ -1,12 +1,12 @@
 import {
-  fLayout
+  createLayout
 } from 'mtrl'
 
 import { createContentSection } from '../../../layout/content'
 
 export const createThemeColors = (container) => {
   console.log('createThemeColors', container)
-  const layout = fLayout(createContentSection({
+  const layout = createLayout(createContentSection({
     title: 'Theme Colors',
     description: 'Theme colors provide semantic meaning and are used consistently across components. Use these tokens to maintain visual consistency and accessibility.',
     class: 'theme-demo'
@@ -64,8 +64,8 @@ export const createThemeColors = (container) => {
     { name: 'outline-variant', label: 'Outline Variant' }
   ]
 
-  // Create container for theme colors using fLayout
-  const themeColorsLayout = fLayout([
+  // Create container for theme colors using createLayout
+  const themeColorsLayout = createLayout([
     ['colorThemeGrid', {
       tag: 'div',
       class: 'color-theme-grid'
@@ -78,7 +78,7 @@ export const createThemeColors = (container) => {
   semanticColors.forEach(color => {
     // If this is a section title, add it directly
     if (color.type === 'title') {
-      fLayout([
+      createLayout([
         ['sectionTitle', {
           tag: 'div',
           class: 'theme-color-section-title',
@@ -108,8 +108,8 @@ export const createThemeColors = (container) => {
       }
     }
 
-    // Create the color swatch using fLayout
-    fLayout([
+    // Create the color swatch using createLayout
+    createLayout([
       ['colorSwatch', {
         tag: 'div',
         class: 'theme-color-swatch',

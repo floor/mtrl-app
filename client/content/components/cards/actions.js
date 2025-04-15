@@ -5,11 +5,11 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout
+  createLayout
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import fCard, {
+import createCard, {
   CARD_VARIANTS
 } from 'mtrl/src/components/card'
 
@@ -18,11 +18,11 @@ export const initActionCards = (container) => {
   const title = 'Action Cards'
   const description = 'Cards with interactive buttons'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create action cards with inline configuration
   artworks.slice(4, 6).forEach(artwork => {
-    const card = fCard({
+    const card = createCard({
       variant: CARD_VARIANTS.ELEVATED,
       interactive: true,
 

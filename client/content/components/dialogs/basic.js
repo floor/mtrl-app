@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
-  fDialog
+  createLayout,
+  createButton,
+  createDialog
 } from 'mtrl'
 
 const createBasicDialog = () => {
-  const dialog = fDialog({
+  const dialog = createDialog({
     title: 'Basic Dialog',
     content: '<p>This is a basic dialog with a title, content, and standard buttons.</p>',
     buttons: [
@@ -37,10 +37,10 @@ const createBasicDialog = () => {
 export const initBasic = (container) => {
   const title = 'Basic Dialog'
   const description = 'A simple dialog with title, content and buttons'
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const openButton = fButton({
+  const openButton = createButton({
     text: 'Open Basic Dialog',
     variant: 'filled'
   })

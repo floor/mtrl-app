@@ -4,9 +4,9 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createExtendedFab,
-  fButton
+  createButton
 } from 'mtrl'
 
 // Icons for interaction demo
@@ -26,7 +26,7 @@ const deleteIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="2
 
 export const initInteraction = (container) => {
   const title = 'Extended FAB Interaction'
-  const layout = fLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentsSectionLayout({
     title,
     description: 'Demonstrates interactive behaviors of the Extended FAB.',
     class: 'noflex'
@@ -47,7 +47,7 @@ export const initInteraction = (container) => {
   buttonContainer.style.flexWrap = 'wrap'
 
   // Change icon button
-  const changeIconBtn = fButton({
+  const changeIconBtn = createButton({
     text: 'Change Icon',
     variant: 'outlined'
   })
@@ -76,7 +76,7 @@ export const initInteraction = (container) => {
   })
 
   // Lower/Raise button
-  const lowerBtn = fButton({
+  const lowerBtn = createButton({
     text: 'Lower Extended FAB',
     variant: 'outlined'
   })
@@ -95,7 +95,7 @@ export const initInteraction = (container) => {
   })
 
   // Change text button
-  const changeTextBtn = fButton({
+  const changeTextBtn = createButton({
     text: 'Change Text',
     variant: 'outlined'
   })
@@ -110,7 +110,7 @@ export const initInteraction = (container) => {
   })
 
   // Enable/Disable button
-  const disableBtn = fButton({
+  const disableBtn = createButton({
     text: 'Disable Extended FAB',
     variant: 'outlined'
   })
@@ -129,7 +129,7 @@ export const initInteraction = (container) => {
   })
 
   // Collapse/Expand button
-  const collapseBtn = fButton({
+  const collapseBtn = createButton({
     text: 'Collapse Extended FAB',
     variant: 'outlined'
   })

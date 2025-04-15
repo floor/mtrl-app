@@ -3,17 +3,17 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTabs,
-  fButton
+  createLayout,
+  createTabs,
+  createButton
 } from 'mtrl'
 
 export const initProgrammaticTabs = (container) => {
   const title = 'Programmatic Control'
-  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs
-  const tabs = fTabs({
+  const tabs = createTabs({
     tabs: [
       { text: 'First', value: 'first' },
       { text: 'Second', value: 'second' },
@@ -32,25 +32,25 @@ export const initProgrammaticTabs = (container) => {
   controlsContainer.className = 'mtrl-content__tab-controls'
 
   // Button to select the first tab
-  const firstButton = fButton({
+  const firstButton = createButton({
     text: 'Select First',
     variant: 'outlined'
   })
 
   // Button to select the second tab
-  const secondButton = fButton({
+  const secondButton = createButton({
     text: 'Select Second',
     variant: 'outlined'
   })
 
   // Button to select the third tab
-  const thirdButton = fButton({
+  const thirdButton = createButton({
     text: 'Select Third',
     variant: 'outlined'
   })
 
   // Button to select the fourth tab
-  const fourthButton = fButton({
+  const fourthButton = createButton({
     text: 'Select Fourth',
     variant: 'outlined'
   })

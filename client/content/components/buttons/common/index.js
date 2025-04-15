@@ -5,7 +5,7 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout
+  createLayout
 } from 'mtrl'
 
 import { initVariants } from './variants'
@@ -19,7 +19,7 @@ export const createButtonsContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = fLayout(lContentLayout(info), container).component
+  const layout = createLayout(lContentLayout(info), container).component
 
   initVariants(layout.body)
   initDisabled(layout.body)

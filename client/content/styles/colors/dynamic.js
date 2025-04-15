@@ -1,14 +1,14 @@
 import {
-  fLayout,
+  createLayout,
   createElement,
-  fChips,
-  fSwitch
+  createChips,
+  createSwitch
 } from 'mtrl'
 import { createContentSection } from '../../../layout/content'
 
 export const createDynamicTheme = (container) => {
   console.log('createDynamicTheme', container)
-  const layout = fLayout(createContentSection({
+  const layout = createLayout(createContentSection({
     title: 'Theme',
     description: 'Try different themes to see how color tokens adapt to maintain consistency across themes and color modes.',
     class: 'theme-colors'
@@ -49,7 +49,7 @@ export const createDynamicTheme = (container) => {
   ]
 
   // Create a chip set for theme selection
-  const themeChips = fChips({
+  const themeChips = createChips({
     scrollable: true,
     multiSelect: false, // Only one theme can be active at a time
     onChange: (selectedChip, selectedChips) => {
@@ -99,7 +99,7 @@ export const createDynamicTheme = (container) => {
   themeSwitchers.appendChild(themeChips.element)
 
   // Create dark mode switch
-  const darkModeSwitch = fSwitch({
+  const darkModeSwitch = createSwitch({
     label: 'Dark Mode',
     checked: document.body.getAttribute('data-theme-mode') === 'dark',
     supportingText: 'Toggle between light and dark mode'

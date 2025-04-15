@@ -3,13 +3,13 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
-  fDialog
+  createLayout,
+  createButton,
+  createDialog
 } from 'mtrl'
 
 const createButtonsDialog = (statusMessage) => {
-  const dialog = fDialog({
+  const dialog = createDialog({
     title: 'Save Changes?',
     content: '<p>Your changes will be lost if you don\'t save them.</p>',
     buttons: [
@@ -48,10 +48,10 @@ const createButtonsDialog = (statusMessage) => {
 export const initCustomButtons = (container) => {
   const title = 'Dialog with Custom Buttons'
   const description = 'Dialogs can have custom buttons with different variants and behaviors'
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create button to open dialog
-  const openButton = fButton({
+  const openButton = createButton({
     text: 'Dialog with Custom Buttons',
     variant: 'filled'
   })

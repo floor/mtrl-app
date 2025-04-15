@@ -3,17 +3,17 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTabs,
-  fButton
+  createLayout,
+  createTabs,
+  createButton
 } from 'mtrl'
 
 export const initEventsAPI = (container) => {
   const title = 'Events & API Methods'
-  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with callback handlers
-  const tabs = fTabs({
+  const tabs = createTabs({
     tabs: [
       { text: 'Dashboard', value: 'dashboard', state: 'active' },
       { text: 'Analytics', value: 'analytics' },
@@ -37,25 +37,25 @@ export const initEventsAPI = (container) => {
   apiControlsContainer.className = 'mtrl-content__api-controls'
 
   // Add a button to get active tab
-  const getActiveButton = fButton({
+  const getActiveButton = createButton({
     text: 'Get Active Tab',
     variant: 'outlined'
   })
 
   // Add a button to disable tabs
-  const disableTabButton = fButton({
+  const disableTabButton = createButton({
     text: 'Disable Reports Tab',
     variant: 'outlined'
   })
 
   // Add a button to enable tabs
-  const enableTabButton = fButton({
+  const enableTabButton = createButton({
     text: 'Enable Reports Tab',
     variant: 'outlined'
   })
 
   // Add a button to add badge
-  const addBadgeButton = fButton({
+  const addBadgeButton = createButton({
     text: 'Add Badge to Analytics',
     variant: 'outlined'
   })

@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton,
-  fDialog
+  createLayout,
+  createButton,
+  createDialog
 } from 'mtrl'
 
 import {
@@ -13,7 +13,7 @@ import {
 } from 'mtrl/src/components/dialog'
 
 const createAnimationsDialog = (animation) => {
-  const dialog = fDialog({
+  const dialog = createDialog({
     title: `${animation.name} Animation`,
     content: `<p>This dialog uses the ${animation.name.toLowerCase()} animation style.</p>`,
     animation: animation.value,
@@ -31,7 +31,7 @@ const createAnimationsDialog = (animation) => {
 export const initAnimations = (container) => {
   const title = 'Dialog Animations'
   const description = 'Dialogs can use different animation styles when opening and closing'
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create a dialog for each animation type
   const animations = [
@@ -43,7 +43,7 @@ export const initAnimations = (container) => {
 
   animations.forEach(animation => {
     // Create button to open dialog
-    const openButton = fButton({
+    const openButton = createButton({
       text: `${animation.name} Animation`,
       variant: 'outlined'
     })

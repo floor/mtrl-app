@@ -4,7 +4,7 @@ import {
   applyLayoutClasses,
   cleanupLayoutClasses
 } from 'mtrl/src/core/layout'
-import { fLayout, fChips } from 'mtrl'
+import { createLayout, createChips } from 'mtrl'
 
 /**
  * Creates a card layout demo with different card layout options
@@ -14,7 +14,7 @@ import { fLayout, fChips } from 'mtrl'
  */
 export const createCardLayout = (container) => {
   // Create the content section with title and description
-  const sectionLayout = fLayout(createContentSection({
+  const sectionLayout = createLayout(createContentSection({
     title: 'Card Layout',
     description: 'Layout for displaying card-based content with different options for handling card heights.',
     class: 'theme-colors'
@@ -22,8 +22,8 @@ export const createCardLayout = (container) => {
 
   const body = sectionLayout.get('body')
 
-  // Create controls with fLayout and layout option
-  const controlsLayout = fLayout([
+  // Create controls with createLayout and layout option
+  const controlsLayout = createLayout([
     'controlsContainer', {
       tag: 'div',
       class: 'layout-demo__controls',
@@ -36,7 +36,7 @@ export const createCardLayout = (container) => {
     },
     [
       // Create chip set
-      fChips, 'cardChipSet', {
+      createChips, 'cardChipSet', {
         scrollable: false,
         multiSelect: false,
         class: 'card-chip-set',
@@ -49,8 +49,8 @@ export const createCardLayout = (container) => {
   // Get chip set component
   const cardChipSet = controlsLayout.get('cardChipSet')
 
-  // Create card container with fLayout and layout option
-  const cardLayout = fLayout([
+  // Create card container with createLayout and layout option
+  const cardLayout = createLayout([
     'cardContainer', {
       tag: 'div',
       class: 'layout-demo card-layout',
@@ -94,9 +94,9 @@ export const createCardLayout = (container) => {
     }
   ]
 
-  // Create cards using fLayout with layout options
+  // Create cards using createLayout with layout options
   cardContents.forEach((cardData, index) => {
-    const cardStructure = fLayout([
+    const cardStructure = createLayout([
       `card${index}`, {
         tag: 'div',
         class: 'layout-demo__card',

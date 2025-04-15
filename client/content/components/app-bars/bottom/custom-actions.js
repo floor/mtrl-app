@@ -4,10 +4,10 @@ import {
 } from '../../../../layout'
 
 import {
-  fLayout,
-  fBottomAppBar,
-  fButton,
-  fFab
+  createLayout,
+  createBottomAppBar,
+  createButton,
+  createFab
 } from 'mtrl'
 
 /**
@@ -27,7 +27,7 @@ export const FAB_VARIANTS = {
 export const initCustomActionsBottomAppBar = (container) => {
   const title = 'Custom Actions & Context'
 
-  const layout = fLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentsSectionLayoutBox({
     title,
     class: 'noflex'
   }), container).component
@@ -103,85 +103,85 @@ export const initCustomActionsBottomAppBar = (container) => {
   demoContainer.appendChild(contentArea)
 
   // Create bottom app bars for different modes
-  const navigationBar = fBottomAppBar({
+  const navigationBar = createBottomAppBar({
     hasFab: true
   })
 
-  const editingBar = fBottomAppBar()
+  const editingBar = createBottomAppBar()
 
-  const selectionBar = fBottomAppBar()
+  const selectionBar = createBottomAppBar()
 
   // Create navigation mode actions
-  const homeButton = fButton({
+  const homeButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>',
     variant: 'icon',
     ariaLabel: 'Home'
   })
 
-  const favoritesButton = fButton({
+  const favoritesButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Favorites'
   })
 
-  const profileButton = fButton({
+  const profileButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
     variant: 'icon',
     ariaLabel: 'Profile'
   })
 
   // Create editing mode actions
-  const saveButton = fButton({
+  const saveButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>',
     variant: 'icon',
     ariaLabel: 'Save'
   })
 
-  const deleteButton = fButton({
+  const deleteButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Delete'
   })
 
-  const formatButton = fButton({
+  const formatButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Format'
   })
 
-  const undoButton = fButton({
+  const undoButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Undo'
   })
 
   // Create selection mode actions
-  const selectAllButton = fButton({
+  const selectAllButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Select All'
   })
 
-  const shareSelectionButton = fButton({
+  const shareSelectionButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Share Selection'
   })
 
-  const copySelectionButton = fButton({
+  const copySelectionButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>',
     variant: 'icon',
     ariaLabel: 'Copy Selection'
   })
 
-  const deleteSelectionButton = fButton({
+  const deleteSelectionButton = createButton({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>',
     variant: 'icon',
     ariaLabel: 'Delete Selection'
   })
 
   // Create FAB for primary action using the dedicated FAB component
-  const addFab = fFab({
+  const addFab = createFab({
     icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
     ariaLabel: 'Add new item',
     variant: FAB_VARIANTS.PRIMARY
@@ -225,7 +225,7 @@ export const initCustomActionsBottomAppBar = (container) => {
   ]
 
   modes.forEach(mode => {
-    const button = fButton({
+    const button = createButton({
       text: mode.name,
       variant: mode.value === 'navigation' ? 'filled' : 'outlined'
     })

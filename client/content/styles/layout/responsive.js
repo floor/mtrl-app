@@ -4,7 +4,7 @@ import {
   applyLayoutClasses,
   cleanupLayoutClasses
 } from 'mtrl/src/core/layout'
-import { fLayout, fChips } from 'mtrl'
+import { createLayout, createChips } from 'mtrl'
 
 /**
  * Creates a responsive layout demo that adapts to different screen sizes
@@ -14,7 +14,7 @@ import { fLayout, fChips } from 'mtrl'
  */
 export const createResponsiveLayout = (container) => {
   // Create the content section with title and description
-  const sectionLayout = fLayout(createContentSection({
+  const sectionLayout = createLayout(createContentSection({
     title: 'Responsive Layout',
     description: 'Layout that adapts to different screen sizes. Use the chips to toggle between different layouts.',
     class: 'theme-colors'
@@ -22,21 +22,21 @@ export const createResponsiveLayout = (container) => {
 
   const body = sectionLayout.get('body')
 
-  // Create controls layout with fLayout and layout option
-  const controlsLayout = fLayout([
+  // Create controls layout with createLayout and layout option
+  const controlsLayout = createLayout([
     'controlsContainer', {
       tag: 'div',
       class: 'layout-demo__controls',
       // Use layout configuration option
       layout: { type: 'row', justify: 'center', align: 'center' }
     },
-    [fChips, 'layoutType', {
+    [createChips, 'layoutType', {
       scrollable: false,
       multiSelect: false,
       label: 'Layout Type',
       onChange: (values) => layoutChangeHandler(values[0])
     }],
-    [fChips, 'layoutChipSet2', {
+    [createChips, 'layoutChipSet2', {
       scrollable: false,
       multiSelect: false,
       label: 'Layout Gap',
@@ -47,8 +47,8 @@ export const createResponsiveLayout = (container) => {
   // Get chip set component
   const layoutType = controlsLayout.get('layoutType')
 
-  // Create responsive container using fLayout with layout option
-  const responsiveLayout = fLayout([
+  // Create responsive container using createLayout with layout option
+  const responsiveLayout = createLayout([
     'responsiveContainer', {
       tag: 'div',
       class: 'layout-demo responsive-layout',
@@ -62,8 +62,8 @@ export const createResponsiveLayout = (container) => {
 
   // Create example content boxes
   for (let i = 1; i <= 10; i++) {
-    // Create box with fLayout
-    fLayout([
+    // Create box with createLayout
+    createLayout([
       `box${i}`, {
         tag: 'div',
         class: 'layout-demo__box',

@@ -3,17 +3,17 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fTabs,
-  fButton
+  createLayout,
+  createTabs,
+  createButton
 } from 'mtrl'
 
 export const initDynamicTabs = (container) => {
   const title = 'Dynamic Tabs'
-  const layout = fLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
 
   // Create tabs with an initial set of tabs
-  const tabs = fTabs({
+  const tabs = createTabs({
     tabs: [
       { text: 'Tab 1', value: 'tab1', state: 'active' },
       { text: 'Tab 2', value: 'tab2' }
@@ -28,13 +28,13 @@ export const initDynamicTabs = (container) => {
   controlsContainer.className = 'mtrl-content__tab-controls'
 
   // Add Tab button
-  const addButton = fButton({
+  const addButton = createButton({
     text: 'Add Tab',
     variant: 'filled'
   })
 
   // Remove Tab button
-  const removeButton = fButton({
+  const removeButton = createButton({
     text: 'Remove Last Tab',
     variant: 'outlined'
   })

@@ -5,13 +5,13 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fButton
+  createLayout,
+  createButton
   , createElement
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import fCard, {
+import createCard, {
   createCardHeader,
   createCardContent,
   createCardMedia,
@@ -24,13 +24,13 @@ export const initDynamicCard = (container) => {
   const title = 'Dynamic Cards'
   const description = 'Cards with content that updates dynamically'
 
-  const layout = fLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
   // Create dynamic card
   const artwork = artworks[2] // The Persistence of Memory
 
   // Create the main card component
-  const card = fCard({
+  const card = createCard({
     variant: CARD_VARIANTS.ELEVATED
   })
 
@@ -76,7 +76,7 @@ export const initDynamicCard = (container) => {
     })
 
     // Create view button
-    const viewButton = fButton({
+    const viewButton = createButton({
       text: 'View Details',
       variant: 'filled'
     }).element
@@ -101,7 +101,7 @@ export const initDynamicCard = (container) => {
   }, 3000)
 
   // Create a second dynamic card that cycles through artworks
-  const cycleCard = fCard({
+  const cycleCard = createCard({
     variant: CARD_VARIANTS.OUTLINED
   })
 
@@ -138,7 +138,7 @@ export const initDynamicCard = (container) => {
     })
 
     // Create cycle button
-    const cycleButton = fButton({
+    const cycleButton = createButton({
       text: 'Next Artwork',
       variant: 'text',
       onclick: () => {

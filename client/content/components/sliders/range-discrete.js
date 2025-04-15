@@ -3,8 +3,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSlider
+  createLayout,
+  createSlider
 } from 'mtrl'
 
 import {
@@ -13,9 +13,9 @@ import {
 
 export const initRangeDiscrete = (container) => {
   const title = 'Range slider with tick marks'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const slider = fSlider({
+  const slider = createSlider({
     min: 0,
     max: 1000,
     value: 200,

@@ -5,8 +5,8 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
-  fSearch
+  createLayout,
+  createSearch
 } from 'mtrl'
 
 export const SEARCH_VARIANTS = {
@@ -15,7 +15,7 @@ export const SEARCH_VARIANTS = {
 }
 export const initWithSuggestions = (container) => {
   const title = 'Search with Suggestions'
-  const layout = fLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
   // Define icons for suggestions
   const historyIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -37,7 +37,7 @@ export const initWithSuggestions = (container) => {
   ]
 
   // Create search with suggestions
-  const searchWithSuggestions = fSearch({
+  const searchWithSuggestions = createSearch({
     variant: SEARCH_VARIANTS.VIEW,
     placeholder: 'Search with suggestions',
     showClearButton: true,

@@ -3,14 +3,14 @@ import {
 } from '../../../layout'
 
 import {
-  fLayout,
+  createLayout,
   createDatePicker
 } from 'mtrl'
 
 export const initConstraints = (container) => {
   const title = 'Date Constraints'
   const description = 'Restrict date selection with min and max date constraints'
-  const layout = fLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
 
   // Get dates for examples
   const today = new Date()
