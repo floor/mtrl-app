@@ -47,8 +47,6 @@ export const createThemeManager = (options = {}) => {
    * @private
    */
   const applyTheme = () => {
-    // console.log(`Applying theme: ${themeSettings.themeName}, mode: ${themeSettings.themeMode}`)
-
     // Add theme classes to document body
     document.body.setAttribute(config.themeAttribute, themeSettings.themeName)
     document.body.setAttribute(config.modeAttribute, themeSettings.themeMode)
@@ -73,7 +71,6 @@ export const createThemeManager = (options = {}) => {
 
     // Update any UI components that reflect theme state
     if (ui && ui.toggleDarkmode) {
-      // Try multiple ways to update the icon
       ui.toggleDarkmode.setIcon(getThemeModeIcon())
     }
 
@@ -116,72 +113,31 @@ export const createThemeManager = (options = {}) => {
   }
 
   /**
-   * Creates or toggles the theme menu
-   * @param {Object} origin - Origin element for the menu
-   * @private
-   */
-  const toggleThemeMenu = (anchor) => {
-    // If menu exists and is not visible, show it
-    if (themesMenu && !themesMenu.isVisible()) {
-      themesMenu.show()
-      return
-    }
-
-    // If menu exists but is not visible, reposition and show it
-    // if (themesMenu) {
-    //   themesMenu.position(anchor.element, { align: 'center' }).show()
-    //   return
-    // }
-
-    // Otherwise create a new menu
-    themesMenu = createMenu({
-      items: config.themesMenu,
-      anchor: anchor.element
-    })
-
-    // Set up the menu selection handler
-    themesMenu.on('select', (event) => {
-      setTheme(event.itemId)
-      // themesMenu.hide() // Just hide the menu instead of destroying it
-    })
-
-    // Set up the close handler to clean up references
-    // themesMenu.on('close', () => {
-    //   // Don't destroy the menu, just update our tracking of visibility
-    // })
-
-    // // Position and show the menu
-    // // themesMenu.position(origin.element, { align: 'center' }).show()
-
-    // // Set the currently selected theme if the menu supports it
-    // if (themesMenu.setSelected && themeSettings.themeName) {
-    //   themesMenu.setSelected(themeSettings.themeName)
-    // }
-  }
-
-  /**
    * Initialize theme selection menu
    * @private
    */
   const initializeThemeMenu = () => {
-    // Handle different possible component formats
-    // const origin = ui.moreMenu
+    // Create the menu once and attach it to the anchor
+    if (!themesMenu && ui.moreMenu?.element) {
+      themesMenu = createMenu({
+        items: config.themesMenu,
+        anchor: ui.moreMenu.element
+      })
 
-    themesMenu = createMenu({
-      items: config.themesMenu,
-      anchor: ui.moreMenu.element
-    })
+      // Set up the menu selection handler
+      themesMenu.on('select', (event) => {
+        // Apply theme change
+        setTheme(event.itemId)
 
-    // Set up the menu selection handler
-    themesMenu.on('select', (event) => {
-      setTheme(event.itemId)
-      // themesMenu.hide() // Just hide the menu instead of destroying it
-    })
+        // Let the menu close gracefully with its built-in animation
+        // The closeOnSelect: false option in menu creation prevents immediate closing
+      })
 
-    // Set up click handler for the menu button
-    // origin.on('click', () => {
-    //   toggleThemeMenu(origin)
-    // })
+      // Set the currently selected theme if the menu supports it
+      if (themesMenu.setSelected && themeSettings.themeName) {
+        themesMenu.setSelected(themeSettings.themeName)
+      }
+    }
   }
 
   /**
@@ -337,8 +293,6 @@ export const createThemeManager = (options = {}) => {
     const currentMode = themeSettings.themeMode
     const newMode = currentMode === 'dark' ? 'light' : 'dark'
 
-    // console.log(`Toggling theme mode: ${currentMode} -> ${newMode}`)
-
     // Set new mode
     setThemeMode(newMode)
 
@@ -374,8 +328,6 @@ export const createThemeManager = (options = {}) => {
    */
   const getThemeModeIcon = () => {
     const currentMode = themeSettings.themeMode
-
-    // console.error('getThemeModeIcon', currentMode)
     return config.modeToggleIcons[currentMode] || 'brightness_medium'
   }
 
