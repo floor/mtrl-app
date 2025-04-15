@@ -10,6 +10,8 @@ import { initRange as createRangeSlider } from './components/sliders/range'
 import { initCombinedFeatures as createTextfieldCombined } from './components/textfields/combined-features'
 import { initSupportingText as createSwitches } from './components/switches/supporting'
 import { initBasicTabs as fTabs } from './components/tabs/basic'
+import { initSubmenu as createSelectSubmenu } from './components/selects/submenu'
+import { initIndeterminateCheckboxes as createCheckboxes } from './components/checkboxes/indeterminate'
 
 import { initFormDialog as createDialogs } from './components/dialogs/form-dialog'
 
@@ -30,6 +32,8 @@ export const createHomeContent = (container) => {
   createSwitches(body)
   createTextfieldCombined(body)
   createRangeSlider(body)
+  createSelectSubmenu(body)
   createDialogs(body)
+  createCheckboxes(body)
   fTabs(body)
 }
