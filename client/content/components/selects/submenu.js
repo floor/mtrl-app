@@ -12,6 +12,8 @@ import {
   createSelect
 } from 'mtrl'
 
+import { faceIcon, locationIcon } from '../../../icons'
+
 export const initSubmenu = (container) => {
   const title = 'Select with nested menu'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
@@ -19,6 +21,7 @@ export const initSubmenu = (container) => {
   // Create a basic select component with all countries
   const filled = createSelect({
     label: 'Position',
+    leadingIcon: faceIcon,
     supportingText: 'Select a position',
     options: organisation
   })
@@ -32,9 +35,14 @@ export const initSubmenu = (container) => {
 
   const outlined = createSelect({
     label: 'Location',
+    leadingIcon: locationIcon,
     variant: 'outlined',
     supportingText: 'Select a location',
     options: location
+  })
+
+  outlined.on('change', (event) => {
+    console.log(`Selected: ${event.value} (${event.text})`)
   })
 
   outlined.element.style.maxWidth = '240px'

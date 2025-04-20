@@ -5,7 +5,7 @@ import {
 import {
   createLayout,
   createMenu,
-  createButton
+  createTextfield
 } from 'mtrl'
 
 import {
@@ -15,44 +15,43 @@ import {
 
 import { faceIcon, locationIcon } from '../../../icons'
 
-export const initNestedMenu = (container) => {
-  const title = 'Nested Menu'
+export const initTexfieldMenu = (container) => {
+  const title = 'Textfield menu'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  const buttonPosition = createButton({
-    icon: faceIcon,
-    text: 'Position',
-    variant: 'tonal'
+  const textfieldPosition = createTextfield({
+    label: 'Position',
+    leadingIcon: faceIcon,
+    text: 'Position'
   })
 
   const menu = createMenu({
-    opener: buttonPosition,
+    opener: textfieldPosition,
     items: organisation
   })
 
-  const buttonLocation = createButton({
-    icon: locationIcon,
-    text: 'Location',
-    variant: 'tonal'
+  const textfieldLocation = createTextfield({
+    label: 'Location',
+    leadingIcon: locationIcon,
+    text: 'Location'
   })
 
   const menu2 = createMenu({
-    opener: buttonLocation,
+    opener: textfieldLocation,
     items: location
   })
 
   menu.on('select', (event) => {
     console.log('event', event)
     console.log(`Selected position: ${event.itemId}`)
-    buttonPosition.setText(event.item.text)
+    textfieldPosition.setValue(event.itemId)
   })
 
   menu2.on('select', (event) => {
     console.log('event', event)
     console.log(`Selected location: ${event.itemId}`)
-    buttonLocation.setText(event.item.text)
   })
 
-  layout.body.appendChild(buttonPosition.element)
-  layout.body.appendChild(buttonLocation.element)
+  layout.body.appendChild(textfieldPosition.element)
+  layout.body.appendChild(textfieldLocation.element)
 }

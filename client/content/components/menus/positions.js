@@ -42,7 +42,7 @@ export const initPositionsMenu = (container) => {
 
     const chip = chips.getChips(position)[i]
 
-    menuOptions.anchor = chip
+    menuOptions.opener = chip
     menuOptions.position = position
     createMenu(menuOptions)
   }

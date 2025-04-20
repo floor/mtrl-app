@@ -13,7 +13,7 @@ export const createThemeManager = (options = {}) => {
   // Configuration with defaults
   const config = {
     stateKey: 'theme-settings',
-    defaultTheme: 'material',
+    defaultTheme: 'ocean',
     defaultMode: 'light',
     systemPreference: true,
     transitionDuration: 300,
@@ -121,7 +121,7 @@ export const createThemeManager = (options = {}) => {
     if (!themesMenu && ui.moreMenu?.element) {
       themesMenu = createMenu({
         items: config.themesMenu,
-        anchor: ui.moreMenu.element
+        opener: ui.moreMenu.element
       })
 
       // Set up the menu selection handler

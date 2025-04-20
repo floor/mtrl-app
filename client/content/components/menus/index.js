@@ -11,7 +11,8 @@ import {
 import { initBasicMenu } from './basic'
 import { initNestedMenu } from './nested'
 import { initPositionsMenu } from './positions'
-import { initCustomMenu } from './custom'
+import { initTexfieldMenu } from './textfield'
+// import { initCustomMenu } from './custom'
 
 export const createMenusContent = (container) => {
   const info = {
@@ -22,7 +23,8 @@ export const createMenusContent = (container) => {
   const layout = createLayout(componentsLayout(info), container).component
 
   initBasicMenu(layout.body)
-  initNestedMenu(layout.body)
   initPositionsMenu(layout.body)
+  initNestedMenu(layout.body)
+  initTexfieldMenu(layout.body)
   // initCustomMenu(layout.body)
 }
