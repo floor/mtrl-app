@@ -23,6 +23,8 @@ try {
     // Register routes
     routes,
 
+    contentPagination: true,
+
     // Global error handling
     onError: (error) => console.error('Application error:', error),
     onNavigationError: (error) => console.error('Navigation failed:', error),

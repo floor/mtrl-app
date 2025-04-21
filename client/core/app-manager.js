@@ -8,6 +8,7 @@ import { createNavigationSystem } from 'mtrl/src/components/navigation/system'
 import { createLayoutManager } from './layout'
 import { appLayout, navigationLayout } from '../config'
 import { generateDynamicRoutes } from './router/dynamic-loader'
+import { createContentPagination } from '../layout/pagination'
 
 /**
  * Creates an application manager responsible for core initialization,
@@ -17,6 +18,15 @@ import { generateDynamicRoutes } from './router/dynamic-loader'
  * @returns {Object} Application manager API
  */
 export const createApp = (options = {}) => {
+  // Default options with content pagination enabled by default
+  const defaultOptions = {
+    deferInit: false,
+    contentPagination: true
+  }
+
+  // Merge with provided options
+  options = { ...defaultOptions, ...options }
+
   // Internal state
   let isInitialized = false
   let readyCallbacks = []
@@ -134,6 +144,39 @@ export const createApp = (options = {}) => {
     // Register notFoundHandler if provided
     if (options.notFoundHandler) {
       routerInstance.registerNotFound(options.notFoundHandler)
+    }
+
+    // Add content pagination functionality if enabled
+    if (options.contentPagination !== false) {
+      routerInstance.afterEach((route, prevRoute) => {
+        // Wait for content to render
+        setTimeout(() => {
+          if (ui?.content) {
+            console.log('ui?.content', ui?.content)
+
+            // Remove existing pagination if any
+            const existingPagination = ui.content.querySelector('.content-pagination')
+            if (existingPagination) {
+              existingPagination.remove()
+            }
+
+            // Create and append new pagination
+            if (route && route.path) {
+              const pagination = createContentPagination(route.path, routerInstance)
+              const footer = ui.content.querySelector('.mtrl-content__footer')
+
+              // Check if footer exists and is a child of content before using insertBefore
+              if (footer && footer.parentNode === ui.content) {
+                // Insert pagination before the footer
+                ui.content.insertBefore(pagination, footer)
+              } else {
+                // If no footer or footer isn't a direct child, append to the end
+                ui.content.appendChild(pagination)
+              }
+            }
+          }
+        }, 100)
+      })
     }
 
     return routerInstance
