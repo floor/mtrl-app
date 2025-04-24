@@ -9,6 +9,9 @@ import { createLayoutManager } from './layout'
 import { appLayout, navigationLayout } from '../config'
 import { generateDynamicRoutes } from './router/dynamic-loader'
 import { createContentPagination } from '../layout/pagination'
+import Prism from 'prismjs'
+import 'prismjs/components/prism-javascript'
+import 'prismjs/components/prism-typescript'
 
 /**
  * Creates an application manager responsible for core initialization,
@@ -30,6 +33,9 @@ export const createApp = (options = {}) => {
   // Internal state
   let isInitialized = false
   let readyCallbacks = []
+
+  // Code highlighting mutation observer
+  let codeHighlightObserver = null
 
   // Navigation synchronization state
   const syncState = {
@@ -75,6 +81,9 @@ export const createApp = (options = {}) => {
       eventManager = initializeEvents(ui)
       initializeTheme(ui)
       navigationSystem = initializeNavigation(ui)
+
+      // Initialize code highlighting if enabled
+      initializeCodeHighlighting(ui)
 
       // Execute ready callbacks
       executeReadyCallbacks()
@@ -152,7 +161,7 @@ export const createApp = (options = {}) => {
         // Wait for content to render
         setTimeout(() => {
           if (ui?.content) {
-            console.log('ui?.content', ui?.content)
+            // console.log('ui?.content', ui?.content)
 
             // Remove existing pagination if any
             const existingPagination = ui.content.querySelector('.content-pagination')
@@ -180,6 +189,84 @@ export const createApp = (options = {}) => {
     }
 
     return routerInstance
+  }
+
+  /**
+   * Initialize code highlighting
+   * @param {Object} ui - UI component reference
+   * @private
+   */
+  const initializeCodeHighlighting = (ui) => {
+    // Make sure we're in a browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return
+    }
+
+    // Highlight all existing code blocks
+    Prism.highlightAll()
+
+    // Set up a simple mutation observer to highlight new code blocks
+    // Check if MutationObserver exists in window context
+    if (typeof window.MutationObserver !== 'undefined') {
+      codeHighlightObserver = new window.MutationObserver((mutations) => {
+        let shouldHighlight = false
+
+        for (const mutation of mutations) {
+          if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+            // Check if any added nodes contain code blocks
+            for (const node of mutation.addedNodes) {
+              if (node.nodeType === Node.ELEMENT_NODE) {
+                if (
+                  (node.tagName === 'PRE' && node.querySelector('code[class*="language-"]')) ||
+                  (node.tagName === 'CODE' && node.className && node.className.includes('language-')) ||
+                  node.querySelector('pre > code[class*="language-"]')
+                ) {
+                  shouldHighlight = true
+                  break
+                }
+              }
+            }
+
+            if (shouldHighlight) break
+          }
+        }
+
+        if (shouldHighlight) {
+          // Use requestAnimationFrame for better performance
+          window.requestAnimationFrame(() => {
+            Prism.highlightAll()
+          })
+        }
+      })
+
+      // Start observing the content area or body
+      const targetNode = ui.content || document.body
+      codeHighlightObserver.observe(targetNode, {
+        childList: true,
+        subtree: true
+      })
+
+      // Register cleanup for observer
+      if (eventManager) {
+        eventManager.addCleanup(() => {
+          if (codeHighlightObserver) {
+            codeHighlightObserver.disconnect()
+            codeHighlightObserver = null
+          }
+        })
+      }
+    }
+
+    // If using router, highlight code after each navigation
+    if (router) {
+      router.afterEach(() => {
+        console.log('afterEach')
+        // Slight delay to ensure content is loaded
+        setTimeout(() => {
+          Prism.highlightAll()
+        }, 50)
+      })
+    }
   }
 
   /**
@@ -461,6 +548,11 @@ export const createApp = (options = {}) => {
 
     if (layoutResult) {
       layoutResult.destroy()
+    }
+
+    if (codeHighlightObserver) {
+      codeHighlightObserver.disconnect()
+      codeHighlightObserver = null
     }
 
     // Reset state

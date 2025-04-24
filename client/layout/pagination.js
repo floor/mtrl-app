@@ -1,7 +1,6 @@
 // client/core/content-pagination.js
 import { createLayout, createElement } from 'mtrl'
 import { getAdjacentContent } from '../core/content-navigation'
-
 /**
  * Creates a pagination footer component for content navigation using mtrl layout
  * @param {string} currentPath - Current content path
@@ -15,51 +14,65 @@ export function createContentPagination (currentPath, router) {
   const paginationLayout = [
     'pagination', {
       className: 'content-pagination',
-      attributes: { role: 'navigation', 'aria-label': 'Content pagination' },
-      layout: { type: 'row', justify: 'between', align: 'center' }
+      attributes: { role: 'navigation', 'aria-label': 'Content pagination' }
     }, [
-      // Previous container with link nested inside
-      'prevContainer', { className: 'pagination-prev pagination-container' },
-      previous
-        ? [
-            createElement, 'prevLink', {
-              tag: 'a',
-              className: 'pagination-link prev',
-              attributes: { href: `/${previous.path}` },
-              events: { click: (e) => { e.preventDefault(); if (router) router.navigate(previous.path) } }
-            }, [
-              createElement, 'prevArrow', { tag: 'span', className: 'pagination-arrow', text: '←' },
-              createElement, 'prevContent', { tag: 'span', className: 'pagination-content' }, [
-                createElement, 'prevLabel', { tag: 'small', className: 'pagination-label', text: 'Previous' },
-                createElement, 'prevTitle', { tag: 'span', className: 'pagination-title', text: previous.title }
-              ]
-            ]
+      // Previous container with nested link
+      createElement, 'prevContainer', {
+        tag: 'div',
+        className: 'pagination-prev'
+      },
+      previous ? [
+        createElement, 'prevLink', {
+          tag: 'a',
+          className: 'pagination-link',
+          attributes: { href: `/${previous.path}` },
+          events: { click: (e) => { e.preventDefault(); if (router) router.navigate(previous.path) } }
+        }, [
+          createElement, 'prevContent', { tag: 'span', className: 'pagination-content' }, [
+            createElement, 'prevLabel', {
+              tag: 'small',
+              className: 'pagination-label',
+              html: '← Previous' // Arrow inside the label
+            },
+            createElement, 'prevTitle', {
+              tag: 'span',
+              className: 'pagination-title',
+              text: previous.title
+            }
           ]
-        : null,
+        ]
+      ] : [],
 
-      // Next container with link nested inside
-      'nextContainer', { className: 'pagination-next pagination-container' },
-      next
-        ? [
-            createElement, 'nextLink', {
-              tag: 'a',
-              className: 'pagination-link next',
-              attributes: { href: `/${next.path}` },
-              events: { click: (e) => { e.preventDefault(); if (router) router.navigate(next.path) } }
-            }, [
-              createElement, 'nextContent', { tag: 'span', className: 'pagination-content' }, [
-                createElement, 'nextLabel', { tag: 'small', className: 'pagination-label', text: 'Next' },
-                createElement, 'nextTitle', { tag: 'span', className: 'pagination-title', text: next.title }
-              ],
-              createElement, 'nextArrow', { tag: 'span', className: 'pagination-arrow', text: '→' }
-            ]
+      // Next container with nested link
+      createElement, 'nextContainer', {
+        tag: 'div',
+        className: 'pagination-next'
+      },
+      next ? [
+        createElement, 'nextLink', {
+          tag: 'a',
+          className: 'pagination-link',
+          attributes: { href: `/${next.path}` },
+          events: { click: (e) => { e.preventDefault(); if (router) router.navigate(next.path) } }
+        }, [
+          createElement, 'nextContent', { tag: 'span', className: 'pagination-content' }, [
+            createElement, 'nextLabel', {
+              tag: 'small',
+              className: 'pagination-label',
+              html: 'Up next →' // Arrow inside the label
+            },
+            createElement, 'nextTitle', {
+              tag: 'span',
+              className: 'pagination-title',
+              text: next.title
+            }
           ]
-        : null
+        ]
+      ] : []
     ]
   ]
 
   const pagination = createLayout(paginationLayout)
   return pagination.element
 }
-
 export default createContentPagination

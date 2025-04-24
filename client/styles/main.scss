@@ -47,8 +47,10 @@
 @use './content/content';
 @use './content/components';
 @use './content/typography';
+@use './content/pagination';
 @use './content/styles';
 @use './content/colors';
+@use './content/gestures';
 @use './content/layout' as l;
 @use './content/elevation';
 @use './content/progress' as p;
@@ -56,3 +58,5 @@
 @use './content/state';
 @use './content/composition';
 @use './content/tabs' as t;
+@use './code/prism.css';
+// @use './code/javascript.scss';

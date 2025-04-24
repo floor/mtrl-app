@@ -48,9 +48,10 @@ export const navigationLayout = {
     label: 'Core',
     icon: codeIcon,
     items: [
+      { id: 'composition', label: 'Composition', path: '/core/composition' },
       { id: 'events', label: 'Events', path: '/core/events' },
-      { id: 'state', label: 'State', path: '/core/state' },
-      { id: 'composition', label: 'Composition', path: '/core/composition' }
+      { id: 'gestures', label: 'Gestures', path: '/core/gestures' },
+      { id: 'state', label: 'State', path: '/core/state' }
       // { id: 'layout', label: 'Layout', path: '/core/layout' }
     ]
   },
@@ -112,7 +113,6 @@ export const navigationLayout = {
       { id: 'selects', label: 'Selects', path: '/components/selects' },
       { id: 'sliders', label: 'Sliders', path: '/components/sliders' },
       { id: 'snackbars', label: 'Snackbars', path: '/components/snackbars' },
-
       { id: 'switches', label: 'Switches', path: '/components/switches' },
       { id: 'tabs', label: 'Tabs', path: '/components/tabs' },
       { id: 'textfields', label: 'Textfields', path: '/components/textfields' }

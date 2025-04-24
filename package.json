@@ -29,7 +29,8 @@
     "bun-types": "^1.2.5",
     "compression": "^1.8.0",
     "ejs": "^3.1.10",
-    "mtrl": "^0.3.8"
+    "mtrl": "^0.3.8",
+    "prismjs": "^1.30.0"
   },
   "devDependencies": {
     "sass": "^1.83.4",

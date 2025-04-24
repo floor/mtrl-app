@@ -4,8 +4,14 @@ import {
   createButton
 } from 'mtrl'
 
-export const initEventBus = (ui) => {
-  const container = ui.eventBus
+export const initEventBus = (body) => {
+  const layout = createLayout([createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Event Bus' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'The Event Bus enables application-wide communication between components using a publish/subscribe pattern.' }],
+    [createElement, 'container', { id: 'eventBus', class: 'event-bus-container' }]
+  ], body)
+
+  const container = layout.get('container')
 
   // Create explanation and examples for event bus
   const busExplanation = createElement({

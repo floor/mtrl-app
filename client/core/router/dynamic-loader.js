@@ -1,5 +1,7 @@
 // src/client/core/router/dynamic-loader.js
 
+import { highlightCodeBlocks } from '../code/highlight'
+
 /**
  * Dynamic route handler that lazy loads content modules
  *
@@ -12,6 +14,7 @@
 const ROUTE_MODULE_MAP = {
   // Section routes
   home: () => import('../../content/home'),
+  core: () => import('../../content/core'),
   styles: () => import('../../content/styles'),
   components: () => import('../../content/components'),
 
@@ -19,6 +22,7 @@ const ROUTE_MODULE_MAP = {
   'core/events': () => import('../../content/core/events'),
   'core/state': () => import('../../content/core/state'),
   'core/composition': () => import('../../content/core/composition'),
+  'core/gestures': () => import('../../content/core/gestures'),
   'core/layout': () => import('../../content/core/layout'),
 
   // Style routes
@@ -62,6 +66,7 @@ const ROUTE_MODULE_MAP = {
  * @returns {Function} A handler function that loads the module and renders the content
  */
 export const createDynamicHandler = (routePath) => {
+  // console.log('createDynamicHandler', routePath)
   return async (route, ui) => {
     try {
       // Check if we have a direct mapping for this route
@@ -118,6 +123,10 @@ export const createDynamicHandler = (routePath) => {
       if (!contentCreator || typeof contentCreator !== 'function') {
         console.error(`No content creator function found for route: ${routePath}. Available exports:`, Object.keys(module))
         throw new Error(`Invalid content module for route: ${routePath}`)
+      }
+
+      if (ui.content) {
+        highlightCodeBlocks(ui.content, { delay: 50 })
       }
 
       // Call the content creator function with the UI container

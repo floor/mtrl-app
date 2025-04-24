@@ -3,8 +3,14 @@ import {
   createElement
 } from 'mtrl'
 
-export const initTouchGestures = (ui) => {
-  const container = ui.touchGestures
+export const initSwipe = (body) => {
+  const layout = createLayout([createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Touch Gestures' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Built-in support for touch gestures makes it easy to create consistent interactions across devices.' }],
+    [createElement, 'container', { id: 'touchGestures', class: 'touch-gestures-container' }]
+  ], body)
+
+  const container = layout.get('container')
 
   // Create explanation for touch gestures
   const touchExplanation = createElement({

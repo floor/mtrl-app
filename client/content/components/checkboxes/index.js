@@ -3,6 +3,10 @@ import {
   componentsLayout
 } from '../../../layout'
 
+import {
+  createLayout
+} from 'mtrl'
+
 import { initBasicCheckboxes } from './basic'
 import { initLabelPositions } from './label'
 import { initIndeterminateCheckboxes } from './indeterminate'

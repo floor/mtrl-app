@@ -1,0 +1,133 @@
+// Enhanced styling specifically for JavaScript code blocks
+
+// JavaScript-specific code block enhancements
+pre > code.language-javascript {
+  // Add a subtle indicator for JavaScript code
+  &::before {
+    content: "JS";
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #666;
+    background: #f0f0f0;
+    border-radius: 0 0 0 4px;
+    opacity: 0.8;
+  }
+  
+  // Make keywords more prominent
+  .token.keyword {
+    font-weight: 500;
+  }
+  
+  // Enhance arrow functions
+  .token.operator + .token.operator {
+    margin-left: -0.25em; // Tighten consecutive operators (for =>)
+  }
+  
+  // Enhance template literals
+  .token.template-string {
+    color: #50a14f;
+  }
+  
+  // Enhance comments
+  .token.comment {
+    font-style: italic;
+  }
+  
+  // Enhance function calls
+  .token.function {
+    color: #4078f2;
+  }
+  
+  // Better highlighting for method calls in object chains
+  .token.property + .token.punctuation + .token.function {
+    color: #4078f2;
+  }
+}
+
+// Enhance the parent pre container
+pre:has(> code.language-javascript) {
+  position: relative;
+  border-left: 3px solid #f2db4c; // JavaScript yellow
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  
+  // Better spacing for readability
+  line-height: 1.5;
+  
+  // Add proper scrolling behavior
+  overflow-x: auto;
+  
+  // Improve font rendering
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Dark theme adjustments
+[data-theme="dark"] {
+  pre > code.language-javascript {
+    &::before {
+      background: #333;
+      color: #eee;
+    }
+  }
+  
+  pre:has(> code.language-javascript) {
+    border-left: 3px solid #e2c52d; // Darker JavaScript yellow for dark mode
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Add a better focus state for keyboard navigation
+pre:focus-within {
+  outline: 2px solid var(--primary-color, #3498db);
+  outline-offset: 2px;
+}
+
+// Add copy button functionality (optional)
+.event-example__code {
+  position: relative;
+  
+  &:hover .code-copy-button {
+    opacity: 1;
+  }
+  
+  .code-copy-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      background: #f5f5f5;
+    }
+    
+    &:active {
+      background: #eee;
+    }
+  }
+}
+
+// Dark mode for copy button
+[data-theme="dark"] .event-example__code .code-copy-button {
+  background: rgba(45, 45, 45, 0.8);
+  border-color: #444;
+  color: #eee;
+  
+  &:hover {
+    background: #3a3a3a;
+  }
+  
+  &:active {
+    background: #444;
+  }
+}

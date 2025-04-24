@@ -143,59 +143,6 @@ $app: '#{b.$prefix}-app';
     flex-wrap: wrap;
   }
 
-  // client/styles/components/_pagination.scss
-  .#{b.$prefix}-content-pagination {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--md-sys-color-outline-variant);
-    
-    .#{b.$prefix}-pagination-link {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: var(--md-sys-color-primary);
-      text-decoration: none;
-      transition: opacity 0.2s;
-      padding: 16px;
-      background-color: var(--md-sys-surface-container);
-      &:hover {
-        opacity: 0.8;
-      }
-      
-      .#{b.$prefix}-pagination-arrow {
-        font-size: 1.25rem;
-        line-height: 1;
-      }
-      
-      .#{b.$prefix}-pagination-content {
-        display: flex;
-        flex-direction: column;
-        
-        .#{b.$prefix}-pagination-label {
-          font-size: 0.75rem;
-          opacity: 0.8;
-        }
-        
-        .#{b.$prefix}-pagination-title {
-          font-weight: 500;
-        }
-      }
-    }
-
-    .#{b.$prefix}-pagination-prev {
-      max-width: 45%;
-    }
-    
-    .#{b.$prefix}-pagination-next {
-      max-width: 45%;
-      margin-left: auto;
-      text-align: right;
-    }
-  }
-
-
   // Desktop styles - as media queries
   @media (min-width: 960px) {
     .#{b.$prefix}-nav--rail {

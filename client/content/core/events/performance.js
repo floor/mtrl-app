@@ -3,8 +3,14 @@ import {
   createElement
 } from 'mtrl'
 
-export const initPerformanceUtils = (ui) => {
-  const container = ui.performanceUtils
+export const initPerformanceUtils = (body) => {
+  const layout = createLayout([createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Performance Utilities' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Performance utilities like throttle and debounce help optimize event handlers that might fire rapidly.' }],
+    [createElement, 'container', { id: 'performanceUtils', class: 'performance-utils-container' }]
+  ], body)
+
+  const container = layout.get('container')
 
   // Create explanation for performance utilities
   const perfExplanation = createElement({

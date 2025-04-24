@@ -1,10 +1,21 @@
 import {
   createElement,
-  createButton
+  createButton,
+  createLayout
 } from 'mtrl'
 
-export const initEventManager = (ui) => {
-  const container = ui.eventManager
+import {
+  sectionTitleDescriptionLayout
+} from '../../../layout'
+
+export const initEventManager = (body) => {
+  const layout = createLayout([createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Event Manager' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'The Event Manager provides a standardized way to handle DOM events and custom component events with built-in error handling and automatic cleanup.' }],
+    [createElement, 'container', { id: 'eventManager', class: 'event-manager-container' }]
+  ], body)
+
+  const container = layout.get('container')
 
   // Create explanation and examples for event manager
   const managerExplanation = createElement({
@@ -15,7 +26,7 @@ export const initEventManager = (ui) => {
   const explanationText = createElement({
     tag: 'p',
     class: 'event-explanation__text',
-    text: '1The Event Manager provides a standardized way to handle DOM events and custom component events with built-in error handling and lifecycle management.'
+    text: 'The Event Manager provides a standardized way to handle DOM events and custom component events with built-in error handling and lifecycle management.'
   })
 
   managerExplanation.appendChild(explanationText)
@@ -32,10 +43,8 @@ export const initEventManager = (ui) => {
     text: 'Basic Usage'
   })
 
-  const exampleCode = createElement({
-    tag: 'pre',
-    class: 'event-example__code',
-    text: `// Create an event manager for a component
+  // Store the code as a variable for easier copying
+  const codeText = `// Create an event manager for a component
 const events = createEventManager(buttonElement);
 
 // Register DOM event listeners
@@ -53,7 +62,24 @@ events.forward('click', 'activate');
 component.lifecycle.destroy = () => {
   events.destroy();
 };`
+
+  // Create pre element with the code element inside using standard Prism.js classes
+  const preElement = createElement({
+    tag: 'pre',
+    class: 'event-example__code'
   })
+
+  // Create code element with standard language class for syntax highlighting
+  const codeElement = createElement({
+    tag: 'code',
+    class: 'language-javascript'
+  })
+
+  // Set code content
+  codeElement.textContent = codeText
+
+  // Append code to pre element
+  preElement.appendChild(codeElement)
 
   const exampleDemo = createElement({
     tag: 'div',
@@ -118,7 +144,7 @@ component.lifecycle.destroy = () => {
   exampleDemo.appendChild(eventLog)
 
   eventManagerExample.appendChild(exampleTitle)
-  eventManagerExample.appendChild(exampleCode)
+  eventManagerExample.appendChild(preElement)
   eventManagerExample.appendChild(exampleDemo)
 
   container.appendChild(managerExplanation)

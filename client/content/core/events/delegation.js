@@ -4,8 +4,14 @@ import {
   createElement
 } from 'mtrl'
 
-export const initEventDelegation = (ui) => {
-  const container = ui.eventDelegation
+export const initEventDelegation = (body) => {
+  const layout = createLayout([createElement, { tag: 'section', class: 'mtrl-content__section' },
+    [createElement, { tag: 'h2', class: 'mtrl-content__section-title', text: 'Event Delegation' }],
+    [createElement, { tag: 'p', class: 'mtrl-content__description', text: 'Event delegation lets you handle events for multiple elements with a single listener, improving performance and working with dynamic elements.' }],
+    [createElement, 'container', { id: 'eventDelegation', class: 'event-delegation-container' }]
+  ], body)
+
+  const container = layout.get('container')
 
   // Create explanation for event delegation
   const delegationExplanation = createElement({
@@ -98,6 +104,7 @@ events.on('change', delegate('input[type="checkbox"]', (event, target) => {
 
   // Set up event delegation demo
   itemList.addEventListener('click', (event) => {
+    console.log('click')
     // Only handle clicks on list items
     if (event.target.matches('.delegation-item')) {
       const logEntry = createElement({

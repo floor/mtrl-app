@@ -1,0 +1,205 @@
+.gesture-explanation {
+  margin-bottom: 2rem;
+}
+
+.gesture-example__code {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow: auto;
+  font-family: monospace;
+  margin-bottom: 2rem;
+}
+
+.gesture-demo-section {
+  margin-top: 2rem;
+}
+
+.gesture-demo-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+}
+
+.gesture-tab {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.gesture-tab.active {
+  color: #4285f4;
+  border-bottom-color: #4285f4;
+}
+
+.gesture-demo {
+  display: none;
+}
+
+.gesture-demo.active {
+  display: block;
+}
+
+.gesture-area {
+  width: 100%;
+  height: 200px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  touch-action: none;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.gesture-log, .card-log {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.gesture-log-title, .card-log-title {
+  background-color: #eee;
+  padding: 0.5rem;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.gesture-log-content, .card-log-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.gesture-log-entry, .card-log-entry {
+  margin-bottom: 0.25rem;
+  padding: 0.25rem;
+}
+
+.gesture-log-entry.tap {
+  color: #4285f4;
+}
+
+.gesture-log-entry.swipe {
+  color: #0f9d58;
+}
+
+.gesture-log-entry.longpress {
+  color: #db4437;
+}
+
+.gesture-log-entry.pinch, .gesture-log-entry.rotate {
+  color: #f4b400;
+}
+
+.card-log-entry.flip {
+  color: #4285f4;
+}
+
+.card-log-entry.zoom {
+  color: #0f9d58;
+}
+
+.card-log-entry.dismiss {
+  color: #db4437;
+}
+
+.gesture-clear-button, .new-card-button {
+  padding: 0.5rem 1rem;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0.5rem;
+  align-self: flex-start;
+}
+
+.gesture-clear-button:hover, .new-card-button:hover {
+  background-color: #3367d6;
+}
+
+.gesture-demo-card {
+  margin-bottom: 2rem;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  min-height: 400px;
+}
+
+/* Pulse effects for gestures */
+.pulse-tap {
+  animation: pulse-blue 0.5s;
+}
+
+.pulse-swipe-left {
+  animation: slide-left 0.5s;
+}
+
+.pulse-swipe-right {
+  animation: slide-right 0.5s;
+}
+
+.pulse-swipe-up {
+  animation: slide-up 0.5s;
+}
+
+.pulse-swipe-down {
+  animation: slide-down 0.5s;
+}
+
+.pulse-longpress {
+  animation: pulse-red 0.5s;
+}
+
+@keyframes pulse-blue {
+  0% { background-color: #f0f0f0; }
+  50% { background-color: rgba(66, 133, 244, 0.3); }
+  100% { background-color: #f0f0f0; }
+}
+
+@keyframes pulse-red {
+  0% { background-color: #f0f0f0; }
+  50% { background-color: rgba(219, 68, 55, 0.3); }
+  100% { background-color: #f0f0f0; }
+}
+
+@keyframes slide-left {
+  0% { background-position: 0 0; }
+  50% { background-position: -20px 0; }
+  100% { background-position: 0 0; }
+}
+
+@keyframes slide-right {
+  0% { background-position: 0 0; }
+  50% { background-position: 20px 0; }
+  100% { background-position: 0 0; }
+}
+
+@keyframes slide-up {
+  0% { background-position: 0 0; }
+  50% { background-position: 0 -20px; }
+  100% { background-position: 0 0; }
+}
+
+@keyframes slide-down {
+  0% { background-position: 0 0; }
+  50% { background-position: 0 20px; }
+  100% { background-position: 0 0; }
+}
