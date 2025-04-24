@@ -3,34 +3,45 @@ import {
 } from '../../../layout'
 
 import {
+  countries
+} from '../../../data/isocode'
+
+import {
   createLayout,
   createList
 } from 'mtrl'
 
 export const initMultiSelectList = (container) => {
+  // let selection = []
+
   const title = 'Multi Select List'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
+  // Create a multi-select list
   const list = createList({
-    type: 'multi',
-    items: [
-      { id: '1', headline: 'Option 1', selected: true },
-      { id: '2', headline: 'Option 2' },
-      { id: '3', headline: 'Option 3', selected: true },
-      { id: '4', headline: 'Option 4' }
-    ]
+    multiSelect: true,
+    items: countries,
+    renderItem: (item) => {
+      // const isSelected = selection.includes(item.id)
+      const layout = createLayout(
+        [{ class: 'list-item' },
+          [{ class: 'list-item-content' },
+            [{ class: 'list-item-text', text: item.name }]
+          ]
+        ]
+      )
+
+      const element = layout.get('element')
+
+      return element
+    }
   })
 
-  list.on('selectionChange', (event) => {
-    log.info('selectionChange', event)
+  // Handle selection changes
+  list.on('select', (event) => {
+    log.info('Selection changed:', event.selectedItems)
+    // selection = event.selectedItems
   })
 
   layout.body.appendChild(list.element)
-
-  list.element.addEventListener('click', (event) => {
-    const item = event.target.closest('.mtrl-list-item')
-    if (item) {
-      log.info(item)
-    }
-  })
 }

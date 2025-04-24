@@ -1,0 +1,31 @@
+// src/client/styles/content/layout.scss
+@use 'mtrl/src/styles/abstract/base' as b;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
+@use 'mtrl/src/styles/abstract/mixins' as m;
+@use 'mtrl/src/styles/abstract/theme' as t;
+
+.#{b.$prefix}-list {
+  width: 260px;
+  height: 500px;
+  border: 2px solid t.color('outline-variant');
+  border-radius: 3px;
+}
+
+.#{b.$prefix}-list--basic {
+  width: 260px;
+  height: 200px;
+  border: 2px solid t.color('outline-variant');
+  border-radius: 3px;
+}
+
+.#{b.$prefix}-list--small {
+  width: 260px;
+  height: 500px;
+  border: 2px solid t.color('outline-variant');
+  border-radius: 3px;
+}
+
+.#{b.$prefix}-list-item--selected {
+  background-color: rgba(33, 150, 243, 0.1);
+}

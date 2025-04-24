@@ -23,7 +23,7 @@ export const createListsContent = (container, components) => {
 
   initBasicList(layout.body)
   // initSingleSelectList(layout.body)
-  // initMultiSelectList(layout.body)
+  initMultiSelectList(layout.body)
   // initSectionedList(layout.body)
   // initVerticalLayout(layout.body)
   // initListsAdapter(layout.body)
