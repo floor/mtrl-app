@@ -123,23 +123,23 @@ function performHighlight (container, config) {
       console.log(`Processed ${codeBlocks.length} code blocks`)
     }
   } else if (config.debug) {
-    console.log('No code blocks found to highlight')
+    // console.log('No code blocks found to highlight')
 
     // Log what selectors we're looking for and what's in the container
-    console.log('Selector:', config.selector)
-    console.log('Container:', container)
+    // console.log('Selector:', config.selector)
+    // console.log('Container:', container)
 
     // Try to find any pre or code elements
     const pre = container.querySelectorAll('pre')
     const code = container.querySelectorAll('code')
 
     if (pre.length) {
-      console.log(`Found ${pre.length} pre elements:`)
+      // console.log(`Found ${pre.length} pre elements:`)
       pre.forEach((el, i) => console.log(`Pre ${i}:`, el.outerHTML.slice(0, 100) + '...'))
     }
 
     if (code.length) {
-      console.log(`Found ${code.length} code elements:`)
+      // console.log(`Found ${code.length} code elements:`)
       code.forEach((el, i) => console.log(`Code ${i}:`, el.outerHTML.slice(0, 100) + '...'))
     }
   }

@@ -3,6 +3,7 @@ import { logRequest, logResponse, logError } from "./middleware/logger.js";
 import { handleStaticRequest, handleFaviconRequest } from "./handlers/static.js";
 import { handleRobotsRequest, handleLiveReload, handleHealthCheck, handleManifestRequest } from "./handlers/special.js";
 import { handleAppRequest, handleNotFound } from "./handlers/app.js";
+import { handleApiRequest } from "./handlers/api.js"; // Import the API handler
 import { initLiveReload } from "./services/live-reload.js";
 import { compressionMiddleware } from "./middleware/compression.js";
 import config from "./config.js";
@@ -30,12 +31,17 @@ async function handleRequest(req: Request): Promise<Response> {
     // Define a variable to hold the response
     let response: Response | null = null;
     
-    // Try special handlers first
-    response = handleHealthCheck(req) || 
-               handleRobotsRequest(req) || 
-               ((!isProduction) ? handleLiveReload(req) : null) ||
-               await handleManifestRequest(req) ||
-               await handleFaviconRequest(req);
+    // Try API handler first
+    response = await handleApiRequest(req); // Check for API requests first
+    
+    // Try special handlers if not an API request
+    if (!response) {
+      response = handleHealthCheck(req) || 
+                 handleRobotsRequest(req) || 
+                 ((!isProduction) ? handleLiveReload(req) : null) ||
+                 await handleManifestRequest(req) ||
+                 await handleFaviconRequest(req);
+    }
     
     // If no special handler matched, try static files
     if (!response && (url.pathname.startsWith('/dist/') || url.pathname.startsWith('/public/'))) {
@@ -84,6 +90,7 @@ const startupBanner = `
 📦 Compression: ${isProduction ? "✅ Enabled (gzip)" : "❌ Disabled"}
 📁 Static file serving enabled
 🌐 Web App Manifest support enabled
+🔍 API Routes enabled
 ${!isProduction ? "🔄 Live reload enabled" : ""}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `;

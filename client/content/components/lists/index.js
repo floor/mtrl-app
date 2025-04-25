@@ -10,6 +10,7 @@ import {
 import { initBasicList } from './basic'
 import { initSingleSelectList } from './single-select'
 import { initMultiSelectList } from './multi-select'
+import { initUsersList } from './users'
 import { initSectionedList } from './sectioned'
 import { initVerticalLayout } from './vertical'
 
@@ -24,6 +25,7 @@ export const createListsContent = (container, components) => {
   initBasicList(layout.body)
   // initSingleSelectList(layout.body)
   initMultiSelectList(layout.body)
+  initUsersList(layout.body)
   // initSectionedList(layout.body)
   // initVerticalLayout(layout.body)
   // initListsAdapter(layout.body)

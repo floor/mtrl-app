@@ -260,7 +260,7 @@ export const createApp = (options = {}) => {
     // If using router, highlight code after each navigation
     if (router) {
       router.afterEach(() => {
-        console.log('afterEach')
+        // console.log('afterEach')
         // Slight delay to ensure content is loaded
         setTimeout(() => {
           Prism.highlightAll()

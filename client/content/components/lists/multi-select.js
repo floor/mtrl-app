@@ -21,6 +21,7 @@ export const initMultiSelectList = (container) => {
   const list = createList({
     multiSelect: true,
     items: countries,
+    baseUrl: null,
     renderItem: (item) => {
       // const isSelected = selection.includes(item.id)
       const layout = createLayout(

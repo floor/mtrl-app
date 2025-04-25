@@ -14,6 +14,7 @@ export const initBasicList = (container) => {
   const basicList = createList({
     // Provide static items directly
     class: 'list--basic',
+    baseUrl: null,
     items: [
       { id: '1', headline: 'List Item 1' },
       { id: '2', headline: 'List Item 2' },
@@ -32,7 +33,6 @@ export const initBasicList = (container) => {
           <span class="mtrl-list-item-text">${item.headline}</span>
         </div>
       `
-
       return element
     }
   })
