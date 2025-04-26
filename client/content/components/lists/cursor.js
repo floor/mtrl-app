@@ -7,25 +7,26 @@ import {
   createList
 } from 'mtrl'
 
-export const initUsersList = (container) => {
+export const initCursorList = (container) => {
   const title = 'API Users List'
-  const description = '1\'000\'000 entries and virtualiation'
+  const description = '1\'000\'000 entries and virtualization with cursor pagination strategy'
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
   console.log('Creating users list...')
 
   // Create the API-connected list
   const userList = createList({
-    collection: 'users', // This should create a '/api/users' endpoint
+    collection: 'users/cursor', // This should create a '/api/users' endpoint
     baseUrl: '/api', // Using relative URL - our fixed adapter will handle this properly
     class: 'list--users',
-    itemHeight: 84,
+    dynamicItemSize: true,
+    // itemHeight: 84,
     pageSize: 10,
     scrollStrategy: 'hybrid',
     pagination: {
-      strategy: 'page', // Specify page strategy
-      pageParamName: 'page', // Parameter for page number (default)
-      perPageParamName: 'limit', // Parameter for page size (default)
-      defaultPageSize: 20 // Items per page (default: 20)
+      strategy: 'cursor', // Specify cursor strategy
+      cursorParamName: 'cursor', // Parameter name for cursor (default)
+      limitParamName: 'limit', // Parameter name for limit (default)
+      defaultPageSize: 25 // Items per page (default: 20)
     },
 
     // Configure adapter to properly handle the response

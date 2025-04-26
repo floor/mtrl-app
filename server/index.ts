@@ -3,7 +3,7 @@ import { logRequest, logResponse, logError } from "./middleware/logger.js";
 import { handleStaticRequest, handleFaviconRequest } from "./handlers/static.js";
 import { handleRobotsRequest, handleLiveReload, handleHealthCheck, handleManifestRequest } from "./handlers/special.js";
 import { handleAppRequest, handleNotFound } from "./handlers/app.js";
-import { handleApiRequest } from "./handlers/api.js"; // Import the API handler
+import { handleApiRequest } from "./api/index.js"; // Updated import path
 import { initLiveReload } from "./services/live-reload.js";
 import { compressionMiddleware } from "./middleware/compression.js";
 import config from "./config.js";

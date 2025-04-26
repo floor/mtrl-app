@@ -9,8 +9,7 @@ import {
 
 export const initUsersList = (container) => {
   const title = 'API Users List'
-  const description = '1\'000\'000 entries and virtualiation'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
   console.log('Creating users list...')
 
   // Create the API-connected list
@@ -21,12 +20,6 @@ export const initUsersList = (container) => {
     itemHeight: 84,
     pageSize: 10,
     scrollStrategy: 'hybrid',
-    pagination: {
-      strategy: 'page', // Specify page strategy
-      pageParamName: 'page', // Parameter for page number (default)
-      perPageParamName: 'limit', // Parameter for page size (default)
-      defaultPageSize: 20 // Items per page (default: 20)
-    },
 
     // Configure adapter to properly handle the response
     adapter: {
