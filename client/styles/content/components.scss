@@ -87,74 +87,84 @@ $components: '#{b.$prefix}-components';
     background-color: t.color('surface-container');
     min-height: 200px;
   }
+}
 
-  &__section {
-    padding: 0;
-    background-color: t.color('surface-container');
-    border-radius: f.get-shape('large');
-    margin-bottom: 24px;
-    &-head {
-      padding: 24px;
-    }
-    &-title {
-      font-weight: normal;
-      // margin-bottom: 0
-    }
 
-    &-description {
-      margin-top: 6px
-    }
+.#{$components}__section {
+  padding: 0;
+  background-color: t.color('surface-container');
+  border-radius: f.get-shape('large');
+  margin-bottom: 24px;
+  &-head {
+    padding: 24px;
+  }
+  &-title {
+    font-weight: normal;
+  }
 
-    &-body {
+  &-description {
+    margin-top: 6px
+  }
+
+  &-body {
+    display: flex;
+    // justify-content: center;
+    // gap: 20px;
+    // padding: 60px 24px 60px;
+    border-radius: 16px;
+    background-color: t.color('surface-bright');
+    // background-image: url(/public/img/grid-light.png);
+    background-position: center;
+    border-left: 1px solid rgba(0,0,0,.05);
+    border-right: 1px solid rgba(0,0,0,.05);
+    border-bottom: 1px solid rgba(0,0,0,.05);
+    overflow: hidden;
+  }
+
+  &-showcase {
+    flex: 2;
+    display: flex;
+    // grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    // justify-items: center; // Ensure proper alignment
+    align-items: center; // Prevents grid items from stretching
+    gap: 20px;
+    padding: 60px 24px 60px;
+    // transform: scale(.85);
+    // @include c.typography('headline-small');
+    background-image: url(/public/img/grid-light.png);
+    color: t.color('on-surface');
+    margin: 0; 
+    &.#{b.$prefix}-noflex {
+      display: inline-block;
+    }
+    .#{b.$prefix}-showcase-wrapper {
+      display: inline-block;
+      position: relative;
       display: flex;
-      justify-content: center;
-      gap: 20px;
-      padding: 60px 24px 60px;
-      border-radius: 16px;
-      background-color: t.color('surface-bright');
-      // background-image: url(/public/img/grid-light.png);
-      background-position: center;
-      border-left: 1px solid rgba(0,0,0,.05);
-      border-right: 1px solid rgba(0,0,0,.05);
-      border-bottom: 1px solid rgba(0,0,0,.05);
-      .#{$components}__section-info {
-
-      }
-      &.noflex {
-        display: inline-block;
-      }
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
     }
-
-    &-showcase {
-      display: flex;
-      // grid-template-columns: repeat(3, 1fr);
-      // justify-items: start; // Ensure proper alignment
-      align-items: start; // Prevents grid items from stretching
-      gap: 20px;
-      // transform: scale(.85);
-      // @include c.typography('headline-small');
-      color: t.color('on-surface');
-      margin: 0 0 16px; 
-      &.#{b.$prefix}-noflex {
-        display: inline-block;
-      }
-    }
-    &-box {
-      // gap: 20px;
-      padding: 24px;
-      background-color: t.color('surface-bright');
-      // background-image: url(/public/img/grid-light.png);
-      background-position: center;
-      border-radius: 16px;
-      border-left: 1px solid rgba(0,0,0,.05);
-      border-right: 1px solid rgba(0,0,0,.05);
-      border-bottom: 1px solid rgba(0,0,0,.05);
-      .#{b.$prefix}-textfield {
-        margin-right: 20px;
-      }
+    .#{b.$prefix}-showcase-label {
+      font-size: 12px;
+      margin-top: 20px;
     }
   }
+  &-info {
+    flex: 1;
+    // display: flex;
+    // grid-template-columns: repeat(3, 1fr);
+    justify-items: start; // Ensure proper alignment
+    align-items: start; // Prevents grid items from stretching
+    gap: 20px;
+    padding: 24px 24px 24px;
+    color: t.color('on-surface');
+    margin: 0;
+  }
 }
+
+
 
 body[data-theme-mode=dark] {
   .#{$components}.components {

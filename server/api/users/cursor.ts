@@ -36,7 +36,7 @@ export async function handleCursorPagination(req: Request, url: URL): Promise<Re
   }
   
   // Add some artificial delay to simulate network latency
-  await new Promise(resolve => setTimeout(resolve, 300));
+  // await new Promise(resolve => setTimeout(resolve, 300));
   
   // Handle users list with pagination
   let users: any[];

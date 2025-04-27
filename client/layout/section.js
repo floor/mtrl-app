@@ -46,7 +46,8 @@ export const createComponentsSectionLayout = (info) => [
       ['description', { tag: 'div', class: 'components__section-description', text: info.description }]
     ],
     ['body', { class: 'components__section-body' },
-      ['showcase', { class: `components__section-showcase ${info.class}` }]
+      ['showcase', { class: `components__section-showcase ${info.class}` }],
+      ['info', { id: 'info', class: 'components__section-info' }]
     ]
   ]
 ]

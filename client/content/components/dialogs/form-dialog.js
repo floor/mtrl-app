@@ -210,6 +210,6 @@ export const initFormDialog = (container) => {
   })
 
   // Add button and result container to layout
-  layout.body.appendChild(openContactButton.element)
-  layout.body.appendChild(openSettingsButton.element)
+  layout.showcase.appendChild(openContactButton.element)
+  layout.showcase.appendChild(openSettingsButton.element)
 }

@@ -46,5 +46,5 @@ export const initRange = (container) => {
   //   console.log('input', event.value, event.secondValue)
   // })
 
-  layout.body.appendChild(priceSlider.element)
+  layout.showcase.appendChild(priceSlider.element)
 }

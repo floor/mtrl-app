@@ -45,5 +45,5 @@ export const initMultiSelectList = (container) => {
     // selection = event.selectedItems
   })
 
-  layout.body.appendChild(list.element)
+  layout.showcase.appendChild(list.element)
 }

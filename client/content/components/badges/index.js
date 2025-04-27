@@ -27,7 +27,8 @@ export const createBadgesContent = (container) => {
   initStandard(layout.body)
   initDot(layout.body)
   // initPositions(layout.body)
-  initMax(layout.body)
-  initAttached(layout.body)
+
+  // initAttached(layout.body)
   initEventsAPI(layout.body)
+  initMax(layout.body)
 }

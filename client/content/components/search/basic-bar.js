@@ -14,14 +14,16 @@ export const initBasicBar = (container) => {
   const title = 'Basic Search Bar'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  // Create a basic search bar
+  // Component show case
   const searchBar = createSearch({
     placeholder: 'Search',
     showClearButton: true
   })
 
   // Create the demo structure
-  const demoStructure = [
+
+  // // Component show case
+  const demo = createLayout([
     [createElement, 'container', { class: 'search-basic-demo' }, [
       [createElement, 'description', {
         tag: 'p',
@@ -29,10 +31,7 @@ export const initBasicBar = (container) => {
       }],
       [createElement, 'searchContainer', { class: 'search-bar-container' }]
     ]]
-  ]
-
-  // Create the demo
-  const demo = createLayout(demoStructure, layout.body).component
+  ], layout.info).component
 
   // Add the search component to its container
   demo.searchContainer.appendChild(searchBar.element)

@@ -106,7 +106,7 @@ export const initIndeterminateCheckboxes = (container) => {
 
   // Assemble the demo
   demoWrapper.appendChild(childrenContainer)
-  demoWrapper.appendChild(description)
-  demoWrapper.appendChild(controlsWrapper)
-  layout.body.appendChild(demoWrapper)
+  layout.info.appendChild(description)
+  layout.info.appendChild(controlsWrapper)
+  layout.showcase.appendChild(demoWrapper)
 }

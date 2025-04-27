@@ -99,5 +99,5 @@ export const initMax = (container) => {
     badgeContainer.appendChild(wrapper)
   })
 
-  layout.body.appendChild(badgeContainer)
+  layout.showcase.appendChild(badgeContainer)
 }

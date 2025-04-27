@@ -19,8 +19,8 @@ export const initUsersList = (container) => {
     baseUrl: '/api', // Using relative URL - our fixed adapter will handle this properly
     class: 'list--users',
     itemHeight: 84,
-    pageSize: 10,
-    scrollStrategy: 'hybrid',
+    // pageSize: 20,
+    scrollStrategy: 'scroll',
     pagination: {
       strategy: 'page', // Specify page strategy
       pageParamName: 'page', // Parameter for page number (default)
@@ -33,14 +33,14 @@ export const initUsersList = (container) => {
       parseResponse: (response) => {
         // Safely extract data and pagination info with fallbacks
         const items = response?.data || []
-        const pagination = response?.pagination || {}
+        // const pagination = response?.pagination || {}
 
         return {
-          items,
-          meta: {
-            cursor: pagination.hasNext ? String(pagination.page + 1) : null,
-            hasNext: Boolean(pagination.hasNext)
-          }
+          items
+          // meta: {
+          //   cursor: pagination.hasNext ? String(pagination.page + 1) : null,
+          //   hasNext: Boolean(pagination.hasNext)
+          // }
         }
       }
     },
@@ -90,19 +90,19 @@ export const initUsersList = (container) => {
     }
   })
 
-  // Event listeners
-  userList.on('load', (event) => {
-    console.log('List loaded:', event)
+  // // Event listeners
+  // userList.on('load', (event) => {
+  //   // console.log('List loaded:', event)
 
-    // Check if any items were added to the DOM
-    const items = userList.element.querySelectorAll('.mtrl-list-item')
-    console.log('DOM items after load:', items.length)
+  //   // Check if any items were added to the DOM
+  //   const items = userList.element.querySelectorAll('.mtrl-list-item')
+  //   console.log('DOM items after load:', items.length)
 
-    // Log heights of visible items
-    Array.from(items).forEach((item) => {
-      console.log('Item height:', item.offsetHeight, item)
-    })
-  })
+  //   // Log heights of visible items
+  //   Array.from(items).forEach((item) => {
+  //     // console.log('Item height:', item.offsetHeight, item)
+  //   })
+  // })
 
   userList.on('select', (event) => {
     console.log('Selected user:', event.item)

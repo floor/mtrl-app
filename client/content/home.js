@@ -12,6 +12,7 @@ import { initSupportingText as createSwitches } from './components/switches/supp
 import { initBasicTabs as createTabs } from './components/tabs/basic'
 import { initSubmenu as createSelectSubmenu } from './components/selects/submenu'
 import { initIndeterminateCheckboxes as createCheckboxes } from './components/checkboxes/indeterminate'
+import { initEventsAPI as createBadgeAPI } from './components/badges/events-api'
 
 import { initFormDialog as createDialogs } from './components/dialogs/form-dialog'
 
@@ -31,8 +32,9 @@ export const createHomeContent = (container) => {
   createButtonVariants(body)
   createSwitches(body)
   createTextfieldCombined(body)
-  createRangeSlider(body)
   createSelectSubmenu(body)
+  createRangeSlider(body)
+  createBadgeAPI(body)
   createDialogs(body)
   createCheckboxes(body)
   createTabs(body)

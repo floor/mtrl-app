@@ -18,9 +18,9 @@ export const initCursorList = (container) => {
     collection: 'users/cursor', // This should create a '/api/users' endpoint
     baseUrl: '/api', // Using relative URL - our fixed adapter will handle this properly
     class: 'list--users',
-    dynamicItemSize: true,
-    // itemHeight: 84,
-    pageSize: 10,
+    // dynamicItemSize: true,
+    itemHeight: 84,
+    pageSize: 20,
     scrollStrategy: 'hybrid',
     pagination: {
       strategy: 'cursor', // Specify cursor strategy
@@ -100,9 +100,9 @@ export const initCursorList = (container) => {
     console.log('DOM items after load:', items.length)
 
     // Log heights of visible items
-    Array.from(items).forEach((item) => {
-      console.log('Item height:', item.offsetHeight, item)
-    })
+    // Array.from(items).forEach((item) => {
+    //   console.log('Item height:', item.offsetHeight, item)
+    // })
   })
 
   userList.on('select', (event) => {
