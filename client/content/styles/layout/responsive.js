@@ -53,7 +53,7 @@ export const createResponsiveLayout = (container) => {
       tag: 'div',
       class: 'layout-demo responsive-layout',
       // Use layout configuration instead of raw classes
-      layout: { type: 'stack', gap: 'md' }
+      layout: { type: 'row', gap: 'md', mobileStack: true, justify: 'between' }
     }
   ], body)
 
@@ -102,7 +102,7 @@ export const createResponsiveLayout = (container) => {
   ]
 
   // Track current layout
-  let currentLayout = 'stack'
+  let currentLayout = 'row'
 
   /**
    * Handler for layout changes with proper class cleanup

@@ -1,17 +1,18 @@
 // src/client/content/styles/layout.js
 
 import {
-  createContentLayout
+  createContentLayout,
+  createDocs
 } from '../../../layout'
 
 // Import utility functions for layout examples
 
 // import { createBasicLayout } from './basic'
 import { createResponsiveLayout } from './responsive'
-import { createGridLayout } from './grid'
-import { createCardLayout } from './card'
+// import { createGridLayout } from './grid'
+// import { createCardLayout } from './card'
 import { createSplitLayout } from './split'
-import { initializeInteractiveLayouts } from './interactive'
+// import { initializeInteractiveLayouts } from './interactive'
 
 import {
   createLayout
@@ -34,5 +35,7 @@ export const createLayoutStylesContent = (container) => {
   createSplitLayout(layout.body)
 
   // Initialize interactive elements after creating all layout components
-  initializeInteractiveLayouts(container)
+  // initializeInteractiveLayouts(container)
+
+  createDocs(layout.body, 'core/layout.md')
 }

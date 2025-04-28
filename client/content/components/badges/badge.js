@@ -6,15 +6,11 @@ import {
 
 import {
   createLayout, createBadge, createSlider,
-  createSelect, createChips, createSwitch
+  createSelect, createChips, createSwitch,
+  BADGE_COLORS, BADGE_VARIANTS
 } from 'mtrl'
 
-import {
-  BADGE_COLORS,
-  BADGE_VARIANTS
-} from 'mtrl/src/components/badge'
-
-export const initEventsAPI = (container) => {
+export const createBadgeContent = (container) => {
   const title = 'Badge API Demo'
   const description = 'Try out the badge API methods'
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component

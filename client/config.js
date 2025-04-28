@@ -48,10 +48,29 @@ export const navigationLayout = {
     label: 'Core',
     icon: codeIcon,
     items: [
-      { id: 'composition', label: 'Composition', path: '/core/composition' },
+      {
+        id: 'composition-main',
+        label: 'Composition',
+        // path: '/core/composition',
+        items: [
+          { id: 'composition', label: 'Overview', path: '/core/composition' },
+          { id: 'features', label: 'Features', path: '/core/composition/features' }
+        ]
+      },
       { id: 'events', label: 'Events', path: '/core/events' },
-      { id: 'gestures', label: 'Gestures', path: '/core/gestures' },
-      { id: 'state', label: 'State', path: '/core/state' }
+      { id: 'state', label: 'State', path: '/core/state' },
+      {
+        id: 'collection-main',
+        label: 'Collection',
+        //  path: '/core/collection',
+        items: [
+          { id: 'collection', label: 'Overview', path: '/core/collection' },
+          { id: 'route', label: 'Route Adapter', path: '/core/collection/route' },
+          { id: 'list-manager', label: 'List Manager', path: '/core/collection/list-manager' }
+        ]
+      },
+      { id: 'gestures', label: 'Gestures', path: '/core/gestures' }
+
       // { id: 'layout', label: 'Layout', path: '/core/layout' }
     ]
   },

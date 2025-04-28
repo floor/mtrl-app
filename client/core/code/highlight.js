@@ -1,4 +1,4 @@
-// src/client/core/utils/code-highlighter.js
+// src/client/core/code/highlight.js
 
 /**
  * Utility for code highlighting in the mtrl application
@@ -65,22 +65,17 @@ function performHighlight (container, config) {
       const classNames = block.className || ''
       const parentClassNames = block.parentElement ? block.parentElement.className || '' : ''
 
-      // Try to find language in code element class
       if (classNames.includes('language-')) {
         const match = classNames.match(/language-([a-z]+)/)
         if (match && match[1] && match[1] !== 'none') {
           language = match[1]
         }
-      }
-      // If language wasn't found or is 'none', check if there's mtrl-language-*
-      else if (classNames.includes('mtrl-language-')) {
+      } else if (classNames.includes('mtrl-language-')) {
         const match = classNames.match(/mtrl-language-([a-z]+)/)
         if (match && match[1] && match[1] !== 'none') {
           language = match[1]
         }
-      }
-      // Check parent element for language class if not found in code element
-      else if (parentClassNames.includes('language-')) {
+      } else if (parentClassNames.includes('language-')) {
         const match = parentClassNames.match(/language-([a-z]+)/)
         if (match && match[1] && match[1] !== 'none') {
           language = match[1]

@@ -5,14 +5,9 @@ import {
 } from '../../../layout'
 
 import {
-  createElement,
-  createLayout,
-  createBadge
-} from 'mtrl'
-
-import {
+  createElement, createLayout, createBadge,
   BADGE_COLORS
-} from 'mtrl/src/components/badge'
+} from 'mtrl'
 
 export const initStandard = (container) => {
   const title = 'Standard Badges with Different Colors'

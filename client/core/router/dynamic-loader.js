@@ -21,7 +21,11 @@ const ROUTE_MODULE_MAP = {
   // Core routes
   'core/events': () => import('../../content/core/events'),
   'core/state': () => import('../../content/core/state'),
+  'core/collection': () => import('../../content/core/collection'),
+  'core/collection/route': () => import('../../content/core/collection/route'),
+  'core/collection/list-manager': () => import('../../content/core/collection/list-manager'),
   'core/composition': () => import('../../content/core/composition'),
+  'core/composition/features': () => import('../../content/core/composition/features'),
   'core/gestures': () => import('../../content/core/gestures'),
   'core/layout': () => import('../../content/core/layout'),
 

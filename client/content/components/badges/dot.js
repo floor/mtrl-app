@@ -5,13 +5,12 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
-  createBadge
+  createLayout, createBadge,
+  BADGE_VARIANTS, BADGE_COLORS
 } from 'mtrl'
 
 import {
-  BADGE_VARIANTS,
-  BADGE_COLORS
+
 } from 'mtrl/src/components/badge'
 
 export const initDot = (container) => {

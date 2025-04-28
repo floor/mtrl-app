@@ -3,7 +3,8 @@ import { logRequest, logResponse, logError } from "./middleware/logger.js";
 import { handleStaticRequest, handleFaviconRequest } from "./handlers/static.js";
 import { handleRobotsRequest, handleLiveReload, handleHealthCheck, handleManifestRequest } from "./handlers/special.js";
 import { handleAppRequest, handleNotFound } from "./handlers/app.js";
-import { handleApiRequest } from "./api/index.js"; // Updated import path
+import { handleApiRequest } from "./api/index.js";
+import { handleMarkdownRequest } from "./handlers/markdown.js"; // Import the markdown handler
 import { initLiveReload } from "./services/live-reload.js";
 import { compressionMiddleware } from "./middleware/compression.js";
 import config from "./config.js";
@@ -32,9 +33,14 @@ async function handleRequest(req: Request): Promise<Response> {
     let response: Response | null = null;
     
     // Try API handler first
-    response = await handleApiRequest(req); // Check for API requests first
+    response = await handleApiRequest(req);
     
-    // Try special handlers if not an API request
+    // Try markdown handler
+    if (!response) {
+      response = await handleMarkdownRequest(req);
+    }
+    
+    // Try special handlers if not an API or markdown request
     if (!response) {
       response = handleHealthCheck(req) || 
                  handleRobotsRequest(req) || 
@@ -90,6 +96,7 @@ const startupBanner = `
 📦 Compression: ${isProduction ? "✅ Enabled (gzip)" : "❌ Disabled"}
 📁 Static file serving enabled
 🌐 Web App Manifest support enabled
+📝 Markdown documentation support enabled
 🔍 API Routes enabled
 ${!isProduction ? "🔄 Live reload enabled" : ""}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

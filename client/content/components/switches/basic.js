@@ -11,27 +11,19 @@ export const initBasicSwitches = (container) => {
   const title = 'Switches'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  layout.body.style.flexDirection = 'column'
-  layout.body.style.gap = '10px'
-  layout.body.style.paddingTop = '30px'
-  layout.body.style.paddingBottom = '60px'
-  layout.body.style.alignItems = 'center'
+  createLayout([
+    {
+      style: {
+        width: '340px'
+      }
+    },
+    [createSwitch, {
+      label: 'Default Switch'
+    }],
+    [createSwitch, {
+      label: 'Initially Checked',
+      checked: true
+    }]
 
-  // Default switch
-  const defaultSwitch = createSwitch({
-    label: 'Default Switch'
-  })
-
-  layout.body.appendChild(defaultSwitch.element)
-
-  // Checked switch
-  const checkedSwitch = createSwitch({
-    label: 'Initially Checked',
-    checked: true
-  })
-
-  checkedSwitch.element.style.width = '340px'
-  defaultSwitch.element.style.width = '340px'
-
-  layout.body.appendChild(checkedSwitch.element)
+  ], layout.showcase)
 }

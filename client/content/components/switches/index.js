@@ -7,6 +7,7 @@ import {
 import { initBasicSwitches } from './basic'
 import { initDisabledSwitches } from './disabled'
 import { initSupportingText } from './supporting'
+import { createSwitchDocs } from './docs'
 
 import {
   createLayout
@@ -27,11 +28,14 @@ export const createSwitchesContent = (container) => {
     description: 'Switches toggle the selection of an item on or off'
   }
 
+  console.log('createSwitchDocs')
+
   const layout = createLayout(componentsLayout(info), container).component
 
   initBasicSwitches(layout.body)
   initSupportingText(layout.body)
   initDisabledSwitches(layout.body)
+  createSwitchDocs(layout.body)
 }
 
 // Ensure we export as default for better compatibility with dynamic loader

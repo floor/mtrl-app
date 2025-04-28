@@ -1,7 +1,8 @@
 // src/client/content/core/events.js
 
 import {
-  contentLayout
+  contentLayout,
+  createDocs
 } from '../../../layout'
 
 import {
@@ -19,4 +20,5 @@ export const createEventsContent = (container) => {
   const layout = createLayout(contentLayout(content), container).component
 
   initGestures(layout.body)
+  createDocs(layout.body, 'core/gestures.md')
 }

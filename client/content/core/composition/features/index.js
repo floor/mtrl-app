@@ -1,9 +1,9 @@
-// src/client/content/core/composition.js
+// src/client/content/core/composition/features.js
 
 import {
   contentLayout,
   createDocs
-} from '../../../layout'
+} from '../../../../layout'
 
 import {
   createLayout
@@ -19,10 +19,10 @@ import {
 
 export const createCompositionContent = (container) => {
   const info = {
-    title: 'Composition',
-    description: 'Build complex components through function composition and feature mixing'
+    title: 'Features',
+    description: 'The composition system follows a functional programming approach, allowing you to build components by composing various features together.'
   }
   const layout = createLayout(contentLayout(info), container).component
 
-  createDocs(layout.body, 'core/composition/composition.md')
+  createDocs(layout.body, 'core/composition/features.md')
 }

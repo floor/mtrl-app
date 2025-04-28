@@ -30,20 +30,6 @@ export const initGestures = (body) => {
 
   const container = layout.get('container')
 
-  // Create explanation for touch gestures
-  const touchExplanation = createElement({
-    tag: 'div',
-    class: 'gesture-explanation'
-  })
-
-  const explanationText = createElement({
-    tag: 'p',
-    class: 'gesture-explanation__text',
-    text: 'The gesture system provides first-class support for touch interactions, making it easy to handle gestures like taps, swipes, pinches, and pans consistently across devices.'
-  })
-
-  touchExplanation.appendChild(explanationText)
-
   // Create touch gestures example
   const touchExample = createElement({
     tag: 'div',
@@ -412,11 +398,8 @@ gestures.on('pinch', handlePinch);`
   })
 
   // Add demos to main container
-  touchExample.appendChild(exampleTitle)
-  touchExample.appendChild(exampleCode)
   touchExample.appendChild(demoSection)
 
-  container.appendChild(touchExplanation)
   container.appendChild(touchExample)
 
   // Log initial system messages

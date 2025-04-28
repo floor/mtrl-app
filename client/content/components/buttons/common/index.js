@@ -1,13 +1,15 @@
 // src/client/content/components/button/index.js
 
 import {
-  contentLayout as lContentLayout
+  contentLayout as ContentLayout,
+  createDocs
 } from '../../../../layout'
 
 import {
   createLayout
 } from 'mtrl'
 
+import { createButtonComponent } from './button'
 import { initVariants } from './variants'
 import { initDisabled } from './disabled'
 import { initSpinnerButton } from './spinner'
@@ -19,10 +21,12 @@ export const createButtonsContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createLayout(lContentLayout(info), container).component
+  const layout = createLayout(ContentLayout(info), container).component
 
-  initVariants(layout.body)
-  initDisabled(layout.body)
+  createButtonComponent(layout.body)
+  // initVariants(layout.body)
+  // initDisabled(layout.body)
   initIcons(layout.body)
   initSpinnerButton(layout.body)
+  createDocs(layout.body, 'components/button.md')
 }

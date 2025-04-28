@@ -1,4 +1,4 @@
-// src/client/core/initializers/highlight-initializer.js
+// src/client/core/code/index.js
 
 import codeHighlighter from './highlight'
 

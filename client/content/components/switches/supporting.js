@@ -11,12 +11,6 @@ export const initSupportingText = (container) => {
   const title = 'Switches with supporting text'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  // layout.body.style.flexDirection = 'column'
-  // layout.body.style.gap = '10px'
-  // layout.body.style.paddingTop = '30px'
-  // layout.body.style.paddingBottom = '60px'
-  // layout.body.style.alignItems = 'center'
-
   createLayout([
     {
       style: {

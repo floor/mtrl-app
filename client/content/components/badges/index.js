@@ -1,13 +1,13 @@
 // src/client/content/components/badges/index.js
 
-import { componentsLayout } from '../../../layout'
+import { componentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initStandard } from './standard'
 import { initDot } from './dot'
 // import { initPositions } from './positions'
-import { initMax } from './max'
-import { initAttached } from './attached'
-import { initEventsAPI } from './events-api'
+// import { initMax } from './max'
+// import { initAttached } from './attached'
+import { createBadgeContent } from './badge'
 
 export const createBadgesContent = (container) => {
   const info = {
@@ -24,11 +24,13 @@ export const createBadgesContent = (container) => {
   layout.body.appendChild(introContainer)
 
   // Initialize all the demo sections
+  createBadgeContent(layout.body)
   initStandard(layout.body)
   initDot(layout.body)
   // initPositions(layout.body)
 
   // initAttached(layout.body)
-  initEventsAPI(layout.body)
-  initMax(layout.body)
+
+  // initMax(layout.body)
+  createDocs(layout.body, 'components/badge.md')
 }
