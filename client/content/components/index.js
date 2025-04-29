@@ -1,14 +1,14 @@
 // src/client/content/components/index.js
-import { createContentLayout } from '../../layout'
-import { createElement, createLayout } from 'mtrl'
+import { createContentLayout, createDocs } from '../../layout'
+import {
+  createElement, createLayout,
+  createCard,
+  CARD_VARIANTS
+} from 'mtrl'
 // import { createLayout } from 'mtrl/src/core/structure'
 import { createAppRouter } from '../../core/router'
 
 import { componentsList } from './components-list'
-
-import createCard, {
-  CARD_VARIANTS
-} from 'mtrl/src/components/card'
 
 /**
  * Creates the main Components content
@@ -27,13 +27,15 @@ export const createComponentsContent = (container, options = {}) => {
   }
 
   // Create layout
-  const structure = createLayout(createContentLayout(info), container).component
+  const layout = createLayout(createContentLayout(info), container).component
 
   componentsList.forEach((group, index) => {
-    initComponentsGroup(structure.body, group, router)
+    initComponentsGroup(layout.body, group, router)
   })
 
-  return structure
+  createDocs(layout.body, 'components/components.md')
+
+  return layout
 }
 
 /**

@@ -154,5 +154,5 @@ export const initAttached = (container) => {
   navWrapper.appendChild(navLabel)
   badgeContainer.appendChild(navWrapper)
 
-  layout.body.appendChild(badgeContainer)
+  layout.showcase.appendChild(badgeContainer)
 }

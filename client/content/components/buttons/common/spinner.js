@@ -5,12 +5,12 @@
 import {
   createComponentsSectionStructure
 } from '../../../../structure'
+
 import {
-  createLayout,
-  createButton,
-  createSnackbar
+  createLayout, createButton
 } from 'mtrl'
-import { sendIcon, spinnerIcon, checkIcon } from '../../../../icons'
+
+import { spinnerIcon, checkIcon } from '../../../../icons'
 
 /**
  * Initializes spinner button example

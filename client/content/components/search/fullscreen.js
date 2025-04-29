@@ -7,13 +7,10 @@ import {
 import {
   createLayout,
   createSearch,
-  createElement
-} from 'mtrl'
-
-import {
+  createElement,
   SEARCH_VARIANTS,
   SEARCH_VIEW_MODES
-} from 'mtrl/src/components/search'
+} from 'mtrl'
 
 export const initFullscreenView = (container) => {
   const title = 'Search View (Fullscreen Mode)'

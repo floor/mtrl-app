@@ -1,9 +1,6 @@
 // src/client/content/components/chips/filter.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { createLayout, createChip, createButton } from 'mtrl'
-
-// Define prefix for CSS classes
-const PREFIX = 'mtrl'
+import { createLayout, createChip, createButton, PREFIX } from 'mtrl'
 
 /**
  * Initializes filter chip set section

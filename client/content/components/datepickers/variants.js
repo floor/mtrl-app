@@ -5,19 +5,9 @@ import {
 import {
   createLayout,
   createButton,
-  createDatePicker
+  createDatePicker,
+  DATEPICKER_VARIANTS
 } from 'mtrl'
-
-const DATEPICKER_VARIANTS = {
-  /** Displays inline with a text field above the calendar */
-  DOCKED: 'docked',
-
-  /** Displays as a modal dialog */
-  MODAL: 'modal',
-
-  /** Displays as a modal dialog with text input */
-  MODAL_INPUT: 'modal-input'
-}
 
 export const initVariants = (container) => {
   const title = 'DatePicker Variants'

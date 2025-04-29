@@ -1,5 +1,6 @@
 // client/styles/code/markdown.scss
 
+@use 'sass:color';
 @use 'mtrl/src/styles/abstract/theme' as t;
 
 // Variables for consistent styling
@@ -111,7 +112,8 @@ $dark-blockquote-border: #555;
     
     &:hover {
       text-decoration: underline;
-      color: darken($primary-color, 10%);
+      // Replace darken($primary-color, 10%) with color.adjust
+      color: color.adjust($primary-color, $lightness: -10%);
     }
   }
   
@@ -206,10 +208,12 @@ $dark-blockquote-border: #555;
     }
     
     a {
-      color: lighten($primary-color, 15%);
+      // Replace lighten($primary-color, 15%) with color.adjust
+      color: color.adjust($primary-color, $lightness: 15%);
       
       &:hover {
-        color: lighten($primary-color, 25%);
+        // Replace lighten($primary-color, 25%) with color.adjust
+        color: color.adjust($primary-color, $lightness: 25%);
       }
     }
     

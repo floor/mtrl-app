@@ -5,15 +5,14 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout
-} from 'mtrl'
-
-import { artworks } from './artwork-data'
-import createCard, {
+  createLayout,
+  createCard,
   createCardHeader,
   createCardContent,
   CARD_VARIANTS
-} from 'mtrl/src/components/card'
+} from 'mtrl'
+
+import { artworks } from './artwork-data'
 
 /**
  * Initialize simple cards with minimal content

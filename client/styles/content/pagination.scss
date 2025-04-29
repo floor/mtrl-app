@@ -54,11 +54,12 @@
         opacity: 0.8;
         text-transform: uppercase;
         margin-bottom: 4px;
+
       }
       
       .#{b.$prefix}-pagination-title {
         @include c.typography('headline-medium');
-        
+        text-transform: capitalize;
         // Use smaller text on mobile for better fit
         @include m.breakpoint-down('sm') {
           @include c.typography('title-medium');

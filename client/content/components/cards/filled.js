@@ -7,16 +7,14 @@ import {
 import {
   createElement,
   createLayout,
-  createCard
-} from 'mtrl'
-import { artworks } from './artwork-data'
-
-import {
+  createCard,
   createCardHeader,
   createCardContent,
   createCardActions,
   CARD_VARIANTS
-} from 'mtrl/src/components/card'
+} from 'mtrl'
+
+import { artworks } from './artwork-data'
 
 /**
  * Initialize filled cards with background color

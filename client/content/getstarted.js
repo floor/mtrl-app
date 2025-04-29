@@ -1,9 +1,9 @@
-// src/client/content/core/composition.js
+// src/client/content/get-started.js
 
 import {
   contentLayout,
   createDocs
-} from '../../layout'
+} from '../layout'
 
 import {
   createLayout
@@ -19,10 +19,10 @@ import {
 
 export const createCompositionContent = (container) => {
   const info = {
-    title: 'Core Library ',
+    title: 'Getting Started with mtrl',
     description: 'The core library provides the fundamental building blocks for creating efficient, composable UI components with the mtrl design system.'
   }
   const layout = createLayout(contentLayout(info), container).component
 
-  createDocs(layout.body, 'core/core.md')
+  createDocs(layout.body, 'get-started.md')
 }

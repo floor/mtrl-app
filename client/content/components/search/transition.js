@@ -7,13 +7,13 @@ import {
 import {
   createLayout,
   createSearch,
-  createElement
+  createElement,
+  SEARCH_VIEW_MODES,
+  SEARCH_EVENTS
 } from 'mtrl'
 
 import {
-  SEARCH_VARIANTS,
-  SEARCH_VIEW_MODES,
-  SEARCH_EVENTS
+
 } from 'mtrl/src/components/search'
 
 export const initTransition = (container) => {

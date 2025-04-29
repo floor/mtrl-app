@@ -4,16 +4,9 @@ import {
 
 import {
   createLayout,
-  createDatePicker
+  createDatePicker,
+  DATEPICKER_SELECTION_MODES
 } from 'mtrl'
-
-const DATEPICKER_SELECTION_MODES = {
-  /** Single date selection */
-  SINGLE: 'single',
-
-  /** Date range selection */
-  RANGE: 'range'
-}
 
 export const initRange = (container) => {
   const title = 'Date Range Selection'

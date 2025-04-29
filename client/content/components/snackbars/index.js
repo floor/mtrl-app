@@ -7,14 +7,9 @@ import {
   createLayout,
   createElement,
   createSnackbar,
-  createButton
+  createButton,
+  SNACKBAR_POSITIONS
 } from 'mtrl'
-
-export const SNACKBAR_POSITIONS = {
-  CENTER: 'center',
-  START: 'start',
-  END: 'end'
-}
 
 export const createSnackbarsContent = (container, components) => {
   const info = {

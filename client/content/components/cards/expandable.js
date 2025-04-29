@@ -6,16 +6,15 @@ import {
 
 import {
   createLayout,
-  createElement
+  createElement,
+  createCardHeader,
+  createCardContent,
+  createCard,
+  CARD_VARIANTS,
+  withExpandable
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
-import createCard, {
-  createCardHeader,
-  createCardContent,
-  CARD_VARIANTS,
-  withExpandable
-} from 'mtrl/src/components/card'
 
 /**
  * Initialize expandable cards

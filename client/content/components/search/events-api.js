@@ -9,17 +9,9 @@ import {
   createSearch,
   createButton,
   createDivider,
-  createElement
+  createElement,
+  SEARCH_EVENTS
 } from 'mtrl'
-
-export const SEARCH_EVENTS = {
-  FOCUS: 'focus',
-  BLUR: 'blur',
-  INPUT: 'input',
-  SUBMIT: 'submit',
-  CLEAR: 'clear',
-  ICON_CLICK: 'iconClick'
-}
 
 export const initEventsAPI = (container) => {
   const title = 'Using Events and API'

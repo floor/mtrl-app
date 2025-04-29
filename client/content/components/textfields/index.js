@@ -8,15 +8,15 @@ import {
   createLayout
 } from 'mtrl'
 
+import { createTextfieldShowcase } from './textfield'
 import { initTextfieldVariants } from './variants'
-
 import { initLeadingIcons } from './leading-icons'
 import { initTrailingIcons } from './trailing-icons'
 import { initPrefix } from './prefix'
 import { initSuffix } from './suffix'
 import { initSupportingText } from './supporting-text'
 import { initCombinedFeatures } from './combined-features'
-// import { initMultilineTextfield } from './multiline'
+import { initMultilineTextfield } from './multiline'
 
 export const createTextfieldsContent = (container) => {
   const info = {
@@ -26,6 +26,8 @@ export const createTextfieldsContent = (container) => {
 
   const layout = createLayout(componentsLayout(info), container).component
 
+  createTextfieldShowcase(layout.body)
+
   // Initialize all the textfield examples
   initTextfieldVariants(layout.body)
   initLeadingIcons(layout.body)
@@ -34,5 +36,5 @@ export const createTextfieldsContent = (container) => {
   initSuffix(layout.body)
   initSupportingText(layout.body)
   initCombinedFeatures(layout.body)
-  // initMultilineTextfield(layout.body)
+  initMultilineTextfield(layout.body)
 }

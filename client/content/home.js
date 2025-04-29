@@ -7,7 +7,7 @@ import {
 import { createColorPalettes } from './styles/colors/palettes'
 import { createButtonComponent } from './components/buttons/common/button'
 import { initRange as createRangeSlider } from './components/sliders/range'
-import { initCombinedFeatures as createTextfieldCombined } from './components/textfields/combined-features'
+import { createTextfieldShowcase } from './components/textfields/textfield'
 import { initSupportingText as createSwitches } from './components/switches/supporting'
 import { initBasicTabs as createTabs } from './components/tabs/basic'
 import { initSubmenu as createSelectSubmenu } from './components/selects/submenu'
@@ -31,7 +31,7 @@ export const createHomeContent = (container) => {
   createColorPalettes(body)
   createButtonComponent(body)
   createSwitches(body)
-  createTextfieldCombined(body)
+  createTextfieldShowcase(body)
   createSelectSubmenu(body)
   createRangeSlider(body)
   createBadgeContent(body)

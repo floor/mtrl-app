@@ -6,17 +6,16 @@ import {
 
 import {
   createLayout,
-  createElement
-} from 'mtrl'
-
-import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+  createElement,
+  createCard,
   createCardHeader,
   createCardContent,
   createCardMedia,
   createCardActions,
   CARD_VARIANTS
-} from 'mtrl/src/components/card'
+} from 'mtrl'
+
+import { artworks, getPlaceholderUrl } from './artwork-data'
 
 // Import the withLoading enhancer
 import { withLoading } from 'mtrl/src/components/card/features'

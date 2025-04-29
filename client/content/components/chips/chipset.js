@@ -1,9 +1,8 @@
 // src/client/content/components/chips/chipset.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { createLayout, createChip } from 'mtrl'
+import { createLayout, createChip, PREFIX } from 'mtrl'
 
 // Define prefix for CSS classes
-const PREFIX = 'mtrl'
 
 /**
  * Initializes chip set section

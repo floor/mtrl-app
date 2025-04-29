@@ -1,10 +1,7 @@
 // src/client/content/components/chips/input.js
 import { createComponentsSectionLayout } from '../../../layout'
-import { createLayout, createChip, createTextfield, createButton } from 'mtrl'
+import { createLayout, createChip, createTextfield, createButton, PREFIX } from 'mtrl'
 import { faceIcon, closeIcon } from '../../../icons'
-
-// Define prefix for CSS classes
-const PREFIX = 'mtrl'
 
 /**
  * Initializes input chips section with a textfield integration

@@ -14,6 +14,7 @@ import { highlightCodeBlocks } from '../code/highlight'
 const ROUTE_MODULE_MAP = {
   // Section routes
   home: () => import('../../content/home'),
+  getstarted: () => import('../../content/getstarted'),
   core: () => import('../../content/core'),
   styles: () => import('../../content/styles'),
   components: () => import('../../content/components'),
@@ -33,7 +34,6 @@ const ROUTE_MODULE_MAP = {
   'styles/colors': () => import('../../content/styles/colors'),
   'styles/typography': () => import('../../content/styles/typography'),
   'styles/elevation': () => import('../../content/styles/elevation'),
-  'styles/layout': () => import('../../content/styles/layout'),
 
   // Components routes
   'components/buttons/common': () => import('../../content/components/buttons/common'),

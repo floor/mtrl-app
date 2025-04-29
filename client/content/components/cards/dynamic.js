@@ -6,18 +6,17 @@ import {
 
 import {
   createLayout,
-  createButton
-  , createElement
-} from 'mtrl'
-
-import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+  createButton,
+  createElement,
+  createCard,
   createCardHeader,
   createCardContent,
   createCardMedia,
   createCardActions,
   CARD_VARIANTS
-} from 'mtrl/src/components/card'
+} from 'mtrl'
+
+import { artworks, getPlaceholderUrl } from './artwork-data'
 
 // Dynamic cards with content that changes over time
 export const initDynamicCard = (container) => {

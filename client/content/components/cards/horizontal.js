@@ -7,16 +7,15 @@ import {
 import {
   createElement,
   createLayout,
-  createButton
-} from 'mtrl'
-import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+  createButton,
+  createCard,
   createCardHeader,
   createCardContent,
   createCardMedia,
   createCardActions,
   CARD_VARIANTS
-} from 'mtrl/src/components/card'
+} from 'mtrl'
+import { artworks, getPlaceholderUrl } from './artwork-data'
 
 /**
  * Initialize horizontal layout cards

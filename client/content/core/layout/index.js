@@ -1,34 +1,53 @@
-// src/client/content/core/layout/index.js
-import { contentLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
-import { createLayoutBasicsSection } from './basics'
-import { createLayoutArraySection } from './array'
-import { createLayoutObjectSection } from './object'
-import { createLayoutComponentsSection } from './components'
-import { createLayoutDemoSection } from './demo'
-import { createLayoutCodeSection } from './code'
+// src/client/content/styles/layout.js
 
-/**
- * Creates the layout module content section in the UI
- * @param {HTMLElement} container - Container to append content to
- */
-export const createLayoutContent = (container) => {
+import { createLayout } from 'mtrl'
+
+import {
+  createContentLayout,
+  createDocs
+} from '../../../layout'
+
+// Import utility functions for layout examples
+
+// import { createLayoutBasicsSection } from './basics'
+// import { createLayoutArraySection } from './array'
+// import { createLayoutObjectSection } from './object'
+// import { createLayoutComponentsSection } from './components'
+// import { createLayoutDemoSection } from './demo'
+// import { createLayoutCodeSection } from './code'
+
+// import { createBasicLayout } from './basic'
+import { createResponsiveLayout } from './responsive'
+// import { createGridLayout } from './grid'
+// import { createCardLayout } from './card'
+import { createSplitLayout } from './split'
+// import { initializeInteractiveLayouts } from './interactive'
+
+export const createLayoutStylesContent = (container) => {
+  log.info('createLayoutContent', container)
   const info = {
     title: 'Layout Module',
     description: 'A lightweight, flexible system for creating and managing visual arrangements and component hierarchies'
   }
+  const layout = createLayout(createContentLayout(info), container).component
 
-  // Create the main layout
-  const structure = createLayout(contentLayout(info), container)
+  console.log('layout', layout)
 
-  // Get the layout body for adding content sections
-  const contentBody = structure.get('body')
+  // createBasicLayout(layout.body)
+  createResponsiveLayout(layout.body)
+  // createGridLayout(layout.body)
+  // createCardLayout(layout.body)
+  createSplitLayout(layout.body)
 
-  // Create each section with its own function for better modularity
-  createLayoutBasicsSection(contentBody)
-  createLayoutArraySection(contentBody)
-  createLayoutObjectSection(contentBody)
-  createLayoutComponentsSection(contentBody)
-  createLayoutDemoSection(contentBody)
-  createLayoutCodeSection(contentBody)
+  // Initialize interactive elements after creating all layout components
+  // initializeInteractiveLayouts(container)
+
+  // createLayoutBasicsSection(layout.body)
+  // createLayoutArraySection(layout.body)
+  // createLayoutObjectSection(layout.body)
+  // createLayoutComponentsSection(layout.body)
+  // createLayoutDemoSection(layout.body)
+  // createLayoutCodeSection(layout.body)
+
+  createDocs(layout.body, 'core/layout.md')
 }

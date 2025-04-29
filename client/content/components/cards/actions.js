@@ -5,13 +5,11 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout
+  createLayout, createCard,
+  CARD_VARIANTS
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
-  CARD_VARIANTS
-} from 'mtrl/src/components/card'
 
 // Cards with actions
 export const initActionCards = (container) => {

@@ -7,12 +7,7 @@ import {
   createList
 } from 'mtrl'
 
-export const initUsersList = (container) => {
-  const title = 'API Users List'
-  const description = '1\'000\'000 entries and virtualiation'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
-  console.log('Creating users list...')
-
+const createUserList = () => {
   // Create the API-connected list
   const userList = createList({
     collection: 'users', // This should create a '/api/users' endpoint
@@ -73,8 +68,28 @@ export const initUsersList = (container) => {
     },
 
     // Render function to display each item
-    renderItem: (user, index) => {
-      // console.log('Rendering user item:', user, 'at index:', index)
+    renderItem: (user, index, recycledElement) => {
+      console.log('Rendering user item:', user, 'at index:', index, recycledElement)
+
+      if (recycledElement) {
+        // Just update the content rather than creating new elements
+        const avatar = recycledElement.querySelector('.user-name')
+        const name = recycledElement.querySelector('.user-name')
+        const email = recycledElement.querySelector('.user-email')
+        const role = recycledElement.querySelector('.user-role')
+
+        // Update text content (faster than innerHTML)
+        avatar.textContent = user.avatar || user.headline?.charAt(0) || '?'
+        name.textContent = user.headline || 'Unknown'
+        email.textContent = user.supportingText || ''
+        role.textContent = user.meta || ''
+
+        // Add element type for recycling system
+        recycledElement.dataset.itemType = 'users'
+
+        return recycledElement
+      }
+
       const element = document.createElement('div')
       element.className = 'mtrl-list-item user-item'
       element.setAttribute('data-id', user.id)
@@ -90,19 +105,30 @@ export const initUsersList = (container) => {
     }
   })
 
-  // // Event listeners
-  // userList.on('load', (event) => {
-  //   // console.log('List loaded:', event)
+  return userList
+}
 
-  //   // Check if any items were added to the DOM
-  //   const items = userList.element.querySelectorAll('.mtrl-list-item')
-  //   console.log('DOM items after load:', items.length)
+export const initUsersList = (container) => {
+  const title = 'API Users List'
+  const description = '1\'000\'000 entries and virtualiation'
+  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  console.log('Creating users list...')
 
-  //   // Log heights of visible items
-  //   Array.from(items).forEach((item) => {
-  //     // console.log('Item height:', item.offsetHeight, item)
-  //   })
-  // })
+  const userList = createUserList()
+
+  // Event listeners
+  userList.on('load', (event) => {
+    console.log('List loaded:', event)
+
+    // Check if any items were added to the DOM
+    const items = userList.element.querySelectorAll('.mtrl-list-item')
+    console.log('DOM items after load:', items.length)
+
+    // Log heights of visible items
+    Array.from(items).forEach((item) => {
+      // console.log('Item height:', item.offsetHeight, item)
+    })
+  })
 
   userList.on('select', (event) => {
     console.log('Selected user:', event.item)

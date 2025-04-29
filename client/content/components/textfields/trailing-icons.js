@@ -46,6 +46,6 @@ export const initTrailingIcons = (container) => {
   })
 
   // Add trailing icon textfields to the layout
-  layout.body.appendChild(filled.element)
-  layout.body.appendChild(outlined.element)
+  layout.showcase.appendChild(filled.element)
+  layout.showcase.appendChild(outlined.element)
 }

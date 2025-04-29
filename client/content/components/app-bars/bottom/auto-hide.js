@@ -7,22 +7,9 @@ import {
   createLayout,
   createBottomAppBar,
   createButton,
-  createFab
+  createFab,
+  FAB_VARIANTS
 } from 'mtrl'
-
-/**
- * FAB variants for styling
- */
-export const FAB_VARIANTS = {
-  /** Primary container color with on-primary-container icons */
-  PRIMARY: 'primary',
-  /** Secondary container color with on-secondary-container icons */
-  SECONDARY: 'secondary',
-  /** Tertiary container color with on-tertiary-container icons */
-  TERTIARY: 'tertiary',
-  /** Surface color with primary color icons */
-  SURFACE: 'surface'
-}
 
 export const initAutoHideBottomAppBar = (container) => {
   const title = 'Auto-Hide on Scroll'

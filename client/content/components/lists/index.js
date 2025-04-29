@@ -1,6 +1,7 @@
 // src/client/layout/lists/index.js
 import {
-  componentsLayout
+  componentsLayout,
+  createDocs
 } from '../../../layout'
 
 import {
@@ -29,6 +30,7 @@ export const createListsContent = (container, components) => {
   initMultiSelectList(layout.body)
   initUsersList(layout.body)
   initCursorList(layout.body)
+  createDocs(layout.body, 'components/list.md')
   // initSectionedList(layout.body)
   // initVerticalLayout(layout.body)
   // initListsAdapter(layout.body)

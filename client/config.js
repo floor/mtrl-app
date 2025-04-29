@@ -32,16 +32,12 @@ export const navigationLayout = {
     // ]
   },
 
-  // Get Started section
-  // getstarted: {
-  //   label: 'Get Started',
-  //   icon: getStartedIcon
-  //   // items: [
-  //   //   { id: 'installation', label: 'Installation', path: '/getstarted' }, // Path to getstarted root
-  //   //   { id: 'usage', label: 'Usage', path: '/getstarted/usage' },
-  //   //   { id: 'examples', label: 'Examples', path: '/getstarted/examples' }
-  //   // ]
-  // },
+  getstarted: {
+    id: 'get-started',
+    path: '/get-started',
+    label: 'Get Started',
+    icon: getStartedIcon
+  },
 
   // Core section
   core: {
@@ -69,6 +65,7 @@ export const navigationLayout = {
           { id: 'list-manager', label: 'List Manager', path: '/core/collection/list-manager' }
         ]
       },
+      { id: 'layout', label: 'Layout', path: '/core/layout' },
       { id: 'gestures', label: 'Gestures', path: '/core/gestures' }
 
       // { id: 'layout', label: 'Layout', path: '/core/layout' }
@@ -82,8 +79,7 @@ export const navigationLayout = {
     items: [
       { id: 'colors', label: 'Colors', path: '/styles/colors' },
       { id: 'typography', label: 'Typography', path: '/styles/typography' },
-      { id: 'elevation', label: 'Elevation', path: '/styles/elevation' },
-      { id: 'layout', label: 'Layout', path: '/styles/layout' }
+      { id: 'elevation', label: 'Elevation', path: '/styles/elevation' }
     ]
   },
 

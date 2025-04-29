@@ -5,12 +5,9 @@ import {
 import {
   createLayout,
   createButton,
-  createDialog
-} from 'mtrl'
-
-import {
+  createDialog,
   DIALOG_SIZES
-} from 'mtrl/src/components/dialog'
+} from 'mtrl'
 
 const createSizesDialog = (size) => {
   const dialog = createDialog({

@@ -6,16 +6,15 @@ import {
 
 import {
   createLayout,
-  createElement
-} from 'mtrl'
-
-import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+  createElement,
+  createCard,
   createCardHeader,
   createCardContent,
   createCardMedia,
   CARD_VARIANTS
-} from 'mtrl/src/components/card'
+} from 'mtrl'
+
+import { artworks, getPlaceholderUrl } from './artwork-data'
 
 /**
  * Initialize interactive cards with click behavior

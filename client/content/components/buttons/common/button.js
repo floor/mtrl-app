@@ -38,7 +38,7 @@ export const createButtonComponent = (container) => {
       // [createElement, 'description', { tag: 'p', text: 'Modify the badge properties using the controls below.' }],
       [createChips, 'variant', { scrollable: false, label: 'setVariant' }],
       [createChips, 'icon', { scrollable: false, label: 'setIcon' }],
-      [createTextfield, 'text', { label: 'Text', value: 'Button', variant: 'outlined' }],
+      [createTextfield, 'text', { label: 'Text', value: 'Button', variant: 'outlined', style: { width: '100%' } }],
       [createSwitch, 'disabled', { label: 'Disabled', checked: true }]
     ], layout.info).component
 
@@ -47,7 +47,8 @@ export const createButtonComponent = (container) => {
       text: variants[i].label,
       value: variants[i].value,
       variant: 'filter',
-      selectable: true
+      selectable: true,
+      selected: variants[i].label === 'filled'
     })
   }
 
@@ -60,7 +61,6 @@ export const createButtonComponent = (container) => {
   })
 
   info.variant.on('change', (value) => {
-    console.log('variant', value)
     button.setVariant(value[0].toLowerCase())
   })
 

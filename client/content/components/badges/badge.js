@@ -61,7 +61,8 @@ export const createBadgeContent = (container) => {
       text: variants[i].label,
       value: variants[i].value,
       variant: 'filter',
-      selectable: true
+      selectable: true,
+      selected: variants[i].label === 'large'
     })
   }
 

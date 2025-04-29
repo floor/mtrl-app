@@ -37,9 +37,31 @@ export async function fetchMarkdown (markdownPath) {
  * @returns {string} Parsed HTML
  */
 function parseMarkdown (markdown) {
-  // Basic markdown parsing
+  // Modified markdown parsing approach that handles code blocks first
   let html = markdown
-    // Headers
+
+  // Store code blocks temporarily to prevent processing their contents
+  const codeBlocks = []
+
+  // Extract code blocks first to prevent processing markdown inside them
+  html = html.replace(/```([a-z]*)\n([\s\S]*?)```/gm, (match, language, code) => {
+    const placeholder = `__CODE_BLOCK_${codeBlocks.length}__`
+    const lang = language || 'plaintext'
+    codeBlocks.push(`<pre class="language-${lang}"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`)
+    return placeholder
+  })
+
+  // Extract inline code to prevent processing markdown inside them
+  const inlineCodes = []
+  html = html.replace(/\`(.*?)\`/gm, (match, code) => {
+    const placeholder = `__INLINE_CODE_${inlineCodes.length}__`
+    inlineCodes.push(`<code>${escapeHtml(code)}</code>`)
+    return placeholder
+  })
+
+  // Now process other markdown elements
+  html = html
+    // Headers - ensure they're at the start of a line
     .replace(/^# (.*$)/gm, '<h1>$1</h1>')
     .replace(/^## (.*$)/gm, '<h2>$1</h2>')
     .replace(/^### (.*$)/gm, '<h3>$1</h3>')
@@ -49,12 +71,6 @@ function parseMarkdown (markdown) {
 
     // Blockquotes
     .replace(/^\> (.*$)/gm, '<blockquote>$1</blockquote>')
-
-    // Code blocks with language support for Prism integration
-    .replace(/```([a-z]*)\n([\s\S]*?)```/gm, (match, language, code) => {
-      const lang = language || 'plaintext'
-      return `<pre class="language-${lang}"><code class="language-${lang}">${escapeHtml(code.trim())}</code></pre>`
-    })
 
     // Bold and italic
     .replace(/\*\*(.*)\*\*/gm, '<strong>$1</strong>')
@@ -76,14 +92,8 @@ function parseMarkdown (markdown) {
         return '' // Skip separator row
       }
 
-      // Process inline code in table cells
-      const processedCells = cells.map(cell => {
-        // Process inline code blocks within table cells
-        return cell.replace(/\`(.*?)\`/g, '<code>$1</code>')
-      })
-
       // Create table cells
-      const cellsHtml = processedCells.map(cell => `<td>${cell}</td>`).join('')
+      const cellsHtml = cells.map(cell => `<td>${cell}</td>`).join('')
       return `<tr>${cellsHtml}</tr>`
     })
 
@@ -94,12 +104,6 @@ function parseMarkdown (markdown) {
     .replace(/^- (.*$)/gm, '<li>$1</li>')
     .replace(/^(\d+)\. (.*$)/gm, '<li>$2</li>')
 
-  // REMOVED: Line breaks causing extra <br> tags
-  // .replace(/^\s*\n/gm, '<br>')
-
-    // Inline code (process after tables to avoid double processing table cell code)
-    .replace(/\`(.*?)\`/gm, '<code>$1</code>')
-
     // Paragraphs (any line not starting with a special character)
     .replace(/^(?!\<)(.+)/gm, '<p>$1</p>')
 
@@ -108,6 +112,16 @@ function parseMarkdown (markdown) {
 
   // Process tables properly (wrap rows in table structure)
   html = processTables(html)
+
+  // Restore inline code blocks
+  inlineCodes.forEach((code, index) => {
+    html = html.replace(`__INLINE_CODE_${index}__`, code)
+  })
+
+  // Restore code blocks last
+  codeBlocks.forEach((block, index) => {
+    html = html.replace(`__CODE_BLOCK_${index}__`, block)
+  })
 
   return html
 }

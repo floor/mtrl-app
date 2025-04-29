@@ -20,6 +20,6 @@ export const createCheckboxesContent = (container) => {
   const layout = createLayout(componentsLayout(info), container).component
 
   initBasicCheckboxes(layout.body)
-  initLabelPositions(layout.body)
+  // initLabelPositions(layout.body)
   initIndeterminateCheckboxes(layout.body)
 }

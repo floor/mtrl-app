@@ -5,12 +5,9 @@ import {
 import {
   createLayout,
   createButton,
-  createDialog
-} from 'mtrl'
-
-import {
+  createDialog,
   DIALOG_FOOTER_ALIGNMENTS
-} from 'mtrl/src/components/dialog'
+} from 'mtrl'
 
 export const initFooterAlignments = (container) => {
   const title = 'Footer Alignments'

@@ -7,17 +7,16 @@ import {
 import {
   createElement,
   createLayout,
-  createButton
-} from 'mtrl'
-
-import { artworks, getPlaceholderUrl } from './artwork-data'
-import createCard, {
+  createButton,
+  createCard,
   createCardHeader,
   createCardContent,
   createCardMedia,
   CARD_VARIANTS,
   withSwipeable
-} from 'mtrl/src/components/card'
+} from 'mtrl'
+
+import { artworks, getPlaceholderUrl } from './artwork-data'
 
 /**
  * Initialize swipeable cards
