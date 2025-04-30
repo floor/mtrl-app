@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -10,7 +10,7 @@ import {
 
 export const initPositionsMenu = (container) => {
   const title = 'Menu Positions'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const positions = ['bottom-start', 'bottom', 'bottom-end', 'top-start', 'top', 'top-end', 'right-start', 'right', 'right-end', 'left-start', 'left', 'left-end']
   const menuOptions = {

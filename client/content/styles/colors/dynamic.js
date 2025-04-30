@@ -4,7 +4,7 @@ import {
   createChips,
   createSwitch
 } from 'mtrl'
-import { createContentSection } from '../../../layout/content'
+import { createContentSection } from '../../../layout'
 
 export const createDynamicTheme = (container) => {
   console.log('createDynamicTheme', container)

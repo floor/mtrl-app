@@ -1,7 +1,7 @@
 // src/client/content/components/menu.js
 
 import {
-  componentsLayout
+  createComponentsLayout
 } from '../../../layout'
 
 import {
@@ -17,7 +17,7 @@ export const createNavigationsContent = (container, components) => {
     title: 'Navigation',
     description: 'Let users switch between UI views'
   }
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   console.log('layout', layout)
 

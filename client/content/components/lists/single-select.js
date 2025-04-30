@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -9,7 +9,7 @@ import {
 
 export const initSingleSelectList = (container) => {
   const title = 'Single Select List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const list = createList({
     type: 'single',

@@ -1,7 +1,7 @@
 // src/client/content/components/timepickers/constraints.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initConstraints = (container) => {
   const title = 'Time Constraints'
   const description = 'Restrict time selection with min and max time constraints'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, description, class: 'noflex' }), container).component
 
   // Create examples container
   const examples = document.createElement('div')

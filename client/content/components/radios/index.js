@@ -1,8 +1,8 @@
 // src/client/content/components/radios.js
 
 import {
-  componentsLayout,
-  createComponentsSectionLayout
+  createComponentsLayout,
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -16,14 +16,14 @@ export const createRadiosContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createLayout(componentsLayout(info), container).getAll()
+  const layout = createLayout(createComponentsLayout(info), container).getAll()
 
   initRadios(layout.body)
 }
 
 export const initRadios = (container) => {
   const title = 'Radios'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const small = createRadios({
     name: 'size1',

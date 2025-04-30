@@ -1,7 +1,7 @@
 // src/client/content/components/timepickers/basic.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -59,7 +59,7 @@ const createBasicTimePicker = (container) => {
 export const initBasic = (container) => {
   const title = 'Basic TimePicker'
   const description = 'A simple time picker with dial and input modes'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, description, class: 'noflex' }), container).component
 
   // Create the basic time picker
   createBasicTimePicker(layout.body)

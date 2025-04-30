@@ -1,7 +1,7 @@
 // src/client/content/components/badges/positions.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -11,7 +11,7 @@ import {
 
 export const initPositions = (container) => {
   const title = 'Badge Positions'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const badgeContainer = document.createElement('div')
   badgeContainer.style.display = 'flex'

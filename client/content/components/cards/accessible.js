@@ -1,7 +1,7 @@
 // src/client/content/components/cards/accessible.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -27,7 +27,7 @@ export const initAccessibleCards = (container) => {
   const title = 'Accessible Cards'
   const description = 'Cards with enhanced accessibility features and ARIA attributes'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create accessible card examples
   const accessibilityFeatures = [

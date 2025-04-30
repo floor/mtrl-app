@@ -1,7 +1,7 @@
 // src/client/content/components/timepickers/programming.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -13,7 +13,7 @@ import {
 export const initProgramming = (container) => {
   const title = 'Programmatic Control'
   const description = 'Control the TimePicker programmatically using its API'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, description, class: 'noflex' }), container).component
 
   // Create a time picker
   const timePicker = createTimePicker({

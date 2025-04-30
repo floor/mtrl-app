@@ -1,7 +1,7 @@
 // src/client/content/components/cards/horizontal.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -27,7 +27,7 @@ export const initHorizontalCards = (container) => {
   const title = 'Horizontal Cards'
   const description = 'Cards with custom horizontal layout for list views'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create horizontal cards
   artworks.slice(7, 10).forEach((artwork, index) => {

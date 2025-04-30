@@ -1,7 +1,7 @@
 // src/client/content/components/search/fullscreen-view.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -14,7 +14,7 @@ import {
 
 export const initFullscreenView = (container) => {
   const title = 'Search View (Fullscreen Mode)'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const searchView = createSearch({
     variant: SEARCH_VARIANTS.VIEW,

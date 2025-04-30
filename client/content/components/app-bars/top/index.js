@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/top/index.js
 
-import { componentsLayout } from '../../../../layout'
+import { createComponentsLayout } from '../../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasicTopAppBar } from './basic'
 import { initTypesTopAppBar } from './types'
@@ -17,7 +17,7 @@ export const createTopAppBarsContent = (container) => {
 
   container.classList.add('mtrl-components-top-app-bar')
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initBasicTopAppBar(layout.body)
   initTypesTopAppBar(layout.body)

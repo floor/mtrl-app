@@ -1,6 +1,6 @@
 // src/client/content/components/chips/index.js
 
-import { componentsLayout } from '../../../layout'
+import { createComponentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 
 import { initChipVariants } from './variants'
@@ -21,7 +21,7 @@ export const createChipsContent = (container) => {
     description: 'Compact elements that represent an input, attribute, or action'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initChipVariants(layout.body)
   initChipWithIcons(layout.body)

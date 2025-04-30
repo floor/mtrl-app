@@ -6,11 +6,11 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initDisabled = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Composing state',
     description: 'Compose multiple state managers to create complex behavior from simple building blocks.',
     bodyClass: 'grid'

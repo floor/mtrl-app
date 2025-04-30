@@ -1,7 +1,7 @@
 // src/client/content/core/events.js
 
 import {
-  contentLayout,
+  createContentLayout,
   createDocs
 } from '../../../layout'
 
@@ -17,7 +17,7 @@ export const createEventsContent = (container) => {
     description: 'The gesture system provides first-class support for touch interactions.'
   }
 
-  const layout = createLayout(contentLayout(content), container).component
+  const layout = createLayout(createContentLayout(content), container).component
 
   initGestures(layout.body)
   createDocs(layout.body, 'core/gestures.md')

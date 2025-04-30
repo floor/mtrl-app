@@ -5,11 +5,11 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initEmitter = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Emitter',
     description: 'A lightweight event emitter for implementing the Observer pattern and enabling component communication.',
     bodyClass: 'grid'

@@ -1,8 +1,8 @@
 // src/client/content/styles/index.js
 
 import {
-  createContentStructure
-} from '../../structure'
+  createContentLayout
+} from '../../layout'
 
 import {
   createLayout,
@@ -18,7 +18,7 @@ export const createStylesContent = (container) => {
     title: 'Styling System',
     description: 'A comprehensive design system for consistent, accessible, and beautiful interfaces'
   }
-  const layout = createLayout(createContentStructure(info), container).component
+  const layout = createLayout(createContentLayout(info), container).component
 
   const ui = createLayout(createStylesStructure(), layout.body).component
 

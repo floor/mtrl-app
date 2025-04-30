@@ -1,5 +1,5 @@
 // src/client/content/components/chips/filter.js
-import { createComponentsSectionLayout } from '../../../layout'
+import { createComponentSection } from '../../../layout'
 import { createLayout, createChip, createButton, PREFIX } from 'mtrl'
 
 /**
@@ -8,7 +8,7 @@ import { createLayout, createChip, createButton, PREFIX } from 'mtrl'
  */
 export const initFilterChipSet = (container) => {
   const title = 'Filter Chip Set'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Example label
   const label = document.createElement('p')

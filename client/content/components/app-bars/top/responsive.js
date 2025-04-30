@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/top/responsive.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initResponsiveTopAppBar = (container) => {
   const title = 'Responsive Behavior'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentSection({
     title,
     class: 'noflex'
   }), container).component
@@ -293,6 +293,6 @@ export const initResponsiveTopAppBar = (container) => {
   `
 
   // Add to layout
-  layout.body.appendChild(demoContainer)
-  layout.body.appendChild(description)
+  layout.showcase.appendChild(demoContainer)
+  layout.info.appendChild(description)
 }

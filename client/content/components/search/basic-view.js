@@ -1,7 +1,7 @@
 // src/client/content/components/search/basic-view.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -13,7 +13,7 @@ import {
 
 export const initBasicView = (container) => {
   const title = 'Search View (Full Screen Mode)'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const searchView = createSearch({
     variant: SEARCH_VARIANTS.VIEW,

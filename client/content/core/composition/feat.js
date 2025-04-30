@@ -4,11 +4,11 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initFeatures = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Component Features',
     description: 'Features are higher-order functions that enhance components with specific capabilities.',
     bodyClass: 'grid'

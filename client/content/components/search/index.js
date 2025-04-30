@@ -1,6 +1,6 @@
 // src/client/content/components/search/index.js
 
-import { componentsLayout } from '../../../layout'
+import { createComponentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasicBar } from './basic-bar'
 import { initBasicView } from './basic-view'
@@ -18,7 +18,7 @@ export const createSearchContent = (container) => {
     description: 'Let users search for content within your application'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initBasicBar(layout.body)
   initBasicView(layout.body)

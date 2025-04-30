@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/top/basic.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initBasicTopAppBar = (container) => {
   const title = 'Basic Top App Bar'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, class: 'noflex' }), container).component
 
   // Create a demo content container
   const demoContainer = document.createElement('div')

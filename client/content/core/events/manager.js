@@ -5,7 +5,7 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initEventManager = (body) => {

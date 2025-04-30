@@ -1,7 +1,7 @@
 // src/client/content/components/cards/actions.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -16,7 +16,7 @@ export const initActionCards = (container) => {
   const title = 'Action Cards'
   const description = 'Cards with interactive buttons'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create action cards with inline configuration
   artworks.slice(4, 6).forEach(artwork => {

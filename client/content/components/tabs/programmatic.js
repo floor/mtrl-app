@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -10,7 +10,7 @@ import {
 
 export const initProgrammaticTabs = (container) => {
   const title = 'Programmatic Control'
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, class: 'noflex' }), container).component
 
   // Create tabs
   const tabs = createTabs({

@@ -1,6 +1,6 @@
 // src/client/content/components/segmented-button/disabled.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -15,7 +15,7 @@ import {
 
 export const initDisabled = (container) => {
   const title = 'Disabled State'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Segmented buttons and individual segments can be disabled to indicate that they are not interactive.',
     class: 'noflex'

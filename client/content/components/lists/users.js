@@ -1,6 +1,6 @@
 // client/content/components/lists/users.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 import {
   createLayout,
@@ -111,7 +111,7 @@ const createUserList = () => {
 export const initUsersList = (container) => {
   const title = 'API Users List'
   const description = '1\'000\'000 entries and virtualiation'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
   console.log('Creating users list...')
 
   const userList = createUserList()

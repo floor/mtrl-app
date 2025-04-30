@@ -1,6 +1,6 @@
 // src/examples/price-range.js
 import {
-  createComponentsSectionLayoutInfo
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -15,7 +15,7 @@ import {
 
 export const initRange = (container) => {
   const title = 'Price Range Filter'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const priceSlider = createSlider({
     min: 0,

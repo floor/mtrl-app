@@ -1,5 +1,5 @@
 // src/client/content/components/chips/input.js
-import { createComponentsSectionLayout } from '../../../layout'
+import { createComponentSection } from '../../../layout'
 import { createLayout, createChip, createTextfield, createButton, PREFIX } from 'mtrl'
 import { faceIcon, closeIcon } from '../../../icons'
 
@@ -10,7 +10,7 @@ import { faceIcon, closeIcon } from '../../../icons'
 export const initInputChips = (container) => {
   const title = 'Input Chips'
   const subtitle = 'Use with Textfield for tag/recipient input'
-  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createLayout(createComponentSection({ title, subtitle }), container).component
 
   // Create a container for the input chips
   const inputChipSetContainer = document.createElement('div')

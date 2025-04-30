@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 import {
   createLayout,
@@ -8,7 +8,7 @@ import {
 
 export const initBasicList = (container) => {
   const title = 'Basic List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a basic list with static items
   const basicList = createList({

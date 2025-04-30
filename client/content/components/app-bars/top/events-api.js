@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/top/events-api.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initEventsApiTopAppBar = (container) => {
   const title = 'Events & API Methods'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentSection({
     title,
     class: 'noflex'
   }), container).component

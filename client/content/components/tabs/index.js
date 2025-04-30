@@ -1,6 +1,6 @@
 // src/client/content/components/tabs/index.js
 
-import { componentsLayout } from '../../../layout'
+import { createComponentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasicTabs } from './basic'
 import { initSecondaryTabs } from './secondary'
@@ -19,7 +19,7 @@ export const createTabsContent = (container) => {
 
   container.classList.add('mtrl-components-tabs')
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initBasicTabs(layout.body)
   initSecondaryTabs(layout.body)

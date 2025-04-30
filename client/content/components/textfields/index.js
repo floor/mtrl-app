@@ -1,7 +1,7 @@
 // src/client/content/components/textfields/index.js
 
 import {
-  componentsLayout
+  createComponentsLayout
 } from '../../../layout'
 
 import {
@@ -24,7 +24,7 @@ export const createTextfieldsContent = (container) => {
     description: 'Text fields let users enter and edit text'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   createTextfieldShowcase(layout.body)
 

@@ -1,6 +1,6 @@
 // src/client/content/components/segmented-button/interaction.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -43,7 +43,7 @@ const categoryIcons = {
 
 export const initInteraction = (container) => {
   const title = 'Interactive Behavior'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Demonstrates the interactive behaviors and events of segmented buttons.',
     class: 'noflex'

@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -40,7 +40,7 @@ const createFullscreenDialog = (size) => {
 export const initFullscreen = (container) => {
   const title = 'Fullscreen Dialog'
   const description = 'A fullscreen dialog for immersive experiences or mobile interfaces'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create button to open dialog
   const openButton = createButton({

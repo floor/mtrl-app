@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -15,7 +15,7 @@ export const initMultiSelectList = (container) => {
   // let selection = []
 
   const title = 'Multi Select List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a multi-select list
   const list = createList({

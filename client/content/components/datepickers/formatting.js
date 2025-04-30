@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -10,7 +10,7 @@ import {
 export const initFormatting = (container) => {
   const title = 'Date Formatting'
   const description = 'DatePicker supports different date display formats'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, description, class: 'noflex' }), container).component
 
   // Create grid layout for different formats
   const grid = document.createElement('div')

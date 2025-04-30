@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -13,7 +13,7 @@ import {
 
 export const initLongMenu = (container) => {
   const title = 'Long Menu Select'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a basic select component with all countries
   const filled = createSelect({

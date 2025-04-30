@@ -1,6 +1,6 @@
 // src/client/content/components/textfields/leading-icons.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -15,7 +15,7 @@ const searchIcon = `<svg viewBox="0 0 24 24" width="24" height="24">
 
 export const initLeadingIcons = (container) => {
   const title = 'Textfields with Leading Icons'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Filled textfield with leading icon
   const filled = createTextfield({

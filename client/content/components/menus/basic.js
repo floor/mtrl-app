@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -15,7 +15,7 @@ import {
 export const initBasicMenu = (container) => {
   const title = 'Basic Menus'
   const description = 'Basic Menu'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   const button = createButton({
     text: 'Basic Menu',

@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/bottom/custom-actions.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -11,7 +11,7 @@ import {
 export const initCustomActionsBottomAppBar = (container) => {
   const title = 'Custom Actions & Context'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentSection({
     title,
     class: 'noflex'
   }), container).component

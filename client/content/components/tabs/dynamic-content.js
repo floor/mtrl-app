@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -10,7 +10,7 @@ import {
 
 export const initDynamicContent = (container) => {
   const title = 'Dynamic Content'
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, class: 'noflex' }), container).component
 
   // Create tabs
   const tabs = createTabs({

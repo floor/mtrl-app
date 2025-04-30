@@ -1,6 +1,6 @@
 // src/client/content/components/textfields/multiline.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -10,7 +10,7 @@ import {
 
 export const initMultilineTextfield = (container) => {
   const title = 'Multiline Textfield'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Filled multiline textfield
   const filled = createTextfield({

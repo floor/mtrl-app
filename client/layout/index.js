@@ -1,29 +1,19 @@
-import { contentLayout, createContentLayout, createContentSection } from './content'
-import { componentsLayout } from './components'
+import {
+  createContentLayout,
+  createComponentsLayout
+} from './content'
 
 import {
-  sectionLayout,
-  sectionTitleLayout,
-  sectionTitleDescriptionLayout,
-  createSectionShowcase,
-  createComponentsSectionLayout,
-  createComponentsSectionLayoutBox,
-  createComponentsSectionLayoutInfo
+  createComponentSection,
+  createContentSection
 } from './section'
 
 import { createDocs } from './docs'
 
 export {
   createDocs,
-  contentLayout,
   createContentSection,
-  componentsLayout,
+  createComponentsLayout,
   createContentLayout,
-  sectionLayout,
-  sectionTitleLayout,
-  sectionTitleDescriptionLayout,
-  createSectionShowcase,
-  createComponentsSectionLayout,
-  createComponentsSectionLayoutBox,
-  createComponentsSectionLayoutInfo
+  createComponentSection
 }

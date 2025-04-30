@@ -5,8 +5,8 @@
  * @module src/client/content/components/button/icons
  */
 import {
-  createComponentsSectionStructure
-} from '../../../../structure'
+  createComponentSection
+} from '../../../../layout'
 import {
   createLayout,
   createButton
@@ -37,7 +37,7 @@ const iconLabelButtons = [
  */
 export const initIcons = (container) => {
   const title = 'Buttons icons'
-  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentSection({ title }), container).component
   const states = ['enabled', 'disabled']
   const variants = ['filled', 'elevated']
 

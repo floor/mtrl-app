@@ -1,7 +1,7 @@
 // src/client/content/core/composition.js
 
 import {
-  contentLayout,
+  createContentLayout,
   createDocs
 } from '../../../layout'
 
@@ -22,7 +22,7 @@ export const createCompositionContent = (container) => {
     title: 'Composition',
     description: 'Build complex components through function composition and feature mixing'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(createContentLayout(info), container).component
 
   createDocs(layout.body, 'core/composition/composition.md')
 }

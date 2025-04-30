@@ -1,7 +1,7 @@
 // src/client/content/components/button/index.js
 
 import {
-  contentLayout as ContentLayout,
+  createContentLayout,
   createDocs
 } from '../../../../layout'
 
@@ -21,7 +21,7 @@ export const createButtonsContent = (container) => {
     description: 'Let users take action and make choices with one tap'
   }
 
-  const layout = createLayout(ContentLayout(info), container).component
+  const layout = createLayout(createContentLayout(info), container).component
 
   createButtonComponent(layout.body)
   // initVariants(layout.body)

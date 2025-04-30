@@ -1,6 +1,6 @@
 // src/client/content/components/segmented-button/form-integration.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -15,7 +15,7 @@ import {
 
 export const initFormIntegration = (container) => {
   const title = 'Form Integration'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Segmented buttons can be used within forms as an alternative to radio buttons or checkboxes.',
     class: 'noflex'

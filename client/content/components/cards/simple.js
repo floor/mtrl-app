@@ -1,7 +1,7 @@
 // src/client/content/components/cards/simple.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -24,7 +24,7 @@ export const initSimpleCards = (container) => {
   const title = 'Simple Cards'
   const description = 'Basic cards with title and text content following MD3 specifications'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create simple cards using the first three artworks
   artworks.slice(0, 2).forEach(artwork => {

@@ -1,7 +1,7 @@
 // src/client/content/components/search/transition-example.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -18,7 +18,7 @@ import {
 
 export const initTransition = (container) => {
   const title = 'Search Bar to View Mode Transition'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a search bar that will expand into view mode
   const searchBar = createSearch({

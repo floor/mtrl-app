@@ -1,6 +1,6 @@
 // src/client/content/components/segmented-buttons/variants.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -14,7 +14,7 @@ import {
 
 export const initVariants = (container) => {
   const title = 'Segmented Button Basic Examples'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Segmented buttons help people select options, switch views, or sort elements',
     class: 'noflex'

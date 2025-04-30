@@ -1,7 +1,7 @@
 // src/client/content/components/cards/swipeable.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -28,7 +28,7 @@ export const initSwipeableCard = (container) => {
   const title = 'Swipeable Cards'
   const description = 'Cards with swipe gesture interactions and accessible alternatives'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create a swipeable card
   const artwork = artworks[8] // American Gothic

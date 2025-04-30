@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -16,7 +16,7 @@ import { faceIcon, locationIcon } from '../../../icons'
 
 export const initSubmenu = (container) => {
   const title = 'Select with nested menu'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a basic select component with all countries
   const filled = createSelect({

@@ -3,8 +3,8 @@
  * Button spinner example
  */
 import {
-  createComponentsSectionStructure
-} from '../../../../structure'
+  createComponentSection
+} from '../../../../layout'
 
 import {
   createLayout, createButton
@@ -17,7 +17,7 @@ import { spinnerIcon, checkIcon } from '../../../../icons'
  */
 export const initSpinnerButton = (container) => {
   const title = 'Button with spinner'
-  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentSection({ title }), container).component
 
   // Create a regular button
   const button = createButton({

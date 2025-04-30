@@ -1,7 +1,7 @@
 // src/client/content/components/switches/index.js
 
 import {
-  componentsLayout
+  createComponentsLayout
 } from '../../../layout'
 
 import { initBasicSwitches } from './basic'
@@ -30,7 +30,7 @@ export const createSwitchesContent = (container) => {
 
   console.log('createSwitchDocs')
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initBasicSwitches(layout.body)
   initSupportingText(layout.body)

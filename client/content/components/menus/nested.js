@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -17,7 +17,7 @@ import { faceIcon, locationIcon } from '../../../icons'
 
 export const initNestedMenu = (container) => {
   const title = 'Nested Menu'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const buttonPosition = createButton({
     icon: faceIcon,

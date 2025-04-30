@@ -4,12 +4,12 @@ import {
 } from 'mtrl'
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 export const initLabelPositions = (container) => {
   const title = 'Label Positions'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a description element
   // const description = createElement({ tag: 'p', class: 'section-description' })

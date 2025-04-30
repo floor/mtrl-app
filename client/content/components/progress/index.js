@@ -1,8 +1,8 @@
 // src/client/content/components/progress.js
 
 import {
-  componentsLayout,
-  createComponentsSectionLayoutInfo
+  createComponentsLayout,
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -24,7 +24,7 @@ export const createProgressContent = (container) => {
     description: 'Progress indicators express an unspecified wait time or display the length of a process'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initLinearProgress(layout.body)
   initCircularProgress(layout.body)
@@ -39,7 +39,7 @@ export const createProgressContent = (container) => {
  */
 export const initLinearProgress = (container) => {
   const title = 'Linear Progress'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create determinate linear progress
   const progress25 = createProgress({
@@ -73,7 +73,7 @@ export const initLinearProgress = (container) => {
  */
 export const initCircularProgress = (container) => {
   const title = 'Circular Progress'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create determinate circular progress indicators
   const progress25 = createProgress({
@@ -107,7 +107,7 @@ export const initCircularProgress = (container) => {
  */
 export const initIndeterminateProgress = (container) => {
   const title = 'Indeterminate Progress'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create indeterminate circular progress
   const indeterminateCircular = createProgress({
@@ -130,7 +130,7 @@ export const initIndeterminateProgress = (container) => {
  */
 export const initBufferProgress = (container) => {
   const title = 'Buffer Progress'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create progress with buffer indicator
   const progress = createProgress({
@@ -156,7 +156,7 @@ export const initBufferProgress = (container) => {
  */
 export const initInteractiveProgress = (container) => {
   const title = 'Interactive Progress Demo'
-  const layout = createLayout(createComponentsSectionLayoutInfo({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create linear and circular progress indicators for interaction
   const linearProgress = createProgress({

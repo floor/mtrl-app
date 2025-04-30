@@ -1,6 +1,6 @@
 // src/client/content/components/extended-fab/positions.js
 import {
-  createComponentsSectionLayoutInfo
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -54,7 +54,7 @@ const positionLabels = {
 
 export const initPositions = (container) => {
   const title = 'Extended FAB Positions'
-  const layout = createLayout(createComponentsSectionLayoutInfo({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Extended FABs can be positioned in different corners of the screen. In a real application, they would be fixed to the viewport.'
   }), container).component

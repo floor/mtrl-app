@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -9,7 +9,7 @@ import {
 
 export const initSecondaryTabs = (container) => {
   const title = 'Secondary Tabs'
-  const layout = createLayout(createComponentsSectionLayoutBox({ title, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, class: 'noflex' }), container).component
 
   // Create tabs with secondary variant
   const tabs = createTabs({

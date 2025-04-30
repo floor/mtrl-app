@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/bottom/programmatic.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -15,7 +15,7 @@ import {
 export const initProgrammaticBottomAppBar = (container) => {
   const title = 'Programmatic Control'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentSection({
     title,
     class: 'noflex'
   }), container).component

@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -9,7 +9,7 @@ import {
 
 export const initSectionedList = (container) => {
   const title = 'Sectioned List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const list = createList({
     sections: [

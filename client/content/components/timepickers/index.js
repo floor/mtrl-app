@@ -1,6 +1,6 @@
 // src/client/content/components/timepickers/index.js
 
-import { componentsLayout } from '../../../layout'
+import { createComponentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasic } from './basic'
 import { initVariants } from './variants'
@@ -15,7 +15,7 @@ export const createTimePickersContent = (container) => {
     description: 'Select time from a dial or input interface'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   // Initialize all timepicker examples
   initBasic(layout.body)

@@ -1,7 +1,7 @@
 // src/client/content/components/timepickers/formats.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initFormats = (container) => {
   const title = 'Time Formats'
   const description = 'TimePicker supports 12-hour and 24-hour time formats'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, description, class: 'noflex' }), container).component
 
   // Create grid layout for different formats
   const grid = document.createElement('div')

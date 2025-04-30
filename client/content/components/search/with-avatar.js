@@ -1,7 +1,7 @@
 // src/client/content/components/search/with-avatar.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -13,7 +13,7 @@ import {
 
 export const initWithAvatar = (container) => {
   const title = 'Search Bar with Avatar'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Define avatar
   const avatar = '<img src="https://i.pravatar.cc/100" alt="User avatar">'

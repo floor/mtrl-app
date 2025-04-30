@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initBasicTabs = (container) => {
   const title = 'Tabs'
 
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const tabsLayout = createLayout([
     { layout: { type: 'flex' }, style: { width: '80%' } },

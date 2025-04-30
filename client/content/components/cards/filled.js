@@ -1,7 +1,7 @@
 // src/client/content/components/cards/filled.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -26,7 +26,7 @@ export const initFilledCards = (container) => {
   const title = 'Filled Cards'
   const description = 'Cards with filled background color using MD3 surface-container-highest'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create filled cards
   artworks.slice(7, 9).forEach(artwork => {

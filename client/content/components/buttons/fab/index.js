@@ -1,7 +1,7 @@
 // src/client/content/components/fab/index.js
 
 import {
-  componentsLayout
+  createComponentsLayout
 } from '../../../../layout'
 
 import {
@@ -20,7 +20,7 @@ export const createFabContent = (container) => {
     description: 'A FAB (Floating Action Button) represents the primary action on a screen. It appears in front of all screen content and is recognizable for its circular shape and icon in the center.'
   }
 
-  const layout = createLayout(componentsLayout(info), container).getAll()
+  const layout = createLayout(createComponentsLayout(info), container).getAll()
 
   initVariants(layout.body)
   initSizes(layout.body)

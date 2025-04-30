@@ -6,12 +6,12 @@ import {
 } from 'mtrl'
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 export const initIndeterminateCheckboxes = (container) => {
   const title = 'Indeterminate State'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a wrapper for the demo
   const demoWrapper = createElement({ class: 'indeterminate-checkbox-demo' })

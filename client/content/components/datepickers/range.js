@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -11,7 +11,7 @@ import {
 export const initRange = (container) => {
   const title = 'Date Range Selection'
   const description = 'Select a start and end date for a date range'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, description, class: 'noflex' }), container).component
 
   // Create date range picker
   const rangePicker = createDatePicker({

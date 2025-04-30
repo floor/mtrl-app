@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -17,7 +17,7 @@ import { faceIcon, locationIcon } from '../../../icons'
 
 export const initTexfieldMenu = (container) => {
   const title = 'Textfield menu'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const textfieldPosition = createTextfield({
     label: 'Position',

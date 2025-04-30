@@ -1,6 +1,6 @@
 // src/client/content/components/chips/selectable.js
 import { capitalize } from '../../../core/utils'
-import { createComponentsSectionLayout } from '../../../layout'
+import { createComponentSection } from '../../../layout'
 import { createLayout, createChip } from 'mtrl'
 
 /**
@@ -9,7 +9,7 @@ import { createLayout, createChip } from 'mtrl'
  */
 export const initSelectableChips = (container) => {
   const title = 'Selectable Chips'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a selection chips container
   const chipsContainer = document.createElement('div')

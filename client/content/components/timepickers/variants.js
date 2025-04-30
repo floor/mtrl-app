@@ -1,7 +1,7 @@
 // src/client/content/components/timepickers/variants.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -13,7 +13,7 @@ import {
 export const initVariants = (container) => {
   const title = 'TimePicker Variants'
   const description = 'TimePickers come in different types and orientations'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create grid layout for variants
   const grid = document.createElement('div')

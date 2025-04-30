@@ -1,7 +1,7 @@
 // src/client/content/core/state.js
 
 import {
-  contentLayout
+  createContentLayout
 } from '../../../layout'
 
 import {
@@ -19,7 +19,7 @@ export const createStateContent = (container) => {
     title: 'State',
     description: 'A lightweight state management system for components and applications'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(createContentLayout(info), container).component
 
   initEmitter(layout.body)
   initStore(layout.body)

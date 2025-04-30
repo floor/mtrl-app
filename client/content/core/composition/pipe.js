@@ -4,11 +4,11 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initPipeFunction = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Pipe Function',
     description: 'The pipe function is the core utility that enables functional composition in mtrl.',
     bodyClass: 'grid'

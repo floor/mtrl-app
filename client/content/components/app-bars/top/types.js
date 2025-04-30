@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/top/types.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initTypesTopAppBar = (container) => {
   const title = 'Top App Bar Types'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentSection({
     title,
     class: 'noflex'
   }), container).component

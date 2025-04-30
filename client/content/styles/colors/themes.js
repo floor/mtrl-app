@@ -2,7 +2,7 @@ import {
   createLayout
 } from 'mtrl'
 
-import { createContentSection } from '../../../layout/content'
+import { createContentSection } from '../../../layout'
 
 export const createThemeColors = (container) => {
   console.log('createThemeColors', container)

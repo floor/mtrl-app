@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initVariants = (container) => {
   const title = 'DatePicker Variants'
   const sectionDescription = 'DatePickers come in three variants: docked, modal, and modal input'
-  const layout = createLayout(createComponentsSectionLayout({ title, description: sectionDescription }), container).component
+  const layout = createLayout(createComponentSection({ title, description: sectionDescription }), container).component
 
   // Create grid layout for variants
   const grid = document.createElement('div')

@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -9,7 +9,7 @@ import {
 
 export const initTextfieldVariants = (container) => {
   const title = 'Textfield Variants'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a wrapper for the filled variant
   // const filledWrapper = createElement({ class: 'mtrl-content__variant' })

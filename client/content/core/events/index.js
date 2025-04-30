@@ -1,7 +1,7 @@
 // src/client/content/core/events.js
 
 import {
-  contentLayout
+  createContentLayout
 } from '../../../layout'
 
 import {
@@ -23,7 +23,7 @@ export const createEventsContent = (container) => {
     description: 'A standardized system for handling events across components'
   }
 
-  const layout = createLayout(contentLayout(content), container).component
+  const layout = createLayout(createContentLayout(content), container).component
 
   initEventManager(layout.body)
   initEventBus(layout.body)

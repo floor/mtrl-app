@@ -4,7 +4,7 @@ import {
   createButton
 } from 'mtrl'
 
-import { createContentSection } from '../../../layout/content'
+import { createContentSection } from '../../../layout'
 
 export const createColorState = (container) => {
   const body = createLayout(createContentSection({

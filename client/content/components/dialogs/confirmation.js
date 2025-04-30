@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -11,7 +11,7 @@ import {
 export const initConfirmation = (container) => {
   const title = 'Confirmation Dialog'
   const description = 'A simple confirmation dialog using the confirm() method'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create button to open dialog
   const confirmButton = createButton({

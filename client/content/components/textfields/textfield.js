@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const createTextfieldShowcase = (container) => {
   const title = 'Textfield'
   const description = 'Try out the textfield API methods'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   const showcase = createLayout([
     [createTextfield, 'textfield', {

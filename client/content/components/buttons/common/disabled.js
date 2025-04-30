@@ -3,8 +3,8 @@
 import { capitalize } from '../../../../core/utils'
 
 import {
-  createComponentsSectionStructure
-} from '../../../../structure'
+  createComponentSection
+} from '../../../../layout'
 
 import {
   createLayout,
@@ -13,7 +13,7 @@ import {
 
 export const initDisabled = (container) => {
   const title = 'Buttons Disabled'
-  const structure = createLayout(createComponentsSectionStructure({ title }), container).component
+  const structure = createLayout(createComponentSection({ title }), container).component
 
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {

@@ -1,6 +1,6 @@
 // src/client/content/components/cards/index.js
 
-import { componentsLayout } from '../../../layout'
+import { createComponentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { addCardStyles } from './styles'
 import { artworks } from './artwork-data'
@@ -37,7 +37,7 @@ export const createCardsContent = (container) => {
   // Initialize styles
   addCardStyles()
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   // Initialize all card sections
   initSimpleCards(layout.body)

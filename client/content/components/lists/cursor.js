@@ -1,6 +1,6 @@
 // client/content/components/lists/users.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 import {
   createLayout,
@@ -10,7 +10,7 @@ import {
 export const initCursorList = (container) => {
   const title = 'API Users List'
   const description = '1\'000\'000 entries and virtualization with cursor pagination strategy'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
   console.log('Creating users list...')
 
   // Create the API-connected list

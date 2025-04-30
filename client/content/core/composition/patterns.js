@@ -4,11 +4,11 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initCompositionPatterns = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Composition Patterns',
     description: 'Learn how mtrl uses functional composition instead of inheritance to create flexible, reusable components.',
     bodyClass: 'grid'

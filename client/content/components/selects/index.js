@@ -1,7 +1,7 @@
 // src/client/content/components/textfields/index.js
 
 import {
-  componentsLayout
+  createComponentsLayout
 } from '../../../layout'
 
 import {
@@ -18,7 +18,7 @@ export const createTextfieldsContent = (container) => {
     description: 'A dropdown component that allows users to select from multiple options.'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   // Initialize all the textfield examples
   initBasicSelect(layout.body)

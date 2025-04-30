@@ -1,6 +1,6 @@
 // src/client/content/components/datepickers/index.js
 
-import { componentsLayout } from '../../../layout'
+import { createComponentsLayout } from '../../../layout'
 import { createLayout } from 'mtrl'
 import { initBasic } from './basic'
 import { initRange } from './range'
@@ -15,7 +15,7 @@ export const createDatePickersContent = (container) => {
     description: 'Select a date or range of dates from a calendar interface'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   // Initialize all datepicker examples
   initBasic(layout.body)

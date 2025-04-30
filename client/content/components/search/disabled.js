@@ -1,7 +1,7 @@
 // src/client/content/components/search/disabled.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -13,7 +13,7 @@ import {
 
 export const initDisabled = (container) => {
   const title = 'Disabled Search'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Disabled search bar
   const disabledSearch = createSearch({

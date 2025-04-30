@@ -1,6 +1,6 @@
 // client/content/components/lists/users.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 import {
   createLayout,
@@ -9,7 +9,7 @@ import {
 
 export const initUsersList = (container) => {
   const title = 'API Users List'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
   console.log('Creating users list...')
 
   // Create the API-connected list

@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -20,7 +20,7 @@ const USER_ICON = `
 
 export const initVerticalLayout = (container) => {
   const title = 'Vertical Layout'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const list = createList({
     layout: 'vertical',

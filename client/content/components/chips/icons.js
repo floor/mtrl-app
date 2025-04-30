@@ -1,5 +1,5 @@
 // src/client/content/components/chips/icons.js
-import { createComponentsSectionLayout } from '../../../layout'
+import { createComponentSection } from '../../../layout'
 import { createLayout, createChip } from 'mtrl'
 import { faceIcon, closeIcon, locationIcon, addIcon } from '../../../icons'
 
@@ -9,7 +9,7 @@ import { faceIcon, closeIcon, locationIcon, addIcon } from '../../../icons'
  */
 export const initChipWithIcons = (container) => {
   const title = 'Chips with Icons'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Example with leading icon
   const leadingIconChip = createChip({

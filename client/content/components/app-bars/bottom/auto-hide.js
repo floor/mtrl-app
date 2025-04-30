@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/bottom/auto-hide.js
 import {
-  createComponentsSectionLayoutBox
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -14,7 +14,7 @@ import {
 export const initAutoHideBottomAppBar = (container) => {
   const title = 'Auto-Hide on Scroll'
 
-  const layout = createLayout(createComponentsSectionLayoutBox({
+  const layout = createLayout(createComponentSection({
     title,
     class: 'noflex'
   }), container).component

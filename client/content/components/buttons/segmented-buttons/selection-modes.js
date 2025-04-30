@@ -1,6 +1,6 @@
 // src/client/content/components/segmented-button/selection-modes.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -15,7 +15,7 @@ import {
 
 export const initSelectionModes = (container) => {
   const title = 'Selection Modes'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Segmented buttons support two selection modes: single-select and multi-select.',
     class: 'noflex'

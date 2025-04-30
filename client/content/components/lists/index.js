@@ -1,6 +1,6 @@
 // src/client/layout/lists/index.js
 import {
-  componentsLayout,
+  createComponentsLayout,
   createDocs
 } from '../../../layout'
 
@@ -23,7 +23,7 @@ export const createListsContent = (container, components) => {
     description: 'Lists are continuous, vertical indexes of text and images'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initBasicList(layout.body)
   // initSingleSelectList(layout.body)

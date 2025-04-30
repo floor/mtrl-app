@@ -1,7 +1,7 @@
 // src/client/content/components/cards/dynamic.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -23,7 +23,7 @@ export const initDynamicCard = (container) => {
   const title = 'Dynamic Cards'
   const description = 'Cards with content that updates dynamically'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create dynamic card
   const artwork = artworks[2] // The Persistence of Memory

@@ -1,5 +1,5 @@
 import { createLayout, createChips, createChip } from 'mtrl'
-import { createContentSection } from '../../../layout/content'
+import { createContentSection } from '../../../layout'
 import themeManager from '../../../core/theme/theme-manager'
 
 export const createColorPalettes = (container) => {

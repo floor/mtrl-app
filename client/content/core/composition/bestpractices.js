@@ -3,11 +3,11 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initBestPractices = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Best Practices',
     description: 'Follow these guidelines to get the most out of the composition pattern in your mtrl applications.',
     bodyClass: 'grid'

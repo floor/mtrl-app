@@ -1,7 +1,7 @@
 // src/client/content/components/search/events-api.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -14,7 +14,7 @@ import {
 
 export const initEventsAPI = (container) => {
   const title = 'Using Events and API'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const showcase = createLayout([
     [createSearch, 'search', {

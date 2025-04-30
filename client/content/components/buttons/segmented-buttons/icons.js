@@ -1,6 +1,6 @@
 // src/client/content/components/segmented-button/icons.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -95,7 +95,7 @@ const icons = {
 
 export const initIconsOptions = (container) => {
   const title = 'Icons and Labels'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Segmented buttons can display icons, text labels, or both. Icons enhance visual recognition and complement text labels.',
     class: 'noflex'

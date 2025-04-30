@@ -1,7 +1,7 @@
 // src/client/content/components/search/basic-bar.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 
 export const initBasicBar = (container) => {
   const title = 'Basic Search Bar'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create the demo structure
 

@@ -1,7 +1,7 @@
 // src/client/content/components/cards/outlined.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -25,7 +25,7 @@ export const initOutlinedCards = (container) => {
   const title = 'Outlined Cards'
   const description = 'Cards with outline border using MD3 outline color token'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create outlined cards
   artworks.slice(10, 11).forEach((artwork, index) => {

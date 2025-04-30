@@ -1,7 +1,7 @@
 // src/client/content/get-started.js
 
 import {
-  contentLayout,
+  createContentLayout,
   createDocs
 } from '../layout'
 
@@ -22,7 +22,7 @@ export const createCompositionContent = (container) => {
     title: 'Getting Started with mtrl',
     description: 'The core library provides the fundamental building blocks for creating efficient, composable UI components with the mtrl design system.'
   }
-  const layout = createLayout(contentLayout(info), container).component
+  const layout = createLayout(createContentLayout(info), container).component
 
   createDocs(layout.body, 'get-started.md')
 }

@@ -1,7 +1,7 @@
 // src/client/content/components/badges/events-api.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -13,7 +13,7 @@ import {
 export const createBadgeContent = (container) => {
   const title = 'Badge Component'
   const description = 'Try out the badge API methods'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create the badge in the showcase section
 

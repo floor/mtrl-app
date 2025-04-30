@@ -4,12 +4,12 @@ import {
 } from 'mtrl'
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 export const initBasicCheckboxes = (container) => {
   const title = 'Basic Checkboxes'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   createLayout([{
 

@@ -242,7 +242,7 @@ const appLayout = createLayout({
 });
 
 // Add content to the content area
-const contentLayout = createLayout([
+const createContentLayout = createLayout([
   'heading', { tag: 'h1', text: 'Welcome to the Dashboard' },
   'description', { 
     tag: 'p', 

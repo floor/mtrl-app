@@ -1,7 +1,7 @@
 // src/client/content/components/badges/standard.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -11,7 +11,7 @@ import {
 
 export const initStandard = (container) => {
   const title = 'Standard Badges with Different Colors'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Component showcase
 

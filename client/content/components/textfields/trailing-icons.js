@@ -1,6 +1,6 @@
 // src/client/content/components/textfields/trailing-icons.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -15,7 +15,7 @@ const clearIcon = `<svg viewBox="0 0 24 24" width="24" height="24">
 
 export const initTrailingIcons = (container) => {
   const title = 'Textfields with Trailing Icons'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Filled textfield with trailing icon
   const filled = createTextfield({

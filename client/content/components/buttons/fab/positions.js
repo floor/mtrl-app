@@ -1,6 +1,6 @@
 // src/client/content/components/fab/positions.js
 import {
-  createComponentsSectionLayoutInfo
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -46,7 +46,7 @@ const icons = {
 
 export const initPositions = (container) => {
   const title = 'FAB Positions'
-  const layout = createLayout(createComponentsSectionLayoutInfo({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'These FABs demonstrate positioning. In a real application, they would be fixed to the viewport.'
   }), container).component

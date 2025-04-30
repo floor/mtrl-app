@@ -5,14 +5,14 @@ import {
 } from 'mtrl'
 import { capitalize } from '../../../../core/utils'
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 import { downloadIcon, bookmarkIcon, likeIcon, sendIcon, closeIcon } from '../../../../icons'
 
 export const createButtonComponent = (container) => {
   const title = 'Button Component'
   const description = 'Interactive playground to experiment with button variants, icons, text customization, and disabled states'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create the button in the showcase section
   let defaultText = 'Button'

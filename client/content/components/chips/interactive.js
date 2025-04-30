@@ -1,5 +1,5 @@
 // src/client/content/components/chips/interactive.js
-import { createComponentsSectionLayout } from '../../../layout'
+import { createComponentSection } from '../../../layout'
 import { createLayout, createChip, createTextfield, createButton } from 'mtrl'
 import { locationIcon } from '../../../icons'
 
@@ -10,7 +10,7 @@ import { locationIcon } from '../../../icons'
 export const initInteractiveChipExample = (container) => {
   const title = 'Interactive Chip Example'
   const subtitle = 'City selection with feedback'
-  const layout = createLayout(createComponentsSectionLayout({ title, subtitle }), container).component
+  const layout = createLayout(createComponentSection({ title, subtitle }), container).component
 
   // Create a container for the example
   const demoContainer = document.createElement('div')

@@ -2,7 +2,7 @@
 import { capitalize } from '../../../../core/utils'
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -24,7 +24,7 @@ const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
 
 export const initWidthOptions = (container) => {
   const title = 'Extended FAB Width Options'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Extended FABs can have fixed width (defined by content) or fluid width (defined by container).'
   }), container).component

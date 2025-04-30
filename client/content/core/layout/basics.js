@@ -1,7 +1,7 @@
 // src/client/content/core/layout/basics.js
 import { createLayout, createElement } from 'mtrl'
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 /**
@@ -9,7 +9,7 @@ import {
  * @param {HTMLElement} container - Parent container
  */
 export const createLayoutBasicsSection = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Basic Layout',
     description: 'The Layout Module provides a declarative approach to building UI.',
     bodyClass: 'grid'

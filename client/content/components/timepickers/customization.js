@@ -1,7 +1,7 @@
 // src/client/content/components/timepickers/customization.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -12,7 +12,7 @@ import {
 export const initCustomization = (container) => {
   const title = 'Customized TimePickers'
   const description = 'Customize the appearance and behavior of TimePickers'
-  const layout = createLayout(createComponentsSectionLayout({ title, description, class: 'noflex' }), container).component
+  const layout = createLayout(createComponentSection({ title, description, class: 'noflex' }), container).component
 
   // Create grid layout for customized examples
   const grid = document.createElement('div')

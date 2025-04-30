@@ -1,6 +1,6 @@
 // src/client/content/components/extended-fab/collapse.js
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -18,7 +18,7 @@ const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
 
 export const initCollapse = (container) => {
   const title = 'Extended FAB Collapse on Scroll'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Extended FABs can automatically collapse to a standard FAB when scrolling down and expand when scrolling up. This provides persistent access to the action while minimizing screen space usage.',
     class: 'noflex'

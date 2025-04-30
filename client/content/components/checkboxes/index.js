@@ -1,6 +1,6 @@
 // src/client/content/components/checkboxes/index.js
 import {
-  componentsLayout
+  createComponentsLayout
 } from '../../../layout'
 
 import {
@@ -17,7 +17,7 @@ export const createCheckboxesContent = (container) => {
     description: 'Checkboxes let users select one or more items from a list, or turn an item on or off'
   }
 
-  const layout = createLayout(componentsLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
   initBasicCheckboxes(layout.body)
   // initLabelPositions(layout.body)

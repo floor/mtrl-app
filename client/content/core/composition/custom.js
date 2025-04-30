@@ -5,11 +5,11 @@ import {
 } from 'mtrl'
 
 import {
-  sectionTitleDescriptionLayout
+  createContentLayout
 } from '../../../layout'
 
 export const initCustomComponent = (container) => {
-  const section = createLayout(sectionTitleDescriptionLayout({
+  const section = createLayout(createContentLayout({
     title: 'Creating Custom Components',
     description: 'Learn how to create your own custom components using the composition pattern.',
     bodyClass: 'grid'

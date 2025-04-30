@@ -1,7 +1,7 @@
 // src/client/content/components/cards/media.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -28,7 +28,7 @@ export const initMediaCards = (container) => {
   const title = 'Media Cards'
   const description = 'Cards with images and different aspect ratios'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Select artworks that work well with different aspect ratios
   const artworksByRatio = [
@@ -96,7 +96,7 @@ export const initActionCards = (container) => {
   const title = 'Action Cards'
   const description = 'Cards with interactive buttons and different action alignments'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Different action alignments to showcase
   const alignments = [

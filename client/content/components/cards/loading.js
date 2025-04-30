@@ -1,7 +1,7 @@
 // src/client/content/components/cards/loading.js
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -25,7 +25,7 @@ export const initLoadingCard = async (container) => {
   const title = 'Loading Cards'
   const description = 'Cards with loading state and placeholder content'
 
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create two cards - one loading, one showing loaded content
   const artwork = artworks[1] // The Starry Night

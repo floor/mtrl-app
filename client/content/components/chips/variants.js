@@ -1,6 +1,6 @@
 // src/client/content/components/chips/variants.js
 import { capitalize } from '../../../core/utils'
-import { createComponentsSectionLayout } from '../../../layout'
+import { createComponentSection } from '../../../layout'
 import { createLayout, createChip } from 'mtrl'
 
 /**
@@ -9,7 +9,7 @@ import { createLayout, createChip } from 'mtrl'
  */
 export const initChipVariants = (container) => {
   const title = 'Chip Variants'
-  const layout = createLayout(createComponentsSectionLayout({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // List of all available variants
   const variants = ['filled', 'outlined', 'elevated', 'assist', 'filter', 'input', 'suggestion']

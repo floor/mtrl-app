@@ -1,5 +1,5 @@
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../layout'
 
 import {
@@ -178,7 +178,7 @@ const createContactDialog = (nameField, emailField, phoneField, newsletterCheckb
 export const initFormDialog = (container) => {
   const title = 'Form Dialog'
   const description = 'A dialog containing form elements for user input'
-  const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create button to open dialog
   const openContactButton = createButton({

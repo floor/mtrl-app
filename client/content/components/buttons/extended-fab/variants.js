@@ -2,7 +2,7 @@
 import { capitalize } from '../../../../core/utils'
 
 import {
-  createComponentsSectionLayout
+  createComponentSection
 } from '../../../../layout'
 
 import {
@@ -29,7 +29,7 @@ const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
 
 export const initVariants = (container) => {
   const title = 'Extended FAB Variants'
-  const layout = createLayout(createComponentsSectionLayout({
+  const layout = createLayout(createComponentSection({
     title,
     description: 'Extended FABs are available in different color variants, each suitable for different contexts.'
   }), container).component
