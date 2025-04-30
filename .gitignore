@@ -9,6 +9,7 @@ dist/
 *.log
 *.gz
 node_modules
+/snapshot/
 
 # environment
 .env
