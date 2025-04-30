@@ -77,14 +77,21 @@ $dark-blockquote-border: #555;
     }
   }
   
-  // Code blocks
+// Code blocks with multiline support
+// To be placed in client/styles/code/markdown.scss as part of the .markdown-container class
   pre {
     background: $code-bg;
     padding: 1rem;
-    overflow-x: auto;
     border-radius: $border-radius;
-    margin: 0;
+    margin: 1rem 0;
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    
+    // Keep horizontal scrolling available as an option
+    overflow-x: auto;
+    
+    // Add maximum height with vertical scrolling for very large code blocks
+    max-height: 80vh;
+    overflow-y: auto;
     
     code {
       background: transparent;
@@ -92,16 +99,35 @@ $dark-blockquote-border: #555;
       display: block;
       color: inherit;
       font-size: 0.9em;
+      font-family: $font-family-code;
+      
+      // Add these properties to enable multiline wrapping
+      white-space: pre-wrap;       // CSS3 - allows wrapping but preserves other whitespace
+      word-wrap: break-word;       // Allow long words to be broken
+      word-break: break-word;      // Improved breaking for better readability
     }
   }
   
-  // Inline code
-  code {
-    background: $code-bg;
-    padding: 0.2rem 0.4rem;
-    border-radius: $border-radius;
-    font-family: $font-family-code;
-    font-size: 0.9em;
+  // Optional: Class for code that should never wrap (like tables or ASCII art)
+  pre.no-wrap code {
+    white-space: pre;
+    word-wrap: normal;
+    word-break: normal;
+  }
+  
+  // Optional: Class for code blocks that should visually indicate wrapped lines
+  pre.wrap-indicator code {
+    position: relative;
+    padding-left: 1.5em;
+    
+    // This requires some JavaScript to add the .wrapped-line class to wrapped lines
+    .wrapped-line::before {
+      content: "↪";
+      position: absolute;
+      left: 0.3em;
+      color: $muted-color; // Use your existing muted color
+      opacity: 0.7;
+    }
   }
   
   // Links

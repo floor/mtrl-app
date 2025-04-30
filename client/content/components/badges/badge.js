@@ -11,7 +11,7 @@ import {
 } from 'mtrl'
 
 export const createBadgeContent = (container) => {
-  const title = 'Badge API Demo'
+  const title = 'Badge Component'
   const description = 'Try out the badge API methods'
   const layout = createLayout(createComponentsSectionLayout({ title, description }), container).component
 
@@ -27,7 +27,7 @@ export const createBadgeContent = (container) => {
       mavValue: 500,
       color: BADGE_COLORS.ERROR,
       standalone: true,
-      style: { transform: 'scale(5)' }
+      style: { transform: 'scale(3)' }
     }]
   ], layout.showcase)
 
@@ -47,7 +47,7 @@ export const createBadgeContent = (container) => {
 
   // Component context information and controls in the info section
   const info = createLayout(
-    [{ layout: { type: 'stack', gap: 6, autoHeight: true, dense: true, align: 'center' } /* style: { transform: 'scale(.9)' } */ },
+    [{ layout: { type: 'grid', column: 1, gap: 4, dense: true, align: 'center' } /* style: { transform: 'scale(.9)' } */ },
       // [createElement, 'description', { tag: 'p', text: 'Modify the badge properties using the controls below.' }],
       [createChips, 'variant', { scrollable: false, label: 'Select variant' }],
       [createSelect, 'color', { variant: 'outlined', label: 'Color', options: colors }],

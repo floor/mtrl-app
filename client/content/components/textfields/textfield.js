@@ -37,10 +37,6 @@ export const createTextfieldShowcase = (container) => {
       [createSwitch, 'disabled', { label: 'Disabled', checked: true }]
     ], layout.info).component
 
-  console.log('TEXTFIELD_VARIANTS', TEXTFIELD_VARIANTS)
-
-  console.log('getInheritedBackground', getInheritedBackground(layout.showcase))
-
   for (let i = 0; i < variants.length; i++) {
     info.variant.addChip({
       text: variants[i].label,

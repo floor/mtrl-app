@@ -71,24 +71,24 @@ const createUserList = () => {
     renderItem: (user, index, recycledElement) => {
       console.log('Rendering user item:', user, 'at index:', index, recycledElement)
 
-      if (recycledElement) {
-        // Just update the content rather than creating new elements
-        const avatar = recycledElement.querySelector('.user-name')
-        const name = recycledElement.querySelector('.user-name')
-        const email = recycledElement.querySelector('.user-email')
-        const role = recycledElement.querySelector('.user-role')
+      // if (recycledElement) {
+      //   // Just update the content rather than creating new elements
+      //   const avatar = recycledElement.querySelector('.user-name')
+      //   const name = recycledElement.querySelector('.user-name')
+      //   const email = recycledElement.querySelector('.user-email')
+      //   const role = recycledElement.querySelector('.user-role')
 
-        // Update text content (faster than innerHTML)
-        avatar.textContent = user.avatar || user.headline?.charAt(0) || '?'
-        name.textContent = user.headline || 'Unknown'
-        email.textContent = user.supportingText || ''
-        role.textContent = user.meta || ''
+      //   // Update text content (faster than innerHTML)
+      //   avatar.textContent = user.avatar || user.headline?.charAt(0) || '?'
+      //   name.textContent = user.headline || 'Unknown'
+      //   email.textContent = user.supportingText || ''
+      //   role.textContent = user.meta || ''
 
-        // Add element type for recycling system
-        recycledElement.dataset.itemType = 'users'
+      //   // Add element type for recycling system
+      //   recycledElement.dataset.itemType = 'users'
 
-        return recycledElement
-      }
+      //   return recycledElement
+      // }
 
       const element = document.createElement('div')
       element.className = 'mtrl-list-item user-item'

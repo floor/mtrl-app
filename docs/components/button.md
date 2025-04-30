@@ -337,15 +337,6 @@ The Button component uses BEM-style CSS classes for easy customization:
 - Don't use too many prominent buttons in a single view
 - Keep button text to 1-3 words when possible
 
-## Browser Compatibility
-
-The Button component is compatible with all modern browsers:
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
 ## Performance Considerations
 
 The Button component is designed to be lightweight and performant:

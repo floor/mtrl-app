@@ -8,7 +8,6 @@ import {
   createLayout,
   createSearch,
   createButton,
-  createDivider,
   createElement,
   SEARCH_EVENTS
 } from 'mtrl'
@@ -17,89 +16,39 @@ export const initEventsAPI = (container) => {
   const title = 'Using Events and API'
   const layout = createLayout(createComponentsSectionLayout({ title }), container).component
 
-  // Create the search component with event handlers
-  const search = createSearch({
-    placeholder: 'Type and submit',
-    showClearButton: true,
-    on: {
+  const showcase = createLayout([
+    [createSearch, 'search', {
+      placeholder: 'Type and submit',
+      showClearButton: true,
+      on: {
       // Log input changes
-      [SEARCH_EVENTS.INPUT]: (event) => {
-        console.log(`Input value: "${event.value}"`)
-      },
-      // Show when search is submitted
-      [SEARCH_EVENTS.SUBMIT]: (event) => {
-        console.log(`Search submitted: "${event.value}"`)
-        // Update the event log
-        appendToLog(`Search submitted: "${event.value}"`)
-      },
-      // Track focus events
-      [SEARCH_EVENTS.FOCUS]: () => {
-        console.log('Search focused')
-        appendToLog('Search focused')
-      },
-      // Track blur events
-      [SEARCH_EVENTS.BLUR]: () => {
-        console.log('Search blurred')
-        appendToLog('Search blurred')
+        [SEARCH_EVENTS.INPUT]: (event) => {
+          console.log(`Input value: "${event.value}"`)
+        },
+        // Show when search is submitted
+        [SEARCH_EVENTS.SUBMIT]: (event) => {
+          console.log(`Search submitted: "${event.value}"`)
+          // Update the event log
+          appendToLog(`Search submitted: "${event.value}"`)
+        },
+        // Track focus events
+        [SEARCH_EVENTS.FOCUS]: () => {
+          console.log('Search focused')
+          appendToLog('Search focused')
+        },
+        // Track blur events
+        [SEARCH_EVENTS.BLUR]: () => {
+          console.log('Search blurred')
+          appendToLog('Search blurred')
+        }
       }
-    }
-  })
+    }]
+  ], layout.showcase).component
 
-  // Create buttons for the demo
-  const setValueButton = createButton({
-    text: 'Set Value to "Hello World"',
-    variant: 'outlined'
-  })
-
-  const clearButton = createButton({
-    text: 'Clear Search',
-    variant: 'outlined'
-  })
-
-  const focusButton = createButton({
-    text: 'Focus Search',
-    variant: 'outlined'
-  })
-
-  const placeholderButton = createButton({
-    text: 'Change Placeholder',
-    variant: 'outlined'
-  })
-
-  const submitButton = createButton({
-    text: 'Submit Search',
-    variant: 'filled',
-    color: 'primary'
-  })
-
-  // Add event handlers to buttons
-  setValueButton.on('click', () => {
-    search.setValue('Hello World')
-    appendToLog('Set value to "Hello World"')
-  })
-
-  clearButton.on('click', () => {
-    search.clear()
-    appendToLog('Cleared search')
-  })
-
-  focusButton.on('click', () => {
-    search.focus()
-    appendToLog('Focused search via API')
-  })
-
-  placeholderButton.on('click', () => {
-    search.setPlaceholder('New placeholder text')
-    appendToLog('Changed placeholder text')
-  })
-
-  submitButton.on('click', () => {
-    search.submit()
-    appendToLog('Submitted search via API')
-  })
+  const search = showcase.search
 
   // Create a structure for our UI
-  const demoStructure = [
+  const info = createLayout([
     [createElement, 'container', { class: 'search-demo-container' }, [
       [createElement, 'description', {
         tag: 'p',
@@ -109,7 +58,6 @@ export const initEventsAPI = (container) => {
         tag: 'p',
         innerHTML: '<strong>Try it:</strong> Click the buttons below to interact with the search component via its API. All events and actions will be displayed in the log.'
       }],
-      [createElement, 'searchContainer', { class: 'search-container' }],
       [createElement, 'buttonsContainer', {
         class: 'search-buttons-container',
         style: {
@@ -118,7 +66,27 @@ export const initEventsAPI = (container) => {
           gap: '8px',
           marginTop: '16px'
         }
+      },
+
+      [createButton, 'valueButton', { text: 'Set Value to "Hello World"', variant: 'outlined' }],
+      [createButton, 'clearButton', {
+        text: 'Clear Search',
+        variant: 'outlined'
       }],
+      [createButton, 'focusButton', {
+        text: 'Focus Search',
+        variant: 'outlined'
+      }],
+      [createButton, 'placeholderButton', {
+        text: 'Change Placeholder',
+        variant: 'outlined'
+      }],
+      [createButton, 'submitButton', {
+        text: 'Submit Search',
+        variant: 'filled',
+        color: 'primary'
+      }]
+      ],
       [createElement, 'dividerContainer', {
         style: { margin: '20px 0' }
       }],
@@ -130,7 +98,7 @@ export const initEventsAPI = (container) => {
           backgroundColor: 'var(--mtrl-sys-color-surface-container-high)',
           borderRadius: '4px',
           border: '1px solid var(--mtrl-sys-color-outline-variant)',
-          maxHeight: '200px',
+          height: '200px',
           overflowY: 'auto'
         }
       }, [
@@ -147,20 +115,38 @@ export const initEventsAPI = (container) => {
         }]
       ]]
     ]]
-  ]
+  ], layout.info).component
 
-  // Create the demo layout
-  const demo = createLayout(demoStructure, layout.body).component
+  console.log('info', info)
+
+  // Add event handlers to buttons
+  info.valueButton.on('click', () => {
+    search.setValue('Hello World')
+    appendToLog('Set value to "Hello World"')
+  })
+
+  info.clearButton.on('click', () => {
+    search.clear()
+    appendToLog('Cleared search')
+  })
+
+  info.focusButton.on('click', () => {
+    search.focus()
+    appendToLog('Focused search via API')
+  })
+
+  info.placeholderButton.on('click', () => {
+    search.setPlaceholder('New placeholder text')
+    appendToLog('Changed placeholder text')
+  })
+
+  info.submitButton.on('click', () => {
+    search.submit()
+    appendToLog('Submitted search via API')
+  })
 
   // Add the search component
-  demo.searchContainer.appendChild(search.element)
-
-  // Add the buttons
-  demo.buttonsContainer.appendChild(setValueButton.element)
-  demo.buttonsContainer.appendChild(clearButton.element)
-  demo.buttonsContainer.appendChild(focusButton.element)
-  demo.buttonsContainer.appendChild(placeholderButton.element)
-  demo.buttonsContainer.appendChild(submitButton.element)
+  layout.showcase.appendChild(search.element)
 
   // Add divider
   // const divider = createDivider()
@@ -173,9 +159,9 @@ export const initEventsAPI = (container) => {
     entry.style.borderBottom = '1px solid var(--mtrl-sys-color-outline-variant)'
     entry.style.padding = '4px 0'
 
-    demo.logContent.appendChild(entry)
+    info.logContent.appendChild(entry)
 
     // Auto-scroll to bottom
-    demo.logContainer.scrollTop = demo.logContainer.scrollHeight
+    info.logContainer.scrollTop = info.logContainer.scrollHeight
   }
 }

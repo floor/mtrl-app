@@ -61,15 +61,15 @@ export const initWithSuggestions = (container) => {
   // Add a paragraph explaining the component
   const description = document.createElement('p')
   description.textContent = 'Search view can display suggestions that update as the user types. Try typing to see the suggestions filter in real-time.'
-  layout.body.appendChild(description)
+  layout.info.appendChild(description)
 
   // Add the search component
-  layout.body.appendChild(searchWithSuggestions.element)
+  layout.showcase.appendChild(searchWithSuggestions.element)
 
   // Add instructions
   const instructions = document.createElement('p')
   instructions.style.fontSize = '14px'
   instructions.style.marginTop = '16px'
   instructions.innerHTML = '<strong>Try it:</strong> Click on the search field and type to see the suggestions filter in real-time.'
-  layout.body.appendChild(instructions)
+  layout.info.appendChild(instructions)
 }
