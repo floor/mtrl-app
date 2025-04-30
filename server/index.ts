@@ -4,7 +4,9 @@ import { handleStaticRequest, handleFaviconRequest } from "./handlers/static.js"
 import { handleRobotsRequest, handleLiveReload, handleHealthCheck, handleManifestRequest } from "./handlers/special.js";
 import { handleAppRequest, handleNotFound } from "./handlers/app.js";
 import { handleApiRequest } from "./api/index.js";
-import { handleMarkdownRequest } from "./handlers/markdown.js"; // Import the markdown handler
+import { handleMarkdownRequest } from "./handlers/markdown.js";
+import { handleSnapshotRequest } from "./handlers/snapshot.js";
+import { handleSitemapRequest } from "./handlers/sitemap.js"; // Import the sitemap handler
 import { initLiveReload } from "./services/live-reload.js";
 import { compressionMiddleware } from "./middleware/compression.js";
 import config from "./config.js";
@@ -40,7 +42,17 @@ async function handleRequest(req: Request): Promise<Response> {
       response = await handleMarkdownRequest(req);
     }
     
-    // Try special handlers if not an API or markdown request
+    // Try sitemap handler
+    if (!response) {
+      response = await handleSitemapRequest(req);
+    }
+    
+    // Try snapshot handler
+    if (!response) {
+      response = await handleSnapshotRequest(req);
+    }
+
+    // Try special handlers if not an API, markdown, or sitemap request
     if (!response) {
       response = handleHealthCheck(req) || 
                  handleRobotsRequest(req) || 
@@ -98,6 +110,7 @@ const startupBanner = `
 🌐 Web App Manifest support enabled
 📝 Markdown documentation support enabled
 🔍 API Routes enabled
+🗺️ XML/JSON Sitemap support enabled
 ${!isProduction ? "🔄 Live reload enabled" : ""}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 `;

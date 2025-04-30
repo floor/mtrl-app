@@ -17,12 +17,25 @@ export function handleRobotsRequest(req: Request): Response | null {
   }
   
   try {
+    // Get the base URL from the request
+    const baseUrl = `${url.protocol}//${url.host}`;
+    
+    // Create robots.txt content with sitemap reference
+    const robotsTxt = `User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dist/reload
+
+# Sitemaps
+Sitemap: ${baseUrl}/sitemap.xml
+`;
+    
     const headers = new Headers({
       "Content-Type": "text/plain",
       "Cache-Control": "public, max-age=86400"
     });
     
-    return new Response("User-agent: *\nDisallow:", { headers });
+    return new Response(robotsTxt, { headers });
   } catch (error: any) {
     logError("/robots.txt", error);
     return new Response(`Error serving robots.txt: ${error.message}`, { 
