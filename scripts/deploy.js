@@ -7,15 +7,15 @@ const execAsync = promisify(exec)
 // Configuration
 const config = {
   staging: {
-    host: process.env.DEPLOY_HOST || 'staging.mtrl.app',
+    host: process.env.DEPLOY_HOST || 'staging.mtrl-app',
     user: process.env.DEPLOY_USER || 'admin',
-    path: process.env.DEPLOY_PATH || '/home/floor/staging.mtrl.app',
+    path: process.env.DEPLOY_PATH || '/home/floor/staging.mtrl-app',
     port: process.env.SSH_PORT || 22
   },
   production: {
-    host: process.env.DEPLOY_HOST || 'mtrl.app',
+    host: process.env.DEPLOY_HOST || 'mtrl-app',
     user: process.env.DEPLOY_USER || 'admin',
-    path: process.env.DEPLOY_PATH || '/home/floor/mtrl.app',
+    path: process.env.DEPLOY_PATH || '/home/floor/mtrl-app',
     port: process.env.SSH_PORT || 22
   }
 }

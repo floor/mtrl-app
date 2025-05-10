@@ -80,7 +80,7 @@ jobs:
     if: github.event_name == 'push'
     environment:
       name: staging
-      url: https://staging.mtrl.app
+      url: https://staging.mtrl-app
     steps:
       - uses: actions/checkout@v4
       
@@ -158,7 +158,7 @@ jobs:
     # Require manual approval for production deployment
     environment:
       name: production
-      url: https://mtrl.app
+      url: https://mtrl-app
     steps:
       - uses: actions/checkout@v4
       
