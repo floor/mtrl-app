@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Script to generate static snapshots of mtrl.app using the snpsht package
+ * Script to generate static snapshots of mtrl-app using the snpsht package
  * This script uses the existing sitemap.xml
  */
 
@@ -13,10 +13,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const projectRoot = path.resolve(__dirname, '..')
 
 async function generateSnapshots () {
-  console.log('🚀 Generating static snapshots of mtrl.app...')
+  console.log('🚀 Generating static snapshots of mtrl-app...')
 
   // Configuration - adjust these values as needed
-  const baseUrl = 'http://localhost:4000' // Your local mtrl.app instance
+  const baseUrl = 'http://localhost:4000' // Your local mtrl-app instance
   const sitemapUrl = 'http://localhost:4000/sitemap.xml' // Path to your existing sitemap
   const outDir = path.join(projectRoot, 'snapshot') // Store snapshots at project root level
 
