@@ -107,19 +107,19 @@ To use mtrl app for development:
 ```bash
 # 1. Clone both repositories side by side
 git clone https://github.com/yourusername/mtrl.git
-git clone https://github.com/yourusername/mtrl.app.git
+git clone https://github.com/yourusername/mtrl-app.git
 
 # 2. Install dependencies in both
 cd mtrl
 bun install
 
-cd ../mtrl.app
+cd ../mtrl-app
 bun install
 
 # 3. Link your local mtrl to mtrl App
 cd ../mtrl
 bun run build
-cd ../mtrl.app
+cd ../mtrl-app
 bun link ../mtrl
 
 # 4. Start the mtrl App development server
@@ -141,7 +141,7 @@ For example, to test a new Button component:
 
 1. Navigate to mtrl App's components directory:
    ```
-   cd mtrl.app/src/client/content/components/
+   cd mtrl-app/src/client/content/components/
    ```
 
 2. Create a new file for your component examples:

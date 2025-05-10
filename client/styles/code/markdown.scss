@@ -17,7 +17,7 @@ $border-radius: 8px;
 
 // Dark mode variables (can be customized)
 $dark-bg: #222;
-$dark-text: #eee;
+$dark-text: var(--mtrl-sys-color-on-surface-variant);
 $dark-muted: #aaa;
 $dark-border: #444;
 $dark-code-bg: #2d2d2d;
@@ -90,7 +90,7 @@ $dark-blockquote-border: #555;
     overflow-x: auto;
     
     // Add maximum height with vertical scrolling for very large code blocks
-    max-height: 80vh;
+    // max-height: 80vh;
     overflow-y: auto;
     
     code {
