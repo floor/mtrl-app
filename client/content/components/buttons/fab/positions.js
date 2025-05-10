@@ -70,6 +70,8 @@ export const initPositions = (container) => {
     const formattedPosition = position.replace(/_/g, '-').toLowerCase()
     const icon = icons[formattedPosition] || icons['bottom-right']
 
+    console.log('formattedPosition', formattedPosition)
+
     const fab = createFab({
       icon,
       position: formattedPosition,

@@ -4,6 +4,13 @@ import {
 } from '../../../../layout'
 
 import {
+  topLeftIcon,
+  topRightIcon,
+  bottomLeftIcon,
+  bottomRightIcon
+} from '../../../../icons'
+
+import {
   createExtendedFab,
   createLayout
 } from 'mtrl'
@@ -24,24 +31,10 @@ export const FAB_POSITIONS = {
 
 // Different icons for position demonstration
 const icons = {
-  'top-right': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="15 3 21 3 21 9"></polyline>
-    <polyline points="9 21 3 21 3 15"></polyline>
-    <line x1="21" y1="3" x2="14" y2="10"></line>
-    <line x1="3" y1="21" x2="10" y2="14"></line>
-  </svg>`,
-  'top-left': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="9 3 3 3 3 9"></polyline>
-    <polyline points="15 21 21 21 21 15"></polyline>
-    <line x1="3" y1="3" x2="10" y2="10"></line>
-    <line x1="21" y1="21" x2="14" y2="14"></line>
-  </svg>`,
-  'bottom-right': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 5v14M5 12h14"/>
-  </svg>`,
-  'bottom-left': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 19V5M5 12h14"/>
-  </svg>`
+  'top-right': topRightIcon,
+  'top-left': topLeftIcon,
+  'bottom-right': bottomRightIcon,
+  'bottom-left': bottomLeftIcon
 }
 
 // Position labels for better clarity
@@ -63,10 +56,10 @@ export const initPositions = (container) => {
   const demoContainer = document.createElement('div')
   demoContainer.style.position = 'relative'
   demoContainer.style.height = '400px'
-  demoContainer.style.border = '1px dashed #ccc'
-  demoContainer.style.marginBottom = '20px'
+  // demoContainer.style.border = '1px dashed #ccc'
 
   layout.showcase.style.display = 'block'
+  layout.showcase.style.padding = '0px'
 
   // Add to showcase
   layout.showcase.appendChild(demoContainer)
@@ -93,37 +86,4 @@ export const initPositions = (container) => {
 
     demoContainer.appendChild(extendedFab.element)
   })
-
-  // Add a note about animating Extended FABs
-  const animatedTitle = document.createElement('h3')
-  animatedTitle.textContent = 'Animated Extended FAB'
-  layout.showcase.appendChild(animatedTitle)
-
-  const animatedDescription = document.createElement('p')
-  animatedDescription.textContent = 'This Extended FAB demonstrates the entrance animation'
-  layout.showcase.appendChild(animatedDescription)
-
-  const animatedFab = createExtendedFab({
-    icon: icons['bottom-right'],
-    text: 'Create',
-    animate: true,
-    ariaLabel: 'Animated Extended FAB'
-  })
-
-  layout.showcase.appendChild(animatedFab.element)
-
-  // Create a button to trigger animation
-  const resetButton = document.createElement('button')
-  resetButton.textContent = 'Reset Animation'
-  resetButton.style.marginTop = '20px'
-  resetButton.addEventListener('click', () => {
-    // Remove and re-add the Extended FAB to reset animation
-    animatedFab.element.remove()
-    animatedFab.element.classList.add('mtrl-extended-fab--animate-enter')
-    setTimeout(() => {
-      layout.showcase.appendChild(animatedFab.element)
-    }, 10)
-  })
-
-  layout.showcase.appendChild(resetButton)
 }

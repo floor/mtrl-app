@@ -84,6 +84,6 @@ export const initBasicBottomAppBar = (container) => {
   `
 
   // Add to layout
-  layout.body.appendChild(demoContainer)
-  layout.body.appendChild(description)
+  layout.showcase.appendChild(demoContainer)
+  layout.info.appendChild(description)
 }

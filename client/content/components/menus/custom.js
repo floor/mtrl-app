@@ -32,5 +32,5 @@ export const initCustomMenu = (container) => {
     console.log(`Selected from custom menu: ${name} (${text})`)
   })
 
-  layout.body.appendChild(button.element)
+  layout.showcase.appendChild(button.element)
 }

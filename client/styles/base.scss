@@ -22,3 +22,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   @include c.motion-transition(background-color, color);
 }
+
+ul {
+  list-style-type: disc; 
+  margin: 8px 0 24px 16px; 
+}

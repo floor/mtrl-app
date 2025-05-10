@@ -104,7 +104,6 @@ $app: '#{b.$prefix}-app';
     position: fixed;
     left: 15px;
     bottom: 15px;
-    transition: .2s ease left;
   }
 
   .#{b.$prefix}-button.#{b.$prefix}-more-menu {
@@ -112,7 +111,6 @@ $app: '#{b.$prefix}-app';
     position: fixed;
     left: 15px;
     bottom: 67px;
-    transition: .2s ease left;
   }
 
   // Mobile-specific hiding of components

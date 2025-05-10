@@ -28,8 +28,7 @@ export const initInteraction = (container) => {
   const title = 'Extended FAB Interaction'
   const layout = createLayout(createComponentSection({
     title,
-    description: 'Demonstrates interactive behaviors of the Extended FAB.',
-    class: 'noflex'
+    description: 'Demonstrates interactive behaviors of the Extended FAB.'
   }), container).component
 
   // Create the main Extended FAB
@@ -163,6 +162,6 @@ export const initInteraction = (container) => {
   buttonContainer.appendChild(collapseBtn.element)
 
   // Add container and Extended FAB to showcase
-  layout.showcase.appendChild(buttonContainer)
+  layout.info.appendChild(buttonContainer)
   layout.showcase.appendChild(extendedFab.element)
 }

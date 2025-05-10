@@ -1,6 +1,7 @@
 import {
   createLayout, createButton,
   createChips, createSwitch, createTextfield,
+  addClass, removeClass,
   BUTTON_VARIANTS
 } from 'mtrl'
 import { capitalize } from '../../../../core/utils'
@@ -25,10 +26,11 @@ export const createButtonComponent = (container) => {
   }
 
   // Add the button to the showcase
-  const showcase = createLayout([{ style: { transform: 'scale(1.2)' } },
+  const showcase = createLayout([{ },
     [createButton, 'button', {
       variant: BUTTON_VARIANTS.FILLED,
-      text: defaultText
+      text: defaultText,
+      class: 'button--showcase'
     }]
   ], layout.showcase)
   const button = showcase.get('button')
@@ -41,7 +43,6 @@ export const createButtonComponent = (container) => {
   // Component context information and controls in the info section
   const info = createLayout(
     [{ layout: { type: 'grid', column: 1, gap: 4, autoHeight: true, dense: true, align: 'center' } /* style: { transform: 'scale(.9)' } */ },
-      // [createElement, 'description', { tag: 'p', text: 'Modify the badge properties using the controls below.' }],
       [createChips, 'variant', { scrollable: false, label: 'Variant' }],
       [createChips, 'icon', { scrollable: false, label: 'Icon' }],
       [createTextfield, 'text', { label: 'Text', value: 'Button', variant: 'outlined', style: { width: '100%' } }],
@@ -82,8 +83,7 @@ export const createButtonComponent = (container) => {
 
   info.icon.on('change', (value) => {
     if (!button.hasIcon()) {
-      console.log('text', button.getText())
-      defaultText = button.getText()
+      defaultText = button.getText() || defaultText
     }
     if (value[0] !== 'none') {
       const text = capitalize(value[0])
@@ -98,7 +98,13 @@ export const createButtonComponent = (container) => {
   })
 
   info.text.on('input', (event) => {
+    // consoole.log()
     button.setText(event.value)
     defaultText = event.value
+    // if (event.value) {
+    //   addClass(button.element, 'button-circular')
+    // } else {
+    //   removeClass(button.element, 'button-circular')
+    // }
   })
 }

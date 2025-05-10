@@ -12,6 +12,7 @@ import { initVariants } from './variants'
 import { initWidthOptions } from './width'
 import { initDisabled } from './disabled'
 import { initPositions } from './positions'
+import { initAnimation } from './animation'
 import { initInteraction } from './interaction'
 import { initCollapse } from './collapse'
 
@@ -27,6 +28,7 @@ export const createExtendedFabContent = (container) => {
   initWidthOptions(layout.body)
   initDisabled(layout.body)
   initPositions(layout.body)
+  initAnimation(layout.body)
   initInteraction(layout.body)
   initCollapse(layout.body)
 }

@@ -26,20 +26,20 @@ export const initNestedMenu = (container) => {
   })
 
   const menu = createMenu({
-    opener: buttonPosition,
+    opener: buttonPosition.element,
     items: organisation
   })
 
-  const buttonLocation = createButton({
-    icon: locationIcon,
-    text: 'Location',
-    variant: 'tonal'
-  })
+  // const buttonLocation = createButton({
+  //   icon: locationIcon,
+  //   text: 'Location',
+  //   variant: 'tonal'
+  // })
 
-  const menu2 = createMenu({
-    opener: buttonLocation,
-    items: location
-  })
+  // const menu2 = createMenu({
+  //   opener: buttonLocation.element,
+  //   items: location
+  // })
 
   menu.on('select', (event) => {
     console.log('event', event)
@@ -47,12 +47,12 @@ export const initNestedMenu = (container) => {
     buttonPosition.setText(event.item.text)
   })
 
-  menu2.on('select', (event) => {
-    console.log('event', event)
-    console.log(`Selected location: ${event.itemId}`)
-    buttonLocation.setText(event.item.text)
-  })
+  // menu2.on('select', (event) => {
+  //   console.log('event', event)
+  //   console.log(`Selected location: ${event.itemId}`)
+  //   buttonLocation.setText(event.item.text)
+  // })
 
-  layout.body.appendChild(buttonPosition.element)
-  layout.body.appendChild(buttonLocation.element)
+  layout.showcase.appendChild(buttonPosition.element)
+  // layout.showcase.appendChild(buttonLocation.element)
 }

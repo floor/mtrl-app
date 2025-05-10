@@ -51,8 +51,8 @@ export const createBadgeContent = (container) => {
       // [createElement, 'description', { tag: 'p', text: 'Modify the badge properties using the controls below.' }],
       [createChips, 'variant', { scrollable: false, label: 'Select variant' }],
       [createSelect, 'color', { variant: 'outlined', label: 'Color', options: colors }],
-      [createSlider, 'value', { label: `setLabel (${initialValue})`, min: 0, max: 1100, value: 456, step: 1, variant: 'discrete' }],
-      [createSlider, 'maxValue', { label: ' setMax', min: 99, max: 999, value: 499, step: 100 }],
+      [createSlider, 'value', { label: `Label (${initialValue})`, min: 0, max: 1100, value: 456, step: 1, variant: 'discrete' }],
+      [createSlider, 'maxValue', { label: ' Max value', min: 99, max: 999, value: 499, step: 100 }],
       [createSwitch, 'show', { label: 'Show', checked: true }]
     ], layout.info).component
 

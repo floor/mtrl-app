@@ -25,11 +25,11 @@ export const initBasicMenu = (container) => {
   const menu = createMenu({
     opener: button,
     items: [
-      { name: 'new', text: 'New File' },
-      { name: 'open', text: 'Open...' },
+      { id: 'new', text: 'New File' },
+      { id: 'open', text: 'Open...' },
       { type: 'divider' },
-      { name: 'save', text: 'Save' },
-      { name: 'save-as', text: 'Save As...' }
+      { id: 'save', text: 'Save' },
+      { id: 'save-as', text: 'Save As...' }
     ]
   })
 
@@ -51,6 +51,6 @@ export const initBasicMenu = (container) => {
     console.log('Selected Id:', event.itemId)
   })
 
-  layout.body.appendChild(button.element)
-  layout.body.appendChild(button2.element)
+  layout.showcase.appendChild(button.element)
+  layout.showcase.appendChild(button2.element)
 }

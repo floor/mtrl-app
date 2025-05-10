@@ -30,28 +30,29 @@ export const initTexfieldMenu = (container) => {
     items: organisation
   })
 
-  const textfieldLocation = createTextfield({
-    label: 'Location',
-    leadingIcon: locationIcon,
-    text: 'Location'
-  })
+  // const textfieldLocation = createTextfield({
+  //   label: 'Location',
+  //   leadingIcon: locationIcon,
+  //   text: 'Location'
+  // })
 
-  const menu2 = createMenu({
-    opener: textfieldLocation,
-    items: location
-  })
+  // const menu2 = createMenu({
+  //   opener: textfieldLocation,
+  //   items: location
+  // })
 
   menu.on('select', (event) => {
-    console.log('event', event)
+    console.trace('event', event)
     console.log(`Selected position: ${event.itemId}`)
-    textfieldPosition.setValue(event.itemId)
+    textfieldPosition.setValue(event.item.text)
   })
 
-  menu2.on('select', (event) => {
-    console.log('event', event)
-    console.log(`Selected location: ${event.itemId}`)
-  })
+  // menu2.on('select', (event) => {
+  //   console.log('event', event)
+  //   console.log(`Selected location: ${event.itemId}`)
+  //   textfieldLocation.setValue(event.item.text)
+  // })
 
-  layout.body.appendChild(textfieldPosition.element)
-  layout.body.appendChild(textfieldLocation.element)
+  layout.showcase.appendChild(textfieldPosition.element)
+  // layout.showcase.appendChild(textfieldLocation.element)
 }

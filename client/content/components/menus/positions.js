@@ -47,5 +47,5 @@ export const initPositionsMenu = (container) => {
     createMenu(menuOptions)
   }
 
-  layout.body.appendChild(chips.element)
+  layout.showcase.appendChild(chips.element)
 }
