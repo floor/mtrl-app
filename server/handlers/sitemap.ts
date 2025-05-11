@@ -11,6 +11,23 @@ interface SitemapItem {
   priority: number;
 }
 
+// Interface for sitemap structure
+interface SitemapSection {
+  path?: string;
+  label?: string;
+  lastModified?: string;
+  items?: any[];
+  [key: string]: any;
+}
+
+// Interface to represent a node in the sitemap hierarchy
+interface SitemapNode {
+  path: string;
+  priority: number;
+  changefreq: SitemapItem["changefreq"];
+  children?: SitemapNode[];
+}
+
 // Get the base URL from config or default to localhost
 const BASE_URL = config.baseUrl || `http://localhost:${config.port}`;
 
@@ -41,201 +58,202 @@ function generateSitemapXml(sitemapItems: SitemapItem[]): string {
 }
 
 /**
- * Smart URL categorization for optimal priority and change frequency settings
- * @returns Array of properly categorized sitemap items
+ * Extracts last modified date from sitemap item if available
+ * @param item Sitemap item or section
+ * @returns ISO date string (YYYY-MM-DD) or current date if not available
  */
-function getSitemapUrls(): SitemapItem[] {
-  const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-  const result: SitemapItem[] = [];
-  
-  // Define URL categories for optimal SEO
-  const highPriorityUrls = [];                        // 1.0, daily
-  const mediumPriorityUrls = ['/core/composition', '/styles/colors'];    // 0.8, weekly
-  const componentUrls: string[] = [];                                    // 0.7, monthly
-  const docUrls: string[] = [];                                          // 0.5, monthly
-  
-  // Extract all paths from the sitemap structure
-  extractPathsFromSitemap(sitemap, componentUrls, docUrls);
-  
-  // Add high priority URLs
-  for (const path of highPriorityUrls) {
-    result.push({
-      loc: `${BASE_URL}${path}`,
-      lastmod: today,
-      changefreq: "daily",
-      priority: 1.0
-    });
+function getLastModifiedDate(item: any): string {
+  // If the item has a lastModified property, use it
+  if (item.lastModified) {
+    return item.lastModified;
   }
   
-  // Add medium priority URLs (main category pages)
-  for (const path of mediumPriorityUrls) {
-    result.push({
-      loc: `${BASE_URL}${path}`,
-      lastmod: today,
+  // Otherwise use today's date
+  return new Date().toISOString().split('T')[0];
+}
+
+/**
+ * Creates a sitemap following the hierarchical structure from sitemap.js
+ * @returns Array of properly categorized sitemap items in hierarchical order
+ */
+function getSitemapUrls(): SitemapItem[] {  
+  // Create hierarchical structure first
+  const rootNode: SitemapNode = {
+    path: '/',
+    priority: 1.0,
+    changefreq: "daily",
+    children: []
+  };
+  
+  // Add get-started as a top-level page
+  rootNode.children!.push({
+    path: '/get-started',
+    priority: 1.0,
+    changefreq: "daily"
+  });
+  
+  // Build hierarchical structure for main sections
+  const mainSections = ['core', 'styles', 'components'];
+  
+  for (const sectionKey of mainSections) {
+    const section = sitemap[sectionKey];
+    if (!section || !section.path) continue;
+    
+    // Create node for the section
+    const sectionNode: SitemapNode = {
+      path: section.path,
+      priority: 0.8,
       changefreq: "weekly",
-      priority: 0.8
-    });
-  }
-  
-  // Add components with appropriate priority
-  for (const path of componentUrls) {
-    // Skip if already added as high/medium priority
-    if (highPriorityUrls.includes(path) || mediumPriorityUrls.includes(path)) {
-      continue;
-    }
+      children: []
+    };
     
-    result.push({
-      loc: `${BASE_URL}${path}`,
-      lastmod: today,
-      changefreq: "weekly",  // Components change less frequently
-      priority: 0.7          // Slightly lower priority than main sections
-    });
-  }
-  
-  // Add documentation URLs with appropriate priority
-  for (const path of docUrls) {
-    // Skip if already added in another category
-    if (highPriorityUrls.includes(path) || 
-        mediumPriorityUrls.includes(path) || 
-        componentUrls.includes(path)) {
-      continue;
-    }
+    // Add to root's children
+    rootNode.children!.push(sectionNode);
     
-    result.push({
-      loc: `${BASE_URL}${path}`,
-      lastmod: today,
-      changefreq: "monthly", // Documentation changes rarely
-      priority: 0.5          // Lower priority
-    });
-  }
-  
-  return result;
-}
-
-/**
- * Extract paths from the sitemap structure
- */
-function extractPathsFromSitemap(
-  sitemapObj: any, 
-  componentPaths: string[] = [], 
-  docPaths: string[] = []
-): void {
-  // Process home
-  if (sitemapObj.home?.path) {
-    componentPaths.push(sitemapObj.home.path);
-  } else {
-    // Explicitly add home path if missing
-    componentPaths.push('/');
-  }
-  
-  // Process get-started
-  if (sitemapObj.getstarted?.path) {
-    componentPaths.push(sitemapObj.getstarted.path);
-  }
-  
-  // Process core section
-  processSection(sitemapObj.core, componentPaths, docPaths, 'core');
-  
-  // Process styles section
-  processSection(sitemapObj.styles, componentPaths, docPaths, 'styles');
-  
-  // Process components section
-  processSection(sitemapObj.components, componentPaths, docPaths, 'components');
-}
-
-/**
- * Process a section of the sitemap
- */
-function processSection(
-  section: any, 
-  componentPaths: string[], 
-  docPaths: string[],
-  sectionType: string
-): void {
-  if (!section || !section.items) return;
-  
-  // Process each item in the section
-  for (const item of section.items) {
-    if (item.path) {
-      // Categorize based on section type
-      if (sectionType === 'components') {
-        componentPaths.push(item.path);
-      } else {
-        docPaths.push(item.path);
-      }
-    }
-    
-    // Process subitems if they exist
-    if (item.items && Array.isArray(item.items)) {
-      for (const subitem of item.items) {
-        if (subitem.path) {
-          // Categorize based on section type
-          if (sectionType === 'components') {
-            componentPaths.push(subitem.path);
+    // Process section items
+    if (section.items && Array.isArray(section.items)) {
+      for (const item of section.items) {
+        if (!item) continue;
+        
+        if (item.path) {
+          // Direct child of section
+          const itemNode: SitemapNode = {
+            path: item.path,
+            priority: sectionKey === 'components' ? 0.7 : 0.5,
+            changefreq: sectionKey === 'components' ? "weekly" : "monthly",
+            children: []
+          };
+          
+          sectionNode.children!.push(itemNode);
+        }
+        
+        // Process subitems (third level)
+        if (item.items && Array.isArray(item.items)) {
+          // Find or create parent node
+          let parentNode: SitemapNode;
+          
+          if (item.path) {
+            // Parent already exists in the structure
+            parentNode = sectionNode.children!.find(node => node.path === item.path)!;
           } else {
-            docPaths.push(subitem.path);
+            // Create a virtual parent for organizational purposes
+            parentNode = {
+              path: '', // Empty path as it's not a real URL
+              priority: 0,
+              changefreq: "never",
+              children: []
+            };
+            // No need to add this to the structure
+          }
+          
+          // Add all subitems
+          for (const subitem of item.items) {
+            if (!subitem || !subitem.path) continue;
+            
+            const subitemNode: SitemapNode = {
+              path: subitem.path,
+              priority: sectionKey === 'components' ? 0.7 : 0.5,
+              changefreq: sectionKey === 'components' ? "weekly" : "monthly"
+            };
+            
+            // Only add to real parents
+            if (item.path) {
+              parentNode.children!.push(subitemNode);
+            } else {
+              // If parent was virtual, add directly to section
+              sectionNode.children!.push(subitemNode);
+            }
           }
         }
       }
     }
   }
-}
-
-/**
- * Build a failsafe sitemap with hardcoded paths as backup
- */
-function getFailsafeSitemapUrls(): SitemapItem[] {
-  const today = new Date().toISOString().split('T')[0];
   
-  // If dynamic extraction fails, use these hardcoded paths
-  const paths = [
-    '/',
-    '/get-started',
-    '/core/composition',
-    '/core/composition/features',
-    '/core/events',
-    '/core/state',
-    '/core/collection',
-    '/core/collection/route',
-    '/core/collection/list-manager',
-    '/core/layout',
-    '/core/gestures',
-    '/styles/colors',
-    '/styles/typography',
-    '/styles/elevation',
-    '/components/app-bars/bottom',
-    '/components/app-bars/top',
-    '/components/badges',
-    '/components/buttons/common',
-    '/components/buttons/fab',
-    '/components/buttons/extended-fab',
-    '/components/buttons/segmented-buttons',
-    '/components/cards',
-    '/components/carousel',
-    '/components/checkboxes',
-    '/components/chips',
-    '/components/datepickers',
-    '/components/timepickers',
-    '/components/dialogs',
-    '/components/lists',
-    '/components/menus',
-    '/components/progress',
-    '/components/radios',
-    '/components/search',
-    '/components/selects',
-    '/components/sliders',
-    '/components/snackbars',
-    '/components/switches',
-    '/components/tabs',
-    '/components/textfields'
-  ];
+  // Flatten the hierarchical structure to a list, preserving order
+  const result: SitemapItem[] = [];
+  const visited = new Set<string>();
   
-  return paths.map(path => ({
-    loc: `${BASE_URL}${path}`,
-    lastmod: today,
-    changefreq: (path === '/' || path === '/get-started') ? "daily" : "weekly",
-    priority: (path === '/' || path === '/get-started') ? 1.0 : 0.8
-  }));
+  // Recursive function to flatten the tree and extract lastModified dates
+  function flattenNode(node: SitemapNode) {
+    // Skip empty paths (virtual nodes) and already visited paths
+    if (!node.path || visited.has(node.path)) return;
+    
+    // Mark as visited
+    visited.add(node.path);
+    
+    // Find the original item in the sitemap to get lastModified if available
+    let lastModified = new Date().toISOString().split('T')[0]; // Default to today
+    
+    // Look for the item in the sitemap structure to get its lastModified property
+    const findItem = (obj: any, path: string): any => {
+      if (obj.path === path) return obj;
+      
+      if (obj.items && Array.isArray(obj.items)) {
+        for (const item of obj.items) {
+          if (!item) continue;
+          
+          if (item.path === path) return item;
+          
+          if (item.items && Array.isArray(item.items)) {
+            for (const subitem of item.items) {
+              if (subitem && subitem.path === path) return subitem;
+            }
+          }
+        }
+      }
+      
+      return null;
+    };
+    
+    // Special case for home and get-started
+    if (node.path === '/') {
+      if (sitemap.home?.lastModified) {
+        lastModified = sitemap.home.lastModified;
+      }
+    } else if (node.path === '/get-started') {
+      if (sitemap.getstarted?.lastModified) {
+        lastModified = sitemap.getstarted.lastModified;
+      }
+    } else {
+      // Check in main sections
+      for (const sectionKey of ['core', 'styles', 'components']) {
+        const section = sitemap[sectionKey];
+        
+        if (section.path === node.path) {
+          if (section.lastModified) {
+            lastModified = section.lastModified;
+          }
+          break;
+        }
+        
+        const item = findItem(section, node.path);
+        if (item && item.lastModified) {
+          lastModified = item.lastModified;
+          break;
+        }
+      }
+    }
+    
+    // Add to result
+    result.push({
+      loc: `${BASE_URL}${node.path}`,
+      lastmod: lastModified,
+      changefreq: node.changefreq,
+      priority: node.priority
+    });
+    
+    // Process children if any
+    if (node.children && node.children.length > 0) {
+      for (const child of node.children) {
+        flattenNode(child);
+      }
+    }
+  }
+  
+  // Start with the root node
+  flattenNode(rootNode);
+  
+  return result;
 }
 
 /**
@@ -253,21 +271,30 @@ export async function handleSitemapRequest(req: Request): Promise<Response | nul
   }
   
   try {
-    // Try to get sitemap URLs dynamically
+    // Get sitemap URLs dynamically
     let sitemapItems: SitemapItem[] = [];
     
     try {
       sitemapItems = getSitemapUrls();
     } catch (error) {
-      // If dynamic extraction fails, use failsafe method
-      console.warn("Dynamic sitemap generation failed, using failsafe method");
-      sitemapItems = getFailsafeSitemapUrls();
+      console.error("Sitemap generation failed:", error);
+      throw new Error(`Failed to generate sitemap: ${error.message}`);
     }
     
-    // Ensure we have items in the sitemap
+    // Ensure we have at least the root URL
     if (sitemapItems.length === 0) {
-      sitemapItems = getFailsafeSitemapUrls();
+      console.warn("Generated sitemap is empty, adding root URL");
+      const today = new Date().toISOString().split('T')[0];
+      sitemapItems = [{
+        loc: `${BASE_URL}/`,
+        lastmod: today,
+        changefreq: "daily",
+        priority: 1.0
+      }];
     }
+    
+    // Log sitemap size for debugging
+    console.log(`Generated sitemap with ${sitemapItems.length} URLs`);
     
     // Return XML or JSON based on request
     if (path === "/sitemap.xml") {

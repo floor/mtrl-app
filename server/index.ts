@@ -6,7 +6,8 @@ import { handleAppRequest, handleNotFound } from "./handlers/app.js";
 import { handleApiRequest } from "./api/index.js";
 import { handleMarkdownRequest } from "./handlers/markdown.js";
 import { handleSnapshotRequest } from "./handlers/snapshot.js";
-import { handleSitemapRequest } from "./handlers/sitemap.js"; // Import the sitemap handler
+import { handleSitemapRequest } from "./handlers/sitemap.js";
+import { botDetectionMiddleware } from "./middleware/bot-detection.js"; // Import the bot detection middleware
 import { initLiveReload } from "./services/live-reload.js";
 import { compressionMiddleware } from "./middleware/compression.js";
 import config from "./config.js";
@@ -34,8 +35,14 @@ async function handleRequest(req: Request): Promise<Response> {
     // Define a variable to hold the response
     let response: Response | null = null;
     
-    // Try API handler first
-    response = await handleApiRequest(req);
+    // Try bot detection first - serve static snapshot if it's a bot
+    response = await botDetectionMiddleware(req);
+    
+    // Continue with normal request handling if not handled by bot middleware
+    if (!response) {
+      // Try API handler
+      response = await handleApiRequest(req);
+    }
     
     // Try markdown handler
     if (!response) {
@@ -47,7 +54,7 @@ async function handleRequest(req: Request): Promise<Response> {
       response = await handleSitemapRequest(req);
     }
     
-    // Try snapshot handler
+    // Try snapshot handler (for direct snapshot requests)
     if (!response) {
       response = await handleSnapshotRequest(req);
     }
@@ -106,6 +113,7 @@ const startupBanner = `
 🚀 Bun HTTP server running on http://localhost:${server.port}
 🔧 Mode: ${isProduction ? "🏭 Production" : "🔨 Development"}
 📦 Compression: ${isProduction ? "✅ Enabled (gzip)" : "❌ Disabled"}
+🤖 Bot detection: ✅ Enabled (serving snapshots for search engines)
 📁 Static file serving enabled
 🌐 Web App Manifest support enabled
 📝 Markdown documentation support enabled

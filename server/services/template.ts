@@ -8,10 +8,38 @@ import config from "../config.js";
 
 const { isProduction } = config;
 
-// Template data interface
+// Enhanced template data interface with SEO-related properties
 export interface TemplateData {
   [key: string]: any;
-  timestamp?: string;
+  title?: string;
+  description?: string;
+  path?: string;                // Current URL path
+  canonicalUrl?: string;        // Full canonical URL
+  ogImage?: string;             // Open Graph image URL
+  jsonLd?: Record<string, any>; // Structured data
+  timestamp?: string;           // Cache-busting timestamp
+  isSnapshot?: boolean;         // Whether this is being rendered for a snapshot
+}
+
+/**
+ * Generate a default template data object with sensible defaults
+ * @param path Current URL path
+ * @returns Default template data
+ */
+export function getDefaultTemplateData(path: string = "/"): TemplateData {
+  const baseUrl = process.env.BASE_URL || "https://mtrl.app";
+  const canonicalUrl = `${baseUrl}${path === "/" ? "" : path}`;
+  
+  return {
+    title: "mtrl UI Framework",
+    description: "A lightweight, composable TypeScript/JavaScript component library inspired by Material Design principles",
+    path,
+    canonicalUrl,
+    ogImage: `${baseUrl}/og-image.png`,
+    timestamp: getTimestampParam(),
+    isSnapshot: false,
+    isProduction
+  };
 }
 
 /**
@@ -29,13 +57,17 @@ export async function renderTemplate(templatePath: string, data: TemplateData = 
     // Read the template file
     const templateContent = await Bun.file(templatePath).text();
     
-    // Default data with timestamp
-    const defaultData: TemplateData = {
-      timestamp: getTimestampParam()
+    // Get path from data or default to "/"
+    const path = data.path || "/";
+    
+    // Merge with default data
+    const templateData: TemplateData = {
+      ...getDefaultTemplateData(path),
+      ...data
     };
     
     // Render the template with EJS
-    return ejs.render(templateContent, { ...defaultData, ...data }, {
+    return ejs.render(templateContent, templateData, {
       filename: templatePath, // Important for EJS includes
       async: false
     });
@@ -48,14 +80,21 @@ export async function renderTemplate(templatePath: string, data: TemplateData = 
 /**
  * Serve a rendered template with appropriate headers
  * @param html Rendered HTML
+ * @param isBot Whether the request is from a bot
  * @returns Response object
  */
-export async function serveRenderedTemplate(html: string): Promise<Response> {
+export async function serveRenderedTemplate(html: string, isBot: boolean = false): Promise<Response> {
   const headers = new Headers({
     "Content-Type": "text/html; charset=utf-8",
-    "Cache-Control": "no-cache",
-    "Access-Control-Allow-Origin": "*"
+    "Cache-Control": isBot ? "public, max-age=3600" : "no-cache", // Higher cache for bots
+    "Vary": "User-Agent" // Important for caching different versions based on user agent
   });
+  
+  // Add bot-specific headers
+  if (isBot) {
+    headers.set("X-Robots-Tag", "all");
+    headers.set("X-Pre-Rendered", "true");
+  }
   
   // Try to compress HTML in production
   if (isProduction) {
@@ -113,5 +152,6 @@ export function renderErrorPage(error: Error, status: number = 500): Response {
 export default {
   renderTemplate,
   serveRenderedTemplate,
-  renderErrorPage
+  renderErrorPage,
+  getDefaultTemplateData
 };

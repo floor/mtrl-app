@@ -17,14 +17,20 @@ export async function handleSnapshotRequest(req: Request): Promise<Response | nu
   const url = new URL(req.url);
   const path = url.pathname;
   
-  // Only handle paths starting with /snapshot/
-  if (!path.startsWith('/snapshot')) {
+  // Determine if this is a direct snapshot request or from bot middleware
+  const isDirectSnapshotRequest = path.startsWith('/snapshot');
+  const isFromBotMiddleware = req.headers.get('user-agent')?.match(/bot|crawler|spider|google|bing|yandex|baidu|slurp/i);
+  
+  // Only handle direct snapshot requests or requests from bot middleware
+  if (!isDirectSnapshotRequest && !isFromBotMiddleware) {
     return null;
   }
   
   try {
-    // Extract the path after /snapshot/
-    let subPath = path.replace(/^\/snapshot\/?/, '');
+    // Extract the path: either after /snapshot/ or the original path for bots
+    let subPath = isDirectSnapshotRequest 
+      ? path.replace(/^\/snapshot\/?/, '')
+      : path.replace(/^\/?/, '');
     
     // If path is empty, serve the index snapshot
     if (!subPath || subPath === '') {
@@ -46,14 +52,32 @@ export async function handleSnapshotRequest(req: Request): Promise<Response | nu
     
     // Check if the file exists
     if (!existsSync(snapshotPath)) {
-      return new Response(`Snapshot not found: ${subPath}`, { 
-        status: 404,
-        headers: { "Content-Type": "text/plain" }
-      });
+      if (isFromBotMiddleware) {
+        console.log(`🤖 Bot snapshot not found: ${subPath}, falling back to SPA`);
+        // For bots, if snapshot doesn't exist, let the app handle it
+        return null;
+      } else {
+        return new Response(`Snapshot not found: ${subPath}`, { 
+          status: 404,
+          headers: { "Content-Type": "text/plain" }
+        });
+      }
+    }
+    
+    // Extra headers specifically for bots
+    const customHeaders: Record<string, string> = {};
+    
+    if (isFromBotMiddleware) {
+      // Set proper headers to indicate this is a pre-rendered version
+      customHeaders['X-Robots-Tag'] = 'all';
+      customHeaders['X-Pre-Rendered'] = 'true';
+      customHeaders['Cache-Control'] = 'public, max-age=3600';
+      
+      console.log(`🤖 Serving snapshot: ${snapshotPath}`);
     }
     
     // Serve the snapshot file
-    return await serveStaticFile(snapshotPath, {}, req);
+    return await serveStaticFile(snapshotPath, customHeaders, req);
   } catch (error: any) {
     logError(path, error);
     return new Response(`Error serving snapshot: ${error.message}`, { 
