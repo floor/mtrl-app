@@ -27,6 +27,6 @@ export const initSecondaryTabs = (container) => {
   infoText.textContent = 'Secondary tabs are useful for filtering content within a screen or adding a second level of navigation.'
 
   // Add tabs to the layout
-  layout.body.appendChild(tabs.element)
-  layout.body.appendChild(infoText)
+  layout.showcase.appendChild(tabs.element)
+  layout.info.appendChild(infoText)
 }

@@ -1,10 +1,8 @@
 import {
   createLayout,
-  createElement
-
+  createElement,
+  createGestureManager
 } from 'mtrl'
-
-import { createGestureManager } from 'mtrl/src/core/gestures'
 
 import createGestureCard from './gesture-card'
 
@@ -92,7 +90,7 @@ gestures.on('pinch', handlePinch);`
     tag: 'button',
     class: 'gesture-tab active',
     text: 'Simple Demo',
-    attrs: {
+    attributes: {
       'data-tab': 'simple'
     }
   })
@@ -101,7 +99,7 @@ gestures.on('pinch', handlePinch);`
     tag: 'button',
     class: 'gesture-tab',
     text: 'Interactive Card',
-    attrs: {
+    attributes: {
       'data-tab': 'card'
     }
   })
@@ -113,7 +111,7 @@ gestures.on('pinch', handlePinch);`
   const simpleDemo = createElement({
     tag: 'div',
     class: 'gesture-demo gesture-demo-simple active',
-    attrs: {
+    attributes: {
       'data-demo': 'simple'
     }
   })
@@ -236,7 +234,7 @@ gestures.on('pinch', handlePinch);`
   const cardDemo = createElement({
     tag: 'div',
     class: 'gesture-demo gesture-demo-card',
-    attrs: {
+    attributes: {
       'data-demo': 'card'
     }
   })

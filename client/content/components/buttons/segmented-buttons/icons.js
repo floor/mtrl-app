@@ -4,13 +4,10 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout
-} from 'mtrl'
-
-import {
+  createLayout,
   createSegmentedButton,
   SelectionMode
-} from 'mtrl/src/components/segmented-button'
+} from 'mtrl'
 
 // Icons for different use cases
 const icons = {
@@ -121,7 +118,7 @@ export const initIconsOptions = (container) => {
   layout.showcase.appendChild(iconOnlyResult)
 
   // Icon-only example
-  const transportButton = createSegmentedButton({
+  const transportButton = ({
     mode: SelectionMode.SINGLE,
     segments: [
       { icon: icons.car, value: 'car', selected: true },

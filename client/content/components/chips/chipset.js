@@ -51,7 +51,7 @@ export const initChipSet = (container) => {
     })
   })
 
-  layout.body.appendChild(chipSetContainer)
+  layout.showcase.appendChild(chipSetContainer)
 
   // Add a vertical chip set example
   const verticalTitle = document.createElement('p')

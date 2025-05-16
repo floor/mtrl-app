@@ -9,10 +9,6 @@ import {
   BADGE_VARIANTS, BADGE_COLORS
 } from 'mtrl'
 
-import {
-
-} from 'mtrl/src/components/badge'
-
 export const initDot = (container) => {
   const title = 'Small Dot Badges'
   const layout = createLayout(createComponentSection({ title }), container).component

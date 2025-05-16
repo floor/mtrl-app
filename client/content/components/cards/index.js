@@ -48,7 +48,7 @@ export const createCardsContent = (container) => {
   initMediaCards(layout.body)
   initInteractiveCards(layout.body)
   initAccessibleCards(layout.body)
-  initLoadingCard(layout.body)
+  // initLoadingCard(layout.body)
   initDynamicCard(layout.body)
   initExpandableCards(layout.body)
   initSwipeableCard(layout.body)

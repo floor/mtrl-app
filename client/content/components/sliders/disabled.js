@@ -18,5 +18,5 @@ export const initDisabled = (container) => {
     disabled: true
   })
 
-  layout.body.appendChild(slider.element)
+  layout.showcase.appendChild(slider.element)
 }

@@ -23,9 +23,9 @@ export const initBasicTabs = (container) => {
         { text: 'Profile', value: 'profile' }
       ]
     }],
-    ['home', { tag: 'div', class: 'content__tab-panel', attrs: { id: 'panel-home' } }],
-    ['favorites', { tag: 'div', class: 'content__tab-panel hidden', attrs: { id: 'panel-favorites' } }],
-    ['profile', { tag: 'div', class: 'content__tab-panel hidden', attrs: { id: 'panel-profile' } }]
+    ['home', { tag: 'div', class: 'content__tab-panel', attributes: { id: 'panel-home' } }],
+    ['favorites', { tag: 'div', class: 'content__tab-panel hidden', attributes: { id: 'panel-favorites' } }],
+    ['profile', { tag: 'div', class: 'content__tab-panel hidden', attributes: { id: 'panel-profile' } }]
   ], layout.showcase)
 
   const { tabs, home, favorites, profile } = tabsLayout.component

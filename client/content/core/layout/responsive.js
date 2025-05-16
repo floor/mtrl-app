@@ -1,10 +1,10 @@
 // src/examples/responsive.js
 import { createContentSection } from '../../../layout'
+
 import {
-  applyLayoutClasses,
-  cleanupLayoutClasses
-} from 'mtrl/src/core/layout'
-import { createLayout, createChips } from 'mtrl'
+  createLayout, createChips,
+  applyLayoutClasses, cleanupLayoutClasses
+} from 'mtrl'
 
 /**
  * Creates a responsive layout demo that adapts to different screen sizes

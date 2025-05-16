@@ -167,7 +167,7 @@ export const initInteractiveChipExample = (container) => {
   demoContainer.appendChild(label)
   demoContainer.appendChild(cityChipsContainer)
   demoContainer.appendChild(resultText)
-  demoContainer.appendChild(customCityContainer)
+  layout.info.appendChild(customCityContainer)
 
-  layout.body.appendChild(demoContainer)
+  layout.showcase.appendChild(demoContainer)
 }

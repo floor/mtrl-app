@@ -1,75 +1,41 @@
-import { createHomeContent } from './home'
-import { createEventsContent } from './core/events'
-import { createStateContent } from './core/state'
-import { createCompositionContent } from './core/composition'
-import { createStylesContent } from './styles/index'
-import { createColorsContent } from './styles/colors'
-import { createTypographyContent } from './styles/typography'
-import { createElevationContent } from './styles/elevation'
-import { createLayoutContent } from './sytles/layout'
-import { createLayoutStylesContent } from './styles/layout'
-import { createComponentsContent } from './components'
-import { createBottomAppBarsContent } from './components/app-bars/bottom'
-import { createTopAppBarsContent } from './components/app-bars/top'
-import { createBadgesContent } from './components/badges'
-import { createButtonsContent } from './components/buttons/common'
-import { createFabContent } from './components/buttons/fab'
-import { createExtendedFabContent } from './components/buttons/extended-fab'
-import { createSegmentedButtonsContent } from './components/buttons/segmented-buttons'
-import { createCardsContent } from './components/cards'
-import { createCarouselContent } from './components/carousel'
-import { createCheckboxesContent } from './components/checkboxes'
-import { createChipsContent } from './components/chips'
-import { createDialogsContent } from './components/dialogs'
-import { createDatePickersContent } from './components/datepickers'
-import { createListsContent } from './components/lists'
-import { createMenusContent } from './components/menus'
-import { createNavigationsContent } from './components/navigations'
-import { createProgressContent } from './components/progress'
-import { createRadiosContent } from './components/radios'
-import { createSearchContent } from './components/search'
-import { createSlidersContent } from './components/sliders'
-import { createSnackbarsContent } from './components/snackbars'
-import { createSwitchesContent } from './components/switches'
-import { createTabsContent } from './components/tabs'
-import { createTextfieldsContent } from './components/textfields'
-import { createTimePickersContent } from './components/timepickers'
+// src/client/content/home.js
 
-export {
-  createHomeContent,
-  createEventsContent,
-  createStateContent,
-  createCompositionContent,
-  createLayoutContent,
-  createStylesContent,
-  createColorsContent,
-  createTypographyContent,
-  createElevationContent,
-  createLayoutStylesContent,
-  createComponentsContent,
-  createBottomAppBarsContent,
-  createTopAppBarsContent,
-  createBadgesContent,
-  createButtonsContent,
-  createFabContent,
-  createExtendedFabContent,
-  createSegmentedButtonsContent,
-  createCardsContent,
-  createCarouselContent,
-  createCheckboxesContent,
-  createChipsContent,
-  createDialogsContent,
-  createDatePickersContent,
-  createListsContent,
-  createMenusContent,
-  createNavigationsContent,
-  createProgressContent,
-  createRadiosContent,
-  createSearchContent,
-  createSlidersContent,
-  createSnackbarsContent,
-  createSwitchesContent,
-  createTextfieldsContent,
-  createTimePickersContent,
-  createTabsContent
+import {
+  createHomeLayout
+} from '../layout/home'
+
+import { createColorPalettes } from './styles/colors/palettes'
+import { createButtonComponent } from './components/buttons/common/button'
+import { initRange as createRangeSlider } from './components/sliders/range'
+import { createTextfieldShowcase } from './components/textfields/textfield'
+import { initSupportingText as createSwitches } from './components/switches/supporting'
+import { initBasicTabs as createTabs } from './components/tabs/basic'
+import { initSubmenu as createSelectSubmenu } from './components/selects/submenu'
+import { initIndeterminateCheckboxes as createCheckboxes } from './components/checkboxes/indeterminate'
+import { createBadgeContent } from './components/badges/badge'
+
+import { initFormDialog as createDialogs } from './components/dialogs/form-dialog'
+
+import {
+  createLayout
+} from 'mtrl'
+
+export const createHomeContent = (container) => {
+  const info = {
+    title: 'mtrl',
+    description: 'A functional TypeScript/Javascript component library with composable architecture'
+  }
+
+  const body = createLayout(createHomeLayout(info), container).get('body')
+
+  createColorPalettes(body)
+  createButtonComponent(body)
+  createSwitches(body)
+  createTextfieldShowcase(body)
+  createSelectSubmenu(body)
+  createRangeSlider(body)
+  createBadgeContent(body)
+  createDialogs(body)
+  createCheckboxes(body)
+  createTabs(body)
 }

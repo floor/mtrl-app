@@ -12,13 +12,13 @@ import {
   createCardContent,
   createCardMedia,
   createCardActions,
+  withLoading,
   CARD_VARIANTS
 } from 'mtrl'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 
 // Import the withLoading enhancer
-import { withLoading } from 'mtrl/src/components/card/features'
 
 // Loading card with placeholder content
 export const initLoadingCard = async (container) => {

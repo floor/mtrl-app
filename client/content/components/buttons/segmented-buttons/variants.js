@@ -4,13 +4,10 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout
-} from 'mtrl'
-
-import {
+  createLayout,
   createSegmentedButton,
   SelectionMode
-} from 'mtrl/src/components/segmented-button'
+} from 'mtrl'
 
 export const initVariants = (container) => {
   const title = 'Segmented Button Basic Examples'

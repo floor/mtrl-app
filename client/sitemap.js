@@ -22,8 +22,8 @@ export const sitemap = {
   getstarted: {
     id: 'get-started',
     path: '/get-started',
-    lastModified: '2025-05-10',
-    createdDate: '2025-05-10',
+    lastModified: '2025-05-11',
+    createdDate: '2025-05-11',
     label: 'Get Started',
     icon: getStartedIcon,
     description: 'Start building with mtrl - installation guides, quick tutorials, and setup instructions.'

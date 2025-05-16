@@ -56,5 +56,5 @@ export const initFullscreen = (container) => {
   })
 
   // Add button to layout
-  layout.body.appendChild(openButton.element)
+  layout.showcase.appendChild(openButton.element)
 }

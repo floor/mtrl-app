@@ -50,5 +50,5 @@ export const initBasic = (container) => {
     createBasicDialog()
   })
 
-  layout.body.appendChild(openButton.element)
+  layout.showcase.appendChild(openButton.element)
 }

@@ -20,7 +20,12 @@
     "logs": "pm2 logs mtrl-app",
     "dev": "bun run ./build.js --watch & bun run ./server.ts",
     "test": "bun test",
-    "serve": "bun --hot test/serve.ts"
+    "serve": "bun --hot test/serve.ts",
+    "snapshot": "bun run snapshot:dev",
+    "snapshot:dev": "snpsht generate --base-url http://localhost:4000 --sitemap http://localhost:4000/sitemap.xml --out-dir ./snapshot --config ./snpsht.config.js",
+    "snapshot:prod": "snpsht generate --base-url https://mtrl.app --sitemap https://mtrl.app/sitemap.xml --out-dir ./snapshot --config ./snpsht.config.js",
+    "og-images": "bun run ./scripts/generate-og-images.js",
+    "seo:prepare": "bun run og-images && bun run snapshot"
   },
   "dependencies": {
     "@types/compression": "^1.7.5",
@@ -35,6 +40,7 @@
   "devDependencies": {
     "madge": "^8.0.0",
     "sass": "^1.83.4",
+    "sharp": "^0.32.6",
     "snpsht": "^0.1.1",
     "standard": "^17.1.2",
     "typescript": "^5.8.2"

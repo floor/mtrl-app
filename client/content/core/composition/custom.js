@@ -53,7 +53,7 @@ export const createToggle = pipe(
   withElement({
     tag: 'button',
     componentName: 'toggle',
-    attrs: { type: 'button' }
+    attributes: { type: 'button' }
   }),
   
   // Add event handling

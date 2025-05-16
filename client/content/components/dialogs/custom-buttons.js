@@ -71,6 +71,6 @@ export const initCustomButtons = (container) => {
   })
 
   // Add button and status message to layout
-  layout.body.appendChild(openButton.element)
+  layout.showcase.appendChild(openButton.element)
   layout.body.appendChild(statusMessage)
 }

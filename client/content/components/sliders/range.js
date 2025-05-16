@@ -6,12 +6,9 @@ import {
 import {
   createLayout,
   createSlider,
-  createSnackbar
-} from 'mtrl'
-
-import {
+  createSnackbar,
   SLIDER_COLORS
-} from 'mtrl/src/components/slider'
+} from 'mtrl'
 
 export const initRange = (container) => {
   const title = 'Price Range Filter'

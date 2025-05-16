@@ -31,5 +31,5 @@ export const initEventsAPI = (container) => {
     }
   })
 
-  layout.body.appendChild(slider.element)
+  layout.showcase.appendChild(slider.element)
 }

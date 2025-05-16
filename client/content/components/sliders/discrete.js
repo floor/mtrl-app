@@ -38,5 +38,5 @@ export const initDiscreteWithLabels = (container) => {
     // color: SLIDER_COLORS.TERTIARY
   })
 
-  layout.body.appendChild(slider.element)
+  layout.showcase.appendChild(slider.element)
 }

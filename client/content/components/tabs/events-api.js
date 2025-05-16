@@ -125,7 +125,7 @@ export const initEventsAPI = (container) => {
   apiControlsContainer.appendChild(enableTabButton.element)
   apiControlsContainer.appendChild(addBadgeButton.element)
 
-  layout.body.appendChild(tabs.element)
+  layout.showcase.appendChild(tabs.element)
   layout.body.appendChild(apiControlsContainer)
   layout.body.appendChild(logContainer)
 }

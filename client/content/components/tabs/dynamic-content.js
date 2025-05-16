@@ -101,6 +101,6 @@ export const initDynamicContent = (container) => {
   loadContent('info')
 
   // Add components to the layout
-  layout.body.appendChild(tabs.element)
-  layout.body.appendChild(contentContainer)
+  layout.showcase.appendChild(tabs.element)
+  layout.info.appendChild(contentContainer)
 }

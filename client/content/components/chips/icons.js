@@ -17,7 +17,7 @@ export const initChipWithIcons = (container) => {
     leadingIcon: faceIcon,
     variant: 'filled'
   })
-  layout.body.appendChild(leadingIconChip.element)
+  layout.showcase.appendChild(leadingIconChip.element)
 
   // Example with trailing icon
   const trailingIconChip = createChip({
@@ -28,7 +28,7 @@ export const initChipWithIcons = (container) => {
       console.log('Trailing icon clicked')
     }
   })
-  layout.body.appendChild(trailingIconChip.element)
+  layout.showcase.appendChild(trailingIconChip.element)
 
   // Example with both icons
   const bothIconsChip = createChip({
@@ -37,12 +37,12 @@ export const initChipWithIcons = (container) => {
     trailingIcon: closeIcon,
     variant: 'outlined'
   })
-  layout.body.appendChild(bothIconsChip.element)
+  layout.showcase.appendChild(bothIconsChip.element)
 
   // Example with icon only
   const iconOnlyChip = createChip({
     leadingIcon: addIcon,
     variant: 'elevated'
   })
-  layout.body.appendChild(iconOnlyChip.element)
+  layout.showcase.appendChild(iconOnlyChip.element)
 }

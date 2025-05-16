@@ -1,10 +1,9 @@
 // src/client/core/app-manager.js
 
 import { createEventManager, setupErrorBoundary } from './events'
-import { createLayout } from 'mtrl'
+import { createLayout, createNavigationSystem } from 'mtrl'
 import { createRouter } from './router/service'
 import themeManager from './theme/theme-manager'
-import { createNavigationSystem } from 'mtrl/src/components/navigation/system'
 import { createLayoutManager } from './layout'
 import { appLayout, navigationLayout } from '../config'
 import { generateDynamicRoutes } from './router/dynamic-loader'

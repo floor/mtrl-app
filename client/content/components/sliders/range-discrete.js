@@ -4,12 +4,9 @@ import {
 
 import {
   createLayout,
-  createSlider
-} from 'mtrl'
-
-import {
+  createSlider,
   SLIDER_COLORS
-} from 'mtrl/src/components/slider'
+} from 'mtrl'
 
 export const initRangeDiscrete = (container) => {
   const title = 'Range slider with tick marks'
@@ -26,5 +23,5 @@ export const initRangeDiscrete = (container) => {
     color: SLIDER_COLORS.SECONDARY
   })
   // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-  layout.body.appendChild(slider.element)
+  layout.showcase.appendChild(slider.element)
 }

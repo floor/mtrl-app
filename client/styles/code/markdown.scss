@@ -2,26 +2,20 @@
 
 @use 'sass:color';
 @use 'mtrl/src/styles/abstract/theme' as t;
+@use 'mtrl/src/styles/abstract/variables' as v;
+@use 'mtrl/src/styles/abstract/functions' as f;
 
-// Variables for consistent styling
-$primary-color: #0074d9;
-$text-color: t.color('on-primary');
-$muted-color: #666;
-$border-color: #eaeaea;
-$border-color-light: #f0f0f0;
-$code-bg: #f5f5f5;
-$blockquote-border: #ddd;
+// Variables for consistent styling using the theme system
+$primary-color: t.color('primary');
+$text-color: t.color('on-surface');
+$muted-color: t.color('on-surface-variant');
+$border-color: t.color('outline-variant');
+$border-color-light: t.color('outline-variant');
+$code-bg: t.color('surface-container-highest'); // More distinct background for code blocks
+$blockquote-border: t.color('outline');
 $font-family-base: system-ui, -apple-system, sans-serif;
 $font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-$border-radius: 8px;
-
-// Dark mode variables (can be customized)
-$dark-bg: #222;
-$dark-text: var(--mtrl-sys-color-on-surface-variant);
-$dark-muted: #aaa;
-$dark-border: #444;
-$dark-code-bg: #2d2d2d;
-$dark-blockquote-border: #555;
+$border-radius: v.shape('medium');
 
 .markdown-container {
   margin: 0 auto;
@@ -30,6 +24,7 @@ $dark-blockquote-border: #555;
   color: $text-color;
   font-family: $font-family-base;
   font-size: 1.2em;
+  
   // Headings
   h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
@@ -77,14 +72,13 @@ $dark-blockquote-border: #555;
     }
   }
   
-// Code blocks with multiline support
-// To be placed in client/styles/code/markdown.scss as part of the .markdown-container class
+  // Code blocks with multiline support
   pre {
     background: $code-bg;
     padding: 1rem;
     border-radius: $border-radius;
     margin: 1rem 0;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    //  box-shadow: inset 0 1px 2px t.alpha('shadow', 0.1);
     
     // Keep horizontal scrolling available as an option
     overflow-x: auto;
@@ -94,7 +88,7 @@ $dark-blockquote-border: #555;
     overflow-y: auto;
     
     code {
-      background: transparent;
+      background: transparent; // Keep transparent to let the pre background show
       padding: 0;
       display: block;
       color: inherit;
@@ -106,6 +100,15 @@ $dark-blockquote-border: #555;
       word-wrap: break-word;       // Allow long words to be broken
       word-break: break-word;      // Improved breaking for better readability
     }
+  }
+  
+  // Inline code
+  :not(pre) > code {
+    background: $code-bg;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: $font-family-code;
+    font-size: 0.9em;
   }
   
   // Optional: Class for code that should never wrap (like tables or ASCII art)
@@ -125,7 +128,7 @@ $dark-blockquote-border: #555;
       content: "↪";
       position: absolute;
       left: 0.3em;
-      color: $muted-color; // Use your existing muted color
+      color: $muted-color;
       opacity: 0.7;
     }
   }
@@ -138,8 +141,8 @@ $dark-blockquote-border: #555;
     
     &:hover {
       text-decoration: underline;
-      // Replace darken($primary-color, 10%) with color.adjust
-      color: color.adjust($primary-color, $lightness: -10%);
+      // Use CSS filter to darken the color instead of SASS color adjustment
+      filter: brightness(0.9);
     }
   }
   
@@ -174,12 +177,12 @@ $dark-blockquote-border: #555;
     }
     
     th {
-      background-color: $border-color-light;
+      background-color: t.color('surface-container-high');
       font-weight: 600;
     }
     
     tr:nth-child(even) {
-      background-color: rgba(0, 0, 0, 0.02);
+      background-color: t.alpha('on-surface', 0.02);
     }
   }
   
@@ -194,74 +197,26 @@ $dark-blockquote-border: #555;
   // Code syntax highlighting - basic example
   .syntax-highlight {
     .keyword {
-      color: #569cd6;
+      color: t.color('primary');
     }
     
     .string {
-      color: #ce9178;
+      color: t.color('tertiary');
     }
     
     .comment {
-      color: #6a9955;
+      color: t.color('on-surface-variant');
     }
     
     .number {
-      color: #b5cea8;
+      color: t.color('secondary');
     }
   }
 }
 
-// Optional: Dark Mode Support (using a class or media query)
-@media (prefers-color-scheme: dark) {
-  .markdown-container {
-    color: $dark-text;
-    
-    h1 {
-      border-bottom-color: $dark-border;
-    }
-    
-    h2 {
-      border-bottom-color: $dark-border;
-    }
-    
-    blockquote {
-      border-left-color: $dark-blockquote-border;
-      color: $dark-muted;
-    }
-    
-    pre, code {
-      background: $dark-code-bg;
-    }
-    
-    a {
-      // Replace lighten($primary-color, 15%) with color.adjust
-      color: color.adjust($primary-color, $lightness: 15%);
-      
-      &:hover {
-        // Replace lighten($primary-color, 25%) with color.adjust
-        color: color.adjust($primary-color, $lightness: 25%);
-      }
-    }
-    
-    table {
-      th, td {
-        border-color: $dark-border;
-      }
-      
-      th {
-        background-color: rgba(255, 255, 255, 0.05);
-      }
-      
-      tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.03);
-      }
-    }
-    
-    hr {
-      background-color: $dark-border;
-    }
-  }
-}
+// Dark Mode Support is automatically handled by the theme system
+// The CSS variables will automatically switch to dark mode values when theme changes
+// No need for additional media query since the theme system handles this
 
 // Optional: Print styles for better document printing
 @media print {

@@ -102,7 +102,7 @@ window.addEventListener('resize', handleResize);`
     tag: 'label',
     class: 'debounce-search-label',
     text: 'Search:',
-    attrs: {
+    attributes: {
       for: 'debounce-search-input'
     }
   })
@@ -110,7 +110,7 @@ window.addEventListener('resize', handleResize);`
   const searchInput = createElement({
     tag: 'input',
     class: 'debounce-search-input',
-    attrs: {
+    attributes: {
       type: 'text',
       id: 'debounce-search-input',
       placeholder: 'Type to search...'

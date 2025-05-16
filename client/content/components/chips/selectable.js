@@ -9,13 +9,10 @@ import { createLayout, createChip } from 'mtrl'
  */
 export const initSelectableChips = (container) => {
   const title = 'Selectable Chips'
-  const layout = createLayout(createComponentSection({ title }), container).component
+  const description = 'Create independant selectable chips (without chipset)'
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create a selection chips container
-  const chipsContainer = document.createElement('div')
-  chipsContainer.style.display = 'flex'
-  chipsContainer.style.gap = '8px'
-  layout.body.appendChild(chipsContainer)
 
   // Create selectable chips with different variants
   const selectableVariants = [
@@ -36,15 +33,8 @@ export const initSelectableChips = (container) => {
     chip.on('click', () => {
       console.log('variant', variant)
       console.log('selected', variant === 'filter')
-
-      // // Update icon for filter chips
-      // if (variant !== 'filter') {
-      //     chip.toggleSelected()
-      //     chip.setLeadingIcon('')
-      //   }
-      // }
     })
 
-    chipsContainer.appendChild(chip.element)
+    layout.showcase.appendChild(chip.element)
   })
 }

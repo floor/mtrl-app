@@ -5,13 +5,10 @@ import {
 
 import {
   createLayout,
-  createButton
-} from 'mtrl'
-
-import {
+  createButton,
   createSegmentedButton,
   SelectionMode
-} from 'mtrl/src/components/segmented-button'
+} from 'mtrl'
 
 export const initDisabled = (container) => {
   const title = 'Disabled State'

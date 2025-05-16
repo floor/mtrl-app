@@ -210,9 +210,3 @@ const component = pipe(
 ```
 
 This composition approach makes components highly adaptable and maintainable.
-
-## Conclusion
-
-mtrl provides a lightweight, performant implementation of Material Design 3 using functional composition. The mtrl App development environment makes it easy to create and test components with immediate visual feedback.
-
-Happy building with mtrl!

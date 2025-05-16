@@ -17,5 +17,5 @@ export const initCentered = (container) => {
     value: 0,
     step: 1
   })
-  layout.body.appendChild(slider.element)
+  layout.showcase.appendChild(slider.element)
 }

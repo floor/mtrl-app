@@ -69,6 +69,6 @@ export const initFooterAlignments = (container) => {
     // Add button to layout with some margin
     openButton.element.style.marginRight = '8px'
     openButton.element.style.marginBottom = '8px'
-    layout.body.appendChild(openButton.element)
+    layout.showcase.appendChild(openButton.element)
   })
 }

@@ -96,7 +96,7 @@ export const initProgrammaticTabs = (container) => {
   controlsContainer.appendChild(thirdButton.element)
   controlsContainer.appendChild(fourthButton.element)
 
-  layout.body.appendChild(tabs.element)
-  layout.body.appendChild(statusDisplay)
-  layout.body.appendChild(controlsContainer)
+  layout.showcase.appendChild(tabs.element)
+  layout.info.appendChild(statusDisplay)
+  layout.info.appendChild(controlsContainer)
 }

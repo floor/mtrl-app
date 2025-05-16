@@ -49,6 +49,6 @@ export const initConfirmation = (container) => {
   })
 
   // Add button and result display to layout
-  layout.body.appendChild(confirmButton.element)
+  layout.showcase.appendChild(confirmButton.element)
   layout.body.appendChild(resultDisplay)
 }

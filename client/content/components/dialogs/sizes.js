@@ -55,6 +55,6 @@ export const initSizes = (container) => {
 
     // Add button to layout with some margin
     openButton.element.style.marginRight = '8px'
-    layout.body.appendChild(openButton.element)
+    layout.showcase.appendChild(openButton.element)
   })
 }

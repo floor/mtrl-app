@@ -8,7 +8,7 @@ import {
 } from 'mtrl'
 
 export const initCursorList = (container) => {
-  const title = 'API Users List'
+  const title = 'API Users List (cursor mode)'
   const description = '1\'000\'000 entries and virtualization with cursor pagination strategy'
   const layout = createLayout(createComponentSection({ title, description }), container).component
   console.log('Creating users list...')
@@ -19,6 +19,7 @@ export const initCursorList = (container) => {
     baseUrl: '/api', // Using relative URL - our fixed adapter will handle this properly
     class: 'list--users',
     // dynamicItemSize: true,
+    // singleSelect: true,
     itemHeight: 84,
     pageSize: 20,
     scrollStrategy: 'hybrid',

@@ -55,7 +55,7 @@ export const initRadios = (container) => {
     ]
   })
 
-  layout.body.appendChild(small.element)
-  layout.body.appendChild(radios.element)
-  layout.body.appendChild(large.element)
+  layout.showcase.appendChild(small.element)
+  layout.showcase.appendChild(radios.element)
+  layout.showcase.appendChild(large.element)
 }

@@ -6,16 +6,14 @@ import {
 
 import {
   createElement,
-  createLayout
+  createLayout,
+  createCard,
+  CARD_VARIANTS,
+  createCardHeader,
+  createCardContent
 } from 'mtrl'
 
 import { artworks } from './artwork-data'
-
-import createCard, {
-  createCardHeader,
-  createCardContent,
-  CARD_VARIANTS
-} from 'mtrl/src/components/card'
 
 /**
  * Initialize cards demonstrating accessibility features

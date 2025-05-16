@@ -120,7 +120,7 @@ const initObjectLayouts = (container) => {
         children: {
           avatar: {
             creator: createElement,
-            options: { tag: 'img', attrs: { src: 'avatar.jpg' } }
+            options: { tag: 'img', attributes: { src: 'avatar.jpg' } }
           },
           userName: {
             creator: createElement,

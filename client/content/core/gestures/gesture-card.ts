@@ -12,7 +12,7 @@ import {
   withText,
   withLifecycle,
   withGestures
-} from 'mtrl/src/core';
+} from 'mtrl';
 
 const GESTURE_TYPES = {
   TAP: 'tap',

@@ -63,6 +63,6 @@ export const initDynamicTabs = (container) => {
   controlsContainer.appendChild(addButton.element)
   controlsContainer.appendChild(removeButton.element)
 
-  layout.body.appendChild(tabs.element)
-  layout.body.appendChild(controlsContainer)
+  layout.showcase.appendChild(tabs.element)
+  layout.info.appendChild(controlsContainer)
 }

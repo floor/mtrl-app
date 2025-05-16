@@ -25,5 +25,5 @@ export const initVertical = (container) => {
     valueFormatter: (value) => `${value}%`
   })
 
-  layout.body.appendChild(slider.element)
+  layout.showcase.appendChild(slider.element)
 }

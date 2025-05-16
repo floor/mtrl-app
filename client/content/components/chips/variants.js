@@ -21,6 +21,6 @@ export const initChipVariants = (container) => {
       variant
     })
 
-    layout.body.appendChild(chip.element)
+    layout.showcase.appendChild(chip.element)
   })
 }

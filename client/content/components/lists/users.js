@@ -14,6 +14,7 @@ const createUserList = () => {
     baseUrl: '/api', // Using relative URL - our fixed adapter will handle this properly
     class: 'list--users',
     itemHeight: 84,
+    multiSelect: true,
     // pageSize: 20,
     scrollStrategy: 'scroll',
     pagination: {
@@ -69,7 +70,7 @@ const createUserList = () => {
 
     // Render function to display each item
     renderItem: (user, index, recycledElement) => {
-      console.log('Rendering user item:', user, 'at index:', index, recycledElement)
+      // console.log('Rendering user item:', user, 'at index:', index, recycledElement)
 
       // if (recycledElement) {
       //   // Just update the content rather than creating new elements
@@ -118,11 +119,11 @@ export const initUsersList = (container) => {
 
   // Event listeners
   userList.on('load', (event) => {
-    console.log('List loaded:', event)
+    // console.log('List loaded:', event)
 
     // Check if any items were added to the DOM
     const items = userList.element.querySelectorAll('.mtrl-list-item')
-    console.log('DOM items after load:', items.length)
+    // console.log('DOM items after load:', items.length)
 
     // Log heights of visible items
     Array.from(items).forEach((item) => {

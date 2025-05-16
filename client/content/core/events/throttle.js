@@ -91,7 +91,7 @@ element.addEventListener('mousemove', handleMouseMove);`
   const trackingBox = createElement({
     tag: 'div',
     class: 'throttle-tracking-box',
-    attrs: {
+    attributes: {
       tabindex: '0', // Make focusable for accessibility
       role: 'region',
       'aria-label': 'Mouse tracking area for throttle demonstration'

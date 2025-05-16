@@ -157,7 +157,7 @@ const initArrayLayouts = (container) => {
     ],
     'content', { class: 'card-content' },
     [
-      'avatar', { tag: 'img', attrs: { src: 'avatar.jpg' } },
+      'avatar', { tag: 'img', attributes: { src: 'avatar.jpg' } },
       'userName', { tag: 'h4', text: 'John Doe' },
       'userInfo', { tag: 'p', text: 'Software Developer' }
     ]

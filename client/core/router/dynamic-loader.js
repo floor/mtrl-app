@@ -13,8 +13,8 @@ import { highlightCodeBlocks } from '../code/highlight'
 // This allows us to map routes to their corresponding module paths
 const ROUTE_MODULE_MAP = {
   // Section routes
-  home: () => import('../../content/home'),
-  getstarted: () => import('../../content/getstarted'),
+  home: () => import('../../content'),
+  getstarted: () => import('../../content/get-started'),
   core: () => import('../../content/core'),
   styles: () => import('../../content/styles'),
   components: () => import('../../content/components'),

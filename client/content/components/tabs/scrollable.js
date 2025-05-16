@@ -34,8 +34,8 @@ export const initScrollableTabs = (container) => {
   description.textContent = 'When there are too many tabs to fit in the available space, scrollable tabs allow horizontal scrolling to access all the tabs.'
 
   // Add tabs to the layout
-  layout.body.appendChild(tabs.element)
-  layout.body.appendChild(description)
+  layout.showcase.appendChild(tabs.element)
+  layout.info.appendChild(description)
 
   // Set a max width to demonstrate scrolling even on wide screens
   tabs.element.style.maxWidth = '600px'
