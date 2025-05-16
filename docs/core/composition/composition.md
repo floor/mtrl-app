@@ -68,8 +68,7 @@ import { withElement } from 'mtrl/core/compose';
 
 const elementConfig = {
   tag: 'button',
-  componentName: 'button',
-  attrs: { type: 'button' },
+  attributes: { type: 'button' },
   className: ['primary', 'large'],
   interactive: true
 };
@@ -275,7 +274,7 @@ const createButton = (config) => {
   // Element configuration
   const elementConfig = {
     tag: 'button',
-    attrs: { type: config.type || 'button' },
+    attributes: { type: config.type || 'button' },
     className: config.class,
     interactive: true
   };
