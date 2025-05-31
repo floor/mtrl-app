@@ -16,6 +16,7 @@ interface CacheSettings {
 export interface ServerConfig {
   port: number;
   isProduction: boolean;
+  baseUrl: string; // Added baseUrl property
   paths: {
     root: string;
     dist: string;
@@ -40,6 +41,11 @@ const config: ServerConfig = {
   // Server settings
   port: Number(process.env.PORT) || 4000,
   isProduction: process.env.NODE_ENV === "production",
+  
+  // Base URL - automatically determined based on environment
+  baseUrl: process.env.NODE_ENV === "production" 
+    ? "https://mtrl.app" 
+    : `http://localhost:${Number(process.env.PORT) || 4000}`,
   
   // Paths
   paths: {
