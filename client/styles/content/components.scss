@@ -133,11 +133,18 @@ $components: '#{b.$prefix}-components';
     padding: 60px 24px 60px;
     // transform: scale(.85);
     // @include c.typography('headline-small');
-    background-image: url(/public/img/grid-light.png);
+    // background-image: url(/public/img/grid-light.png);
     color: t.color('on-surface');
     margin: 0; 
     &.#{b.$prefix}-noflex {
       display: inline-block;
+    }
+
+    &.#{b.$prefix}-stack {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 16px;
     }
     .#{b.$prefix}-showcase-wrapper {
       display: inline-block;

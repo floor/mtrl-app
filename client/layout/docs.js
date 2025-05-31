@@ -17,7 +17,7 @@ export const createDocs = async (container, path) => {
   const title = 'Documentation'
   const layout = createLayout(createContentSection({ title }), container).component
 
-  console.log('createSwitchDocs')
+  // console.log('createSwitchDocs')
 
   // Show loading state
   layout.body.innerHTML = '<div class="loading">Loading documentation...</div>'
@@ -25,7 +25,7 @@ export const createDocs = async (container, path) => {
   try {
     // Await the promise from fetchMarkdown
     const htmlContent = await fetchMarkdown(path)
-    console.log('Markdown content loaded successfully')
+    // console.log('Markdown content loaded successfully')
 
     // Set the HTML content to the layout body
     layout.body.innerHTML = htmlContent
@@ -49,7 +49,7 @@ export const createDocsAlternative = (container, path) => {
   // Fetch the markdown and update the DOM when ready
   fetchMarkdown(path)
     .then(htmlContent => {
-      console.log('Markdown content loaded successfully')
+      // console.log('Markdown content loaded successfully')
       layout.body.innerHTML = htmlContent
       layout.body.classList.add('markdown-container')
     })

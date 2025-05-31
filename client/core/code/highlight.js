@@ -28,7 +28,7 @@ export function highlightCodeBlocks (container = document.body, options = {}) {
   const defaults = {
     delay: 50, // Small delay to ensure DOM is ready
     selector: 'pre code[class*="language-"], pre.mtrl-event-example__code code, pre code.mtrl-language-javascript', // Include MTRL-specific selectors
-    debug: true // Whether to log debug info
+    debug: false // Whether to log debug info
   }
 
   const config = { ...defaults, ...options }
@@ -107,7 +107,7 @@ function performHighlight (container, config) {
         Prism.highlightElement(block)
 
         if (config.debug) {
-          console.log(`Highlighted ${language} code block`)
+          // console.log(`Highlighted ${language} code block`)
         }
       } catch (err) {
         console.error('Error highlighting code block:', err)

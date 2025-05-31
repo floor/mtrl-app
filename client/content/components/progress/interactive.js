@@ -17,18 +17,18 @@ import {
  */
 export const initInteractiveProgress = (container) => {
   const title = 'Interactive Progress Demo'
-  const layout = createLayout(createComponentSection({ title }), container).component
+  const layout = createLayout(createComponentSection({ title, class: 'noflex' }), container).component
 
   // Create linear and circular progress indicators for interaction
   const linearProgress = createProgress({
     variant: PROGRESS_VARIANTS.LINEAR,
-    value: 0,
+    value: 50,
     showLabel: true
   })
 
   const circularProgress = createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
-    value: 0
+    value: 50
   })
 
   // Create controls wrapper
@@ -37,8 +37,9 @@ export const initInteractiveProgress = (container) => {
     class: 'progress-indicators'
   })
 
-  progressIndicators.appendChild(linearProgress.element)
   progressIndicators.appendChild(circularProgress.element)
+  progressIndicators.appendChild(linearProgress.element)
+
   layout.showcase.appendChild(progressIndicators)
 
   // Create controls
@@ -46,13 +47,13 @@ export const initInteractiveProgress = (container) => {
     tag: 'div',
     class: 'progress-controls'
   })
-  layout.body.appendChild(controls)
+  layout.info.appendChild(controls)
 
   // Value input
   const valueInput = createTextfield({
     label: 'Value (0-100)',
     variant: 'outlined',
-    value: '0'
+    value: '50'
   })
 
   valueInput.element.addEventListener('input', (e) => {
@@ -112,24 +113,24 @@ export const initInteractiveProgress = (container) => {
 
   // controls.appendChild(toggleButton.element)
 
-  // Toggle disabled state
-  const disableButton = createButton({
-    text: 'Toggle Disabled',
-    variant: 'tonal'
-  })
+  // // Toggle disabled state
+  // const disableButton = createButton({
+  //   text: 'Toggle Disabled',
+  //   variant: 'tonal'
+  // })
 
-  disableButton.on('click', () => {
-    const isDisabled = linearProgress.isDisabled()
-    if (isDisabled) {
-      linearProgress.enable()
-      circularProgress.enable()
-      disableButton.setText('Disable')
-    } else {
-      linearProgress.disable()
-      circularProgress.disable()
-      disableButton.setText('Enable')
-    }
-  })
+  // disableButton.on('click', () => {
+  //   const isDisabled = linearProgress.isDisabled()
+  //   if (isDisabled) {
+  //     linearProgress.enable()
+  //     circularProgress.enable()
+  //     disableButton.setText('Disable')
+  //   } else {
+  //     linearProgress.disable()
+  //     circularProgress.disable()
+  //     disableButton.setText('Enable')
+  //   }
+  // })
 
-  controls.appendChild(disableButton.element)
+  // controls.appendChild(disableButton.element)
 }

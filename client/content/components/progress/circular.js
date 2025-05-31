@@ -16,28 +16,30 @@ export const initCircularProgress = (container) => {
   const title = 'Circular Progress'
   const layout = createLayout(createComponentSection({ title }), container).component
 
-  // Create determinate circular progress indicators
-  const progress25 = createProgress({
-    variant: PROGRESS_VARIANTS.CIRCULAR,
-    value: 25
-  })
-  layout.showcase.appendChild(progress25.element)
+  const showcase = createLayout([
+    { layout: { type: 'stack', gap: 8 } },
+    ['line', { layout: { type: 'row', gap: 8, columns: 4, align: 'center' } }],
+    ['wavy', { layout: { type: 'row', gap: 8, columns: 4, align: 'center' } }]
+  ], layout.showcase).component
 
-  const progress50 = createProgress({
-    variant: PROGRESS_VARIANTS.CIRCULAR,
-    value: 50
-  })
-  layout.showcase.appendChild(progress50.element)
+  const values = [0, 25, 50, 75, 100]
 
-  const progress75 = createProgress({
-    variant: PROGRESS_VARIANTS.CIRCULAR,
-    value: 75
-  })
-  layout.showcase.appendChild(progress75.element)
+  for (let i = 0; i < values.length; i++) {
+    const progress = createProgress({
+      variant: PROGRESS_VARIANTS.CIRCULAR,
+      value: values[i],
+      size: 96
+    })
+    showcase.line.appendChild(progress.element)
+  }
 
-  const progress100 = createProgress({
-    variant: PROGRESS_VARIANTS.CIRCULAR,
-    value: 100
-  })
-  layout.showcase.appendChild(progress100.element)
+  for (let i = 0; i < values.length; i++) {
+    const progress = createProgress({
+      variant: PROGRESS_VARIANTS.CIRCULAR,
+      value: values[i],
+      shape: 'wavy',
+      size: 96
+    })
+    showcase.wavy.appendChild(progress.element)
+  }
 }

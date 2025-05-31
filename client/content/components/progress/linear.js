@@ -9,35 +9,33 @@ import {
 } from 'mtrl'
 
 /**
- * Initializes the linear progress section
+ * Initializes the circular progress section
  * @param {HTMLElement} container - Container element
  */
 export const initLinearProgress = (container) => {
   const title = 'Linear Progress'
-  const layout = createLayout(createComponentSection({ title }), container).component
+  const layout = createLayout(createComponentSection({ title, class: 'layout--stack layout--stack-gap-8' }), container).component
 
-  // Create determinate linear progress
-  const progress25 = createProgress({
-    variant: PROGRESS_VARIANTS.LINEAR,
-    value: 25
-  })
-  layout.showcase.appendChild(progress25.element)
+  const showcase = createLayout([
+    { layout: { type: 'stack', gap: 4 } }
+  ], layout.showcase).component
 
-  const progress50 = createProgress({
-    variant: PROGRESS_VARIANTS.LINEAR,
-    value: 50
-  })
-  layout.showcase.appendChild(progress50.element)
+  const values = [0, 25, 50, 75, 100]
 
-  const progress75 = createProgress({
-    variant: PROGRESS_VARIANTS.LINEAR,
-    value: 75
-  })
-  layout.showcase.appendChild(progress75.element)
+  for (let i = 0; i < values.length; i++) {
+    const progress = createProgress({
+      variant: PROGRESS_VARIANTS.LINEAR,
+      value: values[i]
+    })
+    showcase.element.appendChild(progress.element)
+  }
 
-  const progress100 = createProgress({
-    variant: PROGRESS_VARIANTS.LINEAR,
-    value: 100
-  })
-  layout.showcase.appendChild(progress100.element)
+  for (let i = 0; i < values.length; i++) {
+    const progress = createProgress({
+      variant: PROGRESS_VARIANTS.LINEAR,
+      value: values[i],
+      shape: 'wavy'
+    })
+    showcase.element.appendChild(progress.element)
+  }
 }

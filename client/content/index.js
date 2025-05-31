@@ -5,6 +5,7 @@ import {
 } from '../layout/home'
 
 import { createColorPalettes } from './styles/colors/palettes'
+import { createProgressComponent } from './components/progress/progress'
 import { createButtonComponent } from './components/buttons/common/button'
 import { initRange as createRangeSlider } from './components/sliders/range'
 import { createTextfieldShowcase } from './components/textfields/textfield'
@@ -29,6 +30,7 @@ export const createHomeContent = (container) => {
   const body = createLayout(createHomeLayout(info), container).get('body')
 
   createColorPalettes(body)
+  createProgressComponent(body)
   createButtonComponent(body)
   createSwitches(body)
   createTextfieldShowcase(body)

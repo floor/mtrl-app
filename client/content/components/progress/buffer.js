@@ -16,6 +16,10 @@ export const initBufferProgress = (container) => {
   const title = 'Buffer Progress'
   const layout = createLayout(createComponentSection({ title }), container).component
 
+  const showcase = createLayout([
+    { layout: { type: 'stack', gap: 4 } }
+  ], layout.showcase).component
+
   // Create progress with buffer indicator
   const progress = createProgress({
     variant: PROGRESS_VARIANTS.LINEAR,
@@ -23,7 +27,7 @@ export const initBufferProgress = (container) => {
     buffer: 70,
     showLabel: true
   })
-  layout.showcase.appendChild(progress.element)
+  showcase.element.appendChild(progress.element)
 
   // Create another progress with buffer indicator
   const progress2 = createProgress({
@@ -31,5 +35,5 @@ export const initBufferProgress = (container) => {
     value: 20,
     buffer: 90
   })
-  layout.showcase.appendChild(progress2.element)
+  showcase.element.appendChild(progress2.element)
 }

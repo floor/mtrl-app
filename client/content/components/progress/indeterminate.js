@@ -7,13 +7,14 @@ import {
   createProgress,
   PROGRESS_VARIANTS
 } from 'mtrl'
+
 /**
  * Initializes the indeterminate progress section
  * @param {HTMLElement} container - Container element
  */
 export const initIndeterminateProgress = (container) => {
   const title = 'Indeterminate Progress'
-  const layout = createLayout(createComponentSection({ title }), container).component
+  const layout = createLayout(createComponentSection({ title, class: 'layout--stack layout--stack-gap-8' }), container).component
 
   // Create indeterminate circular progress
   const indeterminateCircular = createProgress({
@@ -22,10 +23,10 @@ export const initIndeterminateProgress = (container) => {
   })
   layout.showcase.appendChild(indeterminateCircular.element)
 
-  // // Create indeterminate linear progress
-  // const indeterminateLinear = createProgress({
-  //   variant: PROGRESS_VARIANTS.LINEAR,
-  //   indeterminate: true
-  // })
-  // layout.showcase.appendChild(indeterminateLinear.element)
+  // Create indeterminate linear progress
+  const indeterminateLinear = createProgress({
+    variant: PROGRESS_VARIANTS.LINEAR,
+    indeterminate: true
+  })
+  layout.showcase.appendChild(indeterminateLinear.element)
 }

@@ -1,24 +1,25 @@
 // src/client/content/components/progress.js
 
 import {
-  createComponentsLayout
+  createComponentsLayout,
+  createDocs
 } from '../../../layout'
 
 import {
   createLayout
 } from 'mtrl'
-
+import { createProgressComponent } from './progress'
 import { initLinearProgress } from './linear'
 import { initCircularProgress } from './circular'
+import { initProgressThickness } from './thickness'
 import { initIndeterminateProgress } from './indeterminate'
 import { initBufferProgress } from './buffer'
-import { initInteractiveProgress } from './interactive'
 
 /**
  * Creates the main Progress component showcase
  * @param {HTMLElement} container - The container element to append content to
  */
-export const createProgressContent = (container) => {
+export const createProgressesContent = (container) => {
   const info = {
     title: 'Progress Indicators',
     description: 'Progress indicators express an unspecified wait time or display the length of a process'
@@ -26,9 +27,11 @@ export const createProgressContent = (container) => {
 
   const layout = createLayout(createComponentsLayout(info), container).component
 
-  // initLinearProgress(layout.body)
-  // initCircularProgress(layout.body)
+  createProgressComponent(layout.body)
+  initLinearProgress(layout.body)
+  initCircularProgress(layout.body)
+  initProgressThickness(layout.body)
   initIndeterminateProgress(layout.body)
-  // initBufferProgress(layout.body)
-  // initInteractiveProgress(layout.body)
+  initBufferProgress(layout.body)
+  createDocs(layout.body, 'components/progress.md')
 }

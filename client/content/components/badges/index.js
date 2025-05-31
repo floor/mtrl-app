@@ -17,12 +17,6 @@ export const createBadgesContent = (container) => {
 
   const layout = createLayout(createComponentsLayout(info), container).component
 
-  // Introduction to the badges
-  const introContainer = document.createElement('div')
-  introContainer.style.marginBottom = '32px'
-
-  layout.body.appendChild(introContainer)
-
   // Initialize all the demo sections
   createBadgeContent(layout.body)
   initStandard(layout.body)
