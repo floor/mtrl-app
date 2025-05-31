@@ -60,11 +60,32 @@ export async function renderTemplate(templatePath: string, data: TemplateData = 
     // Get path from data or default to "/"
     const path = data.path || "/";
     
-    // Merge with default data
+    // Get default data first
+    const defaultData = getDefaultTemplateData(path);
+    
+    // Merge with passed data, ensuring all required fields exist
     const templateData: TemplateData = {
-      ...getDefaultTemplateData(path),
-      ...data
+      ...defaultData,
+      ...data,
+      // Explicitly ensure these critical fields are never undefined
+      title: data.title || defaultData.title,
+      description: data.description || defaultData.description,
+      path: data.path || defaultData.path,
+      canonicalUrl: data.canonicalUrl || defaultData.canonicalUrl,
+      ogImage: data.ogImage || defaultData.ogImage,
+      timestamp: data.timestamp || defaultData.timestamp,
+      isSnapshot: data.isSnapshot || defaultData.isSnapshot
     };
+    
+    // Debug log in development to see what data is being passed
+    if (!isProduction) {
+      console.log('Template data being passed to EJS:', {
+        title: templateData.title,
+        description: templateData.description,
+        path: templateData.path,
+        canonicalUrl: templateData.canonicalUrl
+      });
+    }
     
     // Render the template with EJS
     return ejs.render(templateContent, templateData, {
@@ -73,6 +94,7 @@ export async function renderTemplate(templatePath: string, data: TemplateData = 
     });
   } catch (error) {
     console.error(`Error rendering template ${templatePath}:`, error);
+    console.error('Template data that caused the error:', data);
     throw error;
   }
 }
