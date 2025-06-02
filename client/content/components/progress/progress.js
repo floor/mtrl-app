@@ -50,11 +50,9 @@ export const createProgressComponent = (container) => {
     labelFormatter: (value, max) => `${value} of 100 items`,
     indeterminate,
     shape: initialShape,
-    size: initialVariant === PROGRESS_VARIANTS.CIRCULAR ? initialSize : undefined
+    size: initialVariant === PROGRESS_VARIANTS.CIRCULAR ? initialSize : undefined,
+    parent: layout.showcase
   })
-
-  // Add to showcase
-  layout.showcase.appendChild(progress.element)
 
   // Progress simulation state
   let simulationInterval = null
@@ -94,7 +92,8 @@ export const createProgressComponent = (container) => {
       [createChips, 'shape', { scrollable: false, label: 'Shape' }],
       [createSwitch, 'indeterminate', { label: 'Indeterminate', class: 'switch--dense' }],
       [createSwitch, 'simulate', { label: 'Simulate Download', class: 'switch--dense' }],
-      [createSwitch, 'visible', { label: 'Visible', checked: true, class: 'switch--dense' }]
+      [createSwitch, 'visible', { label: 'Visible', checked: true, class: 'switch--dense' }],
+      [createSwitch, 'disabled', { label: 'Disabled', class: 'switch--dense' }]
     ], layout.info).component
 
   // Add variant chips
@@ -271,15 +270,6 @@ export const createProgressComponent = (container) => {
   })
 
   info.visible.on('change', (e) => {
-    // console.log('Visibility change:', {
-    //   checked: e.checked,
-    //   isSimulating: !!simulationInterval,
-    //   currentValue: currentSimulationValue || value,
-    //   isIndeterminate: info.indeterminate.isChecked(),
-    //   progressState: progress.state
-    // })
-
-    // Don't update if simulation is running
     if (simulationInterval) return
 
     if (e.checked === true) {
@@ -293,6 +283,14 @@ export const createProgressComponent = (container) => {
       }
     } else {
       progress.hide()
+    }
+  })
+
+  info.disabled.on('change', (e) => {
+    if (e.checked === true) {
+      info.value.disable()
+    } else {
+      info.value.enable()
     }
   })
 

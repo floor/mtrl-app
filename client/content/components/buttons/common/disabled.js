@@ -13,17 +13,16 @@ import {
 
 export const initDisabled = (container) => {
   const title = 'Buttons Disabled'
-  const structure = createLayout(createComponentSection({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   const variants = ['filled', 'tonal', 'elevated', 'outlined', 'text']
   variants.forEach(variant => {
     const text = capitalize(variant)
-    const btn = createButton({
+    createButton({
       text: `${text} Button`,
       variant,
-      disabled: true
+      disabled: true,
+      parent: layout.showcase
     })
-    // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-    structure.showcase.appendChild(btn.element)
   })
 }

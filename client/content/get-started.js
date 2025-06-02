@@ -25,4 +25,5 @@ export const createCompositionContent = (container) => {
   const layout = createLayout(createContentLayout(info), container).component
 
   createDocs(layout.body, 'get-started.md')
+  createDocs(layout.body, 'core/bundle.md')
 }

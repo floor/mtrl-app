@@ -37,7 +37,7 @@ const iconLabelButtons = [
  */
 export const initIcons = (container) => {
   const title = 'Buttons icons'
-  const structure = createLayout(createComponentSection({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
   const states = ['enabled', 'disabled']
   const variants = ['filled', 'elevated']
 
@@ -48,11 +48,11 @@ export const initIcons = (container) => {
       const btn = createButton({
         icon: buttonDef.icon,
         iconSize: 'medium',
-        ariaLabel: buttonDef.label
+        ariaLabel: buttonDef.label,
+        parent: layout.showcase
       })
 
       if (disabled) btn.disable()
-      structure.showcase.appendChild(btn.element)
     })
   })
 
@@ -63,9 +63,8 @@ export const initIcons = (container) => {
       text: buttonDef.label,
       iconSize: 'medium',
       ariaLabel: buttonDef.label,
-      variant: variants[i]
+      variant: variants[i],
+      parent: layout.showcase
     })
-
-    structure.showcase.appendChild(labelBtn.element)
   })
 }

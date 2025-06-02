@@ -118,7 +118,7 @@ export const initIconsOptions = (container) => {
   layout.showcase.appendChild(iconOnlyResult)
 
   // Icon-only example
-  const transportButton = ({
+  const transportButton = createSegmentedButton({
     mode: SelectionMode.SINGLE,
     segments: [
       { icon: icons.car, value: 'car', selected: true },

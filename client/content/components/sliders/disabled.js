@@ -13,10 +13,11 @@ export const initDisabled = (container) => {
 
   const slider = createSlider({
     min: 0,
-    max: 10,
-    value: 5,
-    disabled: true
+    max: 100,
+    value: 70,
+    disabled: true,
+    step: 10,
+    ticks: true,
+    parent: layout.showcase
   })
-
-  layout.showcase.appendChild(slider.element)
 }

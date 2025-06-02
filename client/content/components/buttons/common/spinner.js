@@ -17,13 +17,14 @@ import { spinnerIcon, checkIcon } from '../../../../icons'
  */
 export const initSpinnerButton = (container) => {
   const title = 'Button with spinner'
-  const structure = createLayout(createComponentSection({ title }), container).component
+  const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a regular button
   const button = createButton({
     text: 'Send',
     // icon: sendIcon,
-    variant: 'filled'
+    variant: 'filled',
+    parent: layout.showcase
   })
 
   // Add click handler to toggle spinner
@@ -45,6 +46,4 @@ export const initSpinnerButton = (container) => {
       button.enable()
     }, 2000)
   })
-
-  structure.showcase.appendChild(button.element)
 }

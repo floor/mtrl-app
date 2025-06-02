@@ -21,19 +21,19 @@ export const initBufferProgress = (container) => {
   ], layout.showcase).component
 
   // Create progress with buffer indicator
-  const progress = createProgress({
+  createProgress({
     variant: PROGRESS_VARIANTS.LINEAR,
     value: 40,
     buffer: 70,
-    showLabel: true
+    showLabel: true,
+    parent: showcase.element
   })
-  showcase.element.appendChild(progress.element)
 
   // Create another progress with buffer indicator
-  const progress2 = createProgress({
+  createProgress({
     variant: PROGRESS_VARIANTS.LINEAR,
     value: 20,
-    buffer: 90
+    buffer: 90,
+    parent: showcase.element
   })
-  showcase.element.appendChild(progress2.element)
 }

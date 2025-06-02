@@ -11,7 +11,7 @@ export const initEventsAPI = (container) => {
   const title = 'Using events and API'
   const layout = createLayout(createComponentSection({ title }), container).component
 
-  const slider = createSlider({
+  createSlider({
     min: 0,
     max: 100,
     value: 50,
@@ -28,8 +28,7 @@ export const initEventsAPI = (container) => {
       end: () => {
         console.log('Dragging ended')
       }
-    }
+    },
+    parent: layout.showcase
   })
-
-  layout.showcase.appendChild(slider.element)
 }

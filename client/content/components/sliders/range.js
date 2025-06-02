@@ -14,7 +14,7 @@ export const initRange = (container) => {
   const title = 'Price Range Filter'
   const layout = createLayout(createComponentSection({ title }), container).component
 
-  const priceSlider = createSlider({
+  const slider = createSlider({
     min: 0,
     max: 1000,
     value: 200,
@@ -23,13 +23,15 @@ export const initRange = (container) => {
     step: 100,
     ticks: true,
     color: SLIDER_COLORS.SECONDARY,
-    label: 'Price range'
+    label: 'Price range',
+    parent: layout.showcase
+
   })
 
   const duration = 1000
 
   // Update price display when slider changes
-  priceSlider.on('change', (event) => {
+  slider.on('change', (event) => {
     console.log('change', event.value)
     createSnackbar({
       message: `Price range changed: ${event.value} - ${event.secondValue}`,
@@ -42,6 +44,4 @@ export const initRange = (container) => {
   // priceSlider.on('input', (event) => {
   //   console.log('input', event.value, event.secondValue)
   // })
-
-  layout.showcase.appendChild(priceSlider.element)
 }

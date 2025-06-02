@@ -12,7 +12,7 @@ export const initRangeDiscrete = (container) => {
   const title = 'Range slider with tick marks'
   const layout = createLayout(createComponentSection({ title }), container).component
 
-  const slider = createSlider({
+  createSlider({
     min: 0,
     max: 1000,
     value: 200,
@@ -20,8 +20,7 @@ export const initRangeDiscrete = (container) => {
     range: true,
     step: 100,
     ticks: true,
-    color: SLIDER_COLORS.SECONDARY
+    color: SLIDER_COLORS.SECONDARY,
+    contaoner: layout.showcase
   })
-  // btn.on('click', () => components.logEvent(`${variant} button clicked`))
-  layout.showcase.appendChild(slider.element)
 }

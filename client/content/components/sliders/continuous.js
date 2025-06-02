@@ -29,28 +29,25 @@ export const initContinuous1000 = (container) => {
   const title = 'Continuous Slider with Label and Icon'
   const layout = createLayout(createComponentSection({ title }), container).component
 
-  const sliderCallVolume = createSlider({
+  createSlider({
     label: 'Call volume',
     icon: callVolume,
     min: 0,
     max: 10,
     value: 3,
     step: 1,
-    size: 'small'
+    size: 'S',
+    parent: layout.showcase
   })
 
-  const sliderAlarmVolume = createSlider({
+  createSlider({
     label: 'Alarm volume',
     icon: callVolume,
     min: 0,
     max: 10,
     value: 3,
-    step: 1
+    step: 1,
+    size: 'S',
+    parent: layout.showcase
   })
-
-  // slider.setLabel('Phone volume 2')
-  // slider.setIcon(callVolume)
-
-  layout.showcase.appendChild(sliderCallVolume.element)
-  layout.showcase.appendChild(sliderAlarmVolume.element)
 }

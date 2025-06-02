@@ -44,16 +44,16 @@ export const initAnimation = (container) => {
     icon: icons['bottom-right'],
     text: 'Create',
     animate: true,
-    ariaLabel: 'Animated Extended FAB'
+    ariaLabel: 'Animated Extended FAB',
+    parent: layout.showcase
   })
 
   layout.showcase.style.height = '176px'
 
-  layout.showcase.appendChild(animatedFab.element)
-
   // Create a button to trigger animation
   const resetButton = createButton({
-    text: 'Reset Animation'
+    text: 'Reset Animation',
+    parent: layout.showcase
   })
   resetButton.element.addEventListener('click', () => {
     // Remove and re-add the Extended FAB to reset animation
@@ -63,6 +63,4 @@ export const initAnimation = (container) => {
       layout.showcase.appendChild(animatedFab.element)
     }, 10)
   })
-
-  layout.info.appendChild(resetButton.element)
 }
