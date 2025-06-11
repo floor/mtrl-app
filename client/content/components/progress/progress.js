@@ -8,6 +8,7 @@ import {
   createChips,
   createSlider,
   createSwitch,
+  createSnackbar,
   // In real word, you do not need this or maybe (will affect the bundle size, not that much)
   PROGRESS_VARIANTS,
   PROGRESS_SHAPES
@@ -27,9 +28,10 @@ export const createProgressComponent = (container) => {
   }), container).component
 
   let value = 25
-  const animate = false
-  const initialSize = 192
+  const animate = true
+  let size = 196
 
+  let currentThickness = 'thick'
   const initialShape = 'wavy'
   const indeterminate = false
   const initialVariant = PROGRESS_VARIANTS.CIRCULAR
@@ -40,7 +42,7 @@ export const createProgressComponent = (container) => {
   //   value,
   //   showLabel: true,
   //   indeterminate,
-  //   size: initialVariant === PROGRESS_VARIANTS.CIRCULAR ? initialSize : undefined
+  //   size: initialVariant === PROGRESS_VARIANTS.CIRCULAR ? size : undefined
   // })
 
   const progress = createProgress({
@@ -48,9 +50,10 @@ export const createProgressComponent = (container) => {
     value,
     showLabel: true,
     labelFormatter: (value, max) => `${value} of 100 items`,
+    thickness: currentThickness,
     indeterminate,
     shape: initialShape,
-    size: initialVariant === PROGRESS_VARIANTS.CIRCULAR ? initialSize : undefined,
+    size: initialVariant === PROGRESS_VARIANTS.CIRCULAR ? size : undefined,
     parent: layout.showcase
   })
 
@@ -59,20 +62,24 @@ export const createProgressComponent = (container) => {
   let currentSimulationValue = 0
 
   // info control
-  const thicknesses = [{
-    label: 'THIN',
-    value: 'thin'
-  },
-  {
-    label: 'THICK',
-    value: 'thick'
-  }, {
-    label: '10',
-    value: 10
-  }, {
-    label: '14',
-    value: 14
-  }]
+  const thicknesses = [
+    {
+      label: '2',
+      value: 2
+    }, {
+      label: 'THIN',
+      value: 'thin'
+    },
+    {
+      label: 'THICK',
+      value: 'thick'
+    }, {
+      label: '12',
+      value: 12
+    }, {
+      label: '16',
+      value: 16
+    }]
 
   const variants = Object.entries(PROGRESS_VARIANTS).map(([label, value]) => ({
     label,
@@ -87,13 +94,13 @@ export const createProgressComponent = (container) => {
   const info = createLayout(
     [{ layout: { type: 'grid', column: 1, gap: 4, dense: true, align: 'center' } },
       [createChips, 'variant', { scrollable: false, label: 'Variant' }],
-      [createSlider, 'value', { label: 'Value', min: 0, max: 100, value, step: 1, variant: 'discrete' }],
+      [createSlider, 'value', { label: 'Value', min: 0, max: 100, value, step: 1, size: 'M', variant: 'discrete' }],
+      [createSlider, 'size', { label: 'Size', min: 20, max: 240, value: size, step: 10, size: 'XS', variant: 'discrete' }],
       [createChips, 'thickness', { scrollable: false, label: 'Thickness' }],
       [createChips, 'shape', { scrollable: false, label: 'Shape' }],
-      [createSwitch, 'indeterminate', { label: 'Indeterminate', class: 'switch--dense' }],
       [createSwitch, 'simulate', { label: 'Simulate Download', class: 'switch--dense' }],
-      [createSwitch, 'visible', { label: 'Visible', checked: true, class: 'switch--dense' }],
-      [createSwitch, 'disabled', { label: 'Disabled', class: 'switch--dense' }]
+      [createSwitch, 'indeterminate', { label: 'Indeterminate', class: 'switch--dense' }],
+      [createSwitch, 'visible', { label: 'Visible', checked: true, class: 'switch--dense' }]
     ], layout.info).component
 
   // Add variant chips
@@ -114,7 +121,7 @@ export const createProgressComponent = (container) => {
       value,
       variant: 'filter',
       selectable: true,
-      selected: label === 'THIN'
+      selected: label.toLowerCase() === currentThickness
     })
   })
 
@@ -146,7 +153,11 @@ export const createProgressComponent = (container) => {
     value = event.value
 
     // Don't update if simulation is running
-    if (simulationInterval) return
+    if (simulationInterval) {
+      simulateProgress(false)
+      info.simulate.uncheck()
+      return
+    }
 
     if (!progress.isVisible()) {
       // console.log('Component not visible, showing first')
@@ -161,44 +172,37 @@ export const createProgressComponent = (container) => {
     progress.setValue(event.value, animate)
   })
 
-  info.variant.on('change', (variant) => {
-    // console.log('Variant change:', {
-    //   newVariant: variant[0],
-    //   currentValue: value,
-    //   isIndeterminate: info.indeterminate.isChecked(),
-    //   currentThickness: info.thickness.getSelectedValues()?.[0] || 'thin',
-    //   currentShape: info.shape.getSelectedValues()?.[0] || 'line'
-    // })
+  info.size.on('input', (event) => {
+    progress.setSize(event.value)
+    size = event.value
+  })
 
+  info.variant.on('change', (variant) => {
     const newVariant = variant[0]
     const isCircular = newVariant === PROGRESS_VARIANTS.CIRCULAR
 
     // Get current values before destroying
     const isIndeterminate = info.indeterminate.isChecked()
-    const currentThickness = info.thickness.getSelectedValues()?.[0] || 'thin'
-    const currentShape = info.shape.getSelectedValues()?.[0] || 'line'
+    const currentShape = info.shape.getSelectedValues()?.[0] || initialShape
 
     // Remove old progress element
     progress.element.remove()
 
-    // Create new progress component with all features
-    // console.log('Creating new progress component:', {
-    //   variant: newVariant,
-    //   value,
-    //   showLabel: true,
-    //   indeterminate: isIndeterminate,
-    //   size: isCircular ? initialSize : undefined,
-    //   thickness: currentThickness,
-    //   shape: currentShape
-    // })
+    console.log('display', info.size)
+
+    if (isCircular) {
+      info.size.element.style.display = 'inline-flex'
+    } else {
+      info.size.element.style.display = 'none'
+    }
 
     const newProgress = createProgress({
       variant: newVariant,
       value,
       showLabel: true,
-      indeterminate: isIndeterminate,
-      size: isCircular ? initialSize : undefined,
       thickness: currentThickness,
+      indeterminate: isIndeterminate,
+      size: isCircular ? size : undefined,
       shape: currentShape
     })
 
@@ -225,7 +229,12 @@ export const createProgressComponent = (container) => {
     progress.on('complete', () => {
       console.log('complete')
       // progress.hide()
+      info.value.enable()
       info.simulate.uncheck()
+      const snackbar = createSnackbar({
+        message: 'Progress Completed'
+      })
+      snackbar.show()
     })
   })
 
@@ -234,6 +243,9 @@ export const createProgressComponent = (container) => {
     if (thickness[0] !== 'thin' && thickness[0] !== 'thick') {
       value = parseInt(thickness[0], 10)
     }
+
+    currentThickness = value
+    console.log('thickness', thickness)
     progress.setThickness(value)
   })
 
@@ -263,6 +275,7 @@ export const createProgressComponent = (container) => {
       if (info.indeterminate.isChecked()) {
         progress.setIndeterminate(false)
       }
+      info.visible.check()
       simulateProgress(true)
     } else {
       simulateProgress(false)
@@ -286,20 +299,17 @@ export const createProgressComponent = (container) => {
     }
   })
 
-  info.disabled.on('change', (e) => {
-    if (e.checked === true) {
-      info.value.disable()
-    } else {
-      info.value.enable()
-    }
-  })
-
   // Handle completion
   progress.on('complete', () => {
+    console.log('complete')
     // progress.hide()
     // info.visible.uncheck()
     info.value.enable()
     info.simulate.uncheck()
+    const snackbar = createSnackbar({
+      message: 'Progress Completed'
+    })
+    snackbar.show()
   })
 
   /**
@@ -307,6 +317,7 @@ export const createProgressComponent = (container) => {
    * @param {boolean} start - Whether to start or stop the simulation
    */
   const simulateProgress = (start) => {
+    console.log('simulateProgress --', start)
     if (start) {
       value = 0
       progress.setValue(0, false)
@@ -318,7 +329,7 @@ export const createProgressComponent = (container) => {
       progress.show()
 
       // Disable manual controls during simulation
-      info.value.disable()
+      // info.value.disable()
       info.indeterminate.uncheck()
       // Disable variant chips by adding disabled class
       info.variant.element.classList.add('disabled')
@@ -353,7 +364,7 @@ export const createProgressComponent = (container) => {
           clearInterval(simulationInterval)
           simulationInterval = null
         }
-      }, 100)
+      }, 200)
     } else {
       // Stop simulation
       if (simulationInterval) {

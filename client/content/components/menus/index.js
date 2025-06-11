@@ -22,8 +22,8 @@ export const createMenusContent = (container) => {
 
   const layout = createLayout(createComponentsLayout(info), container).component
 
-  // initBasicMenu(layout.body)
-  // initPositionsMenu(layout.body)
+  initBasicMenu(layout.body)
+  initPositionsMenu(layout.body)
   initNestedMenu(layout.body)
   initTexfieldMenu(layout.body)
   // initCustomMenu(layout.body)

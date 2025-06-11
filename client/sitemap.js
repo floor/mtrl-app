@@ -79,6 +79,14 @@ export const sitemap = {
         description: 'Manage component and application state efficiently with mtrl\'s simple yet powerful state management.'
       },
       {
+        id: 'config',
+        label: 'Config',
+        path: '/core/config',
+        lastModified: '2025-06-04',
+        createdDate: '2025-06-04',
+        description: 'A lightweight global configuration system.'
+      },
+      {
         id: 'collection-main',
         label: 'Collection',
         description: 'Tools and utilities for working with collections of data in mtrl applications.',
@@ -214,9 +222,17 @@ export const sitemap = {
             id: 'common',
             label: 'Common',
             path: '/components/buttons/common',
-            lastModified: '2025-04-30',
+            lastModified: '2025-06-11',
             createdDate: '2025-03-19',
             description: 'Standard buttons for common actions in your interface.'
+          },
+          {
+            id: 'icon-buttons',
+            label: 'Icon Buttons',
+            path: '/components/buttons/icon-buttons',
+            lastModified: '2025-01-15',
+            createdDate: '2025-01-15',
+            description: 'Icon buttons provide compact actions with clear visual cues.'
           },
           {
             id: 'fab',

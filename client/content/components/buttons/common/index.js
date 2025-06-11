@@ -11,11 +11,16 @@ import {
 
 import { createButtonComponent } from './button'
 import { initVariants } from './variants'
+import { createToggleButtons } from './toggle'
 import { initDisabled } from './disabled'
-import { initSpinnerButton } from './spinner'
+import { createButtonSizes } from './sizes'
+
+import { initProgressButton } from './progress'
 import { initIcons } from './icons'
 
 export const createButtonsContent = (container) => {
+  // Set global defaults for all buttons in this section
+
   const info = {
     title: 'Buttons',
     description: 'Let users take action and make choices with one tap'
@@ -24,9 +29,12 @@ export const createButtonsContent = (container) => {
   const layout = createLayout(createContentLayout(info), container).component
 
   createButtonComponent(layout.body)
-  // initVariants(layout.body)
-  // initDisabled(layout.body)
+  initVariants(layout.body)
+  createToggleButtons(layout.body)
+  createButtonSizes(layout.body)
+
   initIcons(layout.body)
-  initSpinnerButton(layout.body)
+  initProgressButton(layout.body)
+  initDisabled(layout.body)
   createDocs(layout.body, 'components/button.md')
 }

@@ -94,8 +94,8 @@ export const initIndeterminateCheckboxes = (container) => {
 
   const setIndeterminateBtn = createButton({
     text: 'Set Indeterminate',
-    variant: 'outlined',
-    size: 'small'
+    size: 'xs',
+    shape: 'square'
   })
 
   setIndeterminateBtn.on('click', () => {

@@ -1,6 +1,7 @@
 import { createLayout, createChips, createChip } from 'mtrl'
 import { createContentSection } from '../../../layout'
 import themeManager from '../../../core/theme/theme-manager'
+import { themesMenu } from '../../../config.js'
 
 export const createColorPalettes = (container) => {
   // Create main layout with content section
@@ -11,9 +12,6 @@ export const createColorPalettes = (container) => {
   }), container).getAll()
 
   const body = layout.body
-
-  // Define themes with their colors
-  const themes = ['ocean', 'forest', 'spring', 'summer', 'autumn', 'winter', 'material']
 
   // Get current theme settings
   const currentSettings = themeManager.getSettings()
@@ -78,15 +76,15 @@ export const createColorPalettes = (container) => {
   }
 
   // Add chips to chip set
-  for (let i = 0; i < themes.length; i++) {
-    const name = themes[i]
+  for (let i = 0; i < themesMenu.length; i++) {
+    const theme = themesMenu[i]
     themeChipSet.addChip({
-      text: name.charAt(0).toUpperCase() + name.slice(1), // Capitalize first letter
-      value: name,
+      text: theme.text, // Capitalize first letter
+      value: theme.id,
       variant: 'filter',
       selectable: true, // Explicitly make it selectable
-      selected: name === lastSelectedTheme, // Pre-select current theme
-      class: `theme-chip theme-${name}`
+      selected: theme.id === lastSelectedTheme, // Pre-select current theme
+      class: `theme-chip theme-${theme.id}`
     })
   }
 

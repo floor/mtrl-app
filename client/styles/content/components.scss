@@ -95,6 +95,7 @@ $components: '#{b.$prefix}-components';
   background-color: t.color('surface-container');
   border-radius: f.get-shape('large');
   margin-bottom: 24px;
+
   &-head {
     padding: 24px;
   }
@@ -169,6 +170,15 @@ $components: '#{b.$prefix}-components';
     padding: 24px 24px 24px;
     color: t.color('on-surface');
     margin: 0;
+    &:empty {
+      display: none;
+    }
+  }
+  @media (max-width: 768px) {
+    &-body {
+      display: flex;
+      flex-direction: column;
+    }
   }
 }
 

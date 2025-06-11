@@ -1,4 +1,4 @@
-// src/client/content/components/button/disabled.js
+// src/client/content/components/button/toggle.js
 
 import { capitalize } from '../../../../core/utils'
 
@@ -12,8 +12,8 @@ import {
   BUTTON_SHAPES
 } from 'mtrl'
 
-export const initDisabled = (container) => {
-  const title = 'Buttons Disabled'
+export const createToggleButtons = (container) => {
+  const title = 'Toggle Buttons'
   const layout = createLayout(createComponentSection({ title }), container).component
 
   const showcase = createLayout([
@@ -26,22 +26,26 @@ export const initDisabled = (container) => {
 
   variants.forEach(variant => {
     const text = capitalize(variant)
-    createButton({
-      text: `${text} Button`,
+    const button = createButton({
+      text: `${text} button`,
       variant,
-      disabled: true,
+      toggle: true,
       parent: showcase.round
     })
+    // btn.element.addEventListener('click', () => log.info('native button clicked'))
+    // btn.on('click', () => log.info('component button clicked'))
   })
 
   variants.forEach(variant => {
     const text = capitalize(variant)
-    createButton({
-      text: `${text} Button`,
+    const button = createButton({
+      text: `${text} button`,
       variant,
-      disabled: true,
+      toggle: true,
       shape: BUTTON_SHAPES.SQUARE,
       parent: showcase.square
     })
+    // btn.element.addEventListener('click', () => log.info('native button clicked'))
+    // btn.on('click', () => log.info('component button clicked'))
   })
 }

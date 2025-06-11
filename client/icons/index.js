@@ -10,6 +10,7 @@ import codeIcon from './core.svg'
 import componentsIcon from './components.svg'
 import darkIcon from './dark.svg'
 import downloadIcon from './download.svg'
+import editIcon from './edit.svg'
 import faceIcon from './face.svg'
 import favoriteIcon from './favorite.svg'
 import getStartedIcon from './getstarted.svg'
@@ -17,6 +18,7 @@ import likeIcon from './heart.svg'
 import lightIcon from './light.svg'
 import locationIcon from './location.svg'
 import moreIcon from './more.svg'
+import refreshIcon from './refresh.svg'
 import searchIcon from './search.svg'
 import sendIcon from './send.svg'
 import settingsIcon from './settings.svg'
@@ -40,6 +42,7 @@ export {
   componentsIcon,
   darkIcon,
   downloadIcon,
+  editIcon,
   faceIcon,
   favoriteIcon,
   getStartedIcon,
@@ -47,6 +50,7 @@ export {
   lightIcon,
   locationIcon,
   moreIcon,
+  refreshIcon,
   searchIcon,
   sendIcon,
   settingsIcon,

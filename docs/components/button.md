@@ -12,7 +12,7 @@ Buttons are commonly used for:
 - Dialog controls
 - Toolbars and action menus
 
-The component follows Material Design 3 guidelines with support for various variants (filled, outlined, text, etc.), icons, disabled states, and ripple effects.
+The component follows Material Design 3 guidelines with support for various variants (filled, outlined, text, etc.), shapes, icons, disabled states, progress indicators, and ripple effects.
 
 ## Import
 
@@ -45,6 +45,8 @@ The Button component accepts the following configuration options:
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `variant` | `string` | `'filled'` | Visual style of the button (filled, outlined, text, elevated, tonal) |
+| `size` | `string` | `'s'` | Size of the button (xs, s, m, l, xl) |
+| `shape` | `string` | `'round'` | Shape of the button (round, square) |
 | `disabled` | `boolean` | `false` | Whether the button is initially disabled |
 | `text` | `string` | `undefined` | Text content displayed inside the button |
 | `icon` | `string` | `undefined` | HTML content (typically SVG) for the button icon |
@@ -56,6 +58,35 @@ The Button component accepts the following configuration options:
 | `prefix` | `string` | `'mtrl'` | Prefix for CSS class names |
 | `rippleConfig` | `object` | `undefined` | Configuration options for the ripple effect |
 | `ariaLabel` | `string` | `undefined` | ARIA label for accessibility (important for icon-only buttons) |
+| `progress` | `boolean\|object` | `undefined` | Progress indicator configuration |
+| `showProgress` | `boolean` | `false` | Whether to show progress initially |
+
+## Button Variants
+
+The button supports 5 Material Design 3 variants:
+
+- **`filled`** (default): Primary action button with solid background (high emphasis)
+- **`tonal`**: Secondary action button with medium emphasis
+- **`outlined`**: Button with outline border and transparent background
+- **`elevated`**: Button with slight elevation/shadow
+- **`text`**: Button that appears as text without background or border (low emphasis)
+
+## Button Sizes
+
+The button supports 5 different sizes following Material Design 3 specifications:
+
+- **`xs`**: Extra small - 32px height
+- **`s`**: Small - 40px height (default)
+- **`m`**: Medium - 56px height
+- **`l`**: Large - 96px height
+- **`xl`**: Extra large - 136px height
+
+## Button Shapes
+
+The button supports 2 different shapes:
+
+- **`round`** (default): Pill-shaped buttons with fully rounded corners
+- **`square`**: Buttons with size-specific corner radius (small radius that scales with button size)
 
 ## Component API
 
@@ -75,8 +106,27 @@ The Button component provides the following methods:
 | `enable()` | none | `ButtonComponent` | Enables the button, making it interactive |
 | `disable()` | none | `ButtonComponent` | Disables the button, making it non-interactive |
 | `setActive(active)` | `active: boolean` | `ButtonComponent` | Sets the active state of the button (e.g., when a related menu is open) |
+
+### Variant Methods
+
+| Method | Parameters | Returns | Description |
+|--------|------------|---------|-------------|
 | `setVariant(variant)` | `variant: string` | `ButtonComponent` | Changes the button's visual style variant |
 | `getVariant()` | none | `string` | Gets the button's current variant |
+
+### Size Methods
+
+| Method | Parameters | Returns | Description |
+|--------|------------|---------|-------------|
+| `setSize(size)` | `size: string` | `ButtonComponent` | Sets the button's size (xs, s, m, l, xl) |
+| `getSize()` | none | `string` | Gets the button's current size |
+
+### Shape Methods
+
+| Method | Parameters | Returns | Description |
+|--------|------------|---------|-------------|
+| `setShape(shape)` | `shape: string` | `ButtonComponent` | Sets the button's shape (round, square) |
+| `getShape()` | none | `string` | Gets the button's current shape |
 
 ### Content Methods
 
@@ -84,9 +134,25 @@ The Button component provides the following methods:
 |--------|------------|---------|-------------|
 | `setText(content)` | `content: string` | `ButtonComponent` | Sets the button's text content |
 | `getText()` | none | `string` | Gets the button's current text content |
-| `setIcon(icon)` | `icon: string` | `ButtonComponent` | Sets the button's icon HTML content |
+| `setIcon(icon)` | `icon: string` | `ButtonComponent` | Sets the button's icon HTML content (empty string removes icon) |
 | `getIcon()` | none | `string` | Gets the button's current icon HTML content |
+| `hasIcon()` | none | `boolean` | Checks if the button has an icon |
 | `setAriaLabel(label)` | `label: string` | `ButtonComponent` | Sets the button's aria-label attribute for accessibility |
+
+### Progress Methods (when progress is configured)
+
+| Method | Parameters | Returns | Description |
+|--------|------------|---------|-------------|
+| `showProgress()` | none | `Promise<ButtonComponent>` | Shows the progress indicator |
+| `showProgressSync()` | none | `ButtonComponent` | Shows the progress indicator synchronously |
+| `hideProgress()` | none | `Promise<ButtonComponent>` | Hides the progress indicator |
+| `hideProgressSync()` | none | `ButtonComponent` | Hides the progress indicator synchronously |
+| `setProgress(value)` | `value: number` | `Promise<ButtonComponent>` | Sets progress value (0-100) |
+| `setProgressSync(value)` | `value: number` | `ButtonComponent` | Sets progress value synchronously |
+| `setIndeterminate(indeterminate)` | `indeterminate: boolean` | `Promise<ButtonComponent>` | Sets indeterminate mode |
+| `setIndeterminateSync(indeterminate)` | `indeterminate: boolean` | `ButtonComponent` | Sets indeterminate mode synchronously |
+| `setLoading(loading, text?)` | `loading: boolean, text?: string` | `Promise<ButtonComponent>` | Sets loading state with optional text |
+| `setLoadingSync(loading, text?)` | `loading: boolean, text?: string` | `ButtonComponent` | Sets loading state synchronously |
 
 ### Event Methods
 
@@ -152,6 +218,68 @@ const tonalButton = createButton({
 });
 ```
 
+### Button Sizes
+
+```javascript
+// Extra small button
+const xsButton = createButton({
+  text: 'XS',
+  size: 'xs'
+});
+
+// Small button (default)
+const smallButton = createButton({
+  text: 'Small'
+});
+
+// Medium button
+const mediumButton = createButton({
+  text: 'Medium',
+  size: 'm'
+});
+
+// Large button
+const largeButton = createButton({
+  text: 'Large',
+  size: 'l'
+});
+
+// Extra large button
+const xlButton = createButton({
+  text: 'Extra Large',
+  size: 'xl'
+});
+```
+
+### Button Shapes
+
+```javascript
+// Round button (default)
+const roundButton = createButton({
+  text: 'Round Button',
+  shape: 'round'
+});
+
+// Square button
+const squareButton = createButton({
+  text: 'Square Button',
+  shape: 'square'
+});
+
+// Square buttons work well with different sizes
+const squareSmall = createButton({
+  text: 'Small Square',
+  shape: 'square',
+  size: 's'
+});
+
+const squareLarge = createButton({
+  text: 'Large Square',
+  shape: 'square',
+  size: 'l'
+});
+```
+
 ### Button with Icon
 
 ```javascript
@@ -167,6 +295,25 @@ const saveButton = createButton({
 const addButton = createButton({
   icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
   ariaLabel: 'Add item'  // Important for accessibility
+});
+```
+
+### Dynamic Icon Management
+
+```javascript
+const toggleButton = createButton({
+  text: 'Toggle',
+  icon: '▶️'
+});
+
+toggleButton.on('click', () => {
+  if (toggleButton.hasIcon()) {
+    // Remove the icon
+    toggleButton.setIcon('');
+  } else {
+    // Add the icon back
+    toggleButton.setIcon('⏸️');
+  }
 });
 ```
 
@@ -214,24 +361,234 @@ actionButton.on('click', async () => {
 });
 ```
 
-### Dynamically Changing Button Variants
+### Dynamically Changing Button Properties
 
 ```javascript
 const toggleButton = createButton({
   text: 'Normal State',
-  variant: 'text'
+  variant: 'text',
+  shape: 'round',
+  size: 's'
 });
 
 toggleButton.on('click', () => {
   if (toggleButton.getVariant() === 'text') {
     toggleButton.setVariant('filled');
+    toggleButton.setShape('square');
+    toggleButton.setSize('m');
     toggleButton.setText('Active State');
   } else {
     toggleButton.setVariant('text');
+    toggleButton.setShape('round');
+    toggleButton.setSize('s');
     toggleButton.setText('Normal State');
   }
 });
 ```
+
+## Button Progress Feature
+
+The button component includes built-in progress indicator support that is **lazily loaded** - meaning the progress component is only imported and initialized when actually used.
+
+### Benefits
+
+- **Zero overhead**: Buttons without progress configuration don't import any progress code
+- **Automatic code splitting**: Progress component is dynamically imported only when needed
+- **Seamless integration**: Progress appears as the button's icon
+- **Flexible API**: Both synchronous and asynchronous methods available
+
+### Basic Usage
+
+#### Enable Progress
+
+```typescript
+// Simple boolean to enable with defaults
+const button1 = createButton({
+  text: 'Submit',
+  progress: true  // Uses default circular progress
+});
+
+// Or with custom configuration
+const button2 = createButton({
+  text: 'Upload',
+  progress: {
+    variant: 'circular',
+    size: 20,
+    indeterminate: false
+  }
+});
+```
+
+#### Synchronous API (Recommended for UI)
+
+For most UI interactions, use the synchronous methods:
+
+```typescript
+button.on('click', () => {
+  // Show loading state
+  button.setLoadingSync(true, 'Processing...');
+  
+  // Do async work
+  fetch('/api/data')
+    .then(response => {
+      // Update progress
+      button.setProgressSync(75);
+      return response.json();
+    })
+    .then(data => {
+      // Complete
+      button.setLoadingSync(false, 'Success!');
+    });
+});
+```
+
+#### Asynchronous API
+
+Use async methods when you need to ensure the progress is loaded:
+
+```typescript
+button.on('click', async () => {
+  // This ensures progress is loaded before continuing
+  await button.setLoading(true, 'Starting...');
+  
+  for (let i = 0; i <= 100; i += 10) {
+    await button.setProgress(i);
+    await delay(200);
+  }
+  
+  await button.setLoading(false, 'Complete');
+});
+```
+
+### Progress Configuration
+
+When using `progress: true`, default configuration is applied:
+
+```typescript
+{
+  variant: 'circular',
+  size: 20,
+  thickness: 2,
+  indeterminate: true
+}
+```
+
+For custom configuration:
+
+```typescript
+const button = createButton({
+  text: 'Upload',
+  progress: {
+    variant: 'circular',    // 'circular' or 'linear'
+    size: 24,              // Size in pixels
+    thickness: 3,          // Thickness of progress ring/bar
+    indeterminate: false,  // Whether to show indeterminate progress
+    color: 'primary'       // Color variant
+  }
+});
+```
+
+### Progress Examples
+
+#### File Upload with Progress
+
+```typescript
+const uploadBtn = createButton({
+  text: 'Upload File',
+  progress: { variant: 'circular', size: 18 }
+});
+
+uploadBtn.on('click', () => {
+  const file = getSelectedFile();
+  
+  uploadBtn.setLoadingSync(true, 'Uploading...');
+  
+  uploadFile(file, (progress) => {
+    uploadBtn.setProgressSync(progress);
+  }).then(() => {
+    uploadBtn.setLoadingSync(false, 'Uploaded!');
+  });
+});
+```
+
+#### Form Submission
+
+```typescript
+const submitBtn = createButton({
+  text: 'Submit Form',
+  type: 'submit',
+  progress: true
+});
+
+form.on('submit', async (e) => {
+  e.preventDefault();
+  
+  submitBtn.setLoadingSync(true, 'Submitting...');
+  
+  try {
+    await submitForm(form.getData());
+    submitBtn.setLoadingSync(false, 'Success!');
+  } catch (error) {
+    submitBtn.setLoadingSync(false, 'Try Again');
+  }
+});
+```
+
+#### Multi-step Process
+
+```typescript
+const processBtn = createButton({
+  text: 'Start Process',
+  progress: { indeterminate: false }
+});
+
+processBtn.on('click', async () => {
+  const steps = ['Initializing', 'Processing', 'Finalizing'];
+  
+  processBtn.setLoadingSync(true, steps[0]);
+  processBtn.setProgressSync(0);
+  
+  for (let i = 0; i < steps.length; i++) {
+    processBtn.setText(steps[i]);
+    
+    // Simulate work
+    await performStep(i);
+    
+    const progress = ((i + 1) / steps.length) * 100;
+    processBtn.setProgressSync(progress);
+  }
+  
+  processBtn.setLoadingSync(false, 'Complete!');
+});
+```
+
+### Performance
+
+The progress component is only loaded when:
+1. A button is created with `progress` configuration AND
+2. One of the progress methods is called OR `showProgress: true` is set
+
+This means:
+- Buttons without progress have zero overhead
+- The progress component code is automatically code-split
+- First usage may have a tiny delay while loading (usually imperceptible)
+
+### Progress Styling
+
+The progress indicator automatically adapts to the button variant's color scheme:
+
+- **Filled buttons**: Progress uses `on-primary` color
+- **Elevated buttons**: Progress uses `primary` color  
+- **Tonal buttons**: Progress uses `on-secondary-container` color
+- **Outlined buttons**: Progress uses `primary` color
+- **Text buttons**: Progress uses `primary` color
+
+Additional styling features:
+- Progress smoothly fades in/out with transitions
+- Circular buttons show larger progress indicators (24px)
+- Linear progress is sized appropriately for buttons (48px × 3px)
+- Progress remains visible in disabled state with reduced opacity
+- Dark theme is fully supported with appropriate color adjustments
 
 ## Functional Composition
 
@@ -245,7 +602,9 @@ The Button component is built using functional composition, combining multiple f
 - **Text Content (`withText`)**: Manages text content within the button.
 - **Icon Support (`withIcon`)**: Adds and manages icon elements.
 - **Variant Styling (`withVariant`)**: Applies visual styling variants like filled, outlined, etc.
+- **Size Styling (`withSize`)**: Applies size variants (xs, s, m, l, xl).
 - **Disabled State (`withDisabled`)**: Manages the disabled state of the button.
+- **Progress Indicators (`withProgress`)**: Adds lazily-loaded progress functionality.
 - **Ripple Effect (`withRipple`)**: Adds Material Design ripple feedback effect.
 - **Lifecycle Management (`withLifecycle`)**: Handles component lifecycle including destruction.
 - **Public API (`withAPI`)**: Exposes a clean, chainable API for users.
@@ -260,9 +619,11 @@ const button = pipe(
   withEvents(),             // Add event capability
   withElement(config),      // Create DOM element
   withVariant(config),      // Apply variant styling
+  withSize(config),         // Apply size styling
   withText(config),         // Add text content
   withIcon(config),         // Add icon support
   withDisabled(config),     // Add disabled state
+  withProgress(config),     // Add progress functionality
   withRipple(config),       // Add ripple effect
   withLifecycle(),          // Add lifecycle management
   comp => withAPI(config)(comp)  // Apply public API
@@ -284,6 +645,7 @@ The Button component follows accessibility best practices:
 - Keyboard navigation and focus handling
 - Visual focus indicators
 - Disabled states properly communicated to screen readers
+- Progress states announced to screen readers
 
 ### Keyboard Navigation
 
@@ -307,9 +669,21 @@ The Button component uses BEM-style CSS classes for easy customization:
 .mtrl-button--elevated { /* ... */ }
 .mtrl-button--tonal { /* ... */ }
 
+/* Button sizes */
+.mtrl-button--xs { /* ... */ }
+.mtrl-button--s { /* ... */ }
+.mtrl-button--m { /* ... */ }
+.mtrl-button--l { /* ... */ }
+.mtrl-button--xl { /* ... */ }
+
+/* Button shapes */
+.mtrl-button--round { /* ... */ }
+.mtrl-button--square { /* ... */ }
+
 /* Button states */
 .mtrl-button--disabled { /* ... */ }
 .mtrl-button--active { /* ... */ }
+.mtrl-button--progress { /* ... */ }
 
 /* Button with icon */
 .mtrl-button--icon { /* ... */ }
@@ -318,6 +692,9 @@ The Button component uses BEM-style CSS classes for easy customization:
 
 /* Circular icon-only button */
 .mtrl-button--circular { /* ... */ }
+
+/* Progress integration */
+.mtrl-button-progress { /* ... */ }
 
 /* Ripple effect */
 .mtrl-ripple { /* ... */ }
@@ -330,12 +707,18 @@ The Button component uses BEM-style CSS classes for easy customization:
   - Filled (primary actions)
   - Outlined (secondary actions)
   - Text (low-emphasis actions)
+- Choose the right size for your context
+  - XS/S for compact interfaces
+  - M for standard interfaces
+  - L/XL for touch-first or prominent actions
+- Use square shape for buttons that need to align with other square elements
 - Provide clear, concise text labels
 - Use icons to enhance clarity, not to replace text (except for well-known actions)
 - Always include `aria-label` for icon-only buttons
 - Place primary actions on the right in dialogs and forms
 - Don't use too many prominent buttons in a single view
 - Keep button text to 1-3 words when possible
+- Use progress indicators for operations that take longer than 1 second
 
 ## Performance Considerations
 
@@ -344,5 +727,6 @@ The Button component is designed to be lightweight and performant:
 - Minimal DOM operations
 - Efficient event handling
 - Optimized ripple animations
+- Lazy-loaded progress functionality
 - Clean destruction to prevent memory leaks
 - No external dependencies

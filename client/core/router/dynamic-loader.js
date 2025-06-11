@@ -26,6 +26,7 @@ const ROUTE_MODULE_MAP = {
   'core/collection/route': () => import('../../content/core/collection/route'),
   'core/collection/list-manager': () => import('../../content/core/collection/list-manager'),
   'core/composition': () => import('../../content/core/composition'),
+  'core/config': () => import('../../content/core/config'),
   'core/composition/features': () => import('../../content/core/composition/features'),
   'core/gestures': () => import('../../content/core/gestures'),
   'core/layout': () => import('../../content/core/layout'),
@@ -37,8 +38,9 @@ const ROUTE_MODULE_MAP = {
 
   // Components routes
   'components/buttons/common': () => import('../../content/components/buttons/common'),
-  'components/buttons/fab': () => import('../../content/components/buttons/fab'),
   'components/buttons/extended-fab': () => import('../../content/components/buttons/extended-fab'),
+  'components/buttons/fab': () => import('../../content/components/buttons/fab'),
+  // 'components/buttons/icon-buttons': () => import('../../content/components/buttons/icon-buttons'),
   'components/buttons/segmented-buttons': () => import('../../content/components/buttons/segmented-buttons'),
   'components/app-bars/bottom': () => import('../../content/components/app-bars/bottom'),
   'components/app-bars/top': () => import('../../content/components/app-bars/top'),

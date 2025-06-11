@@ -15,7 +15,10 @@ import {
 
 import { faceIcon, locationIcon } from '../../../icons'
 
+console.log('!!!! createMenuNew', createMenu)
+
 export const initNestedMenu = (container) => {
+  console.log('initNestedMenu', createMenu)
   const title = 'Nested Menu'
   const layout = createLayout(createComponentSection({ title }), container).component
 

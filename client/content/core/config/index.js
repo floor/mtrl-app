@@ -3,7 +3,7 @@
 import {
   createContentLayout,
   createDocs
-} from '../../layout'
+} from '../../../layout'
 
 import {
   createLayout
@@ -17,13 +17,12 @@ import {
 // import { initAdvancedPatterns } from './advanced'
 // import { initBestPractices } from './bestpractices'
 
-export const createCompositionContent = (container) => {
+export const createConfigContent = (container) => {
   const info = {
-    title: 'Core Library ',
-    description: 'The core library provides the fundamental building blocks for creating efficient, composable UI components with the mtrl design system.'
+    title: 'Core Config',
+    description: 'Global configuration system'
   }
   const layout = createLayout(createContentLayout(info), container).component
 
-  createDocs(layout.body, 'core/core.md')
   createDocs(layout.body, 'core/config/global.md')
 }

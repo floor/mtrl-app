@@ -22,7 +22,6 @@ export const initRange = (container) => {
     range: true,
     step: 100,
     ticks: true,
-    color: SLIDER_COLORS.SECONDARY,
     label: 'Price range',
     parent: layout.showcase
 

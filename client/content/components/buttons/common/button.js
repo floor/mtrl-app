@@ -1,8 +1,8 @@
 import {
   createLayout, createButton,
   createChips, createSwitch, createTextfield,
-  addClass, removeClass,
-  BUTTON_VARIANTS
+  BUTTON_VARIANTS,
+  BUTTON_SIZES
 } from 'mtrl'
 import { capitalize } from '../../../../core/utils'
 import {
@@ -26,13 +26,13 @@ export const createButtonComponent = (container) => {
   }
 
   // Add the button to the showcase
-  const showcase = createLayout([{ },
+  const showcase = createLayout(
     [createButton, 'button', {
       variant: BUTTON_VARIANTS.FILLED,
       text: defaultText,
       class: 'button--showcase'
     }]
-  ], layout.showcase)
+    , layout.showcase)
   const button = showcase.get('button')
 
   const variants = []
@@ -40,10 +40,17 @@ export const createButtonComponent = (container) => {
     variants.push({ value, label })
   })
 
+  const sizes = []
+  Object.entries(BUTTON_SIZES).forEach(([value, label]) => {
+    sizes.push({ value, label })
+  })
+
   // Component context information and controls in the info section
   const info = createLayout(
     [{ layout: { type: 'grid', column: 1, gap: 4, autoHeight: true, dense: true, align: 'center' } /* style: { transform: 'scale(.9)' } */ },
       [createChips, 'variant', { scrollable: false, label: 'Variant' }],
+      [createSwitch, 'shape', { label: 'Square' }],
+      [createChips, 'size', { scrollable: false, label: 'Size' }],
       [createChips, 'icon', { scrollable: false, label: 'Icon' }],
       [createTextfield, 'text', { label: 'Text', value: 'Button', variant: 'outlined', style: { width: '100%' } }],
       [createSwitch, 'disabled', { label: 'Disabled', checked: true }]
@@ -69,6 +76,16 @@ export const createButtonComponent = (container) => {
     })
   }
 
+  for (let i = 0; i < sizes.length; i++) {
+    info.size.addChip({
+      text: sizes[i].label,
+      value: sizes[i].value,
+      variant: 'filter',
+      selectable: true,
+      selected: sizes[i].label === 's'
+    })
+  }
+
   info.disabled.on('change', (value) => {
     if (value.checked) {
       button.enable()
@@ -77,8 +94,20 @@ export const createButtonComponent = (container) => {
     }
   })
 
+  info.shape.on('change', (value) => {
+    if (value.checked) {
+      button.setShape('square')
+    } else {
+      button.setShape('round')
+    }
+  })
+
   info.variant.on('change', (value) => {
     button.setVariant(value[0].toLowerCase())
+  })
+
+  info.size.on('change', (value) => {
+    button.setSize(value[0].toLowerCase())
   })
 
   info.icon.on('change', (value) => {
