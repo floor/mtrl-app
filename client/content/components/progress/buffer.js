@@ -36,4 +36,21 @@ export const initBufferProgress = (container) => {
     buffer: 90,
     parent: showcase.element
   })
+
+  // Create progress with buffer indicator
+  createProgress({
+    variant: PROGRESS_VARIANTS.CIRCULAR,
+    value: 40,
+    buffer: 70,
+    showLabel: true,
+    parent: showcase.element
+  })
+
+  // Create another progress with buffer indicator
+  createProgress({
+    variant: PROGRESS_VARIANTS.CIRCULAR,
+    value: 20,
+    buffer: 90,
+    parent: showcase.element
+  })
 }

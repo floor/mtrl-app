@@ -5,11 +5,11 @@ import {
 } from 'mtrl'
 
 import {
-  createContentLayout
+  createContentSection
 } from '../../../layout'
 
 export const initStore = (container) => {
-  const section = createLayout(createContentLayout({
+  const section = createLayout(createContentSection({
     title: 'Store',
     description: 'A centralized state container with support for derived state and middleware.',
     bodyClass: 'grid'

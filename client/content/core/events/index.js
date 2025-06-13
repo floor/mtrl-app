@@ -9,6 +9,7 @@ import {
 } from 'mtrl'
 
 import { initEventManager } from './manager'
+import { initEventEmitter } from './emitter'
 import { initEventBus } from './bus'
 import { initEventDelegation } from './delegation'
 import { initPerformanceUtils } from './performance'
@@ -26,6 +27,7 @@ export const createEventsContent = (container) => {
   const layout = createLayout(createContentLayout(content), container).component
 
   initEventManager(layout.body)
+  initEventEmitter(layout.body)
   initEventBus(layout.body)
   initEventDelegation(layout.body)
   initThrottle(layout.body)

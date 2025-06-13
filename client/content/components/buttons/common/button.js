@@ -52,7 +52,7 @@ export const createButtonComponent = (container) => {
       [createSwitch, 'shape', { label: 'Square' }],
       [createChips, 'size', { scrollable: false, label: 'Size' }],
       [createChips, 'icon', { scrollable: false, label: 'Icon' }],
-      [createTextfield, 'text', { label: 'Text', value: 'Button', variant: 'outlined', style: { width: '100%' } }],
+      [createTextfield, 'text', { label: 'Text', value: 'Button', variant: 'outlined', density: 'compact', style: { width: '100%' } }],
       [createSwitch, 'disabled', { label: 'Disabled', checked: true }]
     ], layout.info).component
 

@@ -17,16 +17,38 @@ export const initIndeterminateProgress = (container) => {
   const layout = createLayout(createComponentSection({ title, class: 'layout--stack layout--stack-gap-8' }), container).component
 
   // Create indeterminate circular progress
-  const indeterminateCircular = createProgress({
+  createProgress({
     variant: PROGRESS_VARIANTS.CIRCULAR,
-    indeterminate: true
+    indeterminate: true,
+    thickness: 'thick',
+    size: 96,
+    parent: layout.showcase
   })
-  layout.showcase.appendChild(indeterminateCircular.element)
 
   // Create indeterminate linear progress
-  const indeterminateLinear = createProgress({
+  createProgress({
     variant: PROGRESS_VARIANTS.LINEAR,
-    indeterminate: true
+    indeterminate: true,
+    thickness: 'thick',
+    parent: layout.showcase
   })
-  layout.showcase.appendChild(indeterminateLinear.element)
+
+  // Create indeterminate circular progress
+  createProgress({
+    variant: PROGRESS_VARIANTS.CIRCULAR,
+    indeterminate: true,
+    shape: 'wavy',
+    size: 96,
+    thickness: 'thick',
+    parent: layout.showcase
+  })
+
+  // Create indeterminate linear progress
+  createProgress({
+    variant: PROGRESS_VARIANTS.LINEAR,
+    indeterminate: true,
+    shape: 'wavy',
+    thickness: 'thick',
+    parent: layout.showcase
+  })
 }

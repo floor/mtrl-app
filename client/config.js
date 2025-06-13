@@ -7,9 +7,14 @@ import {
 
 import {
   createButton
+  // setComponentDefaults
 } from 'mtrl'
 
 import { sitemap } from './sitemap'
+
+// setComponentDefaults('button', {
+//   shape: 'round'
+// })
 
 export const appLayout = [
   ['content', { tag: 'div', className: 'content' }],
@@ -24,8 +29,15 @@ export const themesMenu = [
   { id: 'ocean', text: 'Ocean' },
   { id: 'forest', text: 'Forest' },
   { id: 'spring', text: 'Spring' },
+
   { id: 'summer', text: 'Summer' },
   { id: 'autumn', text: 'Autumn' },
   { id: 'winter', text: 'Winter' },
+
+  { id: 'brownbeige', text: 'Brown/Beige' },
+  { id: 'browngreen', text: 'Brown/Green' },
+  { id: 'sageivory', text: 'Sage/Ivory' },
+  { id: 'tealcaramel', text: 'Teal/Caramel' },
+
   { id: 'material', text: 'Material' }
 ]

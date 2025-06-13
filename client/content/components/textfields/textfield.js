@@ -6,7 +6,7 @@ import {
   createLayout, createTextfield, createChips,
   createSwitch,
   TEXTFIELD_VARIANTS,
-  getInheritedBackground
+  TEXTFIELD_DENSITY
 } from 'mtrl'
 
 export const createTextfieldShowcase = (container) => {
@@ -30,12 +30,28 @@ export const createTextfieldShowcase = (container) => {
     variants.push({ value, label })
   })
 
+  const density = []
+  Object.entries(TEXTFIELD_DENSITY).forEach(([value, label]) => {
+    density.push({ value, label })
+  })
+
   const info = createLayout(
     [{ layout: { type: 'stack', gap: 6, autoHeight: true, dense: true, align: 'center' } /* style: { transform: 'scale(.9)' } */ },
       // [createElement, 'description', { tag: 'p', text: 'Modify the badge properties using the controls below.' }],
-      [createChips, 'variant', { scrollable: false, label: 'Select variant' }],
-      [createSwitch, 'disabled', { label: 'Disabled', checked: true }]
+      [createChips, 'variant', { scrollable: false, label: 'Variant' }],
+      [createChips, 'density', { scrollable: false, label: 'Density' }],
+      [createSwitch, 'disabled', { label: 'Disabled', checked: false }]
     ], layout.info).component
+
+  for (let i = 0; i < variants.length; i++) {
+    info.density.addChip({
+      text: density[i].label,
+      value: density[i].value,
+      variant: 'filter',
+      selectable: true,
+      selected: density[i].label === 'standard'
+    })
+  }
 
   for (let i = 0; i < variants.length; i++) {
     info.variant.addChip({
@@ -52,11 +68,16 @@ export const createTextfieldShowcase = (container) => {
     textfield.setVariant(value[0].toLowerCase())
   })
 
+  info.density.on('change', (value) => {
+    console.log('density', value)
+    textfield.setDensity(value[0].toLowerCase())
+  })
+
   info.disabled.on('change', (value) => {
     if (value.checked) {
-      textfield.enable()
-    } else {
       textfield.disable()
+    } else {
+      textfield.enable()
     }
   })
 }

@@ -88,13 +88,13 @@ export const componentsList = [
     title: 'Containment',
     description: 'Components that hold or organize content and other components',
     components: [
-      {
-        id: 'bottom-sheets',
-        title: 'Bottom Sheets',
-        description: 'Show secondary content anchored to the bottom of the screen.',
-        features: ['Modal', 'Persistent', 'Expandable', 'Draggable'],
-        examples: 'Use bottom sheets for supplementary content or actions without leaving the current context.'
-      },
+      // {
+      //   id: 'bottom-sheets',
+      //   title: 'Bottom Sheets',
+      //   description: 'Show secondary content anchored to the bottom of the screen.',
+      //   features: ['Modal', 'Persistent', 'Expandable', 'Draggable'],
+      //   examples: 'Use bottom sheets for supplementary content or actions without leaving the current context.'
+      // },
       {
         id: 'cards',
         title: 'Cards',
@@ -103,13 +103,13 @@ export const componentsList = [
         examples: 'Cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information.',
         path: 'components/cards'
       },
-      {
-        id: 'carousel',
-        title: 'Carousel',
-        description: 'Display a collection of items that can be scrolled horizontally.',
-        features: ['Multi-browse', 'Hero layout', 'Snap scrolling', 'Controls'],
-        path: 'components/carousel'
-      },
+      // {
+      //   id: 'carousel',
+      //   title: 'Carousel',
+      //   description: 'Display a collection of items that can be scrolled horizontally.',
+      //   features: ['Multi-browse', 'Hero layout', 'Snap scrolling', 'Controls'],
+      //   path: 'components/carousel'
+      // },
       {
         id: 'dialogs',
         title: 'Dialogs',
@@ -118,27 +118,27 @@ export const componentsList = [
         examples: 'Use dialogs to request decisions, show critical information, or focus user attention.',
         path: 'components/dialogs'
       },
-      {
-        id: 'divider',
-        title: 'Divider',
-        description: 'Thin lines that group content in lists or other containers.',
-        features: ['Horizontal', 'Vertical', 'Inset', 'With text'],
-        examples: 'Use dividers to create visual separation between content sections.'
-      },
+      // {
+      //   id: 'divider',
+      //   title: 'Divider',
+      //   description: 'Thin lines that group content in lists or other containers.',
+      //   features: ['Horizontal', 'Vertical', 'Inset', 'With text'],
+      //   examples: 'Use dividers to create visual separation between content sections.'
+      // },
       {
         id: 'lists',
         title: 'Lists',
         description: 'Continuous, vertical indexes of text and images.',
         features: ['Single select', 'Multi select', 'Sectioned lists', 'Rich content'],
         path: 'components/lists'
-      },
-      {
-        id: 'side-sheets',
-        title: 'Side Sheets',
-        description: 'Show secondary content anchored to the side of the screen.',
-        features: ['Modal', 'Persistent', 'Responsive', 'Width variants'],
-        examples: 'Use side sheets for supplementary information or controls related to the main content.'
       }
+      // {
+      //   id: 'side-sheets',
+      //   title: 'Side Sheets',
+      //   description: 'Show secondary content anchored to the side of the screen.',
+      //   features: ['Modal', 'Persistent', 'Responsive', 'Width variants'],
+      //   examples: 'Use side sheets for supplementary information or controls related to the main content.'
+      // }
     ]
   },
 
@@ -146,46 +146,46 @@ export const componentsList = [
     title: 'Navigation',
     description: 'Components that help users move between different views and sections',
     components: [
-      {
-        id: 'bottom-app-bar',
-        title: 'Bottom App Bar',
-        description: 'Display navigation and key actions at the bottom of mobile and tablet screens.',
-        features: ['FAB integration', 'Navigation menu', 'Action items', 'Scrolling behavior'],
-        examples: 'Use in mobile apps to provide easy access to navigation and important actions.',
-        path: 'components/app-bars/bottom'
-      },
-      {
-        id: 'navigation-bar',
-        title: 'Navigation Bar',
-        description: 'Let people switch between UI views on smaller devices.',
-        features: ['Bottom navigation', 'Icon labels', 'Badge indicators', 'Selection states'],
-        examples: 'Use for main navigation destinations in mobile apps.',
-        path: 'components/navigations'
-      },
-      {
-        id: 'navigation-drawer',
-        title: 'Navigation Drawer',
-        description: 'Let people switch between UI views on larger devices.',
-        features: ['Standard drawer', 'Modal drawer', 'Responsive', 'Multi-level'],
-        examples: 'Use for comprehensive navigation structures on larger screens.',
-        path: 'components/navigations'
-      },
-      {
-        id: 'navigation-rail',
-        title: 'Navigation Rail',
-        description: 'Let people switch between UI views on mid-sized devices.',
-        features: ['Icon and label', 'FAB integration', 'Extended rail', 'Responsive'],
-        examples: 'Use for main navigation on tablet and medium-width screens.',
-        path: 'components/navigations'
-      },
-      {
-        id: 'search',
-        title: 'Search',
-        description: 'Let people enter a keyword or phrase to get relevant information.',
-        features: ['Expandable', 'Persistent', 'Autocomplete', 'Voice input'],
-        examples: 'Use to help users quickly find content within your application.',
-        path: 'components/search'
-      },
+      // {
+      //   id: 'bottom-app-bar',
+      //   title: 'Bottom App Bar',
+      //   description: 'Display navigation and key actions at the bottom of mobile and tablet screens.',
+      //   features: ['FAB integration', 'Navigation menu', 'Action items', 'Scrolling behavior'],
+      //   examples: 'Use in mobile apps to provide easy access to navigation and important actions.',
+      //   path: 'components/app-bars/bottom'
+      // },
+      // {
+      //   id: 'navigation-bar',
+      //   title: 'Navigation Bar',
+      //   description: 'Let people switch between UI views on smaller devices.',
+      //   features: ['Bottom navigation', 'Icon labels', 'Badge indicators', 'Selection states'],
+      //   examples: 'Use for main navigation destinations in mobile apps.',
+      //   path: 'components/navigations'
+      // },
+      // {
+      //   id: 'navigation-drawer',
+      //   title: 'Navigation Drawer',
+      //   description: 'Let people switch between UI views on larger devices.',
+      //   features: ['Standard drawer', 'Modal drawer', 'Responsive', 'Multi-level'],
+      //   examples: 'Use for comprehensive navigation structures on larger screens.',
+      //   path: 'components/navigations'
+      // },
+      // {
+      //   id: 'navigation-rail',
+      //   title: 'Navigation Rail',
+      //   description: 'Let people switch between UI views on mid-sized devices.',
+      //   features: ['Icon and label', 'FAB integration', 'Extended rail', 'Responsive'],
+      //   examples: 'Use for main navigation on tablet and medium-width screens.',
+      //   path: 'components/navigations'
+      // },
+      // {
+      //   id: 'search',
+      //   title: 'Search',
+      //   description: 'Let people enter a keyword or phrase to get relevant information.',
+      //   features: ['Expandable', 'Persistent', 'Autocomplete', 'Voice input'],
+      //   examples: 'Use to help users quickly find content within your application.',
+      //   path: 'components/search'
+      // },
       {
         id: 'tabs',
         title: 'Tabs',
@@ -193,14 +193,14 @@ export const componentsList = [
         features: ['Horizontal tabs', 'Scrollable', 'Icon tabs', 'Secondary tabs'],
         path: 'components/tabs'
       },
-      {
-        id: 'top-app-bar',
-        title: 'Top App Bar',
-        description: 'Display navigation, actions, and text at the top of a screen.',
-        features: ['Regular', 'Prominent', 'Dense', 'Scrolling behavior'],
-        examples: 'Use to identify the current screen and provide consistent navigation and actions.',
-        path: 'components/app-bars/top'
-      },
+      // {
+      //   id: 'top-app-bar',
+      //   title: 'Top App Bar',
+      //   description: 'Display navigation, actions, and text at the top of a screen.',
+      //   features: ['Regular', 'Prominent', 'Dense', 'Scrolling behavior'],
+      //   examples: 'Use to identify the current screen and provide consistent navigation and actions.',
+      //   path: 'components/app-bars/top'
+      // },
       {
         id: 'menus',
         title: 'Menus',
@@ -231,14 +231,14 @@ export const componentsList = [
         examples: 'Use chips for selections, filtering, or representing small pieces of information.',
         path: 'components/chips'
       },
-      {
-        id: 'date-pickers',
-        title: 'Date Pickers',
-        description: 'Let people select a date, or a range of dates.',
-        features: ['Calendar', 'Input field', 'Range selection', 'Time combination'],
-        examples: 'Use date pickers when users need to enter dates in a standardized format.',
-        path: 'components/datepickers'
-      },
+      // {
+      //   id: 'date-pickers',
+      //   title: 'Date Pickers',
+      //   description: 'Let people select a date, or a range of dates.',
+      //   features: ['Calendar', 'Input field', 'Range selection', 'Time combination'],
+      //   examples: 'Use date pickers when users need to enter dates in a standardized format.',
+      //   path: 'components/datepickers'
+      // },
       {
         id: 'radios',
         title: 'Radio Buttons',
@@ -259,15 +259,15 @@ export const componentsList = [
         description: 'Toggle the state of a single item on or off.',
         features: ['Binary control', 'Instant action', 'Label placement', 'State feedback'],
         path: 'components/switches'
-      },
-      {
-        id: 'time-pickers',
-        title: 'Time Pickers',
-        description: 'Help users select and set a specific time.',
-        features: ['Clock view', 'Input field', '12/24 hour format', 'Input validation'],
-        examples: 'Use time pickers when users need to enter time values in a standardized format.',
-        path: 'components/timepickers'
       }
+      // {
+      //   id: 'time-pickers',
+      //   title: 'Time Pickers',
+      //   description: 'Help users select and set a specific time.',
+      //   features: ['Clock view', 'Input field', '12/24 hour format', 'Input validation'],
+      //   examples: 'Use time pickers when users need to enter time values in a standardized format.',
+      //   path: 'components/timepickers'
+      // }
     ]
   },
 
@@ -289,13 +289,13 @@ export const componentsList = [
     title: 'Feedback',
     description: 'Components that provide system feedback to users',
     components: [
-      {
-        id: 'alerts',
-        title: 'Alerts',
-        description: 'Provide important information that interrupts the user experience.',
-        features: ['Success', 'Warning', 'Error', 'Info', 'Dismissible'],
-        examples: 'Use alerts to notify users about important events or changes in the system state.'
-      },
+      // {
+      //   id: 'alerts',
+      //   title: 'Alerts',
+      //   description: 'Provide important information that interrupts the user experience.',
+      //   features: ['Success', 'Warning', 'Error', 'Info', 'Dismissible'],
+      //   examples: 'Use alerts to notify users about important events or changes in the system state.'
+      // },
       {
         id: 'dialogs',
         title: 'Dialogs',
@@ -305,8 +305,8 @@ export const componentsList = [
         path: 'components/dialogs'
       },
       {
-        id: 'toasts',
-        title: 'Toasts',
+        id: 'snackbars',
+        title: 'Snackbars',
         description: 'Show brief, non-modal feedback about an operation.',
         features: ['Simple', 'With action', 'Auto-dismiss', 'Position variants'],
         examples: 'Use toasts for non-critical feedback that should not interrupt the user flow.'

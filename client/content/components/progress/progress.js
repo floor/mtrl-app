@@ -1,6 +1,4 @@
-import {
-  createComponentSection
-} from '../../../layout'
+import { createComponentSection } from '../../../layout'
 
 import {
   createLayout,
@@ -21,11 +19,16 @@ import {
 export const createProgressComponent = (container) => {
   const title = 'Progress Component'
   const description = 'With shapes, thickness and indeterminate'
-  const layout = createLayout(createComponentSection({
-    title,
-    description,
-    class: 'layout--stack layout--stack-gap-16'
-  }), container).component
+  const layout = createLayout(
+    createComponentSection({
+      title,
+      description,
+      class: 'layout--stack layout--stack-gap-16'
+    }),
+    container
+  ).component
+
+  let showLabel = false
 
   let value = 25
   const animate = true
@@ -36,20 +39,11 @@ export const createProgressComponent = (container) => {
   const indeterminate = false
   const initialVariant = PROGRESS_VARIANTS.CIRCULAR
 
-  // Create a single progress component with configurable variant
-  // console.log('Creating progress component:', {
-  //   variant: initialVariant,
-  //   value,
-  //   showLabel: true,
-  //   indeterminate,
-  //   size: initialVariant === PROGRESS_VARIANTS.CIRCULAR ? size : undefined
-  // })
-
   const progress = createProgress({
     variant: initialVariant,
     value,
-    showLabel: true,
-    labelFormatter: (value, max) => `${value} of 100 items`,
+    showLabel,
+    labelFormatter: (value, max) => `${Math.round(value)}%`,
     thickness: currentThickness,
     indeterminate,
     shape: initialShape,
@@ -66,20 +60,24 @@ export const createProgressComponent = (container) => {
     {
       label: '2',
       value: 2
-    }, {
+    },
+    {
       label: 'THIN',
       value: 'thin'
     },
     {
       label: 'THICK',
       value: 'thick'
-    }, {
+    },
+    {
       label: '12',
       value: 12
-    }, {
+    },
+    {
       label: '16',
       value: 16
-    }]
+    }
+  ]
 
   const variants = Object.entries(PROGRESS_VARIANTS).map(([label, value]) => ({
     label,
@@ -100,6 +98,7 @@ export const createProgressComponent = (container) => {
       [createChips, 'shape', { scrollable: false, label: 'Shape' }],
       [createSwitch, 'simulate', { label: 'Simulate Download', class: 'switch--dense' }],
       [createSwitch, 'indeterminate', { label: 'Indeterminate', class: 'switch--dense' }],
+      [createSwitch, 'label', { label: 'Show Label', checked: showLabel, class: 'switch--dense' }],
       [createSwitch, 'visible', { label: 'Visible', checked: true, class: 'switch--dense' }]
     ], layout.info).component
 
@@ -199,26 +198,20 @@ export const createProgressComponent = (container) => {
     const newProgress = createProgress({
       variant: newVariant,
       value,
-      showLabel: true,
+      showLabel,
+      labelFormatter: (value, max) => `${Math.round(value)}%`,
       thickness: currentThickness,
       indeterminate: isIndeterminate,
       size: isCircular ? size : undefined,
-      shape: currentShape
+      shape: currentShape,
+      parent: layout.showcase
     })
-
-    // console.log('New progress component created:', {
-    //   element: newProgress.element,
-    //   hasSetValue: typeof newProgress.setValue === 'function',
-    //   hasShow: typeof newProgress.show === 'function',
-    //   hasHide: typeof newProgress.hide === 'function',
-    //   state: newProgress.state
-    // })
 
     // Replace the old progress reference
-    Object.keys(progress).forEach(key => {
+    Object.keys(progress).forEach((key) => {
       delete progress[key]
     })
-    Object.keys(newProgress).forEach(key => {
+    Object.keys(newProgress).forEach((key) => {
       progress[key] = newProgress[key]
     })
 
@@ -261,7 +254,7 @@ export const createProgressComponent = (container) => {
       progress.setIndeterminate(true)
       // Disable variant chips by adding disabled class
       info.variant.element.classList.add('disabled')
-      info.variant.element.querySelectorAll('.mtrl-chip').forEach(chip => {
+      info.variant.element.querySelectorAll('.mtrl-chip').forEach((chip) => {
         chip.classList.add('disabled')
       })
     } else {
@@ -279,6 +272,17 @@ export const createProgressComponent = (container) => {
       simulateProgress(true)
     } else {
       simulateProgress(false)
+    }
+  })
+
+  info.label.on('change', (e) => {
+    if (e.checked === true) {
+      // Show first, then set value to ensure proper initialization
+      showLabel = true
+      progress.showLabel()
+    } else {
+      showLabel = false
+      progress.hideLabel()
     }
   })
 
@@ -328,12 +332,25 @@ export const createProgressComponent = (container) => {
       info.value.setValue(currentSimulationValue)
       progress.show()
 
+      console.log('Set download-specific label formatter')
+
+      // Set download-specific label formatter
+      progress.setLabelFormatter((value, max) => {
+        // Calculate simulated download speed (MB/s)
+        const speed =
+          value < 50
+            ? (Math.random() * 3 + 2).toFixed(1)
+            : (Math.random() * 1 + 0.5).toFixed(1)
+        const downloaded = (value * 2.5).toFixed(0) // Simulate 250MB file
+        return `${downloaded}MB / 250MB (${speed} MB/s)`
+      })
+
       // Disable manual controls during simulation
       // info.value.disable()
       info.indeterminate.uncheck()
       // Disable variant chips by adding disabled class
       info.variant.element.classList.add('disabled')
-      info.variant.element.querySelectorAll('.mtrl-chip').forEach(chip => {
+      info.variant.element.querySelectorAll('.mtrl-chip').forEach((chip) => {
         chip.classList.add('disabled')
       })
 
@@ -353,7 +370,10 @@ export const createProgressComponent = (container) => {
           increment = Math.random() * 2 + 0.2 // Very slow near end: 0.5-2.5
         }
 
-        currentSimulationValue = Math.min(100, currentSimulationValue + increment)
+        currentSimulationValue = Math.min(
+          100,
+          currentSimulationValue + increment
+        )
 
         // Update progress component
         progress.setValue(currentSimulationValue)
@@ -363,6 +383,11 @@ export const createProgressComponent = (container) => {
         if (currentSimulationValue >= 100) {
           clearInterval(simulationInterval)
           simulationInterval = null
+
+          // Restore default formatter after a short delay
+          setTimeout(() => {
+            progress.setLabelFormatter((value, max) => `${Math.round(value)}%`)
+          }, 2000)
         }
       }, 200)
     } else {
@@ -372,13 +397,16 @@ export const createProgressComponent = (container) => {
         simulationInterval = null
       }
 
+      // Restore default label formatter
+      // progress.setLabelFormatter((value, max) => `${Math.round(value)}%`)
+
       // Show progress bar and re-enable controls
       progress.show()
       info.value.enable()
       info.indeterminate.enable()
       // Re-enable variant chips by removing disabled class
       info.variant.element.classList.remove('disabled')
-      info.variant.element.querySelectorAll('.mtrl-chip').forEach(chip => {
+      info.variant.element.querySelectorAll('.mtrl-chip').forEach((chip) => {
         chip.classList.remove('disabled')
       })
     }

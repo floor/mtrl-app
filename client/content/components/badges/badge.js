@@ -50,7 +50,7 @@ export const createBadgeContent = (container) => {
     [{ layout: { type: 'grid', column: 1, gap: 4, dense: true, align: 'center' } /* style: { transform: 'scale(.9)' } */ },
       // [createElement, 'description', { tag: 'p', text: 'Modify the badge properties using the controls below.' }],
       [createChips, 'variant', { scrollable: false, label: 'Select variant' }],
-      [createSelect, 'color', { variant: 'outlined', label: 'Color', options: colors }],
+      [createSelect, 'color', { variant: 'outlined', density: 'compact', label: 'Color', options: colors }],
       [createSlider, 'value', { label: `Label (${initialValue})`, min: 0, max: 1100, value: 456, step: 1, variant: 'discrete' }],
       [createSlider, 'maxValue', { label: ' Max value', min: 99, max: 999, value: 499, step: 100 }],
       [createSwitch, 'show', { label: 'Show', checked: true }]

@@ -8,7 +8,6 @@ import {
   createLayout
 } from 'mtrl'
 
-import { initEmitter } from './emitter'
 import { initStore } from './store'
 import { initLifecycle } from './lifecycle'
 import { initDisabled } from './disabled'
@@ -21,7 +20,6 @@ export const createStateContent = (container) => {
   }
   const layout = createLayout(createContentLayout(info), container).component
 
-  initEmitter(layout.body)
   initStore(layout.body)
   initLifecycle(layout.body)
   initDisabled(layout.body)

@@ -10,6 +10,7 @@ import {
 
 import { createTextfieldShowcase } from './textfield'
 import { initTextfieldVariants } from './variants'
+import { initTextfieldDensity } from './density'
 import { initLeadingIcons } from './leading-icons'
 import { initTrailingIcons } from './trailing-icons'
 import { initPrefix } from './prefix'
@@ -30,6 +31,7 @@ export const createTextfieldsContent = (container) => {
 
   // Initialize all the textfield examples
   initTextfieldVariants(layout.body)
+  initTextfieldDensity(layout.body)
   initLeadingIcons(layout.body)
   initTrailingIcons(layout.body)
   initPrefix(layout.body)
