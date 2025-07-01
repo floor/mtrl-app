@@ -7,7 +7,9 @@ import * as sass from 'sass'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const isWatch = process.argv.includes('--watch')
-const isProduction = process.argv.includes('--production') || process.env.NODE_ENV === 'production'
+const isProduction =
+  process.argv.includes('--production') ||
+  process.env.NODE_ENV === 'production'
 
 // Define consistent output paths
 const DIST_DIR = join(__dirname, 'dist')
@@ -17,7 +19,9 @@ const JS_OUTPUT = join(DIST_DIR, 'app.js')
 const CSS_OUTPUT = join(STYLES_DIR, 'main.css')
 
 // Log build mode
-console.log(`Building in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode with code splitting`)
+console.log(
+  `Building in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode with code splitting`
+)
 
 const compileSass = async () => {
   try {
@@ -41,17 +45,17 @@ const compileSass = async () => {
       style: isProduction ? 'compressed' : 'expanded',
       sourceMap: !isProduction,
       sourceMapIncludeSources: !isProduction,
-      importers: [{
-        // Custom importer to help resolve node_modules paths
-        findFileUrl (url) {
-          if (url.startsWith('mtrl/')) {
-            return new URL(
-              'file://' + join(__dirname, 'node_modules', url)
-            )
+      importers: [
+        {
+          // Custom importer to help resolve node_modules paths
+          findFileUrl (url) {
+            if (url.startsWith('mtrl/')) {
+              return new URL('file://' + join(__dirname, 'node_modules', url))
+            }
+            return null // Let sass handle all other URLs
           }
-          return null // Let sass handle all other URLs
         }
-      }]
+      ]
     })
 
     await mkdir(dirname(outputFile), { recursive: true })
@@ -65,7 +69,7 @@ const compileSass = async () => {
       // Ensure source map references are correct
       if (result.sourceMap.sources) {
         // Fix source paths to be user-friendly in browser devtools
-        result.sourceMap.sources = result.sourceMap.sources.map(source => {
+        result.sourceMap.sources = result.sourceMap.sources.map((source) => {
           if (source.startsWith('file://')) {
             // Convert file:// URLs to relative paths for better readability
             const filePath = fileURLToPath(source)
@@ -126,7 +130,10 @@ const compileSass = async () => {
       console.log('🔄 Continuing to watch for changes...')
     }
 
-    return { success: false, message: errorDetails || error.message || 'Unknown SASS error' } // Return failure status with error message
+    return {
+      success: false,
+      message: errorDetails || error.message || 'Unknown SASS error'
+    } // Return failure status with error message
   }
 }
 
@@ -149,6 +156,7 @@ const buildApp = async () => {
       outdir: DIST_DIR,
       minify: isProduction, // Only minify in production
       sourcemap: isProduction ? 'none' : 'inline', // No sourcemaps in production
+      // sourcemap: "none",
       format: 'esm',
       target: 'browser',
       naming: {
@@ -179,8 +187,9 @@ const buildApp = async () => {
     }
 
     // Ensure main bundle is renamed to app.js if it's not already
-    const mainOutput = jsResult.outputs.find(output =>
-      !output.path.includes('/chunks/') && output.path.endsWith('.js')
+    const mainOutput = jsResult.outputs.find(
+      (output) =>
+        !output.path.includes('/chunks/') && output.path.endsWith('.js')
     )
 
     if (mainOutput && mainOutput.path !== JS_OUTPUT) {
@@ -197,11 +206,14 @@ const buildApp = async () => {
     const outputFiles = jsResult.outputs || []
 
     console.log('✓ JavaScript build successful')
-    console.log(`  Main bundle: ${(await Bun.file(JS_OUTPUT).size / 1024).toFixed(2)} KB`)
+    console.log(
+      `  Main bundle: ${((await Bun.file(JS_OUTPUT).size) / 1024).toFixed(2)} KB`
+    )
 
     // Log info about chunks
-    const chunkFiles = outputFiles.filter(file =>
-      file.path.includes('/chunks/') || (file.kind && file.kind === 'chunk')
+    const chunkFiles = outputFiles.filter(
+      (file) =>
+        file.path.includes('/chunks/') || (file.kind && file.kind === 'chunk')
     )
 
     if (chunkFiles.length > 0) {
@@ -218,7 +230,9 @@ const buildApp = async () => {
         // console.log(`    - ${chunkName}: ${(chunkSize / 1024).toFixed(2)} KB`)
       }
 
-      console.log(`  Total chunks size: ${(totalChunkSize / 1024).toFixed(2)} KB`)
+      console.log(
+        `  Total chunks size: ${(totalChunkSize / 1024).toFixed(2)} KB`
+      )
     }
 
     // Optionally do additional post-processing for production builds
@@ -233,7 +247,10 @@ const buildApp = async () => {
   } catch (error) {
     console.error('❌ JavaScript build error:', error)
     console.error(error.stack)
-    return { success: false, message: error.message || 'Unknown JavaScript build error' }
+    return {
+      success: false,
+      message: error.message || 'Unknown JavaScript build error'
+    }
   }
 }
 
@@ -267,7 +284,10 @@ const createHtmlFile = async () => {
     return { success: true }
   } catch (error) {
     console.error('❌ Error creating HTML file:', error)
-    return { success: false, message: error.message || 'Error creating HTML file' }
+    return {
+      success: false,
+      message: error.message || 'Error creating HTML file'
+    }
   }
 }
 
@@ -284,7 +304,10 @@ const updateReloadTimestamp = async () => {
     return { success: true }
   } catch (error) {
     console.error('❌ Error triggering browser reload:', error)
-    return { success: false, message: error.message || 'Error triggering browser reload' }
+    return {
+      success: false,
+      message: error.message || 'Error triggering browser reload'
+    }
   }
 }
 
@@ -325,7 +348,7 @@ const setupWatchers = () => {
       }, 100) // 100ms debounce time
     }
 
-    jsWatchPaths.forEach(path => {
+    jsWatchPaths.forEach((path) => {
       if (existsSync(path)) {
         watch(path, { recursive: true }, (_, filename) => {
           if (filename?.endsWith('.js') || filename?.endsWith('.ts')) {
@@ -360,7 +383,7 @@ const setupWatchers = () => {
       }, 100) // 100ms debounce time
     }
 
-    scssWatchPaths.forEach(path => {
+    scssWatchPaths.forEach((path) => {
       if (existsSync(path)) {
         watch(path, { recursive: true }, (_, filename) => {
           if (filename?.endsWith('.scss')) {
@@ -404,7 +427,9 @@ const verifyOutput = async () => {
     if (existsSync(chunksDir)) {
       try {
         // Use readdirSync instead of Bun.glob which may not be available in all Bun versions
-        const chunkFiles = readdirSync(chunksDir).filter(file => file.endsWith('.js'))
+        const chunkFiles = readdirSync(chunksDir).filter((file) =>
+          file.endsWith('.js')
+        )
         for (const file of chunkFiles) {
           const chunkPath = join(chunksDir, file)
           const size = await Bun.file(chunkPath).size
@@ -420,7 +445,11 @@ const verifyOutput = async () => {
     console.log('│ JavaScript (main):', (jsStats / 1024).toFixed(2), 'KB')
     console.log('│ JavaScript (chunks):', (chunksSize / 1024).toFixed(2), 'KB')
     console.log('│ CSS:', (cssStats / 1024).toFixed(2), 'KB')
-    console.log('│ Total Size:', ((totalSize + chunksSize) / 1024).toFixed(2), 'KB')
+    console.log(
+      '│ Total Size:',
+      ((totalSize + chunksSize) / 1024).toFixed(2),
+      'KB'
+    )
     console.log('└─────────────────────────────────────────')
   }
 
@@ -453,7 +482,10 @@ const cleanDist = async () => {
       return { success: true }
     } catch (error) {
       console.error('❌ Error cleaning dist directory:', error)
-      return { success: false, message: error.message || 'Error cleaning dist directory' }
+      return {
+        success: false,
+        message: error.message || 'Error cleaning dist directory'
+      }
     }
   }
   return { success: true }
@@ -494,9 +526,13 @@ const build = async () => {
     if (jsResult.success && sassResult.success) {
       await updateReloadTimestamp()
     } else if (!sassResult.success) {
-      console.log('⚠️ Browser reload not triggered due to SCSS compilation errors')
+      console.log(
+        '⚠️ Browser reload not triggered due to SCSS compilation errors'
+      )
     } else if (!jsResult.success) {
-      console.log('⚠️ Browser reload not triggered due to JavaScript build errors')
+      console.log(
+        '⚠️ Browser reload not triggered due to JavaScript build errors'
+      )
     }
 
     const buildTime = ((Date.now() - startTime) / 1000).toFixed(2)

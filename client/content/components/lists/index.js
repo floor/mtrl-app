@@ -1,18 +1,16 @@
 // src/client/layout/lists/index.js
-import {
-  createComponentsLayout,
-  createDocs
-} from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
+import { createLayout } from 'mtrl'
 
+import { createListComponent } from './list'
 import { initBasicList } from './basic'
 import { initSingleSelectList } from './single-select'
 import { initMultiSelectList } from './multi-select'
 import { initCursorList } from './cursor'
-import { initUsersList } from './users'
+import { initCollectionEvents } from './collection-events'
+import { initNavigationDebug } from './debug-navigation'
+import { virtualPositioningTest } from './virtual-positioning-test'
 
 import { initSectionedList } from './sectioned'
 import { initVerticalLayout } from './vertical'
@@ -23,15 +21,25 @@ export const createListsContent = (container, components) => {
     description: 'Lists are continuous, vertical indexes of text and images'
   }
 
-  const layout = createLayout(createComponentsLayout(info), container).component
+  const layout = createLayout(
+    createComponentsLayout(info),
+    container
+  ).component
 
-  initBasicList(layout.body)
+  createListComponent(layout.body)
+
+  // initCollectionEvents(layout.body);
+  // initNavigationDebug(layout.body);
+  // virtualPositioningTest(layout.body);
+
+  // initBasicList(layout.body)
   // initSingleSelectList(layout.body)
-  initMultiSelectList(layout.body)
-  initUsersList(layout.body)
-  initCursorList(layout.body)
+  // initMultiSelectList(layout.body)
+  // initCursorList(layout.body)
   createDocs(layout.body, 'components/list.md')
+
   // initSectionedList(layout.body)
   // initVerticalLayout(layout.body)
   // initListsAdapter(layout.body)
 }
+//

@@ -17,13 +17,16 @@ export const initMultiSelectList = (container) => {
   const title = 'Multi Select List'
   const layout = createLayout(createComponentSection({ title }), container).component
 
+  console.log('countries', countries)
+
   // Create a multi-select list
   const list = createList({
-    multiSelect: true,
+    // multiSelect: true,
     items: countries,
     dynamicItemSize: true,
     baseUrl: null,
     renderItem: (item) => {
+      console.log('renderItem', item)
       // const isSelected = selection.includes(item.id)
       const layout = createLayout(
         [{ class: 'list-item' },
@@ -35,8 +38,11 @@ export const initMultiSelectList = (container) => {
 
       const element = layout.get('element')
 
+      console.log('element', element)
+
       return element
-    }
+    },
+    parent: layout.showcase
   })
 
   // Handle selection changes
@@ -44,6 +50,4 @@ export const initMultiSelectList = (container) => {
     log.info('Selection changed:', event.selectedItems)
     // selection = event.selectedItems
   })
-
-  layout.showcase.appendChild(list.element)
 }

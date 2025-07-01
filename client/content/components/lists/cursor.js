@@ -1,4 +1,4 @@
-// client/content/components/lists/users.js
+// client/content/components/lists/cursor.js
 import {
   createComponentSection
 } from '../../../layout'

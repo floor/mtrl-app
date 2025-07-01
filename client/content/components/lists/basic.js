@@ -11,7 +11,7 @@ export const initBasicList = (container) => {
   const layout = createLayout(createComponentSection({ title }), container).component
 
   // Create a basic list with static items
-  const basicList = createList({
+  const list = createList({
     // Provide static items directly
     class: 'list--basic',
     baseUrl: null,
@@ -34,14 +34,12 @@ export const initBasicList = (container) => {
         </div>
       `
       return element
-    }
+    },
+    parent: layout.showcase
   })
 
-  // Add to layout
-  layout.showcase.appendChild(basicList.element)
-
   // Handle selection events
-  basicList.on('select', (event) => {
+  list.on('select', (event) => {
     console.log('Selected item:', event.item)
   })
 }

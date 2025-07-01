@@ -49,7 +49,7 @@ export const createTextfieldShowcase = (container) => {
       value: density[i].value,
       variant: 'filter',
       selectable: true,
-      selected: density[i].label === 'standard'
+      selected: density[i].label === 'default'
     })
   }
 
