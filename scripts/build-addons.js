@@ -6,13 +6,15 @@
  */
 
 import { join, dirname } from 'path'
-import { existsSync, rmSync, watch } from 'fs'
+import { existsSync, rmSync, watch, mkdirSync } from 'fs'
 import { fileURLToPath } from 'url'
+import { $ } from 'bun'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT_DIR = join(__dirname, '..')
 const ADDONS_DIR = join(ROOT_DIR, '..', 'mtrl-addons')
 const OUTPUT_DIR = join(ROOT_DIR, 'dist', 'mtrl-addons')
+const STYLES_OUTPUT_DIR = join(OUTPUT_DIR, 'styles')
 
 const isWatch = process.argv.includes('--watch')
 
@@ -35,7 +37,31 @@ const buildAddons = async () => {
       })
     }
 
+    // Ensure styles output directory exists
+    if (!existsSync(STYLES_OUTPUT_DIR)) {
+      mkdirSync(STYLES_OUTPUT_DIR, { recursive: true })
+    }
+
     const startTime = Date.now()
+
+    // Build CSS from SCSS
+    const sassStartTime = Date.now()
+    const scssFile = join(ADDONS_DIR, 'src', 'styles', 'index.scss')
+    const cssFile = join(STYLES_OUTPUT_DIR, 'main.css')
+    
+    if (existsSync(scssFile)) {
+      try {
+        await $`bunx sass ${scssFile} ${cssFile} --style=expanded --source-map`
+        const sassTime = Date.now() - sassStartTime
+        console.log(`✅ [BUILD-ADDONS] SCSS compiled in ${sassTime}ms`)
+      } catch (error) {
+        console.error('❌ [BUILD-ADDONS] SCSS compilation failed:', error.message)
+        if (!isWatch) process.exit(1)
+        return false
+      }
+    } else {
+      console.warn('⚠️ [BUILD-ADDONS] No SCSS file found at:', scssFile)
+    }
 
     // Build ES module version (primary)
     const esmResult = await Bun.build({
@@ -84,9 +110,10 @@ const buildAddons = async () => {
     const buildTime = Date.now() - startTime
     const esmSize = await Bun.file(join(OUTPUT_DIR, 'index.mjs')).size
     const cjsSize = await Bun.file(join(OUTPUT_DIR, 'index.js')).size
+    const cssSize = existsSync(cssFile) ? await Bun.file(cssFile).size : 0
     
     console.log(`✅ [BUILD-ADDONS] Built in ${buildTime}ms`)
-    console.log(`  ES: ${(esmSize / 1024).toFixed(1)}KB | CJS: ${(cjsSize / 1024).toFixed(1)}KB`)
+    console.log(`  ES: ${(esmSize / 1024).toFixed(1)}KB | CJS: ${(cjsSize / 1024).toFixed(1)}KB | CSS: ${(cssSize / 1024).toFixed(1)}KB`)
     return true
 
   } catch (error) {
@@ -123,7 +150,7 @@ if (isWatch) {
   watchPaths.forEach((path) => {
     if (existsSync(path)) {
       watch(path, { recursive: true }, (_, filename) => {
-        if (filename?.endsWith('.ts') || filename?.endsWith('.js')) {
+        if (filename?.endsWith('.ts') || filename?.endsWith('.js') || filename?.endsWith('.scss')) {
           debouncedBuild(filename)
         }
       })
