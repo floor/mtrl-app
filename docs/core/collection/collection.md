@@ -911,11 +911,6 @@ const productGrid = createListManager("products", container, {
     const element = recycledElement || document.createElement("div");
     element.className = "product-item";
 
-    // For dynamic height calculation, consider image height variations
-    if (product.image) {
-      element.dataset.needsMeasurement = "true";
-    }
-
     element.innerHTML = `
       ${product.image ? `<img src="${product.image}" alt="${product.name}">` : ""}
       <div class="product-name">${product.name}</div>
@@ -944,7 +939,7 @@ const productGrid = createListManager("products", container, {
   baseUrl: "https://api.example.com/api",
 
   // Layout and item sizing
-  itemHeight: 220, // Base height, will be adjusted after measurement
+  itemHeight: 220, // Fixed uniform height for all items
 
   // Scroll and performance settings
   scrollStrategy: "hybrid", // Use both scroll events and intersection observer

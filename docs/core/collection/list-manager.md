@@ -310,6 +310,22 @@ $placeholder-shimmer-alpha: 0.2 !default;
 $placeholder-animation-speed: 1.5s !default;
 ```
 
+### Placeholder Constants
+
+Configuration for placeholder appearance and behavior:
+
+| Constant                       | Default                   | Description                         |
+| ------------------------------ | ------------------------- | ----------------------------------- |
+| `PLACEHOLDER.ENABLED`          | `true`                    | Enable placeholder system           |
+| `PLACEHOLDER.PLACEHOLDER_FLAG` | `"__isPlaceholder"`       | Property to mark placeholder items  |
+| `PLACEHOLDER.PLACEHOLDER_MODE` | `"masked"`                | Default visual style                |
+| `PLACEHOLDER.MASK_CHARACTER`   | `"■"`                     | Character for masked mode           |
+| `PLACEHOLDER.SKELETON_CHARS`   | `"▁▁▁▁▁"`                 | Loading bar characters              |
+| `PLACEHOLDER.BLANK_CHARS`      | `" "`                     | Invisible space characters          |
+| `PLACEHOLDER.DOT_CHARS`        | `"• • •"`                 | Dot pattern characters              |
+| `PLACEHOLDER.FALLBACK_NAMES`   | `["Alex", "Jordan", ...]` | Fallback data for realistic mode    |
+| `PLACEHOLDER.FALLBACK_DOMAINS` | `["example.com", ...]`    | Fallback domains for realistic mode |
+
 ### Automatic Integration
 
 Placeholders are completely automatic and require no additional configuration:
@@ -334,6 +350,185 @@ For development and testing:
 // Available in browser console
 setPlaceholderMode("skeleton"); // Change mode dynamically
 // Test different modes: 'masked', 'skeleton', 'blank', 'dots', 'realistic'
+```
+
+## Speed Threshold Detection
+
+The List Manager features an intelligent speed threshold detection system that optimizes data loading based on scroll velocity. This system provides seamless performance during both normal scrolling and rapid navigation while maintaining fluid user experience.
+
+### How Speed Detection Works
+
+The system monitors scroll velocity in real-time and makes intelligent decisions about when to load data:
+
+```javascript
+// Speed threshold: 5 pixels per millisecond
+const FAST_SCROLL_THRESHOLD = 5.0; // px/ms
+
+// Example speeds:
+// Mouse wheel: 0.1 - 2.0 px/ms (slow - loads immediately)
+// Scrollbar drag: 1000 - 20000 px/ms (fast - skips loading)
+// Touch scroll: 0.5 - 10 px/ms (varies - adaptive loading)
+```
+
+### Two-Phase Loading Strategy
+
+The system uses a hybrid approach combining immediate speed-based decisions with scroll-stop detection:
+
+#### Phase 1: Real-Time Speed Analysis
+
+- **Slow scrolling (≤5px/ms)**: Load data immediately for responsive experience
+- **Fast scrolling (>5px/ms)**: Skip loading to maintain smooth scrolling performance
+
+#### Phase 2: Scroll-Stop Detection
+
+- **After fast scrolling**: Monitor for scroll events stopping
+- **100ms timeout**: When no scroll events occur for 100ms after fast scrolling
+- **Automatic loading**: Trigger data loading for missing viewport content
+
+### Usage Examples
+
+The speed detection is completely automatic and requires no configuration:
+
+```javascript
+const listManager = createListManager("users", container, {
+  renderItem: (user, index) => {
+    // Your normal render function
+    // Speed detection handles loading automatically
+    const element = document.createElement("div");
+    element.textContent = user.name;
+    return element;
+  },
+
+  // Speed detection works with all pagination strategies
+  pagination: {
+    strategy: "offset", // Recommended for speed detection
+    perPageParamName: "limit",
+  },
+});
+
+// Speed detection handles these scenarios automatically:
+// ✅ Mouse wheel scrolling → immediate loading
+// ✅ Scrollbar dragging → loading after scroll stops
+// ✅ Touch/gesture scrolling → adaptive loading
+// ✅ Programmatic scrolling → context-aware loading
+```
+
+### Performance Benefits
+
+The speed threshold system provides several performance advantages:
+
+#### Smooth Scrolling
+
+- **No loading interruptions**: Fast scrolling never blocks for API requests
+- **Reduced jank**: Eliminates scroll stuttering during rapid navigation
+- **Consistent frame rates**: Maintains 60fps during high-velocity scrolling
+
+#### Intelligent Loading
+
+- **Context-aware**: Loads data only when users pause to read content
+- **Bandwidth optimization**: Avoids loading data that users scroll past quickly
+- **Battery efficiency**: Reduces CPU/network activity during fast scrolling
+
+#### Adaptive Performance
+
+- **Input method detection**: Automatically adapts to mouse wheel vs. scrollbar vs. touch
+- **Velocity-based decisions**: Makes loading decisions based on actual scroll speed
+- **Predictive loading**: Loads data when users are likely to stop and read
+
+### Technical Implementation
+
+The speed detection system uses advanced scroll tracking with multiple detection mechanisms:
+
+#### Velocity Tracking
+
+```javascript
+// Real-time velocity calculation
+const velocity = scrollDistance / timeDelta; // px/ms
+
+// Speed state determination
+const speedState = velocity > FAST_SCROLL_THRESHOLD ? "fast" : "slow";
+
+// Immediate loading decision
+if (speedState === "slow") {
+  loadViewportData(); // Load immediately
+} else {
+  skipLoading(); // Skip for smooth scrolling
+}
+```
+
+#### Scroll-Stop Detection
+
+```javascript
+// Hybrid timeout mechanism
+if (speedState === "fast") {
+  // Set timeout for scroll-stop detection
+  scrollStopTimeout = setTimeout(() => {
+    // Emit synthetic 'slow' event after 100ms of no scroll events
+    emitSpeedThresholdEvent({
+      speed: 0,
+      scrollTop: currentPosition,
+      crossedThreshold: "slow",
+      timestamp: Date.now(),
+    });
+  }, 100);
+}
+```
+
+#### Observer Pattern Integration
+
+```javascript
+// Register for speed threshold events
+const cleanup = scrollTracker.onSpeedThreshold((event) => {
+  // Check for missing viewport data
+  if (needsViewportData()) {
+    loadMissingData(); // Load data for current viewport
+  }
+});
+
+// Event types:
+// - speed: Current scroll velocity (px/ms)
+// - scrollTop: Current scroll position
+// - crossedThreshold: 'slow' (when data should load)
+// - timestamp: Event timestamp for debugging
+```
+
+### Configuration Options
+
+The speed detection system works with configurable thresholds and timing:
+
+| Setting                 | Default | Description                                         |
+| ----------------------- | ------- | --------------------------------------------------- |
+| `FAST_SCROLL_THRESHOLD` | `5.0`   | Speed threshold in px/ms (5 pixels per millisecond) |
+| `SCROLL_STOP_DELAY`     | `100`   | Timeout in ms to detect scroll stop                 |
+| `throttleMs`            | `16`    | Scroll event throttling (60fps)                     |
+| `pagination.strategy`   | `auto`  | Works best with `"offset"` strategy                 |
+
+### Compatibility
+
+Speed threshold detection is compatible with all List Manager features:
+
+- **✅ All pagination strategies**: Works with cursor, page, and offset-based pagination
+- **✅ All scroll methods**: Mouse wheel, scrollbar, touch, programmatic scrolling
+- **✅ All navigation**: `scrollToIndex()`, `scrollToItemById()`, `loadPage()`
+- **✅ Static and API data**: Works with both static items and API-connected lists
+- **✅ All browsers**: Graceful fallback for older browser compatibility
+
+### Debugging Speed Detection
+
+For development and troubleshooting:
+
+```javascript
+// Enable debug logging (in development)
+// Check browser console for speed detection logs:
+// - Speed calculations and thresholds
+// - Loading decisions and timing
+// - Scroll-stop detection events
+// - Performance metrics
+
+// Example debug output:
+// 🔍 Speed: 2.3px/ms ≤ 5px/ms → Loading immediately
+// ⏸️ Speed: 1200px/ms > 5px/ms → Skipping load
+// 🛑 Scroll stopped after fast scrolling → Loading data
 ```
 
 ## API Reference
@@ -521,188 +716,55 @@ setPlaceholderMode("skeleton"); // Change mode dynamically
 
 The List Manager uses a centralized constants system (`constants.ts`) that controls behavior across all modules. These constants can be imported and used to customize the list manager's operation.
 
-### Rendering and Visibility
+### Rendering Constants
 
-Controls virtual rendering and item visibility calculations:
+Virtual rendering and item visibility calculations:
 
-```javascript
-import { RENDERING } from "./constants";
+| Constant                               | Default | Description                                   |
+| -------------------------------------- | ------- | --------------------------------------------- |
+| `RENDERING.DEFAULT_ITEM_HEIGHT`        | `84px`  | Default item height in pixels                 |
+| `RENDERING.LEGACY_ITEM_HEIGHT`         | `48px`  | Legacy compatibility height                   |
+| `RENDERING.DEFAULT_RENDER_BUFFER_SIZE` | `5`     | Extra items rendered outside viewport         |
+| `RENDERING.DEFAULT_OVERSCAN_COUNT`     | `3`     | Items kept in DOM but invisible               |
+| `RENDERING.DEFAULT_CONTAINER_HEIGHT`   | `400px` | Fallback container height                     |
+| `RENDERING.RECYCLING_POOL_LIMIT`       | `50`    | Max recycled elements to prevent memory leaks |
 
-RENDERING.DEFAULT_ITEM_HEIGHT; // 84 - Default item height in pixels
-RENDERING.LEGACY_ITEM_HEIGHT; // 48 - Legacy compatibility height
-RENDERING.DEFAULT_RENDER_BUFFER_SIZE; // 5 - Extra items rendered outside viewport
-RENDERING.DEFAULT_OVERSCAN_COUNT; // 3 - Items kept in DOM but invisible
-RENDERING.DEFAULT_CONTAINER_HEIGHT; // 400 - Fallback container height
-RENDERING.RECYCLING_POOL_LIMIT; // 50 - Max recycled elements to prevent memory leaks
-```
+### Collection and State Constants
 
-### Pagination and Loading
+Internal collection behavior and state management:
 
-Controls data loading and pagination behavior:
+| Constant                              | Default | Description                       |
+| ------------------------------------- | ------- | --------------------------------- |
+| `COLLECTION.DEFAULT_INITIAL_CAPACITY` | `50`    | Initial collection capacity       |
+| `COLLECTION.BINARY_SEARCH_THRESHOLD`  | `500`   | Use binary search above this size |
+| `COLLECTION.SMALL_LIST_THRESHOLD`     | `10`    | Simple rendering for small lists  |
+| `TIMING.RAF_DELAY`                    | `50ms`  | RequestAnimationFrame delay       |
+| `TIMING.MEASUREMENT_TIMEOUT`          | `100ms` | Timeout for measurements          |
+| `TIMING.PAGE_CHANGE_INTERVAL`         | `100ms` | Page change detection interval    |
 
-```javascript
-import { PAGINATION } from "./constants";
-
-PAGINATION.DEFAULT_PAGE_SIZE; // 20 - Items per page
-PAGINATION.INITIAL_PAGE; // 1 - Starting page number
-PAGINATION.SECOND_PAGE; // 2 - Second page number for next loads
-PAGINATION.INITIAL_RANGES_TO_FETCH; // 2 - (Deprecated) Use viewport-based initial loading
-PAGINATION.ADJACENT_PAGES_PRELOAD_BEFORE; // 1 - Pages to preload before viewport
-PAGINATION.ADJACENT_PAGES_PRELOAD_AFTER; // 1 - Pages to preload after viewport
-PAGINATION.ADJACENT_PAGES_PRELOAD; // 2 - (Deprecated) Use separate before/after settings
-PAGINATION.LOAD_PREVIOUS_THRESHOLD; // 200px - Distance from top to load previous
-PAGINATION.LOAD_NEXT_THRESHOLD; // 100px - Distance from bottom to load next
-PAGINATION.FALLBACK_TOTAL_COUNT; // 1,000,000 - Default total when API doesn't provide
-PAGINATION.ADJACENT_PAGE_DIFF; // 1 - Adjacent page difference threshold
-PAGINATION.LARGE_SCROLL_JUMP_THRESHOLD; // 5 - Pages difference for "large jump" detection
-```
-
-### Scroll and Performance
-
-Controls scroll handling and performance optimizations:
-
-```javascript
-import { SCROLL } from "./constants";
-
-SCROLL.SCROLL_THRESHOLD; // 5px - Minimum scroll change to process
-SCROLL.DEFAULT_THROTTLE_MS; // 16ms - Scroll event throttling (~60fps)
-SCROLL.LOAD_THROTTLE_MS; // 100ms - Minimum time between load operations
-SCROLL.DEFAULT_LOAD_THRESHOLD; // 0.8 - Load more at 80% scroll position
-SCROLL.RESET_SCROLL_TOP; // 0 - Reset scroll position
-SCROLL.SCROLL_STOP_DEBOUNCE; // 300ms - Delay for scroll stop detection
-```
-
-### Boundary Detection
-
-Controls automatic page loading during scrolling:
-
-```javascript
-import { BOUNDARIES } from "./constants";
-
-BOUNDARIES.BOUNDARY_THRESHOLD_MULTIPLIER; // 2 - Item heights for boundary threshold
-BOUNDARIES.PAGE_JUMP_RESET_DELAY; // 500ms - Delay before resetting page jump flag
-BOUNDARIES.DATA_PROCESSING_DELAY; // 100ms - Processing delay after page load
-BOUNDARIES.BOUNDARY_LOAD_DEBOUNCE; // 150ms - Debounce for boundary loads
-BOUNDARIES.SCROLL_JUMP_LOAD_DEBOUNCE; // 200ms - Debounce for scroll jump loads
-BOUNDARIES.ADJACENT_PAGE_DEBOUNCE; // 100ms - Debounce for adjacent page loads
-```
-
-### Collection and State Management
-
-Controls internal collection behavior:
-
-```javascript
-import { COLLECTION } from "./constants";
-
-COLLECTION.DEFAULT_INITIAL_CAPACITY; // 50 - Initial collection capacity
-COLLECTION.BINARY_SEARCH_THRESHOLD; // 500 - Use binary search above this size
-COLLECTION.SMALL_LIST_THRESHOLD; // 10 - Simple rendering for small lists
-```
-
-### Animation and Timing
-
-Controls timing for animations and updates:
-
-```javascript
-import { TIMING } from "./constants";
-
-TIMING.RAF_DELAY; // 50ms - RequestAnimationFrame delay
-TIMING.MEASUREMENT_TIMEOUT; // 100ms - Timeout for measurements
-TIMING.PAGE_CHANGE_INTERVAL; // 100ms - Page change detection interval
-```
-
-### API and Network Parameters
+### API Parameter Constants
 
 Default parameter names for API requests:
 
-```javascript
-import { API } from "./constants";
-
-API.DEFAULT_PER_PAGE_PARAM; // "per_page" - Page size parameter name
-API.DEFAULT_LIMIT_PARAM; // "limit" - Limit parameter name
-API.DEFAULT_OFFSET_PARAM; // "offset" - Offset parameter name
-API.DEFAULT_CURSOR_PARAM; // "cursor" - Cursor parameter name
-```
-
-### Placeholder System Configuration
-
-Controls placeholder appearance and behavior:
-
-```javascript
-import { PLACEHOLDER } from "./constants";
-
-PLACEHOLDER.ENABLED; // true - Enable placeholder system
-PLACEHOLDER.PLACEHOLDER_FLAG; // "__isPlaceholder" - Property to mark placeholder items
-PLACEHOLDER.PLACEHOLDER_MODE; // "masked" - Default visual style
-
-// Visual characters for different modes
-PLACEHOLDER.MASK_CHARACTER; // "■" - Character for masked mode
-PLACEHOLDER.SKELETON_CHARS; // Loading bar characters (▁▁▁▁▁)
-PLACEHOLDER.BLANK_CHARS; // Invisible space characters
-PLACEHOLDER.DOT_CHARS; // Dot pattern characters (• • •)
-
-// Fallback data for realistic mode
-PLACEHOLDER.FALLBACK_NAMES; // ["Alex", "Jordan", "Taylor", ...]
-PLACEHOLDER.FALLBACK_DOMAINS; // ["example.com", "company.com", ...]
-```
-
-### Quick Access Defaults
-
-Combined defaults for common configurations:
-
-```javascript
-import { DEFAULTS } from "./constants";
-
-const config = {
-  itemHeight: DEFAULTS.itemHeight, // 84
-  pageSize: DEFAULTS.pageSize, // 20
-  initialRangesToFetch: DEFAULTS.initialRangesToFetch, // 2 (deprecated)
-  adjacentPagesPreloadBefore: DEFAULTS.adjacentPagesPreloadBefore, // 1
-  adjacentPagesPreloadAfter: DEFAULTS.adjacentPagesPreloadAfter, // 1
-  adjacentPagesPreload: DEFAULTS.adjacentPagesPreload, // 2 (legacy)
-  renderBufferSize: DEFAULTS.renderBufferSize, // 5
-  overscanCount: DEFAULTS.overscanCount, // 3
-  loadThreshold: DEFAULTS.loadThreshold, // 0.8
-  throttleMs: DEFAULTS.throttleMs, // 16
-  containerHeight: DEFAULTS.containerHeight, // 400
-};
-```
+| Constant                     | Default      | Description              |
+| ---------------------------- | ------------ | ------------------------ |
+| `API.DEFAULT_PER_PAGE_PARAM` | `"per_page"` | Page size parameter name |
+| `API.DEFAULT_LIMIT_PARAM`    | `"limit"`    | Limit parameter name     |
+| `API.DEFAULT_OFFSET_PARAM`   | `"offset"`   | Offset parameter name    |
+| `API.DEFAULT_CURSOR_PARAM`   | `"cursor"`   | Cursor parameter name    |
 
 ### Customizing Constants
 
-While constants are defined as `const`, you can override them in your configuration:
+Override default values in your list manager configuration:
 
 ```javascript
-// Override default values in your list manager config
 const listManager = createListManager("items", container, {
   itemHeight: 120, // Override DEFAULT_ITEM_HEIGHT
   pageSize: 50, // Override DEFAULT_PAGE_SIZE
   renderBufferSize: 10, // Override DEFAULT_RENDER_BUFFER_SIZE
   throttleMs: 8, // Override DEFAULT_THROTTLE_MS (~120fps)
-
-  // Placeholder customization
   placeholderMode: "skeleton", // Override PLACEHOLDER_MODE
 });
-```
-
-### Performance Tuning
-
-Use constants to tune performance for different scenarios:
-
-```javascript
-// High-performance configuration (faster device)
-const highPerformanceConfig = {
-  throttleMs: SCROLL.DEFAULT_THROTTLE_MS / 2, // 8ms (~120fps)
-  renderBufferSize: RENDERING.DEFAULT_RENDER_BUFFER_SIZE * 2, // 10 items
-  overscanCount: RENDERING.DEFAULT_OVERSCAN_COUNT * 2, // 6 items
-};
-
-// Battery-saving configuration (mobile device)
-const batterySavingConfig = {
-  throttleMs: SCROLL.DEFAULT_THROTTLE_MS * 2, // 32ms (~30fps)
-  renderBufferSize: RENDERING.DEFAULT_RENDER_BUFFER_SIZE / 2, // 3 items
-  overscanCount: RENDERING.DEFAULT_OVERSCAN_COUNT / 2, // 1 item
-};
 ```
 
 ## Architecture
@@ -1011,45 +1073,275 @@ transforms.country = (country) => ({
 
 ## Pagination Strategies
 
-The List Manager supports three pagination strategies:
+The List Manager supports three sophisticated pagination strategies, each optimized for different use cases and API architectures.
 
 ### Cursor-Based Pagination
 
-- Uses a cursor token to retrieve the next set of items
-- Most efficient for large datasets
-- Configuration:
-  ```javascript
+Ideal for real-time feeds and large datasets where new items are frequently added.
+
+**How it works:**
+
+- Uses opaque cursor tokens to maintain position in the dataset
+- Server maintains cursor state for efficient traversal
+- Most efficient for append-only datasets like social feeds
+
+**Configuration:**
+
+```javascript
+const listManager = createListManager("feed", container, {
   pagination: {
-    strategy: 'cursor',
-    cursorParamName: 'cursor' // Optional, defaults to 'cursor'
+    strategy: "cursor",
+    cursorParamName: "cursor", // API parameter name for cursor
+  },
+  pageSize: 20,
+  renderItem: (item) => {
+    /* render function */
+  },
+});
+```
+
+**API Request Example:**
+
+```
+GET /api/feed?cursor=eyJpZCI6MTIzNDU&limit=20
+```
+
+**Expected Response:**
+
+```json
+{
+  "items": [...],
+  "meta": {
+    "hasNext": true,
+    "nextCursor": "eyJpZCI6MTIzNjU"
   }
-  ```
+}
+```
 
 ### Page-Based Pagination
 
-- Uses page numbers for navigation
-- Common in many API implementations
-- Configuration:
-  ```javascript
+Perfect for traditional paginated interfaces with numbered pages and precise navigation.
+
+**How it works:**
+
+- Uses sequential page numbers for navigation
+- Enables jumping to any page directly
+- Supports precise positioning and preloading
+
+**Configuration:**
+
+```javascript
+const listManager = createListManager("users", container, {
   pagination: {
-    strategy: 'page',
-    pageParamName: 'page', // Optional, defaults to 'page'
-    perPageParamName: 'per_page' // Optional, defaults to 'per_page'
+    strategy: "page",
+    pageParamName: "page",
+    perPageParamName: "per_page",
+  },
+  pageSize: 50,
+
+  // Enhanced page navigation
+  adjacentPagesPreloadBefore: 2, // Preload 2 pages before viewport
+  adjacentPagesPreloadAfter: 2, // Preload 2 pages after viewport
+
+  renderItem: (user) => {
+    /* render function */
+  },
+});
+
+// Jump to any page with automatic positioning
+await listManager.loadPage(1000);
+await listManager.scrollToIndex(50000, "center", true);
+```
+
+**API Request Example:**
+
+```
+GET /api/users?page=15&per_page=50
+```
+
+**Expected Response:**
+
+```json
+{
+  "items": [...],
+  "meta": {
+    "page": 15,
+    "per_page": 50,
+    "total_pages": 2000,
+    "total_count": 100000,
+    "hasNext": true,
+    "hasPrev": true
   }
-  ```
+}
+```
 
 ### Offset-Based Pagination
 
-- Uses item offsets for precise positioning
-- Good for random access in large lists
-- Configuration:
-  ```javascript
+Optimized for precise positioning and random access in large, stable datasets.
+
+**How it works:**
+
+- Uses mathematical offsets for exact item positioning
+- Enables instant jumping to any position without page calculations
+- Perfect for datasets where precise index access is required
+
+**Configuration:**
+
+```javascript
+const listManager = createListManager("products", container, {
   pagination: {
-    strategy: 'offset',
-    offsetParamName: 'offset', // Optional, defaults to 'offset'
-    limitParamName: 'limit' // Optional, defaults to 'limit'
+    strategy: "offset",
+    offsetParamName: "offset",
+    limitParamName: "limit",
+  },
+  pageSize: 30,
+
+  // Speed-based loading optimization
+  itemHeight: 120, // Enables precise positioning calculations
+
+  renderItem: (product) => {
+    /* render function */
+  },
+});
+
+// Direct index navigation with automatic offset calculation
+await listManager.scrollToIndex(75000, "start", false);
+```
+
+**API Request Example:**
+
+```
+GET /api/products?offset=750&limit=30
+```
+
+**Expected Response:**
+
+```json
+{
+  "items": [...],
+  "meta": {
+    "offset": 750,
+    "limit": 30,
+    "total_count": 500000,
+    "hasNext": true
   }
-  ```
+}
+```
+
+### Pagination Constants
+
+| Constant                                   | Default     | Description                            |
+| ------------------------------------------ | ----------- | -------------------------------------- |
+| `PAGINATION.DEFAULT_PAGE_SIZE`             | `20`        | Items per page for all strategies      |
+| `PAGINATION.INITIAL_PAGE`                  | `1`         | Starting page number                   |
+| `PAGINATION.ADJACENT_PAGES_PRELOAD_BEFORE` | `1`         | Pages to preload before viewport       |
+| `PAGINATION.ADJACENT_PAGES_PRELOAD_AFTER`  | `1`         | Pages to preload after viewport        |
+| `PAGINATION.LOAD_PREVIOUS_THRESHOLD`       | `200px`     | Distance from top to load previous     |
+| `PAGINATION.LOAD_NEXT_THRESHOLD`           | `100px`     | Distance from bottom to load next      |
+| `PAGINATION.FALLBACK_TOTAL_COUNT`          | `1,000,000` | Default total when API doesn't provide |
+
+### Strategy Selection Guide
+
+| Use Case             | Recommended Strategy | Benefits                               |
+| -------------------- | -------------------- | -------------------------------------- |
+| **Social Feeds**     | Cursor               | Real-time updates, efficient traversal |
+| **User Lists**       | Page                 | Direct navigation, familiar UX         |
+| **Product Catalogs** | Offset               | Precise positioning, instant access    |
+| **Search Results**   | Page                 | Numbered results, pagination UI        |
+| **Large Archives**   | Offset               | Mathematical precision, performance    |
+
+## Speed-Based Loading
+
+The List Manager uses intelligent speed-based loading to optimize data fetching during different scroll behaviors, providing smooth performance across all interaction types.
+
+### How Speed-Based Loading Works
+
+The system continuously monitors scroll speed and makes loading decisions based on **current velocity**, not artificial delays or stop detection:
+
+```javascript
+const listManager = createListManager("items", container, {
+  // Speed-based loading is automatic - no configuration needed
+  renderItem: (item) => {
+    /* render function */
+  },
+
+  // These settings optimize the speed detection
+  itemHeight: 84, // Enables precise speed calculations
+  pageSize: 20, // Balances load frequency with performance
+  throttleMs: 16, // Scroll event throttling (~60fps)
+});
+```
+
+### Loading Decision Logic
+
+The system uses **speed thresholds** to determine when to load data:
+
+**Fast Scrolling (>5px/ms):**
+
+- **Mouse wheel**: Rarely triggers (typical: 0.1-2px/ms)
+- **Scrollbar dragging**: Commonly triggers (typical: 1000-20000px/ms)
+- **Behavior**: Skip loading to prevent API spam
+
+**Slow Scrolling (≤5px/ms):**
+
+- **Mouse wheel**: Normal scrolling behavior
+- **Scrollbar released**: After dragging ends
+- **Behavior**: Load immediately when data is needed
+
+### Speed Detection Examples
+
+```javascript
+// During mouse wheel scrolling (0.5px/ms)
+// System: "🚀 [SPEED-LOAD] Loading immediately: offset 100 (speed: 0.5px/ms ≤ 5px/ms)"
+
+// During scrollbar dragging (15000px/ms)
+// System: "⏸️ [SPEED-SKIP] Skipping load due to high scroll speed: 15000.2px/ms > 5px/ms"
+
+// When scrollbar drag ends (0.1px/ms)
+// System: "🚀 [SPEED-LOAD] Loading immediately: offset 500 (speed: 0.1px/ms ≤ 5px/ms)"
+```
+
+### Key Benefits
+
+1. **No Artificial Delays**: Loads immediately when speed is appropriate
+2. **Prevents API Spam**: Automatically skips loading during rapid scrolling
+3. **Smooth Experience**: Seamless transition between fast and slow scrolling
+4. **Universal Compatibility**: Works with mouse wheel, scrollbar, touch, and keyboard
+
+### Performance Characteristics
+
+| Scroll Method           | Typical Speed   | Loading Behavior  |
+| ----------------------- | --------------- | ----------------- |
+| **Mouse Wheel**         | 0.1-2px/ms      | Immediate loading |
+| **Scrollbar Drag**      | 1000-20000px/ms | Skip during drag  |
+| **Scrollbar Release**   | 0-1px/ms        | Immediate loading |
+| **Touch Scrolling**     | 50-500px/ms     | Immediate loading |
+| **Keyboard Navigation** | 10-100px/ms     | Immediate loading |
+
+### Speed-Based Constants
+
+| Constant                       | Default    | Description                               |
+| ------------------------------ | ---------- | ----------------------------------------- |
+| `SCROLL.FAST_SCROLL_THRESHOLD` | `5.0px/ms` | Speed threshold for fast scroll detection |
+| `SCROLL.DEFAULT_THROTTLE_MS`   | `16ms`     | Scroll event throttling (~60fps)          |
+| `SCROLL.LOAD_THROTTLE_MS`      | `100ms`    | Minimum time between load operations      |
+| `SCROLL.SCROLL_THRESHOLD`      | `5px`      | Minimum scroll change to process          |
+
+### Advanced Speed Optimization
+
+For high-performance scenarios, you can tune the speed detection:
+
+```javascript
+const listManager = createListManager("items", container, {
+  // High-performance configuration
+  throttleMs: 8, // ~120fps for smoother detection
+  renderBufferSize: 10, // Larger buffer for speed changes
+
+  // Or battery-saving configuration
+  throttleMs: 32, // ~30fps for battery efficiency
+  renderBufferSize: 3, // Smaller buffer for lower memory usage
+});
+```
 
 ## Best Practices
 
@@ -1468,42 +1760,43 @@ const lifecycle = createLifecycleManager({
 const cleanup = lifecycle.initialize();
 ```
 
-## Recent Improvements
+## Key Capabilities
 
-The List Manager has been significantly enhanced with these major improvements:
+The List Manager provides enterprise-grade virtualized list functionality with advanced features for modern applications:
 
-### 🚀 **Enhanced Navigation APIs**
+### 🚀 **Advanced Navigation**
 
 - **`scrollToIndex()`** - Navigate to any index with automatic loading and positioning
 - **`scrollToItemById()`** - Find and navigate to items by ID using backend lookup
 - **`loadPage()`** - Jump to specific pages with precise viewport calculation
+- **Smooth Transitions** - Seamless navigation with preloading and positioning
 
-### 🎯 **Intelligent Loading System**
+### 🎯 **Intelligent Loading**
 
 - **Precise Viewport Calculation** - Loads exactly the pages needed for the current viewport
 - **Parallel Loading** - Uses `Promise.all()` to load all viewport pages simultaneously
 - **Dynamic Buffer Detection** - Adapts buffer size based on viewport and page size
-- **Gap Detection** - Correctly identifies and fills gaps in loaded data ranges
+- **Gap Detection** - Identifies and fills gaps in loaded data ranges
 
-### ⚡ **Performance Optimizations**
+### ⚡ **Speed-Based Optimization**
 
-- **Viewport-Based Initial Loading** - Replaces arbitrary page counts with smart viewport calculation
+- **Velocity-Based Loading** - Makes loading decisions based on current scroll speed
+- **No Artificial Delays** - Immediate response when appropriate, skip when too fast
+- **Universal Compatibility** - Works with mouse wheel, scrollbar, touch, and keyboard
+- **API Spam Prevention** - Automatically skips loading during rapid scrolling
+
+### 🔧 **Production Ready**
+
 - **Concurrent-Safe Operations** - Prevents race conditions between scroll systems
 - **Mathematical Precision** - Uses exact calculations for reliable positioning
-- **Optimized Boundary Detection** - Eliminates duplicate network requests
+- **Memory Management** - Efficient DOM recycling and cleanup
+- **Error Handling** - Comprehensive error reporting and recovery
 
-### 🔧 **Fixed Critical Issues**
+### 🌟 **Enterprise Features**
 
-- **Placeholder Replacement** - Fixed placeholders not being replaced during scroll-back
-- **Boundary Detection Logic** - Corrected range tracking to detect actual data gaps
-- **Preload Configuration** - Enhanced with separate before/after controls
-- **Production Bundle** - Removed all debug logging for smaller bundle size
+- **Scales to Any Size** - Handles millions of items with consistent performance
+- **Multiple Strategies** - Supports cursor, page, and offset-based pagination
+- **Backend Integration** - Simple API endpoints for ID-based navigation
+- **Developer Experience** - Clear APIs, comprehensive documentation, and debugging tools
 
-### 🌟 **Key Benefits**
-
-- **Scales to Any Size** - Tested with millions of items and various page sizes
-- **Smooth User Experience** - No visual glitches or empty spaces during navigation
-- **Backend Integration** - Simple API endpoint for ID-based navigation
-- **Developer Friendly** - Clear error messages and comprehensive documentation
-
-The List Manager now provides enterprise-grade virtualized list functionality with the performance and reliability needed for production applications handling large datasets.
+The List Manager delivers the performance and reliability needed for production applications handling large datasets while maintaining a smooth user experience.
