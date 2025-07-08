@@ -1,31 +1,30 @@
 // src/client/styles/content/layout.scss
-@use 'mtrl/src/styles/abstract/base' as b;
-@use 'mtrl/src/styles/abstract/variables' as v;
-@use 'mtrl/src/styles/abstract/functions' as f;
-@use 'mtrl/src/styles/abstract/mixins' as m;
-@use 'mtrl/src/styles/abstract/theme' as t;
+@use "mtrl/src/styles/abstract/base" as b;
+@use "mtrl/src/styles/abstract/variables" as v;
+@use "mtrl/src/styles/abstract/functions" as f;
+@use "mtrl/src/styles/abstract/mixins" as m;
+@use "mtrl/src/styles/abstract/theme" as t;
 
 .#{b.$prefix}-list {
   width: 260px;
   height: 500px;
-  border: 2px solid t.color('outline-variant');
+  border: 2px solid t.color("outline-variant");
   border-radius: 3px;
 }
 
 .#{b.$prefix}-list--basic {
   width: 260px;
   height: 200px;
-  border: 2px solid t.color('outline-variant');
+  border: 2px solid t.color("outline-variant");
   border-radius: 3px;
 }
 
 .#{b.$prefix}-list--small {
   width: 260px;
   height: 500px;
-  border: 2px solid t.color('outline-variant');
+  border: 2px solid t.color("outline-variant");
   border-radius: 3px;
 }
-
 
 .loading-indicator {
   display: flex;
@@ -59,8 +58,6 @@
   transition: background-color 0.2s ease;
 }
 
-
-
 .user-avatar {
   width: 40px;
   height: 40px;
@@ -77,6 +74,7 @@
 .user-details {
   flex: 1;
   min-width: 0;
+  margin-left: 12px;
 }
 
 .user-name {
@@ -91,11 +89,18 @@
   text-overflow: ellipsis;
 }
 
-// .user-role {
-//   color: #757575;
-//   font-size: 12px;
-//   background-color: #f1f1f1;
-//   display: inline-block;
-//   padding: 2px 8px;
-//   border-radius: 12px;
-// }
+.user-phone {
+  color: var(--mtrl-sys-color-primary);
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-role {
+  color: var(--mtrl-sys-color-on-surface-variant);
+  font-size: 12px;
+  margin-top: 2px;
+}
