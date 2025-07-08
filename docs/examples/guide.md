@@ -562,6 +562,67 @@ bun run puppeteer examples/list
 🎉 SUCCESS: Component appears to be working correctly!
 ```
 
+### Real Example: Successful Component Testing
+
+#### Example Command
+
+```bash
+bun run puppeteer examples/list
+```
+
+#### Example Output (Success)
+
+```
+🎯 [PUPPETEER] Testing example: examples/list
+🚀 [PUPPETEER] Starting automated testing session...
+📄 [PUPPETEER] Loading http://localhost:4000/examples/list...
+💬 [LOG] 🚀 [COLLECTION-ADDONS] Starting mtrl-addons collection component example
+💬 [LOG] 📄 [COLLECTION-ADDONS] DOM loaded, initializing collection component
+💬 [LOG] 🚀 [COLLECTION-ADDONS] Initializing list component showcase
+💬 [LOG] 🚀 [COLLECTION-ADDONS] Creating new list component (collection-powered)
+💬 [LOG] 🧪 [COLLECTION-ADDONS] Testing API endpoint...
+💬 [LOG] ✅ [COLLECTION-ADDONS] List component showcase initialized successfully
+💬 [LOG] 🎯 [LIST-ADDONS] Component: JSHandle@object
+💬 [LOG] 🚀 List component initialized with Phase 1 List Manager
+✅ [PUPPETEER] Page loaded successfully
+
+=== 📊 DETAILED PAGE ANALYSIS ===
+📄 Page title: mtrl-addons List Component Example
+📄 Body content length: 9880 characters
+📊 Total divs with classes: 65
+📊 Script tags: 2 (1 ES modules)
+📊 Import maps: 1
+
+=== 🎯 COMPONENT DETECTION ===
+🎯 Component container: ✅ Found
+🎯 mtrl elements: ✅ Found 106
+🎯 Error elements: ✅ None found
+
+📋 Container content preview:
+<div class="mtrl-chip mtrl-chip--selected mtrl-chip--filter" role="button" tabindex="0" aria-selected="true" data-value="1">
+<div class="mtrl-ripple"></div>
+<div class="mtrl-chip-content">...
+
+=== 🎯 FINAL ASSESSMENT ===
+🎉 SUCCESS: Component appears to be working correctly!
+👋 [PUPPETEER] Browser closed
+```
+
+#### Analysis of Success Indicators
+
+- **✅ Component container found**: Main component structure exists
+- **✅ 106 mtrl elements**: Rich Material Design component structure
+- **✅ No error elements**: No JavaScript errors or broken components
+- **✅ Console logs**: Clear initialization and success messages
+- **✅ 9880 character body**: Substantial content indicating proper rendering
+
+#### Common Success Patterns
+
+- **Component initialization logs**: `🚀 [COMPONENT] Starting...`, `✅ [COMPONENT] Success...`
+- **High mtrl element count**: 50+ elements indicates complex component structure
+- **No error elements**: `Error elements: ✅ None found`
+- **Substantial content**: Body length > 5000 characters suggests proper rendering
+
 ### Common Debug Patterns
 
 #### Testing Component Initialization
@@ -1070,14 +1131,49 @@ public/examples/my-component/
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Component Example</title>
+
+    <!-- Load mtrl core styles (Material Design 3 base) -->
+    <link rel="stylesheet" href="/dist/mtrl/styles.css" />
+
+    <!-- Load mtrl-addons styles (custom enhancements) -->
+    <link rel="stylesheet" href="/dist/mtrl-addons/styles/main.css" />
+
     <style>
       /* Component-specific styles */
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .icon-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: white;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>My Component Example</h1>
       <div id="componentContainer"></div>
+
+      <!-- Example with icons -->
+      <div class="controls">
+        <button class="icon-button" id="addButton">
+          <span class="icon"></span>
+          Add Item
+        </button>
+        <button class="icon-button" id="settingsButton">
+          <span class="icon"></span>
+          Settings
+        </button>
+      </div>
     </div>
 
     <!-- Import Map for ES modules -->
@@ -1094,11 +1190,38 @@ public/examples/my-component/
     <script type="module">
       import { myComponent } from "/dist/mtrl-addons/index.mjs";
 
+      // Method 1: Import icons directly from SVG files
+      import addIcon from "/client/icons/add.svg";
+      import settingsIcon from "/client/icons/settings.svg";
+
+      // Method 2: Import from centralized exports (recommended)
+      import {
+        addIcon as addIconExport,
+        settingsIcon as settingsIconExport,
+      } from "/client/icons/exports.js";
+
       // Initialize component
       const component = myComponent({
         container: document.getElementById("componentContainer"),
         // ... configuration
       });
+
+      // Add icons to buttons
+      document.querySelector("#addButton .icon").innerHTML = addIcon;
+      document.querySelector("#settingsButton .icon").innerHTML = settingsIcon;
+
+      // Button event handlers
+      document.getElementById("addButton").addEventListener("click", () => {
+        console.log("Add button clicked");
+        // Add your component logic here
+      });
+
+      document
+        .getElementById("settingsButton")
+        .addEventListener("click", () => {
+          console.log("Settings button clicked");
+          // Add your settings logic here
+        });
     </script>
   </body>
 </html>
@@ -1230,6 +1353,41 @@ Examples are served via static file serving from `mtrl-app/public/`. The server 
 - Check TypeScript compilation errors
 - Verify source file syntax
 - Check dependency versions
+
+**SVG Icon Issues:**
+
+- **MIME Type Errors**: SVG files automatically convert to JavaScript modules when imported
+- **Icon Not Found**: Check both SVG file and exports.js contain the icon
+- **Import Path Issues**: Use server root paths like `/client/icons/icon.svg`
+
+**API Data Loading Issues:**
+
+- **Empty Data Response**: API returns `{ length: 0 }` - check API endpoint and data format
+- **No Pagination**: API should return `{ items: [], meta: { hasNext, total } }` structure
+- **Collection Errors**: Verify collection adapter configuration matches API response format
+
+**Example Debug Output for API Issues:**
+
+```
+💬 [LOG] 🧪 [COLLECTION-ADDONS] Direct API test result: JSHandle@object
+💬 [LOG] 🧪 [COLLECTION-ADDONS] Has data array? false Length: 0
+💬 [LOG] 🧪 [COLLECTION-ADDONS] Has pagination? false
+```
+
+**Solution**: Check API endpoint returns proper data structure:
+
+```javascript
+// Expected API response format
+{
+  items: [...],           // Array of data items
+  meta: {
+    hasNext: boolean,     // More pages available
+    total: number,        // Total item count
+    page: number,         // Current page
+    pageSize: number      // Items per page
+  }
+}
+```
 
 ### Debug Commands
 
