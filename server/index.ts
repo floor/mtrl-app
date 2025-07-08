@@ -80,7 +80,10 @@ async function handleRequest(req: Request): Promise<Response> {
     // If no special handler matched, try static files
     if (
       !response &&
-      (url.pathname.startsWith("/dist/") || url.pathname.startsWith("/public/"))
+      (url.pathname.startsWith("/dist/") ||
+        url.pathname.startsWith("/public/") ||
+        url.pathname.startsWith("/examples/") ||
+        url.pathname.startsWith("/client/"))
     ) {
       response = await handleStaticRequest(req);
     }

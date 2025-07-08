@@ -2,8 +2,12 @@
 import ejs from "ejs";
 import { existsSync } from "fs";
 import { isCompressibleType } from "../utils/mime-types.js";
-import { compressContent, setCompressionHeaders } from "../utils/compression.js";
+import {
+  compressContent,
+  setCompressionHeaders,
+} from "../utils/compression.js";
 import { getTimestampParam } from "../utils/caching.js";
+import { getTemplateFile } from "../utils/paths.js";
 import config from "../config.js";
 
 const { isProduction } = config;
@@ -13,12 +17,12 @@ export interface TemplateData {
   [key: string]: any;
   title?: string;
   description?: string;
-  path?: string;                // Current URL path
-  canonicalUrl?: string;        // Full canonical URL
-  ogImage?: string;             // Open Graph image URL
+  path?: string; // Current URL path
+  canonicalUrl?: string; // Full canonical URL
+  ogImage?: string; // Open Graph image URL
   jsonLd?: Record<string, any>; // Structured data
-  timestamp?: string;           // Cache-busting timestamp
-  isSnapshot?: boolean;         // Whether this is being rendered for a snapshot
+  timestamp?: string; // Cache-busting timestamp
+  isSnapshot?: boolean; // Whether this is being rendered for a snapshot
 }
 
 /**
@@ -29,16 +33,17 @@ export interface TemplateData {
 export function getDefaultTemplateData(path: string = "/"): TemplateData {
   const baseUrl = process.env.BASE_URL || "https://mtrl.app";
   const canonicalUrl = `${baseUrl}${path === "/" ? "" : path}`;
-  
+
   return {
     title: "mtrl UI Framework",
-    description: "A lightweight, composable TypeScript/JavaScript component library inspired by Material Design principles",
+    description:
+      "A lightweight, composable TypeScript/JavaScript component library inspired by Material Design principles",
     path,
     canonicalUrl,
     ogImage: `${baseUrl}/og-image.png`,
     timestamp: getTimestampParam(),
     isSnapshot: false,
-    isProduction
+    isProduction,
   };
 }
 
@@ -48,21 +53,24 @@ export function getDefaultTemplateData(path: string = "/"): TemplateData {
  * @param data Data to pass to the template
  * @returns Rendered HTML
  */
-export async function renderTemplate(templatePath: string, data: TemplateData = {}): Promise<string> {
+export async function renderTemplate(
+  templatePath: string,
+  data: TemplateData = {}
+): Promise<string> {
   try {
     if (!existsSync(templatePath)) {
       throw new Error(`Template not found: ${templatePath}`);
     }
-    
+
     // Read the template file
     const templateContent = await Bun.file(templatePath).text();
-    
+
     // Get path from data or default to "/"
     const path = data.path || "/";
-    
+
     // Get default data first
     const defaultData = getDefaultTemplateData(path);
-    
+
     // Merge with passed data, ensuring all required fields exist
     const templateData: TemplateData = {
       ...defaultData,
@@ -74,27 +82,27 @@ export async function renderTemplate(templatePath: string, data: TemplateData = 
       canonicalUrl: data.canonicalUrl || defaultData.canonicalUrl,
       ogImage: data.ogImage || defaultData.ogImage,
       timestamp: data.timestamp || defaultData.timestamp,
-      isSnapshot: data.isSnapshot || defaultData.isSnapshot
+      isSnapshot: data.isSnapshot || defaultData.isSnapshot,
     };
-    
+
     // Debug log in development to see what data is being passed
     if (!isProduction) {
-      console.log('Template data being passed to EJS:', {
+      console.log("Template data being passed to EJS:", {
         title: templateData.title,
         description: templateData.description,
         path: templateData.path,
-        canonicalUrl: templateData.canonicalUrl
+        canonicalUrl: templateData.canonicalUrl,
       });
     }
-    
+
     // Render the template with EJS
     return ejs.render(templateContent, templateData, {
       filename: templatePath, // Important for EJS includes
-      async: false
+      async: false,
     });
   } catch (error) {
     console.error(`Error rendering template ${templatePath}:`, error);
-    console.error('Template data that caused the error:', data);
+    console.error("Template data that caused the error:", data);
     throw error;
   }
 }
@@ -105,29 +113,32 @@ export async function renderTemplate(templatePath: string, data: TemplateData = 
  * @param isBot Whether the request is from a bot
  * @returns Response object
  */
-export async function serveRenderedTemplate(html: string, isBot: boolean = false): Promise<Response> {
+export async function serveRenderedTemplate(
+  html: string,
+  isBot: boolean = false
+): Promise<Response> {
   const headers = new Headers({
     "Content-Type": "text/html; charset=utf-8",
     "Cache-Control": isBot ? "public, max-age=3600" : "no-cache", // Higher cache for bots
-    "Vary": "User-Agent" // Important for caching different versions based on user agent
+    Vary: "User-Agent", // Important for caching different versions based on user agent
   });
-  
+
   // Add bot-specific headers
   if (isBot) {
     headers.set("X-Robots-Tag", "all");
     headers.set("X-Pre-Rendered", "true");
   }
-  
+
   // Try to compress HTML in production
   if (isProduction) {
     const compressed = await compressContent(html, "text/html");
     setCompressionHeaders(headers, compressed);
-    
+
     if (compressed) {
       return new Response(compressed, { headers });
     }
   }
-  
+
   return new Response(html, { headers });
 }
 
@@ -155,19 +166,86 @@ export function renderErrorPage(error: Error, status: number = 500): Response {
       <h1>Error ${status}</h1>
       <div class="error">
         <p>${error.message}</p>
-        ${!isProduction && error.stack ? `<pre>${error.stack}</pre>` : ''}
+        ${!isProduction && error.stack ? `<pre>${error.stack}</pre>` : ""}
       </div>
-      ${!isProduction ? '<p>This error page is only shown in development mode.</p>' : ''}
+      ${!isProduction ? "<p>This error page is only shown in development mode.</p>" : ""}
     </body>
     </html>
   `;
-  
+
   return new Response(errorHtml, {
     status,
     headers: {
       "Content-Type": "text/html; charset=utf-8",
-      "Cache-Control": "no-cache"
+      "Cache-Control": "no-cache",
+    },
+  });
+}
+
+/**
+ * Render a 404 page
+ * @param req The request object
+ * @returns Response object with 404 page
+ */
+export async function render404Page(req: Request): Promise<Response> {
+  const url = new URL(req.url);
+  const requestedPath = url.pathname;
+
+  try {
+    // Try to use the custom 404 template
+    const template404Path = getTemplateFile("404.ejs");
+
+    if (existsSync(template404Path)) {
+      const html = await renderTemplate(template404Path, {
+        title: "404 - Page Not Found | mtrl",
+        description: "The page you're looking for doesn't exist.",
+        path: requestedPath,
+        requestedPath,
+      });
+
+      return new Response(html, {
+        status: 404,
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "no-cache",
+        },
+      });
     }
+  } catch (error) {
+    console.error("Error rendering 404 template:", error);
+  }
+
+  // Fallback to simple 404 page
+  const fallbackHtml = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>404 - Page Not Found</title>
+      <style>
+        body { font-family: system-ui, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; text-align: center; }
+        h1 { color: #e53e3e; }
+        .path { background: #f7fafc; padding: 1rem; border-radius: 0.25rem; margin: 1rem 0; }
+        a { color: #3182ce; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+      </style>
+    </head>
+    <body>
+      <h1>404 - Page Not Found</h1>
+      <p>The page you're looking for doesn't exist.</p>
+      <div class="path">Requested: ${requestedPath}</div>
+      <p><a href="/">← Go back to home</a></p>
+    </body>
+    </html>
+  `;
+
+  return new Response(fallbackHtml, {
+    status: 404,
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-cache",
+    },
   });
 }
 
@@ -175,5 +253,6 @@ export default {
   renderTemplate,
   serveRenderedTemplate,
   renderErrorPage,
-  getDefaultTemplateData
+  render404Page,
+  getDefaultTemplateData,
 };
