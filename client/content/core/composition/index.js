@@ -5,11 +5,6 @@ import {
   createDocs
 } from '../../../layout'
 
-import {
-  createLayout
-  // createElement
-} from 'mtrl'
-
 // import { initCompositionPatterns } from './patterns'
 // import { initPipeFunction } from './pipe'
 // import { initFeatures } from './features'
@@ -17,6 +12,7 @@ import {
 // import { initAdvancedPatterns } from './advanced'
 // import { initBestPractices } from './bestpractices'
 
+import { createLayout } from 'mtrl-addons'
 export const createCompositionContent = (container) => {
   const info = {
     title: 'Composition',

@@ -1,12 +1,12 @@
 // src/client/content/components/extended-fab/disabled.js
 import { capitalize } from '../../../../core/utils'
 
+import { createLayout } from 'mtrl-addons'
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createExtendedFab
 } from 'mtrl'
 

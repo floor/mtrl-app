@@ -1,10 +1,13 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/app-bars/bottom/events-api.js
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout, createBottomAppBar, createButton, createFab,
+  createBottomAppBar,
+  createButton,
+  createFab,
   FAB_VARIANTS
 } from 'mtrl'
 

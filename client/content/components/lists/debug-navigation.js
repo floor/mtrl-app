@@ -1,5 +1,6 @@
 import { createComponentSection } from "../../../layout";
-import { createLayout, createList, createButton } from "mtrl";
+import { createList, createButton } from "mtrl";
+import { createLayout } from 'mtrl-addons';
 
 export const initNavigationDebug = (container) => {
   const title = "Navigation Consistency Debug";

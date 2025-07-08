@@ -1,5 +1,6 @@
-// Convert country object to array format
+// Complete augmented countries array with all missing ISO codes
 export const countries = [
+  // Your existing entries (kept as-is)
   { id: 'DZA', name: 'Algeria' },
   { id: 'EGY', name: 'Egypt' },
   { id: 'LBY', name: 'Libya' },
@@ -266,5 +267,30 @@ export const countries = [
   { id: 'NRU', name: 'Nauru' },
   { id: 'MNP', name: 'Northern Mariana Islands' },
   { id: 'PLW', name: 'Palau' },
-  { id: 'UMI', name: 'United States Minor Outlying Islands' }
+  { id: 'UMI', name: 'United States Minor Outlying Islands' },
+
+  // *** MISSING ENTRIES THAT SHOULD BE ADDED ***
+  // These are the islands and territories with official ISO codes that were missing from your list:
+
+  // Additional Caribbean/Atlantic Islands
+  { id: 'BLM', name: 'Saint Barthélemy' },
+  { id: 'MAF', name: 'Saint Martin (French part)' },
+  { id: 'SXM', name: 'Sint Maarten (Dutch part)' },
+  { id: 'BES', name: 'Bonaire, Sint Eustatius and Saba' },
+  { id: 'CYM', name: 'Cayman Islands' },
+
+  // Antarctica and Southern Territories
+  { id: 'ATA', name: 'Antarctica' },
+  { id: 'BVT', name: 'Bouvet Island' },
+  { id: 'SGS', name: 'South Georgia and the South Sandwich Islands' },
+  { id: 'HMD', name: 'Heard Island and McDonald Islands' },
+
+  // Arctic/Nordic Islands
+  { id: 'SJM', name: 'Svalbard and Jan Mayen' },
+
+  // Other Pacific Islands
+  { id: 'TKL', name: 'Tokelau' },
+
+  // Asian Territories
+  { id: 'NPL', name: 'Nepal' }
 ]

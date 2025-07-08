@@ -6,7 +6,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createCard,
   createCardHeader,
   createCardContent,
@@ -15,6 +14,7 @@ import {
 
 import { artworks } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize outlined cards with border
  * Demonstrates MD3 outlined card style with proper border

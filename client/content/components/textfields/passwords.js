@@ -1,7 +1,8 @@
 // src/client/content/components/textfields/supporting-text.js
 import { createComponentSection } from "../../../layout";
 
-import { createLayout, createTextfield } from "mtrl";
+import { createTextfield } from "mtrl";
+import { createLayout } from 'mtrl-addons';
 
 import { showIcon, hideIcon } from "../../../icons";
 

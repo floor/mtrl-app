@@ -5,10 +5,6 @@ import {
   createDocs
 } from '../../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { createButtonComponent } from './button'
 import { initVariants } from './variants'
 import { createToggleButtons } from './toggle'
@@ -18,6 +14,7 @@ import { createButtonSizes } from './sizes'
 import { initProgressButton } from './progress'
 import { initIcons } from './icons'
 
+import { createLayout } from 'mtrl-addons'
 export const createButtonsContent = (container) => {
   // Set global defaults for all buttons in this section
 

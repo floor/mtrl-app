@@ -5,7 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createButton,
   createElement,
   createCard,
@@ -18,6 +17,7 @@ import {
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 // Dynamic cards with content that changes over time
 export const initDynamicCard = (container) => {
   const title = 'Dynamic Cards'

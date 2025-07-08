@@ -1,6 +1,6 @@
 // src/client/content/styles/layout.js
 
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import {
   createContentLayout,

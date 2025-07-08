@@ -1,10 +1,10 @@
 import { createComponentSection } from "../../../layout";
+import { createLayout } from 'mtrl-addons'
 import {
-  createLayout,
   createList,
   createButton,
-  COLLECTION_EVENTS,
-} from "mtrl";
+  COLLECTION_EVENTS
+} from 'mtrl';
 
 export const initCollectionEvents = (container) => {
   const title = "Collection Change Events";

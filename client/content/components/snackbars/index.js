@@ -1,10 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/view/components/snackbars/index.js
 import {
   createComponentsLayout
 } from '../../../layout'
 
 import {
-  createLayout,
   createElement,
   createSnackbar,
   createButton,

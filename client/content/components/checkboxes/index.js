@@ -3,14 +3,11 @@ import {
   createComponentsLayout
 } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initBasicCheckboxes } from './basic'
 import { initLabelPositions } from './label'
 import { initIndeterminateCheckboxes } from './indeterminate'
 
+import { createLayout } from 'mtrl-addons'
 export const createCheckboxesContent = (container) => {
   const info = {
     title: 'Checkboxes',

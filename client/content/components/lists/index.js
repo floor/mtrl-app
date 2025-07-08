@@ -1,12 +1,12 @@
 // src/client/layout/lists/index.js
 import { createComponentsLayout, createDocs } from '../../../layout'
 
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import { createListComponent } from './list'
+import { createCollectionAddonsComponent } from './collection-addons'
 import { initBasicList } from './basic'
-import { initSingleSelectList } from './single-select'
-import { initMultiSelectList } from './multi-select'
+import { initLongStaticList } from './long-static'
 import { initCursorList } from './cursor'
 import { initCollectionEvents } from './collection-events'
 import { initNavigationDebug } from './debug-navigation'
@@ -26,17 +26,17 @@ export const createListsContent = (container, components) => {
     container
   ).component
 
-  createListComponent(layout.body)
+  // createListComponent(layout.body)
+  createCollectionAddonsComponent(layout.body)
 
-  // initCollectionEvents(layout.body);
-  // initNavigationDebug(layout.body);
-  // virtualPositioningTest(layout.body);
+  // initCollectionEvents(layout.body)
+  // initNavigationDebug(layout.body)
+  // virtualPositioningTest(layout.body)
 
   // initBasicList(layout.body)
-  // initSingleSelectList(layout.body)
-  // initMultiSelectList(layout.body)
+  // initLongStaticList(layout.body)
   // initCursorList(layout.body)
-  createDocs(layout.body, 'components/list.md')
+  // createDocs(layout.body, 'components/list.md')
 
   // initSectionedList(layout.body)
   // initVerticalLayout(layout.body)

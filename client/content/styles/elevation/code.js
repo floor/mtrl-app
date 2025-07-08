@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/code.js
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Elevation Code section

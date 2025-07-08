@@ -6,7 +6,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createButton,
   createCard,
   createCardHeader,
@@ -18,6 +17,7 @@ import {
 
 import { artworks, getImageUrl } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize cards with media content
  * Demonstrates proper media handling with aspect ratios and accessibility

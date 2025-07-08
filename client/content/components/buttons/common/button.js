@@ -1,9 +1,12 @@
 import {
-  createLayout, createButton,
+  createButton,
   createChips, createSwitch, createTextfield,
   BUTTON_VARIANTS,
   BUTTON_SIZES
 } from 'mtrl'
+
+import { createLayout } from 'mtrl-addons'
+
 import { capitalize } from '../../../../core/utils'
 import {
   createComponentSection

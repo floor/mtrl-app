@@ -1,6 +1,7 @@
 // src/client/content/components/chips/icons.js
 import { createComponentSection } from '../../../layout'
-import { createLayout, createChip } from 'mtrl'
+import { createChip } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { faceIcon, closeIcon, locationIcon, addIcon } from '../../../icons'
 
 /**

@@ -5,10 +5,11 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout, createBadge, createSlider,
+  createBadge, createSlider,
   createSelect, createChips, createSwitch,
   BADGE_COLORS, BADGE_VARIANTS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const createBadgeContent = (container) => {
   const title = 'Badge Component'

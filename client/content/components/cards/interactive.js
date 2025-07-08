@@ -5,7 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createElement,
   createCard,
   createCardHeader,
@@ -16,6 +15,7 @@ import {
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize interactive cards with click behavior
  * Demonstrates interactive and clickable cards with proper state handling

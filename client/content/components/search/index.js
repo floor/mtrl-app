@@ -1,7 +1,7 @@
 // src/client/content/components/search/index.js
 
 import { createComponentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initBasicBar } from './basic-bar'
 import { initBasicView } from './basic-view'
 // import { initDockedView } from './docked-view'

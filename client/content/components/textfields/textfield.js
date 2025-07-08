@@ -3,11 +3,12 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout, createTextfield, createChips,
+  createTextfield, createChips,
   createSwitch,
   TEXTFIELD_VARIANTS,
   TEXTFIELD_DENSITY
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const createTextfieldShowcase = (container) => {
   const title = 'Textfield'

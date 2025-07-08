@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSlider
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initEventsAPI = (container) => {
   const title = 'Using events and API'

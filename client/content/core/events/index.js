@@ -4,10 +4,6 @@ import {
   createContentLayout
 } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initEventManager } from './manager'
 import { initEventEmitter } from './emitter'
 import { initEventBus } from './bus'
@@ -18,6 +14,7 @@ import { initDebounce } from './debounce'
 import { initBestPractice } from './bestpractice'
 import { initImplementation } from './implementation'
 
+import { createLayout } from 'mtrl-addons'
 export const createEventsContent = (container) => {
   const content = {
     title: 'Events',

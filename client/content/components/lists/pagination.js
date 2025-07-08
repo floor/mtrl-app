@@ -1,6 +1,7 @@
 // client/content/components/lists/users.js
 import { createComponentSection } from "../../../layout";
-import { createLayout, createList } from "mtrl";
+import { createList } from "mtrl";
+import { createLayout } from 'mtrl-addons';
 
 export const initUsersList = (container) => {
   const title = "API Users List with Page Events";

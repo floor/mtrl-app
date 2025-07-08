@@ -1,5 +1,5 @@
 // src/client/content/core/layout/array.js
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Array-based Layout section

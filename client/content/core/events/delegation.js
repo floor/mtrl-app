@@ -1,5 +1,4 @@
 import {
-  createLayout,
   createButton,
   createElement
 } from 'mtrl'
@@ -44,6 +43,7 @@ export const initEventDelegation = (body) => {
     class: 'event-example__code',
     text: `import { delegate } from 'mtrl/core/events';
 
+import { createLayout } from 'mtrl-addons'
 // Handle clicks on any button within a container
 events.on('click', delegate('button', (event, target) => {
   console.log(\`Button clicked: \${target.textContent}\`);

@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/levels.js
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Elevation Levels section

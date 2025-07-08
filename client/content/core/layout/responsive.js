@@ -1,9 +1,9 @@
 // src/examples/responsive.js
 import { createContentSection } from '../../../layout'
 
+import { createLayout, applyLayoutClasses, cleanupLayoutClasses } from 'mtrl-addons'
 import {
-  createLayout, createChips,
-  applyLayoutClasses, cleanupLayoutClasses
+  createChips
 } from 'mtrl'
 
 /**

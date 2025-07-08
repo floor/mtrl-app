@@ -5,12 +5,9 @@ import {
   createDocs
 } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initGestures } from './gestures'
 
+import { createLayout } from 'mtrl-addons'
 export const createEventsContent = (container) => {
   const content = {
     title: 'Gestures',

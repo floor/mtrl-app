@@ -1,5 +1,4 @@
 import {
-  createLayout,
   createElement
 } from 'mtrl'
 
@@ -43,6 +42,7 @@ export const initPerformanceUtils = (body) => {
     class: 'event-example__code',
     text: `import { throttle, debounce } from 'mtrl/core/events';
 
+import { createLayout } from 'mtrl-addons'
 // Throttle: Limit execution to once per 100ms
 events.on('scroll', throttle((e) => {
   updateScrollPosition(e.scrollY);

@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/principles.js
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Initializes the elevation principles section

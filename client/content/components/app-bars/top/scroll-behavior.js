@@ -1,10 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/app-bars/top/scroll-behavior.js
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createTopAppBar,
   createButton
 } from 'mtrl'

@@ -1,4 +1,5 @@
-import { createLayout, createChips, createChip } from 'mtrl'
+import { createChips, createChip } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { createContentSection } from '../../../layout'
 import themeManager from '../../../core/theme/theme-manager'
 import { themesMenu } from '../../../config.js'

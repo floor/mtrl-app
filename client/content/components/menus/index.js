@@ -4,16 +4,13 @@ import {
   createComponentsLayout
 } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initBasicMenu } from './basic'
 import { initNestedMenu } from './nested'
 import { initPositionsMenu } from './positions'
 import { initTexfieldMenu } from './textfield'
 // import { initCustomMenu } from './custom'
 
+import { createLayout } from 'mtrl-addons'
 export const createMenusContent = (container) => {
   const info = {
     title: 'Menus',

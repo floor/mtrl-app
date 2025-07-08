@@ -5,9 +5,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout, createBadge,
+  createBadge,
   BADGE_VARIANTS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initMax = (container) => {
   const title = 'Badges with Maximum Value'

@@ -3,10 +3,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSlider,
   SLIDER_COLORS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initDiscrete = (container) => {
   const title = 'Slider with tick marks'

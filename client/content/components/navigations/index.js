@@ -1,3 +1,4 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/menu.js
 
 import {
@@ -6,7 +7,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createNavigation,
   createButton
 } from 'mtrl'

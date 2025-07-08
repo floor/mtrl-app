@@ -1,6 +1,7 @@
 import {
-  createLayout, createIconButton,
-  createChips, createSwitch,
+  createIconButton,
+  createChips,
+  createSwitch,
   BUTTON_VARIANTS,
   BUTTON_SIZES
 } from 'mtrl'
@@ -10,6 +11,7 @@ import {
 } from '../../../../layout'
 import { downloadIcon, bookmarkIcon, likeIcon, sendIcon } from '../../../../icons'
 
+import { createLayout } from 'mtrl-addons'
 export const createIconButtonComponent = (container) => {
   const title = 'Button Component'
   const description = 'Interactive playground to experiment with button variants, icons, text customization, and disabled states'

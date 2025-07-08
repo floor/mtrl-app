@@ -1,5 +1,6 @@
 // src/client/content/core/layout/demo.js
-import { createLayout, createElement, createButton, createTextfield } from 'mtrl'
+import { createElement, createButton, createTextfield } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Layout Demo section

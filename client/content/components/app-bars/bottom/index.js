@@ -1,7 +1,7 @@
 // src/client/content/components/app-bars/bottom/index.js
 
 import { createComponentsLayout } from '../../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initBasicBottomAppBar } from './basic'
 import { initWithFabBottomAppBar } from './with-fab'
 import { initAutoHideBottomAppBar } from './auto-hide'

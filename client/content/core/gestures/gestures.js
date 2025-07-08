@@ -1,5 +1,4 @@
 import {
-  createLayout,
   createElement,
   createGestureManager
 } from 'mtrl'
@@ -45,6 +44,7 @@ export const initGestures = (body) => {
     class: 'gesture-example__code',
     text: `import { withGesture, pipe, createBase } from 'mtrl';
 
+import { createLayout } from 'mtrl-addons'
 // Add gesture recognition to any component
 const component = pipe(
   createBase,

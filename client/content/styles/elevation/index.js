@@ -1,6 +1,6 @@
 // src/client/content/styles/elevation/index.js
 import { createContentLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { createElevationLevelsSection } from './levels'
 import { createElevationPrinciplesSection } from './principles'
 import { createDynamicElevationSection } from './dynamic'

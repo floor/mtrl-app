@@ -5,9 +5,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout, createBadge,
+  createBadge,
   BADGE_VARIANTS, BADGE_COLORS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initOutlined = (container) => {
   const title = 'Outlined Badges'

@@ -3,7 +3,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createButton,
   createDialog,
   createTextfield,
@@ -11,6 +10,7 @@ import {
   createCheckbox,
   createSnackbar
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import { settingsIcon, addIcon } from '../../../icons'
 

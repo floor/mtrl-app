@@ -8,9 +8,9 @@ import {
 } from '../../layout'
 
 import {
-  createLayout,
   createCarousel
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 // Sample slide data for examples
 const sampleSlides = [

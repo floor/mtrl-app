@@ -1,7 +1,7 @@
 // src/client/content/components/cards/index.js
 
 import { createComponentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { addCardStyles } from './styles'
 import { artworks } from './artwork-data'
 

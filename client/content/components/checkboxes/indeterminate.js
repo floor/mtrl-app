@@ -1,9 +1,9 @@
 import {
-  createLayout,
   createCheckbox,
   createElement,
   createButton
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import {
   createComponentSection

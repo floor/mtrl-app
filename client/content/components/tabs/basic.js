@@ -3,11 +3,11 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createTabs,
   addClass,
   removeClass
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initBasicTabs = (container) => {
   const title = 'Tabs'

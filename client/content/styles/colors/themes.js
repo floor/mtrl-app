@@ -1,6 +1,4 @@
-import {
-  createLayout
-} from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import { createContentSection } from '../../../layout'
 

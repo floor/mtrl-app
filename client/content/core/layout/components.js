@@ -1,5 +1,5 @@
 // src/client/content/core/layout/components.js
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Layout Components section

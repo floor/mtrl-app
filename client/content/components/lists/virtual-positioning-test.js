@@ -1,6 +1,7 @@
 // Test for virtual positioning when jumping to pages
 import { createComponentSection } from "../../../layout";
-import { createLayout, createList } from "mtrl";
+import { createList } from "mtrl";
+import { createLayout } from 'mtrl-addons';
 
 export const virtualPositioningTest = (container) => {
   const title = "Virtual Positioning Test";

@@ -1,7 +1,8 @@
 // src/client/core/app-manager.js
 
 import { createEventManager, setupErrorBoundary } from './events'
-import { createLayout, createNavigationSystem } from 'mtrl'
+import { createNavigationSystem } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { createRouter } from './router/service'
 import themeManager from './theme/theme-manager'
 import { createLayoutManager } from './layout'

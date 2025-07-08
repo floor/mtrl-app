@@ -1,5 +1,4 @@
 import {
-  createLayout,
   createElement,
   debounce
 } from 'mtrl'
@@ -51,6 +50,7 @@ export const initDebounce = (body) => {
     class: 'debounce-example__code',
     text: `import { debounce } from 'mtrl';
 
+import { createLayout } from 'mtrl-addons'
 // Create a debounced search handler
 // Will only execute 300ms after the user stops typing
 const handleSearch = debounce((searchTerm) => {

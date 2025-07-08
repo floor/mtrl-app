@@ -1,3 +1,4 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/search/basic-view.js
 
 import {
@@ -5,7 +6,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSearch,
   createElement,
   SEARCH_VARIANTS

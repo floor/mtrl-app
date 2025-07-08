@@ -5,9 +5,10 @@ import {
 } from '../../../layout'
 
 import {
-  createElement, createLayout, createBadge,
+  createElement, createBadge,
   BADGE_COLORS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initStandard = (container) => {
   const title = 'Standard Badges with Different Colors'

@@ -1,5 +1,6 @@
 // src/client/content/styles/typography/roles.js
-import { createLayout, createElement } from 'mtrl'
+import { createElement } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Typography Roles section

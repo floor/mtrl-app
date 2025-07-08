@@ -4,16 +4,13 @@ import {
   createComponentsLayout
 } from '../../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initVariants } from './variants'
 import { initSizes } from './sizes'
 import { initDisabled } from './disabled'
 import { initPositions } from './positions'
 import { initInteraction } from './interaction'
 
+import { createLayout } from 'mtrl-addons'
 export const createFabContent = (container) => {
   const info = {
     title: 'Floating Action Button (FAB)',

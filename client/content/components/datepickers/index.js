@@ -1,7 +1,7 @@
 // src/client/content/components/datepickers/index.js
 
 import { createComponentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initBasic } from './basic'
 import { initRange } from './range'
 import { initVariants } from './variants'

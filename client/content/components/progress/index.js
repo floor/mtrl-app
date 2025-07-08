@@ -5,9 +5,6 @@ import {
   createDocs
 } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
 import { createProgressComponent } from './progress'
 import { initLinearProgress } from './linear'
 import { initCircularProgress } from './circular'
@@ -15,6 +12,7 @@ import { initProgressThickness } from './thickness'
 import { initIndeterminateProgress } from './indeterminate'
 import { initBufferProgress } from './buffer'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Creates the main Progress component showcase
  * @param {HTMLElement} container - The container element to append content to

@@ -1,6 +1,6 @@
+import { createLayout } from 'mtrl-addons'
 import {
-  createElement,
-  createLayout
+  createElement
 } from 'mtrl'
 
 import {

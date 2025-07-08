@@ -1,10 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/textfields/multiline.js
 import {
   createComponentSection
 } from '../../../layout'
 
 import {
-  createLayout,
   createTextfield
 } from 'mtrl'
 

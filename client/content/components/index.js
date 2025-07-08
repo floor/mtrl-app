@@ -1,10 +1,11 @@
 // src/client/content/components/index.js
 import { createContentLayout, createDocs } from '../../layout'
 import {
-  createElement, createLayout,
+  createElement,
   createCard,
   CARD_VARIANTS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 // import { createLayout } from 'mtrl/src/core/structure'
 import { createAppRouter } from '../../core/router'
 

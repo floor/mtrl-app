@@ -1,6 +1,7 @@
 // src/client/content/components/chips/filter.js
 import { createComponentSection } from '../../../layout'
-import { createLayout, createChip, createButton, PREFIX } from 'mtrl'
+import { createChip, createButton, PREFIX } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Initializes filter chip set section

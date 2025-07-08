@@ -1,5 +1,6 @@
 // src/client/content/styles/typography/demo.js
-import { createLayout, createElement, createButton } from 'mtrl'
+import { createElement, createButton } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Typography Demo section

@@ -1,3 +1,4 @@
+import { createLayout } from 'mtrl-addons'
 import {
   createComponentSection
 } from '../../../layout'
@@ -7,7 +8,6 @@ import {
 } from '../../../data'
 
 import {
-  createLayout,
   createSelect
 } from 'mtrl'
 

@@ -1,5 +1,6 @@
 // client/core/content-pagination.js
-import { createLayout, createElement } from 'mtrl'
+import { createElement } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { getAdjacentContent } from '../core/content-navigation'
 /**
  * Creates a pagination footer component for content navigation using mtrl layout

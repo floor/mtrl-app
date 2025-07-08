@@ -1,9 +1,9 @@
 import {
-  createLayout,
   createElement,
   createChips,
   createSwitch
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { createContentSection } from '../../../layout'
 
 export const createDynamicTheme = (container) => {

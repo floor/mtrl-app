@@ -1,7 +1,7 @@
 // src/client/content/components/tabs/index.js
 
 import { createComponentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initBasicTabs } from './basic'
 import { initSecondaryTabs } from './secondary'
 import { initIconTabs } from './icons'

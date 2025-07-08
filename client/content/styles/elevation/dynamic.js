@@ -1,5 +1,6 @@
 // src/client/content/styles/elevation/dynamic.js
-import { createButton, createLayout } from 'mtrl'
+import { createButton } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Dynamic Elevation section

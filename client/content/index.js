@@ -17,9 +17,7 @@ import { createBadgeContent } from './components/badges/badge'
 
 import { initFormDialog as createDialogs } from './components/dialogs/form-dialog'
 
-import {
-  createLayout
-} from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const createHomeContent = (container) => {
   const info = {

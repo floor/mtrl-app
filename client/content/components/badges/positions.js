@@ -5,9 +5,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout, createBadge,
+  createBadge,
   BADGE_POSITIONS, BADGE_VARIANTS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initPositions = (container) => {
   const title = 'Badge Positions'

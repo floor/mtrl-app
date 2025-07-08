@@ -1,7 +1,7 @@
 // src/client/content/components/dialogs/index.js
 
 import { createComponentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initBasic } from './basic'
 import { initSizes } from './sizes'
 import { initCustomButtons } from './custom-buttons'

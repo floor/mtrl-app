@@ -3,10 +3,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSlider,
   SLIDER_SIZES
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initSizes = (container) => {
   const title = 'Slider sizes'

@@ -8,11 +8,11 @@ import {
   createComponentSection
 } from '../../../../layout'
 import {
-  createLayout,
   createButton
 } from 'mtrl'
 import { downloadIcon, bookmarkIcon, likeIcon, sendIcon } from '../../../../icons'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Icon button definitions with their labels
  * @type {Array<{icon: string, label: string}>}

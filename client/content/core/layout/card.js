@@ -4,7 +4,8 @@ import {
   applyLayoutClasses,
   cleanupLayoutClasses
 } from 'mtrl/src/core/layout'
-import { createLayout, createChips } from 'mtrl'
+import { createChips } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates a card layout demo with different card layout options

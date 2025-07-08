@@ -8,9 +8,9 @@ import {
 } from '../../../data'
 
 import {
-  createLayout,
   createSelect
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import { faceIcon, locationIcon } from '../../../icons'
 

@@ -1,5 +1,6 @@
 // src/client/content/core/layout/basics.js
-import { createLayout, createElement } from 'mtrl'
+import { createElement } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import {
   createContentLayout
 } from '../../../layout'

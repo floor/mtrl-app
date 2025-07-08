@@ -5,10 +5,7 @@ import {
   createDocs
 } from '../../layout'
 
-import {
-  createLayout
-  // createElement
-} from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 // import { initCompositionPatterns } from './patterns'
 // import { initPipeFunction } from './pipe'

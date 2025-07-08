@@ -1,6 +1,7 @@
 // src/client/content/components/chips/input.js
 import { createComponentSection } from '../../../layout'
-import { createLayout, createChip, createTextfield, createButton, PREFIX } from 'mtrl'
+import { createChip, createTextfield, createButton, PREFIX } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { faceIcon, closeIcon } from '../../../icons'
 
 /**

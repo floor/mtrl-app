@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSlider
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initCentered = (container) => {
   const title = 'Centered Slider'

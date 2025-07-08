@@ -1,10 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/fab/positions.js
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createFab
 } from 'mtrl'
 

@@ -5,7 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createElement,
   createCard,
   createCardHeader,
@@ -18,6 +17,7 @@ import {
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 // Import the withLoading enhancer
 
 // Loading card with placeholder content

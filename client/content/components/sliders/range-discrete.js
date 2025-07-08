@@ -3,10 +3,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSlider,
   SLIDER_COLORS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initRangeDiscrete = (container) => {
   const title = 'Range slider with tick marks'

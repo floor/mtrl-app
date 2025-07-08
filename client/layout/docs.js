@@ -8,7 +8,7 @@ import {
 
 import {
   createLayout
-} from 'mtrl'
+} from 'mtrl-addons'
 
 // Import highlighter if not already imported elsewhere
 // import codeHighlighter from '../../../core/code/highlight'

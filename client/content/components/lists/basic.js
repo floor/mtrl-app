@@ -1,8 +1,8 @@
+import { createLayout } from 'mtrl-addons'
 import {
   createComponentSection
 } from '../../../layout'
 import {
-  createLayout,
   createList
 } from 'mtrl'
 

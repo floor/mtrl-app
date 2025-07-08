@@ -1,5 +1,5 @@
 // src/client/content/styles/elevation/usage.js
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Initializes the elevation usage examples

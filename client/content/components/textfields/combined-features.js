@@ -3,7 +3,8 @@ import { createComponentSection } from "../../../layout";
 
 import { searchIcon, clearIcon } from "../../../icons";
 
-import { createLayout, createTextfield } from "mtrl";
+import { createTextfield } from "mtrl";
+import { createLayout } from 'mtrl-addons';
 
 export const initCombinedFeatures = (container) => {
   const title = "Textfields with Combined Features";

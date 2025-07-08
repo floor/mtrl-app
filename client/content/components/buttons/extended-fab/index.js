@@ -4,10 +4,6 @@ import {
   createComponentsLayout
 } from '../../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initVariants } from './variants'
 import { initWidthOptions } from './width'
 import { initDisabled } from './disabled'
@@ -16,6 +12,7 @@ import { initAnimation } from './animation'
 import { initInteraction } from './interaction'
 import { initCollapse } from './collapse'
 
+import { createLayout } from 'mtrl-addons'
 export const createExtendedFabContent = (container) => {
   const info = {
     title: 'Extended Floating Action Button',

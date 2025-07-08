@@ -1,7 +1,8 @@
 // src/client/content/components/chips/variants.js
 import { capitalize } from '../../../core/utils'
 import { createComponentSection } from '../../../layout'
-import { createLayout, createChip } from 'mtrl'
+import { createChip } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Initializes the chip variants section

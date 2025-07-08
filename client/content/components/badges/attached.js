@@ -5,9 +5,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout, createBadge, createButton,
+  createBadge, createButton,
   BADGE_VARIANTS, BADGE_COLORS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initAttached = (container) => {
   const title = 'Badges Attached to Elements'

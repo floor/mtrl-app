@@ -4,10 +4,10 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
   createBottomAppBar,
   createButton
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initBasicBottomAppBar = (container) => {
   const title = 'Basic Bottom App Bar'

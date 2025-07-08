@@ -1,11 +1,11 @@
 import { capitalize } from '../../../../core/utils'
 
+import { createLayout } from 'mtrl-addons'
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createFab
 } from 'mtrl'
 

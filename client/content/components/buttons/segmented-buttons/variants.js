@@ -1,10 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/segmented-buttons/variants.js
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createSegmentedButton,
   SelectionMode
 } from 'mtrl'

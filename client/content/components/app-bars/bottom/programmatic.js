@@ -1,10 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/app-bars/bottom/programmatic.js
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createBottomAppBar,
   createButton,
   createSnackbar,

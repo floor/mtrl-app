@@ -3,10 +3,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createMenu,
   createButton
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import {
   location,

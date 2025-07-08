@@ -1,13 +1,12 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/extended-fab/positions.js
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createExtendedFab,
   createButton
-
 } from 'mtrl'
 
 // Different icons for position demonstration

@@ -6,7 +6,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createCard,
   createCardHeader,
   createCardContent,
@@ -16,6 +15,7 @@ import {
 
 import { artworks } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize filled cards with background color
  * Demonstrates MD3 filled card style with surface-container-highest

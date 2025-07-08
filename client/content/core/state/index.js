@@ -4,15 +4,12 @@ import {
   createContentLayout
 } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initStore } from './store'
 import { initLifecycle } from './lifecycle'
 import { initDisabled } from './disabled'
 import { initComposingState } from './composing'
 
+import { createLayout } from 'mtrl-addons'
 export const createStateContent = (container) => {
   const info = {
     title: 'State',

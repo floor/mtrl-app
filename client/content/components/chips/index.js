@@ -1,7 +1,7 @@
 // src/client/content/components/chips/index.js
 
 import { createComponentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 import { initChipVariants } from './variants'
 import { initChipWithIcons } from './icons'

@@ -4,7 +4,8 @@ import {
   applyLayoutClasses,
   cleanupLayoutClasses
 } from 'mtrl/src/core/layout'
-import { createLayout, createElement, createChips } from 'mtrl'
+import { createElement, createChips } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates a responsive grid layout demo

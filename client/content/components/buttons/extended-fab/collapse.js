@@ -1,10 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/extended-fab/collapse.js
 import {
   createComponentSection
 } from '../../../../layout'
 
 import {
-  createLayout,
   createExtendedFab
 } from 'mtrl'
 

@@ -5,7 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createCard,
   createCardHeader,
   createCardContent,
@@ -14,6 +13,7 @@ import {
 
 import { artworks } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize simple cards with minimal content
  * Demonstrates basic card structure with header and content

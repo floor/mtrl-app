@@ -1,6 +1,7 @@
 // src/client/content/components/chips/chipset.js
 import { createComponentSection } from '../../../layout'
-import { createLayout, createChip, PREFIX } from 'mtrl'
+import { createChip, PREFIX } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 // Define prefix for CSS classes
 

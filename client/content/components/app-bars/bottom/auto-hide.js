@@ -11,10 +11,11 @@ import {
 } from '../../../../icons'
 
 import {
-  createLayout, createElement,
+  createElement,
   createBottomAppBar, createButton, createFab,
   FAB_VARIANTS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initAutoHideBottomAppBar = (container) => {
   const title = 'Auto-Hide on Scroll'

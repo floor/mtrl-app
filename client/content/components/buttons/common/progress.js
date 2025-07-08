@@ -8,11 +8,12 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout, createButton
+  createButton
 } from 'mtrl'
 
 import { checkIcon, sendIcon, refreshIcon } from '../../../../icons'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initializes button with progress example
  */

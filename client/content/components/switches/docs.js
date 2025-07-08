@@ -6,13 +6,10 @@ import {
   fetchMarkdown
 } from '../../../services/docs'
 
-import {
-  createLayout
-} from 'mtrl'
-
 // Import highlighter if not already imported elsewhere
 // import codeHighlighter from '../../../core/code/highlight'
 
+import { createLayout } from 'mtrl-addons'
 export const createSwitchDocs = async (container) => {
   const title = 'Documentation'
   const layout = createLayout(createContentSection({ title }), container).component

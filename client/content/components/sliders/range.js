@@ -4,11 +4,11 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSlider,
   createSnackbar,
   SLIDER_COLORS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initRange = (container) => {
   const title = 'Price Range Filter'

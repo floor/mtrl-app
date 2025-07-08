@@ -3,7 +3,6 @@ import {
 } from '../../../../layout'
 
 import {
-  createLayout,
   createButton,
   BUTTON_SIZES,
   BUTTON_SHAPES
@@ -11,6 +10,7 @@ import {
 
 import { editIcon } from '../../../../icons'
 
+import { createLayout } from 'mtrl-addons'
 export const createButtonSizes = (container) => {
   const title = 'Slider sizes'
   const layout = createLayout(

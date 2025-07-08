@@ -1,7 +1,7 @@
 // src/client/content/components/badges/index.js
 
 import { createComponentsLayout, createDocs } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initStandard } from './standard'
 import { initDot } from './dot'
 // import { initPositions } from './positions'

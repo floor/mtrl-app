@@ -5,9 +5,7 @@ import {
   createDocs
 } from '../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 // import { createAppRouter } from '../../core/router'
 

@@ -1,9 +1,9 @@
+import { createLayout } from 'mtrl-addons'
 import {
   createComponentSection
 } from '../../../layout'
 
 import {
-  createLayout,
   createButton,
   createDatePicker,
   DATEPICKER_VARIANTS

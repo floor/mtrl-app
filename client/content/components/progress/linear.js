@@ -3,10 +3,10 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createProgress,
   PROGRESS_VARIANTS
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Initializes the circular progress section

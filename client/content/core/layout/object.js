@@ -1,5 +1,6 @@
 // src/client/content/core/layout/object.js
-import { createLayout, createElement } from 'mtrl'
+import { createElement } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Object-based Layout section

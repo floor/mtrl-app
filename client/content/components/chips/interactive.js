@@ -1,6 +1,7 @@
 // src/client/content/components/chips/interactive.js
 import { createComponentSection } from '../../../layout'
-import { createLayout, createChip, createTextfield, createButton } from 'mtrl'
+import { createChip, createTextfield, createButton } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { locationIcon } from '../../../icons'
 
 /**

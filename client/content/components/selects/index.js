@@ -4,15 +4,12 @@ import {
   createComponentsLayout
 } from '../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initBasicSelect } from './basic'
 import { initDensitySelect } from './density'
 import { initLongMenu } from './long'
 import { initSubmenu } from './submenu'
 
+import { createLayout } from 'mtrl-addons'
 export const createTextfieldsContent = (container) => {
   const info = {
     title: 'Selects',

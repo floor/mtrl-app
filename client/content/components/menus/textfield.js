@@ -3,7 +3,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createMenu,
   createTextfield
 } from 'mtrl'
@@ -15,6 +14,7 @@ import {
 
 import { faceIcon, locationIcon } from '../../../icons'
 
+import { createLayout } from 'mtrl-addons'
 export const initTexfieldMenu = (container) => {
   const title = 'Textfield menu'
   const layout = createLayout(createComponentSection({ title }), container).component

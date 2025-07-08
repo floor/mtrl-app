@@ -1,6 +1,6 @@
 // src/client/content/styles/typography/index.js
 import { createContentLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { createTypographyScalesSection } from './scales'
 import { createTypeRolesSection } from './roles'
 import { createFontWeightsSection } from './weights'

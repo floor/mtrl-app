@@ -1,7 +1,7 @@
 // src/client/content/components/sliders/index.js
 
 import { createComponentsLayout, createDocs } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initContinuous, initContinuous1000 } from './continuous'
 import { initCentered } from './centered'
 import { initRange } from './range'

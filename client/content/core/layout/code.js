@@ -1,5 +1,5 @@
 // src/client/content/core/layout/code.js
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Creates the Layout Code Examples section
@@ -37,7 +37,8 @@ const initCodeExamples = (container) => {
       'example1Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createButton, createTextfield } from 'mtrl';
+        text: `import { createButton, createTextfield } from 'mtrl';
+import { createLayout } from 'mtrl-addons';
 
 // Create a login form layout with named components
 const loginLayout = createLayout([
@@ -100,7 +101,8 @@ loginButton.on('click', (event) => {
       'example2Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createCard, createButton } from 'mtrl';
+        text: `import { createCard, createButton } from 'mtrl';
+import { createLayout } from 'mtrl-addons';
 
 // Create a data grid with a default creator for text fields
 const dataGridLayout = createLayout([
@@ -180,7 +182,8 @@ row1EditButton.on('click', () => {
       'example3Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createTopAppBar, createNavigation, createList } from 'mtrl';
+        text: `import { createTopAppBar, createNavigation, createList } from 'mtrl';
+import { createLayout } from 'mtrl-addons';
 
 // Create application shell with object schema
 const appLayout = createLayout({
@@ -269,7 +272,7 @@ appLayout.get('analyticsItem').addEventListener('click', () => {
       'example4Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout } from 'mtrl';
+        text: `import { createLayout } from 'mtrl-addons';
 
 // Create a notification layout from HTML string
 const notificationLayout = createLayout(\`
@@ -314,7 +317,8 @@ document.querySelector('#notifications-area').appendChild(notificationBanner);`
       'example5Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createCard, createChip } from 'mtrl';
+        text: `import { createCard, createChip } from 'mtrl';
+import { createLayout } from 'mtrl-addons';
 
 // Sample data from API
 const products = [
@@ -391,7 +395,8 @@ document.querySelectorAll('.product-card').forEach(card => {
       'example6Code', {
         tag: 'pre',
         class: 'mtrl-layout-code',
-        text: `import { createLayout, createDialog, createButton, createTextfield } from 'mtrl';
+        text: `import { createDialog, createButton, createTextfield } from 'mtrl';
+import { createLayout } from 'mtrl-addons';
 
 // Store layout references for cleanup
 const layoutRefs = new Map();

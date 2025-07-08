@@ -1,7 +1,6 @@
 // client/content/components/lists/list.js
 import { createComponentSection } from '../../../layout'
 import {
-  createLayout,
   createButton,
   createList,
   createChips,
@@ -13,22 +12,24 @@ import {
 
 import { rightIcon, leftIcon } from '../../../icons'
 
+import { createLayout } from 'mtrl-addons'
+const strategy = ''
+const debug = false
+
 const createUserList = (parent) => {
   // Create the API-connected list
   const userList = createList({
     collection: 'users', // This should create a '/api/users' endpoint
     baseUrl: '/api', // Relative URL - automatically converted to full URL
     class: 'list--users',
-    itemHeight: 84,
+    // itemHeight: 84,
     multiSelect: true,
-    pageSize: 30,
-    // scrollStrategy: 'hybrid',
+    // pageSize: 20,
+    scrollStrategy: 'scroll',
     parent,
     pagination: {
-      strategy: 'page', // Specify page strategy
-      pageParamName: 'page', // Parameter for page number (default)
-      perPageParamName: 'limit', // Parameter for page size (default)
-      defaultPageSize: 50 // Items per page (default: 20)
+      strategy: 'offset' // Specify pagination strategy
+      // limitSize: 20 // Items per page (default: 20)
     },
 
     // Configure adapter to properly handle the response
@@ -79,24 +80,24 @@ const createUserList = (parent) => {
     renderItem: (user, index, recycledElement) => {
       // console.log('Rendering user item:', user, 'at index:', index, recycledElement)
 
-      // if (recycledElement) {
-      //   // Just update the content rather than creating new elements
-      //   const avatar = recycledElement.querySelector('.user-name')
-      //   const name = recycledElement.querySelector('.user-name')
-      //   const email = recycledElement.querySelector('.user-email')
-      //   const role = recycledElement.querySelector('.user-role')
+      if (recycledElement) {
+        // Just update the content rather than creating new elements
+        const avatar = recycledElement.querySelector('.user-avatar')
+        const name = recycledElement.querySelector('.user-name')
+        const email = recycledElement.querySelector('.user-email')
+        const role = recycledElement.querySelector('.user-role')
 
-      //   // Update text content (faster than innerHTML)
-      //   avatar.textContent = user.avatar || user.headline?.charAt(0) || '?'
-      //   name.textContent = user.headline || 'Unknown'
-      //   email.textContent = user.supportingText || ''
-      //   role.textContent = user.meta || ''
+        // Update text content (faster than innerHTML)
+        avatar.textContent = user.avatar || user.headline?.charAt(0) || '?'
+        name.textContent = `${user.headline}  (${user.id})` || 'Unknown'
+        email.textContent = user.supportingText || ''
+        role.textContent = user.meta || ''
 
-      //   // Add element type for recycling system
-      //   recycledElement.dataset.itemType = 'users'
+        // Add element type for recycling system
+        recycledElement.dataset.itemType = 'users'
 
-      //   return recycledElement
-      // }
+        return recycledElement
+      }
 
       const element = document.createElement('div')
       element.className = 'mtrl-list-item user-item'
@@ -139,8 +140,8 @@ const createDebugPanel = (parent) => {
 }
 
 export const createListComponent = (container) => {
-  const title = 'API Users List'
-  const description = "100'000 entries and virtualiation!!!"
+  const title = 'List Component'
+  const description = "with 100'000 entries and auto-detected height"
   const layout = createLayout(
     createComponentSection({ title, description }),
     container
@@ -154,50 +155,50 @@ export const createListComponent = (container) => {
 
   let animate = true
 
-  // Create a custom render hook to log selection application
-  const originalSetRenderHook = userList.list?.setRenderHook
-  if (originalSetRenderHook && typeof originalSetRenderHook === 'function') {
-    // Wrap the render hook to add debugging
-    const debugRenderHook = (originalHook) => (item, element) => {
-      renderHookCallCount++
-      // console.log(`🎨 RENDER HOOK #${renderHookCallCount}:`, {
-      //   itemId: item.id,
-      //   itemHeadline: item.headline,
-      //   elementDataId: element.getAttribute('data-id'),
-      //   hasSelectedClass: element.classList.contains(
-      //     'mtrl-list-item--selected'
-      //   ),
-      //   isSelected: userList.isItemSelected
-      //     ? userList.isItemSelected(item.id)
-      //     : 'N/A',
-      //   timestamp: new Date().toLocaleTimeString()
-      // })
+  // // Create a custom render hook to log selection application
+  // const originalSetRenderHook = userList.list?.setRenderHook
+  // if (originalSetRenderHook && typeof originalSetRenderHook === 'function') {
+  //   // Wrap the render hook to add debugging
+  //   const debugRenderHook = (originalHook) => (item, element) => {
+  //     renderHookCallCount++
+  //     // console.log(`🎨 RENDER HOOK #${renderHookCallCount}:`, {
+  //     //   itemId: item.id,
+  //     //   itemHeadline: item.headline,
+  //     //   elementDataId: element.getAttribute('data-id'),
+  //     //   hasSelectedClass: element.classList.contains(
+  //     //     'mtrl-list-item--selected'
+  //     //   ),
+  //     //   isSelected: userList.isItemSelected
+  //     //     ? userList.isItemSelected(item.id)
+  //     //     : 'N/A',
+  //     //   timestamp: new Date().toLocaleTimeString()
+  //     // })
 
-      // Call the original hook
-      if (originalHook) {
-        originalHook(item, element)
-      }
+  //     // Call the original hook
+  //     if (originalHook) {
+  //       originalHook(item, element)
+  //     }
 
-      // Log after hook is applied
-      // console.log(`🎨 RENDER HOOK AFTER #${renderHookCallCount}:`, {
-      //   itemId: item.id,
-      //   hasSelectedClass: element.classList.contains(
-      //     'mtrl-list-item--selected'
-      //   ),
-      //   isSelected: userList.isItemSelected
-      //     ? userList.isItemSelected(item.id)
-      //     : 'N/A'
-      // })
-    }
+  //     // Log after hook is applied
+  //     // console.log(`🎨 RENDER HOOK AFTER #${renderHookCallCount}:`, {
+  //     //   itemId: item.id,
+  //     //   hasSelectedClass: element.classList.contains(
+  //     //     'mtrl-list-item--selected'
+  //     //   ),
+  //     //   isSelected: userList.isItemSelected
+  //     //     ? userList.isItemSelected(item.id)
+  //     //     : 'N/A'
+  //     // })
+  //   }
 
-    // Override setRenderHook to wrap any hooks that get set
-    userList.list.setRenderHook = (hookFn) => {
-      // console.log('🔧 SETTING RENDER HOOK:', typeof hookFn)
-      originalSetRenderHook(debugRenderHook(hookFn))
-    }
-  } else {
-    //  console.warn('❌ setRenderHook not available on userList.list')
-  }
+  //   // Override setRenderHook to wrap any hooks that get set
+  //   userList.list.setRenderHook = (hookFn) => {
+  //     // console.log('🔧 SETTING RENDER HOOK:', typeof hookFn)
+  //     originalSetRenderHook(debugRenderHook(hookFn))
+  //   }
+  // } else {
+  //   //  console.warn('❌ setRenderHook not available on userList.list')
+  // }
 
   let page = 1
 
@@ -217,17 +218,17 @@ export const createListComponent = (container) => {
   const info = createLayout([
     { layout: { type: 'grid', column: 1, gap: 4, dense: true, align: 'center' } },
     [createChips, 'pages', { scrollable: false, label: 'Jump to page' }],
-    [createSlider, 'index', { label: 'Value', min: 0, max: 100000, page, step: 1, size: 'XS', variant: 'discrete' }],
+    [createSlider, 'index', { label: 'Jump to index', min: 0, max: 100000, page, step: 1, size: 'XS', variant: 'discrete' }],
     [
       { layout: { type: 'row', column: 3, gap: 1 } },
-      [createButton, 'prev', { icon: leftIcon, size: 'XS' }],
-      [createTextfield, 'page', { label: 'Page', density: 'compact', value: page }],
-      [createButton, 'next', { icon: rightIcon, size: 'XS' }]
+      [createButton, 'prev', { icon: leftIcon, size: 'XS', variant: 'outlined' }],
+      [createTextfield, 'page', { label: 'Page', density: 'compact', value: page, variant: 'outlined' }],
+      [createButton, 'next', { icon: rightIcon, size: 'XS', variant: 'outlined' }]
     ],
     [createSwitch, 'animate', { label: 'Animate scroll', checked: animate, class: 'switch--dense' }]
   ], layout.info).component
 
-  const debugPanel = createDebugPanel(layout.info)
+  // const debugPanel = createDebugPanel(layout.info)
 
   // Add pages chips
   pages.forEach(({ label, value }) => {
@@ -252,20 +253,23 @@ export const createListComponent = (container) => {
 
     console.log('page on input', page, event.value)
 
-    await userList.scrollToPage(page, 'start', animate)
+    await userList.scrollTo(page, 'start', animate)
     updateDebugPanel() // Update immediately after navigation
   })
 
   info.pages.on('change', async (p) => {
     const value = parseInt(p[0], 10)
 
-    await userList.scrollToPage(value, 'start', animate)
+    console.log('[LIST-SHOWCASE] ScrollTo', value)
+
+    await userList.scrollTo(value, 'start', animate)
     info.page.setValue(value)
     updateDebugPanel() // Update immediately after navigation
   })
 
   // Function to update debug panel
   const updateDebugPanel = () => {
+    return
     try {
       const stateElement = document.getElementById('collection-state')
       if (!stateElement) {
@@ -317,18 +321,18 @@ export const createListComponent = (container) => {
   }
 
   // Update debug panel periodically
-  const debugInterval = setInterval(updateDebugPanel, 500)
+  // const debugInterval = setInterval(updateDebugPanel, 500)
 
   // Initial update after a short delay to ensure everything is mounted
   setTimeout(updateDebugPanel, 100)
 
   info.prev.on('click', async () => {
     let currentPage = info.page.getValue()
-
-    if (currentPage > 0) {
+    console.log('prev', currentPage)
+    if (currentPage > 1) {
       console.log('currentPage', currentPage)
       currentPage--
-      userList.scrollToPage(currentPage, 'start', animate)
+      userList.scrollTo(currentPage, 'start', animate)
       info.page.setValue(currentPage)
     }
   })
@@ -339,7 +343,7 @@ export const createListComponent = (container) => {
     console.log('currentPage', currentPage)
     if (result.hasNext) {
       currentPage++
-      userList.scrollToPage(currentPage, 'start', animate)
+      userList.scrollTo(currentPage, 'start', animate)
       // Update page number - estimate based on current state
       info.page.setValue(currentPage)
     }

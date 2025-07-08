@@ -1,7 +1,7 @@
 // src/client/content/components/timepickers/index.js
 
 import { createComponentsLayout } from '../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initBasic } from './basic'
 import { initVariants } from './variants'
 import { initFormats } from './formats'

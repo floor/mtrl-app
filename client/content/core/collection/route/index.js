@@ -1,13 +1,10 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/styles/layout.js
 
 import {
   createContentLayout,
   createDocs
 } from '../../../../layout'
-
-import {
-  createLayout
-} from 'mtrl'
 
 export const createLayoutStylesContent = (container) => {
   log.info('createLayoutContent', container)

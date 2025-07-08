@@ -5,7 +5,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createElement,
   createCardHeader,
   createCardContent,
@@ -16,6 +15,7 @@ import {
 
 import { artworks } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize expandable cards
  * Demonstrates expandable content with proper accessibility

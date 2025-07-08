@@ -4,10 +4,6 @@ import {
   createComponentsLayout
 } from '../../../../layout'
 
-import {
-  createLayout
-} from 'mtrl'
-
 import { initVariants } from './variants'
 import { initSelectionModes } from './selection-modes'
 import { initDisabled } from './disabled'
@@ -15,6 +11,7 @@ import { initIconsOptions } from './icons'
 import { initInteraction } from './interaction'
 import { initFormIntegration } from './form-integration'
 
+import { createLayout } from 'mtrl-addons'
 export const createSegmentedButtonsContent = (container) => {
   const info = {
     title: 'Segmented Button',

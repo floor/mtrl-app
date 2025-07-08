@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createSwitch
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 export const initSupportingText = (container) => {
   const title = 'Switches with supporting text'

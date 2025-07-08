@@ -1,5 +1,4 @@
 import {
-  createLayout,
   createElement,
   throttle
 } from 'mtrl'
@@ -51,6 +50,7 @@ export const initThrottle = (body) => {
     class: 'throttle-example__code',
     text: `import { throttle } from 'mtrl';
 
+import { createLayout } from 'mtrl-addons'
 // Create a throttled scroll handler
 // Will execute at most once every 100ms
 const handleScroll = throttle(() => {

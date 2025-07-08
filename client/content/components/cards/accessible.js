@@ -6,7 +6,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createCard,
   CARD_VARIANTS,
   createCardHeader,
@@ -15,6 +14,7 @@ import {
 
 import { artworks } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize cards demonstrating accessibility features
  * Shows proper ARIA attributes and keyboard navigation

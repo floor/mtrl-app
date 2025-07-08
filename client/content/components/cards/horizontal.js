@@ -6,7 +6,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createButton,
   createCard,
   createCardHeader,
@@ -17,6 +16,7 @@ import {
 } from 'mtrl'
 import { artworks, getPlaceholderUrl } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize horizontal layout cards
  * Demonstrates custom layout while preserving accessibility

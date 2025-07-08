@@ -1,7 +1,7 @@
 // src/client/content/components/app-bars/top/index.js
 
 import { createComponentsLayout } from '../../../../layout'
-import { createLayout } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 import { initBasicTopAppBar } from './basic'
 import { initTypesTopAppBar } from './types'
 import { initScrollBehaviorTopAppBar } from './scroll-behavior'

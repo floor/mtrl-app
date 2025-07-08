@@ -1,3 +1,4 @@
+import { createLayout } from 'mtrl-addons'
 // src/client/content/components/radios.js
 
 import {
@@ -6,7 +7,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createRadios
 } from 'mtrl'
 

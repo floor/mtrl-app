@@ -6,7 +6,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createCard,
   createCardHeader,
   createCardContent,
@@ -15,6 +14,7 @@ import {
 
 import { artworks } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize elevated cards with shadow effects
  * Demonstrates MD3 elevation system with proper shadow levels

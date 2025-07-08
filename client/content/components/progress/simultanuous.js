@@ -4,7 +4,6 @@ import {
 } from '../../../layout'
 
 import {
-  createLayout,
   createProgress,
   createChips,
   createSlider,
@@ -12,6 +11,7 @@ import {
   PROGRESS_VARIANTS,
   PROGRESS_SHAPES
 } from 'mtrl'
+import { createLayout } from 'mtrl-addons'
 
 /**
  * Initializes the interactive progress section

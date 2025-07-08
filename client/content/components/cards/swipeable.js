@@ -6,7 +6,6 @@ import {
 
 import {
   createElement,
-  createLayout,
   createButton,
   createCard,
   createCardHeader,
@@ -18,6 +17,7 @@ import {
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 
+import { createLayout } from 'mtrl-addons'
 /**
  * Initialize swipeable cards
  * Demonstrates swipe gestures with accessible alternatives
