@@ -1,6 +1,6 @@
 // build.js with code splitting support
 import { mkdir } from 'fs/promises'
-import { existsSync, watch, readdirSync } from 'fs'
+import { existsSync, watch, readdirSync, unlinkSync } from 'fs'
 import { join, dirname, basename, relative } from 'path'
 import { fileURLToPath } from 'url'
 import * as sass from 'sass'
@@ -319,13 +319,15 @@ const setupWatchers = () => {
 
   const jsWatchPaths = [
     join(__dirname, 'node_modules/mtrl/src'),
+    join(__dirname, '../mtrl-addons/src'), // Watch mtrl-addons source changes
     join(__dirname, 'client'),
     join(__dirname, 'server')
   ]
 
   const scssWatchPaths = [
     join(__dirname, 'client/styles'),
-    join(__dirname, 'node_modules/mtrl/src/styles')
+    join(__dirname, 'node_modules/mtrl/src/styles'),
+    join(__dirname, '../mtrl-addons/src/styles') // Watch mtrl-addons styles if any
   ]
 
   const watchJsFiles = () => {
@@ -463,32 +465,54 @@ const verifyOutput = async () => {
   }
 }
 
-const cleanDist = async () => {
-  if (isProduction) {
-    try {
-      console.log('🧹 Cleaning dist directory...')
-      // In a real implementation, you would delete the directory contents
-      // but keep the directory itself
-      // For example with rimraf or similar
-      // This is a simple version that assumes the directory exists
-      // and we're just recreating it
-
-      // Simple approach: just recreate the directories
-      await mkdir(DIST_DIR, { recursive: true })
-      await mkdir(STYLES_DIR, { recursive: true })
-      await mkdir(CHUNKS_DIR, { recursive: true })
-
-      console.log('✓ Dist directory cleaned')
-      return { success: true }
-    } catch (error) {
-      console.error('❌ Error cleaning dist directory:', error)
-      return {
-        success: false,
-        message: error.message || 'Error cleaning dist directory'
+const cleanAllCaches = async () => {
+  try {
+    console.log('🧹 Clearing all caches...')
+    
+    // Remove main bundle file if it exists
+    if (existsSync(JS_OUTPUT)) {
+      try {
+        unlinkSync(JS_OUTPUT)
+        console.log('✓ Cleaned main bundle (app.js)')
+      } catch (error) {
+        console.warn(`⚠️ Could not delete app.js: ${error.message}`)
       }
     }
+    
+    // Remove chunks directory if it exists
+    if (existsSync(CHUNKS_DIR)) {
+      const chunkFiles = readdirSync(CHUNKS_DIR)
+      let deletedCount = 0
+      
+      for (const file of chunkFiles) {
+        const filePath = join(CHUNKS_DIR, file)
+        try {
+          unlinkSync(filePath)
+          deletedCount++
+        } catch (error) {
+          console.warn(`⚠️ Could not delete ${file}: ${error.message}`)
+        }
+      }
+      
+      if (deletedCount > 0) {
+        console.log(`✓ Cleaned ${deletedCount} chunk files`)
+      }
+    }
+
+    // Ensure all directories exist
+    await mkdir(DIST_DIR, { recursive: true })
+    await mkdir(STYLES_DIR, { recursive: true })
+    await mkdir(CHUNKS_DIR, { recursive: true })
+
+    console.log('✓ All caches cleared and directories prepared')
+    return { success: true }
+  } catch (error) {
+    console.error('❌ Error clearing caches:', error)
+    return {
+      success: false,
+      message: error.message || 'Error clearing caches'
+    }
   }
-  return { success: true }
 }
 
 const build = async () => {
@@ -502,8 +526,13 @@ const build = async () => {
     console.log('└───────────────────────────────────────────────')
     console.log('')
 
-    // Clean dist directory in production mode
-    await cleanDist()
+    // Clean chunks directory to prevent accumulation
+    await cleanAllCaches()
+
+    // Create output directories immediately after cleaning
+    await mkdir(DIST_DIR, { recursive: true })
+    await mkdir(STYLES_DIR, { recursive: true })
+    await mkdir(CHUNKS_DIR, { recursive: true })
 
     // Create output directories
     await mkdir(DIST_DIR, { recursive: true })
