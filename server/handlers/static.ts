@@ -3,6 +3,7 @@ import { resolveStaticFile, isValidFile } from "../utils/paths.js";
 import { serveStaticFile } from "../services/file-service.js";
 import { logError } from "../middleware/logger.js";
 import { render404Page } from "../services/template.js";
+import { readFileSync } from "fs";
 
 /**
  * Handle static file requests
@@ -34,11 +35,71 @@ export async function handleStaticRequest(
       return await render404Page(req);
     }
 
+    // Special handling for SVG files being imported as modules
+    if (path.endsWith(".svg") && shouldTreatAsModule(req)) {
+      return handleSvgModuleRequest(filePath, req);
+    }
+
     // Serve the file with compression
     return await serveStaticFile(filePath, {}, req);
   } catch (error: any) {
     logError(path, error);
     return new Response(`Error serving static file: ${error.message}`, {
+      status: 500,
+      headers: { "Content-Type": "text/plain" },
+    });
+  }
+}
+
+/**
+ * Determine if an SVG should be treated as a module
+ * @param req The request object
+ * @returns True if the SVG should be served as a JavaScript module
+ */
+function shouldTreatAsModule(req: Request): boolean {
+  // Check if the request is coming from a module import
+  const accept = req.headers.get("Accept") || "";
+  const referer = req.headers.get("Referer") || "";
+
+  // If the Accept header includes JavaScript types or the referer suggests module loading
+  return (
+    accept.includes("application/javascript") ||
+    accept.includes("text/javascript") ||
+    (accept.includes("*/*") && referer.includes("client/"))
+  );
+}
+
+/**
+ * Handle SVG files imported as modules
+ * @param filePath The resolved file path
+ * @param req The request object
+ * @returns A response with the SVG content as a JavaScript module
+ */
+function handleSvgModuleRequest(filePath: string, req: Request): Response {
+  try {
+    // Read the SVG file content
+    const svgContent = readFileSync(filePath, "utf-8");
+
+    // Escape the SVG content for JavaScript
+    const escapedContent = svgContent
+      .replace(/\\/g, "\\\\")
+      .replace(/`/g, "\\`")
+      .replace(/\$/g, "\\$");
+
+    // Create a JavaScript module that exports the SVG content
+    const moduleContent = `export default \`${escapedContent}\`;`;
+
+    // Return as a JavaScript module
+    return new Response(moduleContent, {
+      status: 200,
+      headers: {
+        "Content-Type": "application/javascript",
+        "Cache-Control": "max-age=3600",
+      },
+    });
+  } catch (error: any) {
+    logError(filePath, error);
+    return new Response(`Error reading SVG file: ${error.message}`, {
       status: 500,
       headers: { "Content-Type": "text/plain" },
     });
