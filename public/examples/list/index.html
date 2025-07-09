@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mtrl-addons List Component Example</title>
+
+    <!-- Load mtrl core styles -->
+    <link rel="stylesheet" href="/dist/mtrl/styles.css" />
+
+    <!-- Load mtrl-addons styles -->
+    <link rel="stylesheet" href="/dist/mtrl-addons/styles/main.css" />
+
+    <link rel="stylesheet" href="/dist/styles/main.css" />
+  </head>
+  <body class="mtrl-app">
+    <!-- Import Map for ES modules -->
+    <script type="importmap">
+      {
+        "imports": {
+          "mtrl/": "/dist/mtrl/",
+          "mtrl/src/core/": "/dist/mtrl/",
+          "mtrl/src/": "/dist/mtrl/",
+          "mtrl-addons/": "/dist/mtrl-addons/",
+          "mtrl-addons/src/": "/dist/mtrl-addons/"
+        }
+      }
+    </script>
+    <div class="mtrl-content" id="content"></div>
+
+    <!-- Import the mtrl-addons components -->
+    <script type="module" src="/examples/list/script.js"></script>
+  </body>
+</html>
