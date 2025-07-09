@@ -172,32 +172,39 @@ class PuppeteerTester {
         );
       });
 
-      // Find chip with data-value="2" (as requested by user)
-      const targetChip = chipInfo.find((chip) => chip.dataValue === "2");
-
+      // Click on the second chip (index 1) to test page 2
+      const targetChip = chips[1]; // Change to index 1 for chip 2
       if (targetChip) {
+        const chipValue = await targetChip.evaluate((el) =>
+          el.getAttribute("data-value")
+        );
+        const chipSelected = await targetChip.evaluate(
+          (el) => el.getAttribute("aria-selected") === "true"
+        );
+        const chipText = await targetChip.evaluate((el) => el.textContent);
+
         console.log(
-          `\n🎯 [INTERACTION] Clicking on chip with data-value="2" (index ${targetChip.index})`
+          `🎯 [INTERACTION] Clicking on chip with data-value="${chipValue}" (index 1)`
         );
         console.log(
-          `📝 [INTERACTION] Chip details: Selected=${targetChip.selected}, Text="${targetChip.text}"`
+          `💬 [INTERACTION] Chip details: Selected=${chipSelected}, Text="${chipText}"`
         );
 
-        // Clear console logs before click
-        const preClickLogCount = this.consoleLogs.length;
+        // Count logs before click
+        const logsBefore = this.consoleLogs.length;
         console.log(
-          `\n📊 [INTERACTION] Console logs before click: ${preClickLogCount}`
+          `📊 [INTERACTION] Console logs before click: ${logsBefore}`
         );
 
         // Click the chip
-        await chips[targetChip.index].click();
+        await targetChip.click();
 
-        // Wait for any async operations
+        // Wait a bit for any async operations
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         // Report new console logs
         const postClickLogCount = this.consoleLogs.length;
-        const newLogs = this.consoleLogs.slice(preClickLogCount);
+        const newLogs = this.consoleLogs.slice(logsBefore);
 
         console.log(
           `\n📊 [INTERACTION] Console logs after click: ${postClickLogCount}`
@@ -226,12 +233,12 @@ class PuppeteerTester {
             className: chip?.className,
             text: chip?.textContent?.trim() || "",
           };
-        }, targetChip.index);
+        }, 2); // Pass index 2 for chip 3
 
         console.log(`\n🔄 [INTERACTION] Chip state after click:`);
         console.log(`   Value: ${updatedChipInfo.dataValue}`);
         console.log(
-          `   Selected: ${targetChip.selected} → ${updatedChipInfo.selected}`
+          `   Selected: ${chipSelected} → ${updatedChipInfo.selected}`
         );
         console.log(`   Text: "${updatedChipInfo.text}"`);
         console.log(`   Classes: ${updatedChipInfo.className}`);
@@ -265,6 +272,64 @@ class PuppeteerTester {
       await new Promise((resolve) => setTimeout(resolve, 500));
     }
 
+    // Test scrollbar hover behavior
+    console.log("📜 [INTERACTION] Testing scrollbar hover behavior...");
+    const scrollbarTrack = await page.$(".mtrl-list-manager-scrollbar-track");
+    if (scrollbarTrack) {
+      // Check initial opacity
+      const initialOpacity = await scrollbarTrack.evaluate(
+        (el) => window.getComputedStyle(el).opacity
+      );
+      console.log(
+        `📜 [INTERACTION] Scrollbar initial opacity: ${initialOpacity}`
+      );
+
+      // Hover over scrollbar
+      await scrollbarTrack.hover();
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      // Check opacity after hover
+      const hoverOpacity = await scrollbarTrack.evaluate(
+        (el) => window.getComputedStyle(el).opacity
+      );
+      console.log(
+        `📜 [INTERACTION] Scrollbar opacity on hover: ${hoverOpacity}`
+      );
+
+      // Move mouse away
+      await page.mouse.move(100, 100);
+      await new Promise((resolve) => setTimeout(resolve, 800)); // Wait for fade timeout (500ms) + transition (200ms)
+
+      // Check opacity after mouse leave
+      const finalOpacity = await scrollbarTrack.evaluate(
+        (el) => window.getComputedStyle(el).opacity
+      );
+      console.log(
+        `📜 [INTERACTION] Scrollbar opacity after hover: ${finalOpacity}`
+      );
+
+      // Report results
+      if (
+        hoverOpacity === "1" &&
+        (finalOpacity === "0" || parseFloat(finalOpacity) < 0.1)
+      ) {
+        console.log(
+          "✅ [INTERACTION] Scrollbar hover behavior working correctly!"
+        );
+      } else if (hoverOpacity === "1") {
+        console.log(
+          "⚠️ [INTERACTION] Scrollbar shows on hover but may not hide properly"
+        );
+        console.log(
+          `📜 [INTERACTION] Expected opacity: 0, Got: ${finalOpacity}`
+        );
+      } else {
+        console.log("❌ [INTERACTION] Scrollbar hover events not working");
+      }
+    } else {
+      console.log("❌ [INTERACTION] Scrollbar track not found");
+    }
+
     // Check for any ripple effects or animations
     const ripples = await page.$$(".mtrl-ripple");
     console.log(`✨ [INTERACTION] Found ${ripples.length} ripple elements`);
@@ -274,6 +339,76 @@ class PuppeteerTester {
 
   private async analyzeComponent(page: Page): Promise<ComponentInfo> {
     return await page.evaluate(() => {
+      // List-specific analysis
+      const listItemsContainer = document.querySelector(
+        ".mtrl-list-manager-items"
+      );
+      const listItems = listItemsContainer?.children || [];
+      const listComponent = document.querySelector(".mtrl-list");
+
+      // Check for any items in the container
+      console.log(
+        `📊 [DOM-ANALYSIS] List items container:`,
+        listItemsContainer
+      );
+      console.log(`📊 [DOM-ANALYSIS] Items in container: ${listItems.length}`);
+      console.log(`📊 [DOM-ANALYSIS] List component:`, listComponent);
+
+      // Check for placeholder or loading elements
+      const placeholders = document.querySelectorAll('[class*="placeholder"]');
+      const loadingElements = document.querySelectorAll('[class*="loading"]');
+
+      console.log(`📊 [DOM-ANALYSIS] Placeholders: ${placeholders.length}`);
+      console.log(
+        `📊 [DOM-ANALYSIS] Loading elements: ${loadingElements.length}`
+      );
+
+      // Log the actual HTML content of the items container
+      if (listItemsContainer) {
+        console.log(
+          `📊 [DOM-ANALYSIS] Items container HTML:`,
+          listItemsContainer.innerHTML.substring(0, 500)
+        );
+        console.log(
+          `📊 [DOM-ANALYSIS] Items container style:`,
+          window.getComputedStyle(listItemsContainer).display
+        );
+        console.log(`📊 [DOM-ANALYSIS] Items container dimensions:`, {
+          width: (listItemsContainer as HTMLElement).offsetWidth,
+          height: (listItemsContainer as HTMLElement).offsetHeight,
+          scrollHeight: (listItemsContainer as HTMLElement).scrollHeight,
+        });
+      }
+
+      // Check for scrollbar elements
+      const scrollbarTrack = document.querySelector(
+        ".mtrl-list-manager-scrollbar-track"
+      );
+      const scrollbarThumb = document.querySelector(
+        ".mtrl-list-manager-scrollbar-thumb"
+      );
+
+      if (scrollbarTrack && scrollbarThumb) {
+        const trackHeight = (scrollbarTrack as HTMLElement).offsetHeight;
+        const thumbHeight = (scrollbarThumb as HTMLElement).offsetHeight;
+        const thumbTop = (scrollbarThumb as HTMLElement).offsetTop;
+
+        console.log(
+          `📊 [DOM-ANALYSIS] Scrollbar track height: ${trackHeight}px`
+        );
+        console.log(
+          `📊 [DOM-ANALYSIS] Scrollbar thumb height: ${thumbHeight}px`
+        );
+        console.log(
+          `📊 [DOM-ANALYSIS] Scrollbar thumb position: ${thumbTop}px`
+        );
+        console.log(
+          `📊 [DOM-ANALYSIS] Scrollbar thumb ratio: ${((thumbHeight / trackHeight) * 100).toFixed(2)}%`
+        );
+      } else {
+        console.log(`📊 [DOM-ANALYSIS] Scrollbar not found or not visible`);
+      }
+
       return {
         title: document.title,
         bodyLength: document.body.innerHTML.length,
@@ -368,6 +503,192 @@ class PuppeteerTester {
       console.log("👋 [PUPPETEER] Browser closed");
     }
   }
+}
+
+/**
+ * Test scrollToPage API request behavior
+ */
+async function testScrollToPageAPI(page: Page) {
+  console.log("🧪 [PUPPETEER] Testing scrollToPage API requests...");
+
+  await page.goto("http://localhost:3000/components/lists/collection-addons", {
+    waitUntil: "networkidle2",
+  });
+
+  // Wait for initial load
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Enable request intercepting
+  await page.setRequestInterception(true);
+
+  const apiRequests: any[] = [];
+
+  page.on("request", (request) => {
+    if (request.url().includes("/api/users")) {
+      console.log("🌐 [PUPPETEER] API REQUEST INTERCEPTED:", request.url());
+      apiRequests.push({
+        url: request.url(),
+        method: request.method(),
+        timestamp: Date.now(),
+      });
+    }
+    request.continue();
+  });
+
+  // Test scrollToPage(2) - should trigger API request for page 2
+  console.log("🎯 [PUPPETEER] Testing scrollToPage(2) API request...");
+
+  const beforeRequestCount = apiRequests.length;
+  console.log(
+    "📊 [PUPPETEER] API requests before scrollToPage(2):",
+    beforeRequestCount
+  );
+
+  // Click page 2 chip and monitor console logs
+  await page.evaluate(() => {
+    console.log("🔍 [PUPPETEER] === STARTING scrollToPage(2) TEST ===");
+    console.log("🔍 [PUPPETEER] Current API requests count:", 0);
+  });
+
+  // Enable console logging
+  page.on("console", (msg) => {
+    if (
+      msg.text().includes("COLLECTION") ||
+      msg.text().includes("VIEWPORT") ||
+      msg.text().includes("API")
+    ) {
+      console.log("📝 [BROWSER]", msg.text());
+    }
+  });
+
+  // Click page 2 chip
+  await page.click('mtrl-chip[data-value="2"]');
+
+  // Wait for potential API calls
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  const afterRequestCount = apiRequests.length;
+  console.log(
+    "📊 [PUPPETEER] API requests after scrollToPage(2):",
+    afterRequestCount
+  );
+  console.log(
+    "📊 [PUPPETEER] New API requests:",
+    afterRequestCount - beforeRequestCount
+  );
+
+  // Check if any requests were made
+  if (afterRequestCount > beforeRequestCount) {
+    console.log("✅ [PUPPETEER] API requests were triggered!");
+    apiRequests.slice(beforeRequestCount).forEach((req, i) => {
+      console.log(`📋 [PUPPETEER] Request ${i + 1}: ${req.method} ${req.url}`);
+    });
+  } else {
+    console.log("❌ [PUPPETEER] NO API requests were triggered!");
+
+    // Debug: Check current list state
+    const listState = await page.evaluate(() => {
+      const listElement = document.querySelector(".list");
+      if (!listElement) return { error: "No list element found" };
+
+      const listManager = (listElement as any).listManager;
+      if (!listManager) return { error: "No listManager found" };
+
+      return {
+        totalItems: listManager.getTotalItems(),
+        itemsLength: listManager.getItems().length,
+        visibleRange: listManager.getVisibleRange(),
+        scrollPosition: listManager.getScrollPosition(),
+        hasCollection: !!listManager.collection,
+        hasViewport: !!listManager.viewport,
+        loadedRanges: listManager.collection
+          ? Array.from(listManager.collection.getLoadedRanges())
+          : [],
+        pendingRanges: listManager.collection
+          ? Array.from(listManager.collection.getPendingRanges())
+          : [],
+      };
+    });
+
+    console.log(
+      "🔍 [PUPPETEER] List state after scrollToPage(2):",
+      JSON.stringify(listState, null, 2)
+    );
+  }
+
+  // Test manual API call
+  console.log("🧪 [PUPPETEER] Testing manual collection.loadMissingRanges...");
+
+  const manualLoadResult = await page.evaluate(() => {
+    const listElement = document.querySelector(".list");
+    if (!listElement) return { error: "No list element found" };
+
+    const listManager = (listElement as any).listManager;
+    if (!listManager?.collection) return { error: "No collection found" };
+
+    // Try to manually trigger loading for range 20-39 (page 2)
+    return listManager.collection
+      .loadMissingRanges({ start: 20, end: 39 })
+      .then(() => ({ success: true }))
+      .catch((error: any) => ({ error: error.message }));
+  });
+
+  console.log(
+    "🧪 [PUPPETEER] Manual loadMissingRanges result:",
+    manualLoadResult
+  );
+
+  // Wait for potential API calls from manual trigger
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  const finalRequestCount = apiRequests.length;
+  console.log("📊 [PUPPETEER] Final API requests count:", finalRequestCount);
+
+  if (finalRequestCount > afterRequestCount) {
+    console.log("✅ [PUPPETEER] Manual trigger worked!");
+  } else {
+    console.log("❌ [PUPPETEER] Manual trigger also failed!");
+  }
+
+  // Test if visible range calculation is working
+  const visibleRangeTest = await page.evaluate(() => {
+    const listElement = document.querySelector(".list");
+    if (!listElement) return { error: "No list element found" };
+
+    const listManager = (listElement as any).listManager;
+    if (!listManager) return { error: "No listManager found" };
+
+    console.log("🔍 [RANGE-TEST] === TESTING VISIBLE RANGE CALCULATION ===");
+
+    // Try scrolling to specific position
+    listManager.scrollToIndex(20, "start");
+
+    // Get visible range after scroll
+    const visibleRange = listManager.getVisibleRange();
+    console.log(
+      "🔍 [RANGE-TEST] Visible range after scrollToIndex(20):",
+      visibleRange
+    );
+
+    // Check if range includes index 20
+    const includesTarget = visibleRange.start <= 20 && visibleRange.end >= 20;
+    console.log("🔍 [RANGE-TEST] Range includes index 20:", includesTarget);
+
+    return {
+      visibleRange,
+      includesTarget,
+      scrollPosition: listManager.getScrollPosition(),
+      totalItems: listManager.getTotalItems(),
+      itemsLength: listManager.getItems().length,
+    };
+  });
+
+  console.log(
+    "🔍 [PUPPETEER] Visible range test result:",
+    JSON.stringify(visibleRangeTest, null, 2)
+  );
+
+  console.log("🧪 [PUPPETEER] scrollToPage API test completed");
 }
 
 // Main execution
