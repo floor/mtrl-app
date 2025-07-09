@@ -1,0 +1,143 @@
+# mtrl-app Package Development Rules
+
+## Package Overview
+
+mtrl-app is the information hub and showcase application for the mtrl ecosystem. It contains comprehensive documentation, interactive showcases, and demonstrations for both mtrl core components and mtrl-addons extensions. Serves as the central documentation and testing platform for the entire mtrl system.
+
+## Environment & Architecture
+
+- Part of workspace alongside mtrl and mtrl-addons packages
+- Central hub for all documentation and showcases
+- Houses interactive component demonstrations in /client/content/components
+- Provides layout system documentation and examples
+- Uses mtrl components as foundation for its own interface
+
+## Development Philosophy
+
+- Follow "less is more" philosophy - clear and focused content
+- Prioritize user experience and documentation clarity
+- Showcase real-world usage patterns and best practices
+- Maintain consistency across all documentation and examples
+- Focus on practical demonstrations over theoretical explanations
+
+## Pre-Development Checklist
+
+1. Check existing documentation structure before adding new content
+2. Verify component examples use latest mtrl/mtrl-addons APIs
+3. Ensure showcase follows established content hierarchy
+4. Test all interactive examples for functionality and accessibility
+
+## Content Standards
+
+### Documentation Structure
+
+- Follow established hierarchy in /client/content/
+- Use consistent naming conventions across all docs
+- Organize content logically (components, core, layout, guides)
+- Cross-reference related documentation appropriately
+- Keep navigation intuitive and discoverable
+
+### Showcase Development
+
+- Create showcases in /client/content/components following hierarchy
+- Always use mtrl components via layout system (docs/layout/usages.md)
+- Prefer array-based layout schema for all examples
+- Format schema following formatting convention (docs/core/layout/array-schema.md)
+- Demonstrate component capabilities and real-world use cases
+- Include accessibility considerations in examples
+
+### Code Examples
+
+- Use TypeScript for all code examples
+- Show both basic and advanced usage patterns
+- Include proper error handling and edge cases
+- Demonstrate best practices and common patterns
+- Provide copy-paste ready code snippets
+
+### File Management
+
+- Prefer editing existing files over creating new ones
+- Avoid hyphens in filenames if possible
+- Prefer short filenames if clear enough
+- Organize files by feature/component logically
+- No summary .md files for coding sessions
+
+## Layout System
+
+### Schema Development
+
+- Use array-based layout schema as primary approach
+- Follow established schema formatting conventions
+- Ensure schemas are reusable and composable
+- Document schema patterns and common structures
+- Provide clear examples for each schema type
+
+### Component Integration
+
+- Always use mtrl/mtrl-addons components in showcases
+- Demonstrate proper component composition patterns
+- Show lifecycle management and event handling
+- Include accessibility features in all examples
+- Never create manual DOM elements in showcases
+
+## Testing & Quality
+
+- Test all interactive examples for functionality
+- Verify examples work with latest mtrl versions
+- Ensure accessibility compliance in all showcases
+- Test responsive behavior across device sizes
+- Validate all code examples for syntax and functionality
+
+## Content Guidelines
+
+### Writing Style
+
+- Use clear, concise language
+- Focus on practical examples over theory
+- Include rationale for design decisions
+- Provide context for when to use specific patterns
+- Keep explanations beginner-friendly while showing advanced concepts
+
+### Visual Design
+
+- Never inline CSS in showcases or documentation
+- Use mtrl styling system consistently
+- Maintain visual hierarchy and consistency
+- Ensure proper contrast and readability
+- Follow Material Design principles throughout
+
+## Build & Deployment
+
+- Build using `bun run build:app`
+- Do not start development servers unless testing
+- Ensure all showcases work in production build
+- Verify documentation links and references
+- Test cross-platform compatibility
+
+## Performance & Optimization
+
+- Optimize for fast loading and smooth interactions
+- Minimize bundle size impact of examples
+- Use efficient showcase patterns
+- Avoid unnecessary complexity in demonstrations
+- Ensure examples scale well with content
+
+## Documentation Maintenance
+
+- Keep all documentation current with latest package versions
+- Update examples when APIs change
+- Remove deprecated patterns and outdated information
+- Ensure consistency across all documentation sections
+- Regular review and cleanup of content
+
+## Prohibited Actions
+
+- Do not create standalone .js/.html files for showcases
+- Do not inline CSS in any examples or documentation
+- Do not create manual DOM elements in showcases
+- Do not duplicate documentation across sections
+- Do not create markdown files for temporary notes
+- Do not run unnecessary development servers
+- Do not compromise accessibility in examples
+- Do not show bad practices or anti-patterns
+- Do not harcode prefix in js or scss files
