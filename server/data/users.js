@@ -5,7 +5,7 @@ import { dirname, join } from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const USERS_DATA_FILE = join(__dirname, 'generated-users.json')
+const USERS_DATA_FILE = join(__dirname, 'generated/users.json')
 
 /**
  * Generate a single user with deterministic random values based on ID

@@ -23,6 +23,9 @@ coverage/
 .nyc_output/
 git-user-stats.js
 
+# generated data
+server/data/generated/
+
 # miscellaneous
 *.swp
 *.swo
