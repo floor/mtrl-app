@@ -9,11 +9,11 @@ import {
 
 import { rightIcon, leftIcon } from '../../../icons'
 
-// Import the new collection system and list component
+// Import the new collection system and VList component
 import {
   createLayout,
   createCollection,
-  createList
+  createVList
 } from 'mtrl-addons'
 
 const debug = true
@@ -34,13 +34,11 @@ const createUserList = (parent) => {
     console.log('🧪 [COLLECTION-ADDONS] Has pagination?', !!data.pagination)
   }).catch(e => console.error('🧪 [COLLECTION-ADDONS] API test failed:', e))
 
-  // Create the list component (powered by collection system)
-  const list = createList({
+  // Create the VList component (powered by collection system)
+  const list = createVList({
     container: parent,
-    scroll: {
-      animation: false
-    },
-    adapter: {
+    smoothScrolling: false,
+    collection: {
       read: async (params) => {
         try {
           const page = params?.page || 1
@@ -86,7 +84,7 @@ const createUserList = (parent) => {
       }
     },
 
-    transform: (user) => {
+    transformItem: (user) => {
       if (!user || typeof user !== 'object') {
         return {
           id: 'error-' + Date.now() + Math.random(),
@@ -107,69 +105,34 @@ const createUserList = (parent) => {
       }
     },
 
-    renderItem: {
-      tag: 'div',
-      className: 'mtrl-list-item user-item',
-      attributes: { 'data-id': '{{id}}' },
-      children: [
-        {
-          tag: 'div',
-          className: 'user-avatar',
-          textContent: '{{avatar}}'
-        },
-        {
-          tag: 'div',
-          className: 'user-details',
-          children: [
-            {
-              tag: 'div',
-              className: 'user-name',
-              textContent: '{{name}}'
-            },
-            {
-              tag: 'div',
-              className: 'user-email',
-              textContent: '{{email}}'
-            },
-            {
-              tag: 'div',
-              className: 'user-role',
-              textContent: '{{role}}'
-            }
-          ]
-        }
-      ]
+    template: (item) => {
+      return `
+        <div class="mtrl-list-item user-item" data-id="${item.id}">
+          <div class="user-avatar">${item.avatar}</div>
+          <div class="user-details">
+            <div class="user-name">${item.name}</div>
+            <div class="user-email">${item.email}</div>
+            <div class="user-role">${item.role}</div>
+          </div>
+        </div>
+      `;
     },
 
-    // List-specific configuration
-    listStyle: {
-      itemHeight: 'auto',
-      gap: 2,
-      padding: 8,
-      hoverable: true,
-      striped: true
-    },
-
-    selection: {
-      enabled: true,
-      multiple: true,
-      clearable: true
-    },
-
-    performance: {
-      recycleElements: true,
-      bufferSize: 50,
-      renderDebounce: 16
-    },
+    // VList-specific configuration
+    estimatedItemSize: 84,
+    rangeSize: 20,
+    paginationStrategy: 'page',
+    enableScrollbar: true,
+    autoHideScrollbar: true,
+    enablePlaceholders: true,
 
     className: 'mtrl-collection-users',
     ariaLabel: 'User Directory',
-    pageSize: 20,
     debug: true
   })
 
   // State tracking
-  const isLoading = false
+  let page = 1
 
   // API methods that match current list interface
   const listAPI = {
@@ -177,54 +140,17 @@ const createUserList = (parent) => {
 
     on: (event, callback) => {
       console.log(`📡 [COLLECTION-ADDONS] Event listener added: ${event}`)
-      // Subscribe to list events and map to expected events
-      list.subscribe((eventPayload) => {
-        console.log('📡 [COLLECTION-ADDONS] Raw collection event:', eventPayload)
-
-        // Map collection events to expected showcase events
-        if (event === 'load') {
-          // Handle both ITEMS_ADDED and LOADING_END events as 'load'
-          if (eventPayload.type === 'items:added' || eventPayload.type === 'loading:end') {
-            console.log(`📡 [COLLECTION-ADDONS] Mapping ${eventPayload.type} to load event:`, eventPayload.data)
-            callback({
-              items: eventPayload.data?.items || eventPayload.items,
-              page: eventPayload.data?.page || eventPayload.page,
-              hasMore: eventPayload.data?.hasMore || eventPayload.hasMore,
-              type: 'load'
-            })
-          }
-        } else if (event === 'error') {
-          if (eventPayload.type === 'error:occurred') {
-            console.log('📡 [COLLECTION-ADDONS] Mapping error event:', eventPayload.data)
-            callback({ error: eventPayload.data?.error || eventPayload.error })
-          }
-        }
-      })
-
-      // Also subscribe to the raw event emitter for direct access
-      try {
-        if (list._collection && list._collection.emit) {
-          // Subscribe to collection events directly
-          list._collection.subscribe((data) => {
-            console.log('📡 [COLLECTION-ADDONS] Direct collection event:', data)
-            if (event === 'load' && data.items) {
-              callback({ items: data.items, type: 'load' })
-            }
-          })
-        }
-      } catch (e) {
-        console.log('📡 [COLLECTION-ADDONS] Could not subscribe to direct events:', e.message)
-      }
+      // VList uses standard event emitter pattern
+      list.on(event, callback)
     },
 
     loadNext: async () => {
       console.log('➡️ [COLLECTION-ADDONS] LoadNext called')
-      const hasNext = list.hasNext()
-      if (hasNext) {
-        page++
-        await list.scrollToPage(page)
-      }
-      return Promise.resolve({ hasNext, page })
+      // VList doesn't have loadNext, use loadRange instead
+      const currentPage = page
+      page++
+      await list.loadRange(page, 20, 'page')
+      return Promise.resolve({ hasNext: true, page })
     },
 
     getAllItems: () => {
@@ -234,26 +160,33 @@ const createUserList = (parent) => {
     },
 
     getVisibleItems: () => {
-      const items = list.getItems()
+      // VList has getVisibleRange
+      const range = list.getVisibleRange()
+      const items = []
+      for (let i = range.start; i <= range.end; i++) {
+        const item = list.getItem(i)
+        if (item) items.push(item)
+      }
       console.log(`👁️ [COLLECTION-ADDONS] GetVisibleItems called - ${items.length} items`)
-      return items // For now, all items are visible (virtual scrolling will change this)
+      return items
     },
 
     isLoading: () => {
-      return isLoading || list.isLoading()
+      return list.isLoading()
     },
 
     hasNextPage: () => {
-      return list.hasNext()
+      // VList doesn't expose this directly
+      return true
     },
 
     getSelectedItemIds: () => {
       return list.getSelectedIds()
     },
 
-    // List-specific methods
+    // VList-specific methods
     getMetrics: () => {
-      return list.getMetrics()
+      return list.getMetrics ? list.getMetrics() : {}
     },
 
     getSelectedItems: () => {
@@ -262,15 +195,18 @@ const createUserList = (parent) => {
 
     // Scroll animation control methods
     setScrollAnimation: (enabled) => {
-      return list.setScrollAnimation(enabled)
+      // VList doesn't have this method
+      console.log('📡 [COLLECTION-ADDONS] setScrollAnimation not available in VList')
     },
 
     getScrollAnimation: () => {
-      return list.getScrollAnimation()
+      // VList doesn't have this method
+      return false
     },
 
     toggleScrollAnimation: () => {
-      return list.toggleScrollAnimation()
+      // VList doesn't have this method
+      console.log('📡 [COLLECTION-ADDONS] toggleScrollAnimation not available in VList')
     }
   }
 
@@ -280,6 +216,13 @@ const createUserList = (parent) => {
   // The collection will automatically load initial data and handle pagination
 
   console.log('!!! list', list)
+
+  // Add scrollToPage method for compatibility
+  list.scrollToPage = async function(pageNum, alignment = 'start', animate = false) {
+    console.log(`📄 [COLLECTION-ADDONS] scrollToPage(${pageNum}) called`)
+    // Use loadRange with page strategy
+    await this.loadRange(pageNum, 20, 'page', alignment)
+  }
 
   return list
 }

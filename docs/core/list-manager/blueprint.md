@@ -1133,7 +1133,6 @@ export interface ListManagerConfig {
 ### Phase 1: Core Virtual Scrolling (Current)
 
 1. **Viewport Feature**
-
    - Pure virtual scrolling with container positioning
    - Custom scrollbar implementation
    - Mouse wheel handling
@@ -1148,7 +1147,6 @@ export interface ListManagerConfig {
 ### Phase 2: Optimization (Later)
 
 1. **Element Recycling**
-
    - DOM element pool
    - Reuse strategy
    - Memory optimization

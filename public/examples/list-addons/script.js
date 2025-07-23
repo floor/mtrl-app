@@ -14,7 +14,7 @@ import { rightIcon, leftIcon, mtrlIcon } from '../../../../client/icons/index.js
 
 import {
   createLayout,
-  createList  // Fixed: Use createList as requested
+  createList // Fixed: Use createList as requested
 } from '../../../../dist/mtrl-addons/index.mjs'
 
 export const createComponentsLayout = (info) => [
@@ -59,15 +59,17 @@ const createUserList = (parent) => {
 
   // Create the list component using createList
   const list = createList({
-    container: parent,
-    
+    parent,
+
     scroll: {
-      animation: false
+      animation: false,
+      measureItems: false // Disable item measurement for better performance
     },
-    
-    collection: {
-      limit: 20,
-      strategy: 'page'
+
+    // Use fixed pagination limit instead of viewport-based calculation
+    pagination: {
+      strategy: 'page',
+      limit: 20 // Fixed limit of 20 items per page
     },
 
     selection: {
@@ -82,7 +84,7 @@ const createUserList = (parent) => {
       renderDebounce: 16
     },
 
-    className: 'mtrl-list-users',
+    class: 'mtrl-list--users',
     ariaLabel: 'User Directory',
     debug: true,
 
@@ -92,27 +94,13 @@ const createUserList = (parent) => {
           const page = params?.page || 1
           const limit = params?.limit || 20
           const url = `/api/users?page=${page}&limit=${limit}`
-          console.log(`🌐 [LIST-EXAMPLE] Fetching: ${url}`)
 
           const response = await fetch(url)
           const data = await response.json()
 
-          console.log('📦 [LIST-EXAMPLE] Raw API response:', data)
-          console.log('📦 [LIST-EXAMPLE] API structure check:', {
-            hasItems: 'items' in data,
-            hasData: 'data' in data,
-            itemsLength: data.items?.length || 0,
-            dataLength: data.data?.length || 0,
-            keysInResponse: Object.keys(data)
-          })
-
           // Use the correct structure - API returns { items: [...], meta: {...} }
           const items = data.items || []
           const meta = data.meta || {}
-
-          console.log(`📡 [LIST-EXAMPLE] Processed items: ${items.length} items`)
-          console.log('📡 [LIST-EXAMPLE] First item:', items[0])
-          console.log('📡 [LIST-EXAMPLE] Meta data:', meta)
 
           return {
             items,
@@ -125,7 +113,7 @@ const createUserList = (parent) => {
             }
           }
         } catch (error) {
-          console.error('❌ [LIST-EXAMPLE] API Error:', error)
+          // Return error without logging (handled by collection)
           return {
             items: [],
             error: { message: error.message }
@@ -172,7 +160,7 @@ const createUserList = (parent) => {
             {
               tag: 'div',
               className: 'user-name',
-              textContent: '{{name}}'
+              textContent: '{{name}} ({{index}})'
             },
             {
               tag: 'div',
@@ -189,8 +177,6 @@ const createUserList = (parent) => {
       ]
     }
   })
-
-  console.log('🔄 [LIST-EXAMPLE] List component created:', list)
 
   return list
 }
@@ -223,12 +209,10 @@ const createPerformanceMonitor = () => {
   return {
     trackRender: () => {
       renderCount++
-      console.log(`📊 [LIST-EXAMPLE] Render #${renderCount}`)
     },
 
     trackScroll: () => {
       scrollCount++
-      console.log(`🔄 [LIST-EXAMPLE] Scroll #${scrollCount}`)
     },
 
     getMetrics: () => {
@@ -279,8 +263,8 @@ const createListExampleComponent = (container) => {
     { label: '50', value: 50 },
     { label: '100', value: 100 },
     { label: "1'000", value: 1000 },
-    { label: "2'000", value: 2000 },
-    { label: "3'000", value: 3000 }
+    { label: "10'000", value: 10000 },
+    { label: "50'000", value: 50000 }
   ]
 
   // Create controls
@@ -375,7 +359,7 @@ const createListExampleComponent = (container) => {
     console.log('📄 [LIST-EXAMPLE] Page input:', page)
 
     performanceMonitor.trackScroll()
-    userList.scrollToPage(page, 'start')  // Fixed: Use correct parameter count
+    userList.loadRange(page, 20, 'page', 'start') // New loadRange API
     updateDebugPanel()
   })
 
@@ -384,7 +368,7 @@ const createListExampleComponent = (container) => {
     console.log('📄 [LIST-EXAMPLE] Pages chip selected:', value)
 
     performanceMonitor.trackScroll()
-    userList.scrollToPage(value, 'start')  // Fixed: Use correct parameter count
+    userList.loadRange(value, 20, 'page', 'start') // New loadRange API
     info.page.setValue(value)
     updateDebugPanel()
   })
@@ -395,7 +379,7 @@ const createListExampleComponent = (container) => {
     if (currentPage > 1) {
       currentPage--
       performanceMonitor.trackScroll()
-      userList.scrollToPage(currentPage, 'start')  // Fixed: Use correct parameter count
+      userList.loadRange(currentPage, 20, 'page', 'start') // New loadRange API
       info.page.setValue(currentPage)
     }
   })
@@ -404,7 +388,7 @@ const createListExampleComponent = (container) => {
     console.log('➡️ [LIST-EXAMPLE] Next page:', page)
 
     page++
-    userList.scrollToPage(page, 'start')  // Fixed: Use correct parameter count
+    userList.loadRange(page, 20, 'page', 'start') // New loadRange API
     info.page.setValue(page)
   })
 
@@ -438,13 +422,16 @@ Avg Render Time: ${metrics.avgRenderTime.toFixed(2)}ms`)
     console.error('❌ [LIST-EXAMPLE] Collection error:', event.error)
   })
 
+  // Listen for failed ranges
+  userList.on('range:failed', (event) => {
+    console.warn(`⚠️ [LIST-EXAMPLE] Range ${event.rangeId} failed (attempt ${event.attempts})`)
+  })
+
   // Initial debug panel update
   setTimeout(updateDebugPanel, 100)
 
   // Periodic debug panel updates
   const debugInterval = debug ? setInterval(updateDebugPanel, 1000) : null
-
-  console.log('✅ [LIST-EXAMPLE] List component showcase initialized successfully')
 
   return {
     layout,

@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Placeholder Test</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .list-container {
+        height: 400px;
+        border: 1px solid #ddd;
+        overflow: auto;
+        margin: 20px 0;
+      }
+      .controls {
+        margin-bottom: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+      .info {
+        background: #f0f0f0;
+        padding: 10px;
+        border-radius: 4px;
+        margin-top: 20px;
+      }
+      .placeholder-item {
+        background: #f5f5f5;
+        border-left: 4px solid #2196f3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Placeholder Test</h1>
+
+      <div class="controls">
+        <button onclick="scrollToMiddle()">Scroll to Middle</button>
+        <button onclick="checkPlaceholders()">Check Placeholders</button>
+        <button onclick="analyzeStructure()">Analyze Structure</button>
+      </div>
+
+      <div id="list-container" class="list-container"></div>
+
+      <div id="info" class="info">
+        <p>Status: Ready</p>
+      </div>
+    </div>
+
+    <script type="module">
+      import { createList } from "/dist/chunks/list-chunk.js";
+      import { withListManager } from "/dist/chunks/list-manager-chunk.js";
+
+      // Create list with placeholders enabled
+      const container = document.getElementById("list-container");
+
+      const config = {
+        virtual: {
+          enabled: true,
+          estimatedItemSize: 50,
+          overscan: 5,
+        },
+        collection: {
+          adapter: {
+            async read({ offset, limit }) {
+              // Simulate API delay
+              await new Promise((resolve) => setTimeout(resolve, 1000));
+
+              const items = [];
+              for (let i = 0; i < limit; i++) {
+                items.push({
+                  id: offset + i,
+                  name: `Item ${offset + i}`,
+                  description: `Description for item ${offset + i}`,
+                  email: `user${offset + i}@example.com`,
+                  score: Math.floor(Math.random() * 100),
+                });
+              }
+
+              return {
+                items,
+                meta: { total: 10000 },
+              };
+            },
+          },
+          pageSize: 20,
+          strategy: "offset",
+        },
+        placeholders: {
+          enabled: true,
+          mode: "masked",
+          analyzeAfterInitialLoad: true,
+        },
+      };
+
+      // Create enhanced list
+      const enhance = withListManager(config);
+      const listComponent = enhance(
+        createList({
+          element: container,
+          items: [],
+          totalItems: 10000,
+        })
+      );
+
+      // Initialize
+      listComponent.init();
+
+      // Expose for testing
+      window.listComponent = listComponent;
+
+      window.scrollToMiddle = () => {
+        const viewport = container.querySelector(".mtrl-list__viewport");
+        if (viewport) {
+          viewport.scrollTop = 250000; // Middle of 10k items * 50px
+          updateInfo("Scrolled to middle");
+        }
+      };
+
+      window.checkPlaceholders = () => {
+        if (listComponent.placeholders) {
+          const count = listComponent.placeholders.countPlaceholders();
+          const indices = listComponent.placeholders.getPlaceholderIndices();
+          const hasStructure =
+            listComponent.placeholders.hasAnalyzedStructure();
+
+          updateInfo(`
+                    Placeholders: ${count}<br>
+                    Has Structure: ${hasStructure}<br>
+                    Indices: [${indices.slice(0, 10).join(", ")}${indices.length > 10 ? "..." : ""}]
+                `);
+
+          // Highlight placeholder items
+          document.querySelectorAll(".mtrl-list__item").forEach((el, i) => {
+            const item = listComponent.items[i];
+            if (item && listComponent.placeholders.isPlaceholder(item)) {
+              el.classList.add("placeholder-item");
+            } else {
+              el.classList.remove("placeholder-item");
+            }
+          });
+        }
+      };
+
+      window.analyzeStructure = () => {
+        if (listComponent.placeholders && listComponent.items.length > 0) {
+          const realItems = listComponent.items.filter(
+            (item) => item && !listComponent.placeholders.isPlaceholder(item)
+          );
+
+          if (realItems.length > 0) {
+            const structure =
+              listComponent.placeholders.analyzeDataStructure(realItems);
+            const fields = Array.from(structure.entries()).map(
+              ([field, data]) =>
+                `${field}: ${data.type} (${data.minLength}-${data.maxLength} chars)`
+            );
+
+            updateInfo(`
+                        Structure analyzed from ${realItems.length} items:<br>
+                        ${fields.join("<br>")}
+                    `);
+          } else {
+            updateInfo("No real items to analyze yet");
+          }
+        }
+      };
+
+      function updateInfo(html) {
+        document.getElementById("info").innerHTML = `<p>${html}</p>`;
+      }
+
+      // Auto-check after initial load
+      setTimeout(() => {
+        checkPlaceholders();
+      }, 2000);
+    </script>
+  </body>
+</html>

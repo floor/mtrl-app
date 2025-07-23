@@ -26,6 +26,9 @@
     "dev": "bun run ./build.js --watch & bun run ./server.ts",
     "test": "bun test",
     "serve": "bun --hot test/serve.ts",
+    "server": "bun run server.ts",
+    "server:dev": "NODE_ENV=development bun run server.ts",
+    "server:prod": "NODE_ENV=production bun run server.ts",
     "server:start": "pm2 start ecosystem.config.js",
     "server:stop": "pm2 stop mtrl-app",
     "server:reload": "pm2 restart mtrl-app",
@@ -55,6 +58,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.33.1",
     "@typescript-eslint/parser": "^8.33.1",
+    "entities": "^6.0.1",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.1",

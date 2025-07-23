@@ -14,7 +14,6 @@ import { rightIcon, leftIcon } from '../../../icons'
 
 import { createLayout } from 'mtrl-addons'
 const strategy = ''
-const debug = false
 
 const createUserList = (parent) => {
   // Create the API-connected list
@@ -22,7 +21,7 @@ const createUserList = (parent) => {
     collection: 'users', // This should create a '/api/users' endpoint
     baseUrl: '/api', // Relative URL - automatically converted to full URL
     class: 'list--users',
-    // itemHeight: 84,
+    itemHeight: 84,
     multiSelect: true,
     // pageSize: 20,
     scrollStrategy: 'scroll',
@@ -155,50 +154,50 @@ export const createListComponent = (container) => {
 
   let animate = true
 
-  // // Create a custom render hook to log selection application
-  // const originalSetRenderHook = userList.list?.setRenderHook
-  // if (originalSetRenderHook && typeof originalSetRenderHook === 'function') {
-  //   // Wrap the render hook to add debugging
-  //   const debugRenderHook = (originalHook) => (item, element) => {
-  //     renderHookCallCount++
-  //     // console.log(`🎨 RENDER HOOK #${renderHookCallCount}:`, {
-  //     //   itemId: item.id,
-  //     //   itemHeadline: item.headline,
-  //     //   elementDataId: element.getAttribute('data-id'),
-  //     //   hasSelectedClass: element.classList.contains(
-  //     //     'mtrl-list-item--selected'
-  //     //   ),
-  //     //   isSelected: userList.isItemSelected
-  //     //     ? userList.isItemSelected(item.id)
-  //     //     : 'N/A',
-  //     //   timestamp: new Date().toLocaleTimeString()
-  //     // })
+  // Create a custom render hook to log selection application
+  const originalSetRenderHook = userList.list?.setRenderHook
+  if (originalSetRenderHook && typeof originalSetRenderHook === 'function') {
+    // Wrap the render hook to add debugging
+    const debugRenderHook = (originalHook) => (item, element) => {
+      renderHookCallCount++
+      // console.log(`🎨 RENDER HOOK #${renderHookCallCount}:`, {
+      //   itemId: item.id,
+      //   itemHeadline: item.headline,
+      //   elementDataId: element.getAttribute('data-id'),
+      //   hasSelectedClass: element.classList.contains(
+      //     'mtrl-list-item--selected'
+      //   ),
+      //   isSelected: userList.isItemSelected
+      //     ? userList.isItemSelected(item.id)
+      //     : 'N/A',
+      //   timestamp: new Date().toLocaleTimeString()
+      // })
 
-  //     // Call the original hook
-  //     if (originalHook) {
-  //       originalHook(item, element)
-  //     }
+      // Call the original hook
+      if (originalHook) {
+        originalHook(item, element)
+      }
 
-  //     // Log after hook is applied
-  //     // console.log(`🎨 RENDER HOOK AFTER #${renderHookCallCount}:`, {
-  //     //   itemId: item.id,
-  //     //   hasSelectedClass: element.classList.contains(
-  //     //     'mtrl-list-item--selected'
-  //     //   ),
-  //     //   isSelected: userList.isItemSelected
-  //     //     ? userList.isItemSelected(item.id)
-  //     //     : 'N/A'
-  //     // })
-  //   }
+      // Log after hook is applied
+      // console.log(`🎨 RENDER HOOK AFTER #${renderHookCallCount}:`, {
+      //   itemId: item.id,
+      //   hasSelectedClass: element.classList.contains(
+      //     'mtrl-list-item--selected'
+      //   ),
+      //   isSelected: userList.isItemSelected
+      //     ? userList.isItemSelected(item.id)
+      //     : 'N/A'
+      // })
+    }
 
-  //   // Override setRenderHook to wrap any hooks that get set
-  //   userList.list.setRenderHook = (hookFn) => {
-  //     // console.log('🔧 SETTING RENDER HOOK:', typeof hookFn)
-  //     originalSetRenderHook(debugRenderHook(hookFn))
-  //   }
-  // } else {
-  //   //  console.warn('❌ setRenderHook not available on userList.list')
-  // }
+    // Override setRenderHook to wrap any hooks that get set
+    userList.list.setRenderHook = (hookFn) => {
+      // console.log('🔧 SETTING RENDER HOOK:', typeof hookFn)
+      originalSetRenderHook(debugRenderHook(hookFn))
+    }
+  } else {
+    //  console.warn('❌ setRenderHook not available on userList.list')
+  }
 
   let page = 1
 
@@ -228,7 +227,7 @@ export const createListComponent = (container) => {
     [createSwitch, 'animate', { label: 'Animate scroll', checked: animate, class: 'switch--dense' }]
   ], layout.info).component
 
-  // const debugPanel = createDebugPanel(layout.info)
+  const debugPanel = createDebugPanel(layout.info)
 
   // Add pages chips
   pages.forEach(({ label, value }) => {
@@ -269,7 +268,6 @@ export const createListComponent = (container) => {
 
   // Function to update debug panel
   const updateDebugPanel = () => {
-    return
     try {
       const stateElement = document.getElementById('collection-state')
       if (!stateElement) {
@@ -321,7 +319,7 @@ export const createListComponent = (container) => {
   }
 
   // Update debug panel periodically
-  // const debugInterval = setInterval(updateDebugPanel, 500)
+  const debugInterval = setInterval(updateDebugPanel, 500)
 
   // Initial update after a short delay to ensure everything is mounted
   setTimeout(updateDebugPanel, 100)
@@ -384,7 +382,7 @@ export const createListComponent = (container) => {
     layout,
     userList,
     cleanup: () => {
-      clearInterval(debugInterval)
+      arInterval(debugInterval)
     }
   }
 }

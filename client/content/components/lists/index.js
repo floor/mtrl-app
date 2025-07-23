@@ -26,7 +26,7 @@ export const createListsContent = (container, components) => {
     container
   ).component
 
-  // createListComponent(layout.body)
+  createListComponent(layout.body)
   createCollectionAddonsComponent(layout.body)
 
   // initCollectionEvents(layout.body)
@@ -34,8 +34,8 @@ export const createListsContent = (container, components) => {
   // virtualPositioningTest(layout.body)
 
   // initBasicList(layout.body)
-  // initLongStaticList(layout.body)
-  // initCursorList(layout.body)
+  initLongStaticList(layout.body)
+  initCursorList(layout.body)
   // createDocs(layout.body, 'components/list.md')
 
   // initSectionedList(layout.body)

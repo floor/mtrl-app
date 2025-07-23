@@ -2,6 +2,7 @@
 import {
   DEFAULT_LIMIT,
   TOTAL_USERS,
+  getTotalUsers,
   getUserBatch,
   searchUsers,
 } from "./base.js";
@@ -12,17 +13,19 @@ import {
  * @param limit Items per page
  * @returns Object with page number, index, and existence info
  */
-export function findUserPosition(
+export async function findUserPosition(
   userId: number,
   limit: number = DEFAULT_LIMIT
-): {
+): Promise<{
   exists: boolean;
   pageNumber?: number;
   index?: number;
   totalPages?: number;
-} {
+}> {
+  const totalUsers = await getTotalUsers();
+
   // Validate user ID
-  if (userId < 1 || userId > TOTAL_USERS) {
+  if (userId < 1 || userId > totalUsers) {
     return { exists: false };
   }
 
@@ -31,7 +34,7 @@ export function findUserPosition(
 
   // Calculate which page this index falls on
   const pageNumber = Math.floor(index / limit) + 1;
-  const totalPages = Math.ceil(TOTAL_USERS / limit);
+  const totalPages = Math.ceil(totalUsers / limit);
 
   return {
     exists: true,
@@ -78,7 +81,7 @@ export async function handleFindPosition(
   );
 
   // Find the position
-  const position = findUserPosition(userId, limit);
+  const position = await findUserPosition(userId, limit);
 
   if (!position.exists) {
     return new Response(
@@ -135,13 +138,13 @@ export async function handleOffsetPagination(
 
   if (searchTerm) {
     // Handle search case
-    const searchResults = searchUsers(searchTerm, offset, limit);
+    const searchResults = await searchUsers(searchTerm, offset, limit);
     users = searchResults.users;
     total = searchResults.totalMatches;
   } else {
     // Handle normal offset pagination without search
-    users = getUserBatch(offset, limit);
-    total = TOTAL_USERS;
+    users = await getUserBatch(offset, limit);
+    total = await getTotalUsers();
   }
 
   // Calculate pagination metadata for offset-based
@@ -222,13 +225,13 @@ export async function handleStandardPagination(
 
   if (searchTerm) {
     // Handle search case
-    const searchResults = searchUsers(searchTerm, startIndex, limit);
+    const searchResults = await searchUsers(searchTerm, startIndex, limit);
     users = searchResults.users;
     total = searchResults.totalMatches;
   } else {
     // Handle normal pagination without search
-    users = getUserBatch(startIndex, limit);
-    total = TOTAL_USERS;
+    users = await getUserBatch(startIndex, limit);
+    total = await getTotalUsers();
   }
 
   // Calculate pagination metadata

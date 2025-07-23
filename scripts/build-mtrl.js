@@ -33,18 +33,18 @@ const buildMtrl = async () => {
     }
 
     const startTime = Date.now()
-    
+
     // Ultra-fast bundle - optimized for development speed
     const result = await Bun.build({
       entrypoints: [join(MTRL_DIR, 'index.ts')],
       outdir: OUTPUT_DIR,
       target: 'browser',
       format: 'esm',
-      minify: false,           // Skip minification for speed
-      splitting: false,        // Skip code splitting for speed  
-      sourcemap: 'inline',     // Inline sourcemaps are faster
+      minify: false, // Skip minification for speed
+      splitting: false, // Skip code splitting for speed
+      sourcemap: 'inline', // Inline sourcemaps are faster
       naming: 'index.js',
-      external: [],            // Bundle everything for simplicity
+      external: [], // Bundle everything for simplicity
       define: {
         'process.env.NODE_ENV': '"development"'
       }
@@ -58,10 +58,9 @@ const buildMtrl = async () => {
 
     const buildTime = Date.now() - startTime
     const size = await Bun.file(join(OUTPUT_DIR, 'index.js')).size
-    
+
     console.log(`✅ [BUILD-MTRL] Built in ${buildTime}ms (${(size / 1024).toFixed(1)}KB)`)
     return true
-
   } catch (error) {
     console.error('❌ [BUILD-MTRL] Build error:', error.message)
     if (!isWatch) process.exit(1)
@@ -75,7 +74,7 @@ await buildMtrl()
 // Watch mode
 if (isWatch) {
   console.log('👀 [BUILD-MTRL] Watching for changes...')
-  
+
   const watchPaths = [
     join(MTRL_DIR, 'src'),
     join(MTRL_DIR, 'index.ts')
@@ -111,4 +110,4 @@ if (isWatch) {
     console.log('\n👋 [BUILD-MTRL] Stopping watch mode...')
     process.exit(0)
   })
-} 
+}

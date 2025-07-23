@@ -7,12 +7,15 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 const USERS_DATA_FILE = join(__dirname, 'generated/users.json')
 
+// Total number of users
+const TOTAL_USERS = 1000000
+
 /**
  * Generate a single user with deterministic random values based on ID
  * @param id The user ID
  * @returns A user object
  */
-function generateUser (id) {
+export function generateUser (id) {
   // Use the ID as seed for deterministic "random" values
   const seed = id
 
@@ -140,15 +143,40 @@ export function regenerateUsers () {
   return generateAllUsers()
 }
 
-// Load users on module import
-export const USERS = loadUsers()
+// Lazy-loaded users - will only load when accessed
+let _users = null;
 
-// Export total count
-export const TOTAL_USERS = USERS.length
+/**
+ * Get users array (lazy-loaded)
+ * @returns Array of all users
+ */
+export function getUsers() {
+  if (_users === null) {
+    _users = loadUsers();
+  }
+  return _users;
+}
+
+// For backward compatibility, export USERS as a getter
+export const USERS = {
+  get length() {
+    console.warn('⚠️ USERS.length accessed - this will load all users into memory!');
+    return getUsers().length;
+  },
+  slice(...args) {
+    console.warn('⚠️ USERS.slice accessed - this will load all users into memory!');
+    return getUsers().slice(...args);
+  }
+};
+
+// Export TOTAL_USERS separately to avoid loading users
+export { TOTAL_USERS };
 
 export default {
   USERS,
   TOTAL_USERS,
+  generateUser,
   loadUsers,
-  regenerateUsers
+  regenerateUsers,
+  getUsers
 }

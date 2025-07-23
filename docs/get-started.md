@@ -183,7 +183,7 @@ When making changes to an existing component:
 3. The changes will automatically reflect in mtrl App (no need to restart)
 4. Test all component variants and interactions
 
-This workflow provides immediate visual feedback while keeping the core library clean.
+This workflow provides immediate visual feedback while keeping the main library clean.
 
 ## Next Steps
 

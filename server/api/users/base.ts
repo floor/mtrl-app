@@ -1,12 +1,25 @@
 // server/api/user/base.ts
 import { createHash } from "crypto";
 import { logError } from "../../middleware/logger.js";
+import { getUserService } from "../../data/user-service.js";
 
-// Import pre-generated users
-import { USERS, TOTAL_USERS as TOTAL_USERS_COUNT } from "../../data/users.js";
+// Get user service instance
+let userService: any = null;
+async function getUserServiceInstance() {
+  if (!userService) {
+    userService = await getUserService();
+  }
+  return userService;
+}
 
-// Total number of users (now from pre-generated data)
-export const TOTAL_USERS = TOTAL_USERS_COUNT;
+// Total number of users (dynamic based on data source)
+export async function getTotalUsers() {
+  const service = await getUserServiceInstance();
+  return await service.getTotalUsers();
+}
+
+// Maintain backward compatibility
+export const TOTAL_USERS = 1000000; // Default fallback for synchronous calls
 
 // Default page size
 export const DEFAULT_LIMIT = 20;
@@ -15,32 +28,27 @@ export const DEFAULT_LIMIT = 20;
 export const CURSOR_SECRET = "cursor-secret-key-change-me";
 
 /**
- * Get a user by ID from the pre-generated list
+ * Get a user by ID from the data source
  * @param id The user ID (1-based)
  * @returns A user object or null if not found
  */
-export function getUserById(id: number): any {
-  // Convert 1-based ID to 0-based array index
-  const index = id - 1;
-
-  if (index < 0 || index >= USERS.length) {
-    return null;
-  }
-
-  return USERS[index];
+export async function getUserById(id: number): Promise<any> {
+  const service = await getUserServiceInstance();
+  return await service.getUserById(id);
 }
 
 /**
- * Get a batch of users for the given range from pre-generated list
+ * Get a batch of users for the given range from data source
  * @param startIndex The starting index (0-based)
  * @param count The number of users to return
  * @returns An array of user objects
  */
-export function getUserBatch(startIndex: number, count: number): any[] {
-  const endIndex = Math.min(startIndex + count, TOTAL_USERS);
-
-  // Return slice of pre-generated users
-  return USERS.slice(startIndex, endIndex);
+export async function getUserBatch(
+  startIndex: number,
+  count: number
+): Promise<any[]> {
+  const service = await getUserServiceInstance();
+  return await service.getUserBatch(startIndex, count);
 }
 
 /**
@@ -128,69 +136,18 @@ export function decodeCursor(
 
 /**
  * Search users with the given term
- * This uses a more efficient approach for large datasets by generating
- * and filtering users in batches
  * @param term The search term
  * @param startIndex The starting index
  * @param limit The number of users per page
  * @returns An object with filtered users and total count
  */
-export function searchUsers(
+export async function searchUsers(
   term: string,
   startIndex: number,
   limit: number
-): { users: any[]; totalMatches: number } {
-  const batchSize = 1000; // Process users in batches to avoid memory issues
-  const lowercaseTerm = term.toLowerCase();
-  const matchingUsers: any[] = [];
-  let totalMatches = 0;
-  let foundEnough = false;
-
-  // Process users in batches until we find enough matches
-  for (
-    let batchStart = 0;
-    batchStart < TOTAL_USERS && !foundEnough;
-    batchStart += batchSize
-  ) {
-    const batchEnd = Math.min(batchStart + batchSize, TOTAL_USERS);
-    const userBatch = getUserBatch(batchStart, batchEnd - batchStart);
-
-    // Filter users in this batch
-    for (const user of userBatch) {
-      if (
-        user.name.toLowerCase().includes(lowercaseTerm) ||
-        user.email.toLowerCase().includes(lowercaseTerm) ||
-        user.role.toLowerCase().includes(lowercaseTerm)
-      ) {
-        totalMatches++;
-
-        // Only add users that are within our desired page
-        if (totalMatches > startIndex && matchingUsers.length < limit) {
-          matchingUsers.push(user);
-        }
-
-        // If we've found enough users for this page and counted a reasonable
-        // number for estimation, we can stop
-        if (matchingUsers.length >= limit && totalMatches >= 1000) {
-          foundEnough = true;
-          break;
-        }
-      }
-    }
-  }
-
-  // If we didn't process the entire dataset, estimate the total
-  if (foundEnough) {
-    // We've processed a partial dataset, so estimate the total
-    const processedFraction = totalMatches / TOTAL_USERS;
-    // Round to avoid fractional users
-    totalMatches = Math.round(totalMatches * (1 / processedFraction));
-  }
-
-  return {
-    users: matchingUsers,
-    totalMatches,
-  };
+): Promise<{ users: any[]; totalMatches: number }> {
+  const service = await getUserServiceInstance();
+  return await service.searchUsers(term, startIndex, limit);
 }
 
 /**
@@ -206,8 +163,11 @@ export async function handleSingleUserRequest(
   const userId = endpoint.split("/")[1];
   const userIdNum = parseInt(userId, 10);
 
+  // Get total users for validation
+  const totalUsers = await getTotalUsers();
+
   // Validate user ID is within range
-  if (isNaN(userIdNum) || userIdNum < 1 || userIdNum > TOTAL_USERS) {
+  if (isNaN(userIdNum) || userIdNum < 1 || userIdNum > totalUsers) {
     return new Response(JSON.stringify({ error: "User not found" }), {
       status: 404,
       headers: {
@@ -218,7 +178,7 @@ export async function handleSingleUserRequest(
   }
 
   // Get the user with the given ID
-  const user = getUserById(userIdNum);
+  const user = await getUserById(userIdNum);
 
   if (!user) {
     return new Response(JSON.stringify({ error: "User not found" }), {

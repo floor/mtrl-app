@@ -1,4 +1,4 @@
-import { createLayout } from 'mtrl-addons'
+import { createLayout, createVList } from 'mtrl-addons'
 import {
   createComponentSection
 } from '../../../layout'
@@ -7,43 +7,41 @@ import {
   countries
 } from '../../../data/isocode'
 
-import {
-  createList
-} from 'mtrl'
+console.log('countries', countries)
 
 export const initLongStaticList = (container) => {
-  // let selection = []
-
   const title = 'Long static list'
   const description = 'List without list manager'
-  const layout = createLayout(createComponentSection({ title }), container).component
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
-  console.log('countries', countries)
-
-  // Create a multi-select list
-  const list = createList({
+  // Create a multi-select list with proper template
+  const list = createVList({
     multiSelect: true,
     items: countries,
     baseUrl: null,
-    renderItem: (item) => {
-      // console.log('renderItem', item)
-      // const isSelected = selection.includes(item.id)
+
+    // Use 'template' instead of 'renderItem'
+    template: (item, index) => {
       const layout = createLayout(
         [{ class: 'list-item' },
           [{ class: 'list-item-content' },
-            [{ class: 'list-item-text', text: item.name }]
+            [{ class: 'list-item-text', text: `${item.name} (${item.id})` }]
           ]
         ]
       )
 
       return layout.get('element')
-    },
-    parent: layout.showcase
+    }
   })
+
+  // Append the list to the showcase container immediately
+  layout.showcase.appendChild(list.element)
 
   // Handle selection changes
   list.on('select', (event) => {
-    // log.info('Selection changed:', event.selectedItems)
-    // selection = event.selectedItems
+    console.log('Selection changed:', event.selectedItems)
   })
+
+  // Return the list for potential further use
+  return list
 }
