@@ -10,6 +10,7 @@ import { PuppeteerTester } from "./utils/puppeteer-base";
 import { testIndexChipsClick } from "./tests/scroll-tests";
 import { testPlaceholderSystem } from "./tests/placeholder-test";
 import { testScrollToPageAPI } from "./tests/scroll-to-page-test";
+import { testSelectionFeature } from "./tests/selection-test";
 import {
   testScrollToPageAPI as testScrollToPageAPIFromApiTests,
   testServerStopStartScenario,
@@ -24,7 +25,20 @@ import {
  * Custom VList tester that extends the base PuppeteerTester
  */
 class VListTester extends PuppeteerTester {
+  private testType: string;
+
+  constructor(examplePath: string, isInteractive: boolean = false) {
+    super(examplePath, isInteractive);
+    this.testType = examplePath;
+  }
+
   protected async runTests(page: any): Promise<void> {
+    // Check if this is a selection test
+    if (this.testType.includes("selection")) {
+      await testSelectionFeature(page);
+      return;
+    }
+
     if (this.interactive) {
       await this.performInteractiveTests(page);
       // Also run the fast scroll test in interactive mode
@@ -62,6 +76,9 @@ class VListTester extends PuppeteerTester {
     await testIndexChipsClick(page);
     await testPlaceholderSystem(page);
     await testScrollToPageAPI(page);
+
+    // Test selection feature
+    await testSelectionFeature(page);
 
     // Debug loaded ranges
     // await debugLoadedRanges(page); // Disabled - focusing on scrollToIndex

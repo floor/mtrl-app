@@ -27,16 +27,18 @@ VIRTUAL_SCROLL: {
   DEFAULT_ITEM_SIZE: 84,        // Default height/width of items in pixels
   OVERSCAN_BUFFER: 2,           // Number of items to render outside visible area
   SCROLL_SENSITIVITY: 0.2,      // Scroll speed multiplier
-  MAX_VIRTUAL_SIZE: 10000000    // Maximum virtual container size (10M pixels)
+  MAX_VIRTUAL_SIZE: 10000000,   // Maximum virtual container size (10M pixels)
+  AUTO_DETECT_ITEM_SIZE: true   // Enable automatic item size detection by default
 }
 ```
 
 ### Usage Notes
 
-- `DEFAULT_ITEM_SIZE`: Set this close to your actual item size for better performance
+- `DEFAULT_ITEM_SIZE`: Set this close to your actual item size for better initial rendering
 - `OVERSCAN_BUFFER`: Higher values prevent flicker but use more memory
 - `SCROLL_SENSITIVITY`: Lower values make scrolling feel heavier
 - `MAX_VIRTUAL_SIZE`: Prevents browser limitations with huge datasets
+- `AUTO_DETECT_ITEM_SIZE`: When enabled and no itemSize is provided, the viewport will automatically measure and use the actual size of rendered items
 
 ## Scrolling Settings
 

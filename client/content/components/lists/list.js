@@ -81,10 +81,10 @@ const createUserList = (parent) => {
 
       if (recycledElement) {
         // Just update the content rather than creating new elements
-        const avatar = recycledElement.querySelector('.user-avatar')
-        const name = recycledElement.querySelector('.user-name')
-        const email = recycledElement.querySelector('.user-email')
-        const role = recycledElement.querySelector('.user-role')
+        const avatar = recycledElement.querySelector('.mtrl-user-avatar')
+        const name = recycledElement.querySelector('.mtrl-user-name')
+        const email = recycledElement.querySelector('.mtrl-user-email')
+        const role = recycledElement.querySelector('.mtrl-user-role')
 
         // Update text content (faster than innerHTML)
         avatar.textContent = user.avatar || user.headline?.charAt(0) || '?'
@@ -102,11 +102,11 @@ const createUserList = (parent) => {
       element.className = 'mtrl-list-item user-item'
       element.setAttribute('data-id', user.id)
       element.innerHTML = `
-        <div class="user-avatar">${user.avatar || user.headline?.charAt(0) || '?'}</div>
-        <div class="user-details">
-          <div class="user-name">${user.headline || 'Unknown'} (${user.id})</div>
-          <div class="user-email">${user.supportingText || ''}</div>
-          <div class="user-role">${user.meta || ''}</div>
+        <div class="mtrl-user-avatar">${user.avatar || user.headline?.charAt(0) || '?'}</div>
+        <div class="mtrl-user-details">
+          <div class="mtrl-user-name">${user.headline || 'Unknown'} (${user.id})</div>
+          <div class="mtrl-user-email">${user.supportingText || ''}</div>
+          <div class="mtrl-user-role">${user.meta || ''}</div>
         </div>
       `
       return element

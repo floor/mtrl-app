@@ -99,7 +99,7 @@ export const initCollectionEvents = (container) => {
     }),
     renderItem: (user, index) => {
       const element = document.createElement("div");
-      element.className = "user-item";
+      element.className = "mtrl-user-item";
       element.setAttribute("data-id", user.id);
       element.style.cssText = `
         padding: 16px;
@@ -109,10 +109,10 @@ export const initCollectionEvents = (container) => {
       `;
 
       element.innerHTML = `
-        <div class="user-headline" style="font-weight: 500; font-size: 16px; margin-bottom: 4px;">
+        <div class="mtrl-user-headline" style="font-weight: 500; font-size: 16px; margin-bottom: 4px;">
           ${user.headline}
         </div>
-        <div class="user-supporting" style="color: var(--md-sys-color-on-surface-variant); font-size: 14px; margin-bottom: 4px;">
+        <div class="mtrl-user-supporting" style="color: var(--md-sys-color-on-surface-variant); font-size: 14px; margin-bottom: 4px;">
           ${user.supportingText}
         </div>
         <div class="user-meta" style="color: var(--md-sys-color-primary); font-size: 12px;">

@@ -81,11 +81,11 @@ export const initCursorList = (container) => {
       element.className = 'mtrl-list-item user-item'
       element.setAttribute('data-id', user.id)
       element.innerHTML = `
-        <div class="user-avatar">${user.avatar || user.headline?.charAt(0) || '?'}</div>
-        <div class="user-details">
-          <div class="user-name">${user.headline || 'Unknown'}</div>
-          <div class="user-email">${user.supportingText || ''}</div>
-          <div class="user-role">${user.meta || ''}</div>
+        <div class="viewport-item-avatar">${user.avatar || user.headline?.charAt(0) || '?'}</div>
+        <div class="viewport-item-details">
+          <div class="viewport-item-name">${user.headline || 'Unknown'}</div>
+          <div class="viewport-item-email">${user.supportingText || ''}</div>
+          <div class="viewport-item-role">${user.meta || ''}</div>
         </div>
       `
       return element

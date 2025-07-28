@@ -89,138 +89,121 @@ const debug = false
 const createUserList = (parent) => {
   console.log('🚀 [LIST-EXAMPLE] Creating list component')
 
-  // Create the list component using createVList with old list config format
+  // Create the list component using createVList with modern feature-oriented structure
   const list = createVList({
-    parent,
-
-    scroll: {
-      animation: false,
-      measureItems: false // Disable item measurement for better performance
-    },
-
-    // Use fixed pagination limit instead of viewport-based calculation
-    pagination: {
-      strategy: 'page',
-      limit: 20 // Fixed limit of 20 items per page
-    },
-
-    selection: {
-      enabled: true,
-      multiple: true,
-      clearable: true
-    },
-
-    performance: {
-      recycleElements: true,
-      bufferSize: 50,
-      renderDebounce: 16
-    },
-
-    class: 'mtrl-list--users',
+    container: parent,
+    className: 'list--users',
     ariaLabel: 'User Directory',
     debug: true,
 
-    // Use real API adapter
-    adapter: {
-      read: async (params) => {
-        try {
-          const page = params?.page || 1
-          const limit = params?.limit || 20
-          const url = `/api/users?page=${page}&limit=${limit}`
+    // Virtual scrolling configuration
+    virtual: {
+      itemSize: 84, // will be automatically calculated based on the first loaded range
+      overscan: 2
+    },
 
-          const response = await fetch(url)
-          const data = await response.json()
+    // Scrolling configuration
+    scrolling: {
+      orientation: 'vertical'
+    },
 
-          // Use the correct structure - API returns { items: [...], meta: {...} }
-          const items = data.items || []
-          const meta = data.meta || {}
+    // Pagination configuration
+    pagination: {
+      strategy: 'page',
+      limit: 20 // Items per page
+    },
 
-          return {
-            items,
-            meta: {
-              total: meta.total || undefined,
-              page: meta.page || page,
-              limit: meta.limit || limit,
-              hasNext: meta.hasNext || false,
-              hasPrev: meta.hasPrev || false
+    // Collection configuration
+    collection: {
+      adapter: {
+        read: async (params) => {
+          try {
+            const page = params?.page || 1
+            const limit = params?.limit || 20
+            const url = `/api/users?page=${page}&limit=${limit}`
+
+            const response = await fetch(url)
+            const data = await response.json()
+
+            // Use the correct structure - API returns { items: [...], meta: {...} }
+            const items = data.items || []
+            const meta = data.meta || {}
+
+            return {
+              items,
+              meta: {
+                total: meta.total || undefined,
+                page: meta.page || page,
+                limit: meta.limit || limit,
+                hasNext: meta.hasNext || false,
+                hasPrev: meta.hasPrev || false
+              }
+            }
+          } catch (error) {
+            // Return error without logging (handled by collection)
+            return {
+              items: [],
+              error: { message: error.message }
             }
           }
-        } catch (error) {
-          // Return error without logging (handled by collection)
-          return {
-            items: [],
-            error: { message: error.message }
-          }
         }
+      }
+      // transform: (user) => {
+      //   if (!user || typeof user !== 'object') {
+      //     return {
+      //       id: 'error-' + Date.now() + Math.random(),
+      //       name: 'Error: Invalid User',
+      //       email: '',
+      //       role: '',
+      //       avatar: ''
+      //     }
+      //   }
+
+      //   return {
+      //     id: user.id || user._id || String(Math.random()),
+      //     name: user.name || 'Unknown User',
+      //     email: user.email || '',
+      //     role: user.role || 'User',
+      //     avatar: user.avatar || (user.name ? user.name[0] : '?'),
+      //     original: user
+      //   }
+      // }
+    },
+
+    // Placeholder configuration
+    placeholders: {
+      enabled: true
+    },
+
+    // Selection configuration
+    selection: {
+      enabled: true,
+      mode: 'multiple',
+      onSelectionChange: (selectedItems, selectedIndices) => {
+        console.log('📌 [LIST-EXAMPLE] Selection changed:', {
+          count: selectedItems.length,
+          indices: selectedIndices
+        })
       }
     },
 
-    transform: (user) => {
-      if (!user || typeof user !== 'object') {
-        return {
-          id: 'error-' + Date.now() + Math.random(),
-          name: 'Error: Invalid User',
-          email: '',
-          role: '',
-          avatar: ''
-        }
-      }
-
-      return {
-        id: user.id || user._id || String(Math.random()),
-        name: user.name || 'Unknown User',
-        email: user.email || '',
-        role: user.role || 'User',
-        avatar: user.avatar || (user.name ? user.name[0] : '?'),
-        original: user
-      }
+    // Performance settings
+    performance: {
+      maxConcurrentRequests: 1,
+      debounceDelay: 16,
+      throttleDelay: 100
     },
 
-    renderItem: {
-      tag: 'div',
-      className: 'list-item user-item',
-      attributes: { 'data-id': '{{id}}' },
-      children: [
-        {
-          tag: 'div',
-          className: 'user-avatar',
-          textContent: '{{avatar}}'
-        },
-        {
-          tag: 'div',
-          className: 'user-details',
-          children: [
-            {
-              tag: 'div',
-              className: 'user-name',
-              textContent: '{{name}} ({{index}})'
-            },
-            {
-              tag: 'div',
-              className: 'user-email',
-              textContent: '{{email}}'
-            },
-            {
-              tag: 'div',
-              className: 'user-role',
-              textContent: '{{role}}'
-            }
-          ]
-        }
+    // Using layout system template with array schema (BEM naming)
+    template: (user, index) => [
+      { attributes: { 'data-id': user.id } },
+      [{ class: 'viewport-item__avatar', text: user.avatar }],
+      ['userDetails', { class: 'viewport-item__details' },
+        [{ class: 'viewport-item__headline', text: `${user.name} (${index})` }],
+        [{ class: 'viewport-item__text', text: user.email }],
+        [{ class: 'viewport-item__meta', text: user.role }]
       ]
-    }
-
-    // this is a template using createLayout with a array schema /mtrl-addon/src/core/layout
-    // renderItem: [
-    //   [{ className: 'list-item user-item', attributes: { 'data-id': '{{id}}' } },
-    //     [{ className: 'user-avatar', textContent: '{{avatar}}' }],
-    //     [{ className: 'user-details', textContent: '{{avatar}}' },
-    //       [{ className: 'user-name', textContent: '{{name}} ({{index}})' }],
-    //       [{ className: 'user-email', textContent: '{{email}}' }],
-    //       [{ className: 'user-role', textContent: '{{role}}' }]
-    //     ]
-    //   ]
-    // ]
+    ]
   })
 
   return list
@@ -369,8 +352,7 @@ const createListExampleComponent = (container) => {
 
   // Function to update debug panel
   const updateDebugPanel = () => {
-    // if (!debug || !debugPanel) return
-    // console.error('updateDebugPanel', debug)
+    if (!debug || !debugPanel) return
 
     try {
       const stateElement = document.getElementById('collection-state')
@@ -379,45 +361,48 @@ const createListExampleComponent = (container) => {
         return
       }
 
-      console.error('stateElement', stateElement)
+      const allItems = userList.getItems ? userList.getItems() : []
+      const selectedItems = userList.getSelectedItems ? userList.getSelectedItems() : []
+      const selectedIndices = userList.getSelectedIndices ? userList.getSelectedIndices() : []
+      const performanceMetrics = performanceMonitor.getMetrics()
 
-      // const allItems = userList.getItems()
-      // const visibleItems = userList.getVisibleItems()
-      // const isLoading = userList.isLoading()
-      // const hasNext = userList.hasNext()
-      // const selectedItems = userList.getSelectedIds()
-      // const performanceMetrics = performanceMonitor.getMetrics()
+      const stateHtml = `
+        <div class="mtrl-addons-debug__content">
+          <div class="mtrl-addons-debug__section-title">📊 List State</div>
+          <div class="mtrl-addons-debug__section">
+            <strong>Total Items:</strong> ${allItems.length}<br>
+            <strong>Selected Items:</strong> ${selectedItems.length}<br>
+            <strong>Selected Indices:</strong> ${selectedIndices.slice(0, 5).join(', ')}${selectedIndices.length > 5 ? '...' : ''}<br>
+          </div>
 
-      // const stateHtml = `
-      //   <div class="mtrl-addons-debug__content">
-      //     <div class="mtrl-addons-debug__section-title">📊 List State</div>
-      //     <div class="mtrl-addons-debug__section">
-      //       <strong>Total Items:</strong> ${allItems.length}<br>
-      //       <strong>Visible Items:</strong> ${visibleItems.length}<br>
-      //       <strong>Loading:</strong> ${isLoading}<br>
-      //       <strong>Has Next:</strong> ${hasNext}<br>
-      //       <strong>Selected:</strong> ${selectedItems.length}<br>
-      //     </div>
+          <div class="mtrl-addons-debug__section-title">🔧 System Info</div>
+          <div class="mtrl-addons-debug__section">
+            <strong>Engine:</strong> mtrl-addons VList<br>
+            <strong>Collection System:</strong> Built-in<br>
+            <strong>Template Engine:</strong> Object-based<br>
+            <strong>Selection:</strong> Multi-select enabled<br>
+          </div>
 
-      //     <div class="mtrl-addons-debug__section-title">🔧 System Info</div>
-      //     <div class="mtrl-addons-debug__section">
-      //       <strong>Engine:</strong> mtrl-addons List<br>
-      //       <strong>Collection System:</strong> Built-in<br>
-      //       <strong>Template Engine:</strong> Object-based<br>
-      //       <strong>Selection:</strong> Multi-select enabled<br>
-      //     </div>
+          <div class="mtrl-addons-debug__section-title">📈 Performance Metrics</div>
+          <div class="mtrl-addons-debug__section">
+            <strong>UI Renders:</strong> ${performanceMetrics.renderCount}<br>
+            <strong>UI Scrolls:</strong> ${performanceMetrics.scrollCount}<br>
+            <strong>Total Time:</strong> ${performanceMetrics.totalTime}ms<br>
+            <strong>Avg Render:</strong> ${performanceMetrics.avgRenderTime.toFixed(2)}ms<br>
+          </div>
 
-      //     <div class="mtrl-addons-debug__section-title">📈 Performance Metrics</div>
-      //     <div class="mtrl-addons-debug__section">
-      //       <strong>UI Renders:</strong> ${performanceMetrics.renderCount}<br>
-      //       <strong>UI Scrolls:</strong> ${performanceMetrics.scrollCount}<br>
-      //       <strong>Total Time:</strong> ${performanceMetrics.totalTime}ms<br>
-      //       <strong>Avg Render:</strong> ${performanceMetrics.avgRenderTime.toFixed(2)}ms<br>
-      //     </div>
-      //   </div>
-      // `
+          <div class="mtrl-addons-debug__section-title">✅ Selected Items</div>
+          <div class="mtrl-addons-debug__section" style="max-height: 100px; overflow-y: auto;">
+            ${selectedItems.length > 0
+? selectedItems.slice(0, 10).map(item =>
+              `<div style="font-size: 11px;">${item.name} (${item.email})</div>`
+            ).join('') + (selectedItems.length > 10 ? '<div>...</div>' : '')
+: 'None'}
+          </div>
+        </div>
+      `
 
-      // debugPanel.innerHTML = stateHtml
+      stateElement.innerHTML = stateHtml
     } catch (error) {
       console.error('❌ [LIST-EXAMPLE] Error updating debug panel:', error)
     }

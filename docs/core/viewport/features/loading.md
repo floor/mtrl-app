@@ -30,6 +30,67 @@ Queue Request → Execute Load → Update State → Emit Events
 
 ## Configuration
 
+The Loading feature configuration is derived from the viewport's performance and pagination settings:
+
+```typescript
+interface ViewportConfig {
+  // Performance configuration (affects loading)
+  performance?: {
+    maxConcurrentRequests?: number; // Default: 1
+    enableRequestQueue?: boolean; // Default: true
+    cancelLoadThreshold?: number; // Default: 1.0 px/ms
+  };
+
+  // Pagination configuration (affects loading)
+  pagination?: {
+    strategy?: "page" | "offset" | "cursor";
+    limit?: number; // Range size, default: 20
+  };
+}
+```
+
+### Example Configuration
+
+```typescript
+const viewport = createViewport({
+  // Performance settings affect loading
+  performance: {
+    maxConcurrentRequests: 2, // Allow 2 parallel loads
+    enableRequestQueue: true, // Queue overflow requests
+    cancelLoadThreshold: 0.5, // Load during slower scrolls
+  },
+
+  // Pagination affects range size
+  pagination: {
+    strategy: "page",
+    limit: 50, // Load 50 items per request
+  },
+
+  // Collection is required
+  collection: {
+    adapter: myDataAdapter,
+  },
+});
+```
+
+### Internal Configuration Mapping
+
+The collection feature (which handles loading) receives:
+
+```typescript
+{
+  maxConcurrentRequests: config.performance?.maxConcurrentRequests || 1,
+  enableRequestQueue: config.performance?.enableRequestQueue !== false,
+  cancelLoadThreshold: config.performance?.cancelLoadThreshold || 1.0,
+  rangeSize: config.pagination?.limit || 20,
+  strategy: config.pagination?.strategy || 'offset'
+}
+```
+
+### Advanced Loading Configuration
+
+For direct loading feature usage:
+
 ```typescript
 interface LoadingConfig {
   // Maximum concurrent network requests

@@ -4,7 +4,7 @@ import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 
 import { createListComponent } from './list'
-import { createCollectionAddonsComponent } from './collection-addons'
+import { createVlistComponent } from './vlist'
 import { initBasicList } from './basic'
 import { initLongStaticList } from './long-static'
 import { initCursorList } from './cursor'
@@ -26,14 +26,15 @@ export const createListsContent = (container, components) => {
     container
   ).component
 
+  initBasicList(layout.body)
+
   createListComponent(layout.body)
-  createCollectionAddonsComponent(layout.body)
+  createVlistComponent(layout.body)
 
   // initCollectionEvents(layout.body)
   // initNavigationDebug(layout.body)
   // virtualPositioningTest(layout.body)
 
-  // initBasicList(layout.body)
   initLongStaticList(layout.body)
   initCursorList(layout.body)
   // createDocs(layout.body, 'components/list.md')

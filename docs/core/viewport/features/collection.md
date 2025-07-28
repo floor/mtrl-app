@@ -206,6 +206,76 @@ component.on?.("collection:range-loaded", (data) => {
 
 ## Configuration
 
+The collection feature configuration is now part of the viewport's feature-oriented structure:
+
+```typescript
+interface ViewportConfig {
+  // Collection configuration
+  collection?: {
+    adapter: CollectionAdapter<any>; // Required: Data adapter
+    transform?: (item: any) => any; // Optional: Transform items
+  };
+
+  // Performance configuration (affects collection)
+  performance?: {
+    maxConcurrentRequests?: number; // Default: 1
+    enableRequestQueue?: boolean; // Default: true
+    cancelLoadThreshold?: number; // Default: 1.0 px/ms
+  };
+
+  // Pagination configuration
+  pagination?: {
+    strategy?: "page" | "offset" | "cursor"; // Default: 'offset'
+    limit?: number; // Default: 20
+  };
+}
+```
+
+### Example Configuration
+
+```typescript
+const viewport = createViewport({
+  // Collection setup
+  collection: {
+    adapter: myDataAdapter,
+    transform: (item) => ({
+      ...item,
+      displayName: item.name.toUpperCase(),
+    }),
+  },
+
+  // Performance tuning
+  performance: {
+    maxConcurrentRequests: 2,
+    enableRequestQueue: true,
+    cancelLoadThreshold: 0.5, // Load during slower scrolls
+  },
+
+  // Pagination
+  pagination: {
+    strategy: "page",
+    limit: 50,
+  },
+});
+```
+
+### Legacy Configuration Note
+
+The collection feature internally maps the new structure to its requirements:
+
+```typescript
+// The feature receives:
+{
+  collection: config.collection?.adapter,
+  transform: config.collection?.transform,
+  maxConcurrentRequests: config.performance?.maxConcurrentRequests,
+  enableRequestQueue: config.performance?.enableRequestQueue,
+  cancelLoadThreshold: config.performance?.cancelLoadThreshold,
+  rangeSize: config.pagination?.limit,
+  strategy: config.pagination?.strategy
+}
+```
+
 ### Constants
 
 ```typescript

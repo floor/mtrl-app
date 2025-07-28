@@ -34,6 +34,54 @@ The Scrollbar feature replaces the native browser scrollbar with a custom implem
 
 ## Configuration
 
+The scrollbar feature configuration is part of the viewport's feature-oriented structure:
+
+```typescript
+interface ViewportConfig {
+  // Scrollbar configuration
+  scrollbar?: {
+    enabled?: boolean; // Default: true
+    autoHide?: boolean; // Default: true
+    minThumbSize?: number; // Default: 30
+  };
+}
+```
+
+### Example Configuration
+
+```typescript
+const viewport = createViewport({
+  // Custom scrollbar
+  scrollbar: {
+    enabled: true,
+    autoHide: false, // Always visible
+    minThumbSize: 50, // Larger minimum thumb
+  },
+
+  // Other features...
+  virtual: {
+    itemSize: 100,
+    overscan: 2,
+  },
+});
+```
+
+### Internal Mapping
+
+The scrollbar feature receives:
+
+```typescript
+withScrollbar({
+  enabled: config.scrollbar?.enabled !== false, // Default true
+  autoHide: config.scrollbar?.autoHide,
+  minThumbSize: config.scrollbar?.minThumbSize,
+});
+```
+
+### Advanced Configuration
+
+For more advanced scrollbar options, you can still use the full configuration:
+
 ```typescript
 interface ScrollbarConfig {
   // Enable custom scrollbar

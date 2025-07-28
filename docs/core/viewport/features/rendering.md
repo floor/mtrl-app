@@ -261,7 +261,7 @@ const positionElement = (element: HTMLElement, index: number) => {
 
 const getItemOffset = (index: number): number => {
   // Simple calculation for fixed size
-  return index * viewportState.estimatedItemSize;
+  return index * viewportState.itemSize;
 
   // For variable sizes, use accumulated heights
   // return itemSizeManager.getOffset(index);
@@ -418,10 +418,11 @@ console.log(`Rendering ${elements.size} items`);
 
 #### `viewport:items-rendered`
 
-Fired after render completes.
+Fired after render completes. Includes rendered elements for features like auto-size detection.
 
 ```typescript
 {
+  elements: HTMLElement[];      // Array of rendered DOM elements
   range: { start: number; end: number };
   renderedCount: number;
   poolSize: number;
@@ -429,13 +430,18 @@ Fired after render completes.
 }
 ```
 
-#### `viewport:render-scheduled`
+This event is crucial for the auto-size detection feature, which measures the `elements` array to determine actual item sizes.
 
-Fired when render is scheduled.
+#### `viewport:rendered`
+
+Fired after render completes (legacy event for backward compatibility).
 
 ```typescript
 {
-  reason: string; // What triggered the render
+  range: { start: number; end: number };
+  renderedCount: number;
+  poolSize: number;
+  renderTime?: number;
 }
 ```
 

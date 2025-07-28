@@ -50,6 +50,63 @@ If Virtual Size > MAX_VIRTUAL_SIZE:
   Compressed Size = MAX_VIRTUAL_SIZE
 ```
 
+### Automatic Item Size Detection
+
+The virtual feature now includes intelligent item size detection that automatically measures rendered items to provide accurate virtual space calculations:
+
+```typescript
+// Auto-detection flow
+1. Initial render with estimated size (default: 50px)
+2. Measure actual rendered items
+3. Calculate average item size
+4. Update virtual space with accurate size
+5. Re-render if positions changed significantly
+```
+
+#### How It Works
+
+When `autoDetectItemSize` is enabled (default when no `itemSize` is provided):
+
+1. **First Render**: Uses the initial estimate or default size
+2. **Measurement**: After items are rendered, measures their actual sizes
+3. **Calculation**: Computes the average size from all measured items
+4. **Update**: Updates the internal `itemSize` with the measured value
+5. **Re-calculation**: Updates virtual space and visible range with new size
+6. **Event**: Emits `viewport:item-size-detected` with the new size
+
+#### Benefits
+
+- **No Configuration Required**: Works out of the box for most use cases
+- **Accurate Scrolling**: Eliminates jumpy scrolling from incorrect estimates
+- **Dynamic Content**: Adapts to content that varies slightly in size
+- **Performance**: Only measures once on first render
+- **Fallback**: Uses sensible defaults if measurement fails
+
+#### Example
+
+```typescript
+// Auto-detection enabled by default
+const viewport = createViewport({
+  virtual: {
+    overscan: 2,
+    // No itemSize - will auto-detect
+  },
+});
+
+// Listen for detection
+viewport.on("viewport:item-size-detected", ({ detectedSize, previousSize }) => {
+  console.log(`Item size updated: ${previousSize}px → ${detectedSize}px`);
+});
+
+// Force auto-detection even with initial estimate
+const viewport = createViewport({
+  virtual: {
+    itemSize: 100, // Initial estimate
+    autoDetectItemSize: true, // Force detection
+  },
+});
+```
+
 ## Implementation
 
 ### Feature Structure
@@ -77,18 +134,15 @@ export const withVirtual = (config: VirtualConfig = {}) => {
 
 ```typescript
 const calculateVisibleRange = (): ItemRange => {
-  const { scrollPosition, containerSize, estimatedItemSize, totalItems } =
-    viewportState;
+  const { scrollPosition, containerSize, itemSize, totalItems } = viewportState;
 
-  if (totalItems === 0 || estimatedItemSize === 0) {
+  if (totalItems === 0 || itemSize === 0) {
     return { start: 0, end: 0 };
   }
 
   // Calculate visible range
-  const visibleStart = Math.floor(scrollPosition / estimatedItemSize);
-  const visibleEnd = Math.ceil(
-    (scrollPosition + containerSize) / estimatedItemSize
-  );
+  const visibleStart = Math.floor(scrollPosition / itemSize);
+  const visibleEnd = Math.ceil((scrollPosition + containerSize) / itemSize);
 
   // Apply overscan
   const start = Math.max(0, visibleStart - overscan);
@@ -102,8 +156,8 @@ const calculateVisibleRange = (): ItemRange => {
 
 ```typescript
 const updateVirtualSize = () => {
-  const { totalItems, estimatedItemSize } = viewportState;
-  const actualSize = totalItems * estimatedItemSize;
+  const { totalItems, itemSize } = viewportState;
+  const actualSize = totalItems * itemSize;
 
   // Check if compression needed
   if (actualSize > maxVirtualSize) {
@@ -181,10 +235,10 @@ Item 500,000 virtual position = 50M × 0.1 = 5M pixels
 
 ```typescript
 interface VirtualConfig {
+  itemSize?: number; // Fixed item size in pixels (auto-detected if not provided)
   overscan?: number; // Items to render outside viewport (default: 2)
-  maxVirtualSize?: number; // Maximum virtual container size (default: 10M)
-  minItemSize?: number; // Minimum allowed item size (default: 20)
-  maxItemSize?: number; // Maximum allowed item size (default: 1000)
+  autoDetectItemSize?: boolean; // Enable auto-detection (default: true if no itemSize)
+  debug?: boolean; // Enable debug logging
 }
 ```
 
@@ -283,9 +337,22 @@ Fired when virtual size is updated.
 }
 ```
 
+#### `viewport:item-size-detected`
+
+Fired when item size is automatically detected from rendered items.
+
+```typescript
+{
+  detectedSize: number; // The measured average item size
+  previousSize: number; // The previous item size
+  itemCount: number; // Number of items measured
+}
+```
+
 ### Listened Events
 
 - `viewport:items-changed` - Updates virtual size when total items change
+- `viewport:items-rendered` - Triggers auto-detection measurement when enabled
 - `viewport:item-size-changed` - Recalculates when item size changes
 - `viewport:container-resized` - Updates range when container resizes
 
@@ -391,7 +458,7 @@ const getItemOffset = (index: number): number => {
   if (hasVariableSizes) {
     return accumulatedHeights[index] || estimateOffset(index);
   }
-  return index * estimatedItemSize;
+  return index * itemSize;
 };
 ```
 
@@ -411,7 +478,7 @@ const end = Math.ceil((scrollPosition + containerSize) / itemSize);
 // Check calculations
 console.log("Scroll position:", scrollPosition);
 console.log("Container size:", containerSize);
-console.log("Item size:", estimatedItemSize);
+console.log("Item size:", itemSize);
 console.log("Calculated range:", calculateVisibleRange());
 ```
 
@@ -428,9 +495,9 @@ console.log("Compression active:", isCompressed);
 
 ```typescript
 // Ensure consistent item size
-if (estimatedItemSize !== actualAverageSize) {
+if (itemSize !== actualAverageSize) {
   console.warn("Item size mismatch:", {
-    estimated: estimatedItemSize,
+    estimated: itemSize,
     actual: actualAverageSize,
   });
 }
@@ -469,4 +536,43 @@ viewport.on("viewport:virtual-size-changed", (e) => {
 // Check visible items
 const range = viewport.calculateVisibleRange();
 console.log(`Rendering items ${range.start} to ${range.end}`);
+```
+
+## Configuration
+
+```typescript
+interface VirtualConfig {
+  itemSize?: number; // Fixed item size in pixels (auto-detected if not provided)
+  overscan?: number; // Items to render outside viewport (default: 2)
+  autoDetectItemSize?: boolean; // Enable auto-detection (default: true if no itemSize)
+  debug?: boolean; // Enable debug logging
+}
+```
+
+### Configuration Examples
+
+```typescript
+// Auto-detection enabled by default when no itemSize provided
+const viewport = createViewport({
+  virtual: {
+    // No itemSize specified - will auto-detect
+    overscan: 2,
+  },
+});
+
+// Explicit auto-detection with initial estimate
+const viewport = createViewport({
+  virtual: {
+    itemSize: 100, // Initial estimate
+    autoDetectItemSize: true, // Force auto-detection
+  },
+});
+
+// Disable auto-detection for fixed-size items
+const viewport = createViewport({
+  virtual: {
+    itemSize: 84, // Fixed size
+    autoDetectItemSize: false, // Explicitly disable
+  },
+});
 ```

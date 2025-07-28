@@ -138,6 +138,51 @@ const replacePlaceholders = (items: any[], offset: number) => {
 
 ## Configuration
 
+The placeholders feature configuration is part of the viewport's feature-oriented structure:
+
+```typescript
+interface ViewportConfig {
+  // Placeholder configuration
+  placeholders?: {
+    enabled?: boolean; // Default: true
+    analyzeFirstLoad?: boolean; // Default: true
+    maskCharacter?: string; // Default: 'X'
+  };
+}
+```
+
+### Example Configuration
+
+```typescript
+const viewport = createViewport({
+  // Enable smart placeholders
+  placeholders: {
+    enabled: true,
+    analyzeFirstLoad: true,
+    maskCharacter: "░", // Custom mask character
+  },
+
+  // Collection is required for placeholders
+  collection: {
+    adapter: myDataAdapter,
+  },
+});
+```
+
+### Internal Mapping
+
+The placeholders feature receives:
+
+```typescript
+withPlaceholders({
+  enabled: config.placeholders?.enabled ?? true,
+  analyzeFirstLoad: config.placeholders?.analyzeFirstLoad ?? true,
+  maskCharacter: config.placeholders?.maskCharacter,
+});
+```
+
+Note: Placeholders are automatically enabled when a collection adapter is configured, unless explicitly disabled.
+
 ### Constants
 
 ```typescript

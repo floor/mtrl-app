@@ -16,18 +16,15 @@ export const initLongStaticList = (container) => {
 
   // Create a multi-select list with proper template
   const list = createVList({
-    multiSelect: true,
+    selection: { enabled: true },
+    className: 'list--static',
     items: countries,
     baseUrl: null,
 
     // Use 'template' instead of 'renderItem'
     template: (item, index) => {
       const layout = createLayout(
-        [{ class: 'list-item' },
-          [{ class: 'list-item-content' },
-            [{ class: 'list-item-text', text: `${item.name} (${item.id})` }]
-          ]
-        ]
+        [{ class: 'list-item-text', text: `${item.name} (${item.id})` }]
       )
 
       return layout.get('element')

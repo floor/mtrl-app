@@ -129,7 +129,7 @@ const initializeViewportState = (component) => {
 
     // Size state
     containerSize: 0,
-    estimatedItemSize: config.estimatedItemSize || 100,
+    itemSize: config.virtual?.itemSize || 50,
     virtualTotalSize: 0,
 
     // Range state

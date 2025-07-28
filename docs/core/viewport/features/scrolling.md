@@ -13,6 +13,51 @@ The scrolling feature provides:
 - **Programmatic scrolling** with smooth animations
 - **Scroll position management** with bounds checking
 
+## Configuration
+
+The scrolling feature configuration is part of the viewport's feature-oriented structure:
+
+```typescript
+interface ViewportConfig {
+  // Scrolling configuration
+  scrolling?: {
+    orientation?: "vertical" | "horizontal"; // Default: 'vertical'
+    sensitivity?: number; // Default: 1.0
+    animation?: boolean; // Default: false
+  };
+}
+```
+
+### Example Configuration
+
+```typescript
+const viewport = createViewport({
+  // Smooth vertical scrolling
+  scrolling: {
+    orientation: "vertical",
+    sensitivity: 1.2, // Slightly faster scrolling
+    animation: true, // Enable smooth animations
+  },
+
+  // Other features...
+  virtual: {
+    overscan: 2,
+  },
+});
+```
+
+### Internal Mapping
+
+The scrolling feature receives its configuration from the viewport:
+
+```typescript
+withScrolling({
+  orientation: config.scrolling?.orientation,
+  sensitivity: config.scrolling?.sensitivity,
+  smoothing: config.scrolling?.animation,
+});
+```
+
 ## Architecture
 
 ### Speed Tracker
