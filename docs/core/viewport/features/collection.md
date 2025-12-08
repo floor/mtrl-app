@@ -13,6 +13,7 @@ The collection feature provides:
 - **Duplicate request prevention** through range tracking
 - **Failed request retry** with exponential backoff
 - **Idle-triggered loading** for better user experience
+- **Cursor pagination support** with sequential loading and dynamic sizing
 
 ## Architecture
 
@@ -33,6 +34,13 @@ const requestQueue: QueuedRequest[] = [];
 // Velocity tracking
 let currentVelocity = 0;
 let isDragging = false;
+
+// Cursor pagination state
+const cursorMap = new Map<number, string>(); // Page → Cursor
+const pageToOffsetMap = new Map<number, number>(); // Page → Offset
+let currentCursor: string | null = null;
+let highestLoadedPage = 0;
+let hasReachedEnd = false;
 ```
 
 ### Request Queue
@@ -210,6 +218,10 @@ The collection feature configuration is now part of the viewport's feature-orien
 
 ```typescript
 interface ViewportConfig {
+  // Initial position and selection
+  initialScrollIndex?: number; // Start at specific item index (0-based)
+  selectId?: string | number; // ID of item to select after initial load
+
   // Collection configuration
   collection?: {
     adapter: CollectionAdapter<any>; // Required: Data adapter
@@ -505,3 +517,186 @@ These fixes ensure that placeholders are always replaced with real data, even on
 3. **Concurrent Requests** - More parallel requests vs server load
 4. **Velocity Threshold** - Higher threshold loads during scrolling
 5. **Retry Strategy** - Balance between reliability and performance
+
+## Cursor Pagination Support
+
+The collection feature includes sophisticated cursor pagination support:
+
+### Sequential Loading
+
+Unlike offset/page strategies, cursor pagination requires sequential loading:
+
+```typescript
+// Must load pages in order
+if (strategy === "cursor" && targetPage > highestLoadedPage + 1) {
+  // Load intermediate pages first
+  for (let page = highestLoadedPage + 1; page <= targetPage; page++) {
+    await loadPage(page);
+  }
+}
+```
+
+### Dynamic Virtual Sizing
+
+For cursor pagination, the virtual size grows dynamically as data loads:
+
+```typescript
+// Calculate dynamic virtual size
+const loadedItemsCount = items.filter((item) => item !== undefined).length;
+const marginItems = hasReachedEnd ? 0 : rangeSize * 5; // 5x buffer
+const virtualSize = Math.max(loadedItemsCount + marginItems, minVirtualSize);
+
+// Update viewport when size changes
+component.emit("viewport:total-items-changed", { total: virtualSize });
+```
+
+### Cursor State Management
+
+```typescript
+// Store cursor after successful load
+if (meta.cursor || meta.nextCursor) {
+  currentCursor = meta.cursor || meta.nextCursor;
+  cursorMap.set(page, currentCursor);
+  console.log(`Stored cursor for page ${page}: ${currentCursor}`);
+}
+
+// Check for end of data
+if (meta.hasNext === false) {
+  hasReachedEnd = true;
+  // Adjust virtual size to actual loaded items
+}
+```
+
+### API Methods
+
+```typescript
+// Get current cursor
+collection.getCurrentCursor = () => currentCursor;
+
+// Get cursor for specific page
+collection.getCursorForPage = (page: number) => cursorMap.get(page);
+
+// Check if can jump to page
+collection.canJumpToPage = (page: number) => {
+  if (strategy !== "cursor") return true;
+  return page <= highestLoadedPage + 1;
+};
+```
+
+## Initial Scroll Position and Selection
+
+The collection feature supports starting the viewport at a specific position and optionally selecting an item after the initial data loads.
+
+### initialScrollIndex
+
+Start the viewport at a specific item index instead of the beginning:
+
+```typescript
+const viewport = createViewport({
+  initialScrollIndex: 500, // Start at item 500
+  collection: {
+    adapter: myAdapter,
+  },
+  pagination: {
+    strategy: 'page',
+    limit: 30,
+  },
+});
+```
+
+#### How It Works
+
+1. The viewport calculates the visible range around `initialScrollIndex`
+2. Data is loaded for that range (not page 1)
+3. Items render at the correct position
+4. For large lists with compression, scroll position is automatically recalculated
+
+#### Use Cases
+
+- Restoring user's last scroll position
+- Deep linking to specific items
+- Navigating to search results
+- Resuming from a saved state
+
+### selectId
+
+Automatically select a specific item after the initial load completes:
+
+```typescript
+const viewport = createViewport({
+  initialScrollIndex: 500, // Position in list
+  selectId: 'item-12345', // ID of item to select
+  collection: {
+    adapter: myAdapter,
+  },
+});
+
+// Listen for selection
+viewport.on('selection:change', ({ selectedItems }) => {
+  console.log('Selected:', selectedItems[0]);
+});
+```
+
+#### How It Works
+
+1. Data loads for the initial visible range
+2. `collection:initial-load-complete` event is emitted with `selectId`
+3. The selection feature finds and selects the item
+4. `selection:change` event fires with the selected item
+
+### Combining initialScrollIndex and selectId
+
+For the best user experience when navigating to a specific item:
+
+```typescript
+// Example: Navigate to a user in a large list
+async function navigateToUser(userId) {
+  // 1. Get the user's position in the list
+  const response = await fetch(`/api/users/position?id=${userId}`);
+  const { position } = await response.json();
+  
+  // 2. Create viewport starting at that position with selection
+  const viewport = createViewport({
+    initialScrollIndex: position,
+    selectId: userId,
+    virtual: {
+      itemSize: 100,
+    },
+    collection: {
+      adapter: userAdapter,
+    },
+  });
+  
+  return viewport;
+}
+```
+
+### Edge Case: First Item (Index 0)
+
+When selecting the first item in the list, `initialScrollIndex` will be 0. The collection feature handles this correctly by checking for `selectId` presence:
+
+```typescript
+// This works correctly - selects first item
+const viewport = createViewport({
+  initialScrollIndex: 0, // First item
+  selectId: 'first-item-id',
+  collection: {
+    adapter: myAdapter,
+  },
+});
+```
+
+### Events
+
+#### `collection:initial-load-complete`
+
+Emitted when the initial data load completes (only when `initialScrollIndex` or `selectId` is used):
+
+```typescript
+viewport.on('collection:initial-load-complete', ({ selectId, initialScrollIndex }) => {
+  console.log(`Initial load complete at index ${initialScrollIndex}`);
+  if (selectId) {
+    console.log(`Selecting item: ${selectId}`);
+  }
+});
+```

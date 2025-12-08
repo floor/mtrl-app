@@ -545,6 +545,7 @@ interface VirtualConfig {
   itemSize?: number; // Fixed item size in pixels (auto-detected if not provided)
   overscan?: number; // Items to render outside viewport (default: 2)
   autoDetectItemSize?: boolean; // Enable auto-detection (default: true if no itemSize)
+  initialScrollIndex?: number; // Start at specific item index (0-based)
   debug?: boolean; // Enable debug logging
 }
 ```
@@ -575,4 +576,122 @@ const viewport = createViewport({
     autoDetectItemSize: false, // Explicitly disable
   },
 });
+
+// Start at a specific position (e.g., user's last viewed item)
+const viewport = createViewport({
+  initialScrollIndex: 500, // Start at item 500
+  virtual: {
+    itemSize: 100,
+    overscan: 2,
+  },
+});
+```
+
+## Initial Scroll Position
+
+The `initialScrollIndex` configuration allows the viewport to start at a specific item position instead of the beginning. This is useful for:
+
+- Restoring user's scroll position
+- Deep linking to specific items
+- Navigating to search results
+
+### Basic Usage
+
+```typescript
+const viewport = createViewport({
+  initialScrollIndex: 376, // Start at item 376
+  virtual: {
+    itemSize: 100,
+  },
+  collection: {
+    adapter: myAdapter,
+  },
+});
+```
+
+### With Selection
+
+Combine `initialScrollIndex` with `selectId` to scroll to and select a specific item:
+
+```typescript
+const viewport = createViewport({
+  initialScrollIndex: 376, // Position in list
+  selectId: 'user-12345', // Item ID to select
+  virtual: {
+    itemSize: 100,
+  },
+});
+```
+
+### initialScrollIndex with Compression
+
+When using `initialScrollIndex` with explicit `itemSize` on large lists (>1 million items), the virtual space may be compressed. The viewport automatically handles this by recalculating the scroll position when the total item count is received from the API.
+
+#### The Problem
+
+For a list with 1,050,278 items at 100px each:
+
+```
+Actual Size = 1,050,278 × 100 = 105,027,800 pixels
+MAX_VIRTUAL_SIZE = 100,000,000 pixels
+Compression Ratio = 100M / 105M ≈ 0.95
+```
+
+Without correction, `initialScrollIndex = 376` would calculate:
+- Initial scroll position = 376 × 100 = 37,600px
+- But in compressed space, 37,600px maps to index ~395, not 376
+- Items around index 376 would render off-screen
+
+#### The Solution
+
+When `totalItems` arrives from the API and compression is detected, the scroll position is recalculated using the compression-aware formula:
+
+```typescript
+const ratio = initialScrollIndex / totalItems;
+const compressedPosition = ratio * MAX_VIRTUAL_SIZE;
+```
+
+This ensures the target index appears at the correct position regardless of compression.
+
+#### Why Auto-Detect Works Differently
+
+When `autoDetectItemSize` is enabled (default when no `itemSize` provided):
+1. Initial item size estimate is used
+2. After first items render, actual size is detected
+3. Scroll position is recalculated during detection
+4. This recalculation happens after `totalItems` is known
+
+With explicit `itemSize`, no detection phase occurs, so the viewport now explicitly recalculates when compression is detected.
+
+#### Example with Large Dataset
+
+```typescript
+// Large dataset with explicit itemSize
+const viewport = createViewport({
+  initialScrollIndex: 821959, // Deep in the list
+  virtual: {
+    itemSize: 100, // Explicit size
+    overscan: 2,
+  },
+  collection: {
+    adapter: {
+      read: async (params) => {
+        const response = await fetch(`/api/items?page=${params.page}`);
+        const data = await response.json();
+        return {
+          items: data.items,
+          meta: { total: data.totalCount }, // 1,050,278 items
+        };
+      },
+    },
+  },
+});
+
+// The viewport will:
+// 1. Set initial scroll position to 821959 × 100 = 82,195,900px
+// 2. Load data for the visible range around index 821959
+// 3. Receive totalItems = 1,050,278 from API
+// 4. Detect compression (105M > 100M)
+// 5. Recalculate scroll position: (821959 / 1050278) × 100M = 78,261,089px
+// 6. Re-render items at correct positions
 ```

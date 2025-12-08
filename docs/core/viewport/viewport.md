@@ -48,6 +48,10 @@ interface ViewportConfig {
   className?: string;
   debug?: boolean;
 
+  // Initial position and selection
+  initialScrollIndex?: number; // Start viewport at specific item index (0-based)
+  selectId?: string | number; // ID of item to select after initial load
+
   // Data source
   collection?: {
     adapter: CollectionAdapter<any>; // Data adapter
@@ -151,6 +155,12 @@ Calculate Visible Range → Check Loaded Data → Load Missing Data →
 Render Items → Auto-Detect Size (if enabled) → Update Virtual Space →
 Position Items → Update Scrollbar → Emit Events
 ```
+
+For cursor pagination, the pipeline includes additional steps:
+
+- Sequential loading enforcement
+- Dynamic virtual size calculation
+- Cursor state management
 
 The pipeline includes an intelligent auto-detection step that:
 
@@ -316,6 +326,7 @@ Virtual ────────┐
 - `viewport:range-changed` - Visible range changed
 - `collection:range-loaded` - Data loaded
 - `viewport:items-changed` - Total items changed
+- `viewport:total-items-changed` - Total items updated (cursor mode)
 - `viewport:placeholders-shown` - Placeholders displayed
 - `viewport:placeholders-replaced` - Real data replaced placeholders
 
@@ -389,18 +400,22 @@ Each feature is documented in detail in its own file:
    - Virtual space management
    - Space compression for large datasets
    - Position mapping
+   - Dynamic virtual sizing for cursor pagination
 
 3. **[Scrolling Feature](./features/scrolling.md)** - Scroll handling and velocity
    - Wheel event handling
    - Velocity tracking
    - Idle detection
    - Programmatic scrolling
+   - Sequential loading for cursor pagination
 
 4. **[Collection Feature](./features/collection.md)** - Data management
    - Progressive loading
    - Request queuing
    - Velocity-based decisions
    - Placeholder replacement
+   - Cursor state management
+   - Dynamic virtual sizing
 
 5. **[Placeholders Feature](./features/placeholders.md)** - Temporary items
    - Pattern analysis
@@ -425,12 +440,14 @@ Each feature is documented in detail in its own file:
    - Drag interaction
    - Auto-hide behavior
    - Large dataset support
+   - Dynamic sizing for cursor pagination
 
-9. **[Template Feature](./features/template.md)** - Item templates
-   - Template management
-   - Efficient rendering
-   - Type safety
-   - Customization
+9. **[Pagination Feature](./features/pagination.md)** - Pagination strategies
+   - Page-based pagination
+   - Offset-based pagination
+   - Cursor-based pagination
+   - Sequential loading
+   - Dynamic virtual sizing
 
 ### Optional Features
 
@@ -699,6 +716,72 @@ list.on("viewport:items-rendered", (e) =>
 );
 ```
 
+### Virtual List with Cursor Pagination
+
+```typescript
+import { createViewport } from "mtrl-addons/core/viewport";
+
+// Create viewport with cursor-based pagination
+const viewport = createViewport({
+  // Virtual configuration
+  virtual: {
+    itemSize: 84,
+    overscan: 2,
+  },
+
+  // Collection with cursor adapter
+  collection: {
+    adapter: {
+      read: async (params) => {
+        const url = new URL("/api/users/cursor");
+        url.searchParams.set("limit", params.limit);
+
+        // Add cursor for subsequent pages
+        if (params.cursor) {
+          url.searchParams.set("cursor", params.cursor);
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        return {
+          items: data.items,
+          meta: {
+            nextCursor: data.meta.cursor,
+            hasNext: data.meta.hasNext,
+            total: data.meta.total, // Optional, may not be known
+          },
+        };
+      },
+    },
+  },
+
+  // Cursor pagination strategy
+  pagination: {
+    strategy: "cursor",
+    limit: 20,
+  },
+
+  // Template
+  template: (item) => [
+    { class: "list-item" },
+    [{ class: "list-item__name", text: item.name }],
+    [{ class: "list-item__email", text: item.email }],
+  ],
+});
+
+// Initialize
+const list = viewport({
+  container: document.getElementById("list"),
+  // No totalItems needed for cursor pagination
+});
+
+// Listen for cursor pagination events
+list.on("viewport:total-items-changed", (data) => {
+  console.log(`Virtual size updated to ${data.total} items`);
+});
+```
+
 ## Performance
 
 ### Optimization Strategies
@@ -805,3 +888,31 @@ Previous fixes for slow network scenarios:
 - Added automatic queue processing after successful loads
 - Implemented periodic safety checks for stuck queues
 - Enhanced drag-end handling to check visible ranges
+
+### v1.3.0 - initialScrollIndex with Compressed Virtual Space
+
+**Problem**: When `itemSize` was explicitly set for large lists (>100M virtual pixels), the `initialScrollIndex` feature would fail to position the list correctly. Items would load but appear off-screen, and the list would eventually fall back to showing items from index 0.
+
+**Root Cause**: The initial scroll position was calculated as `initialScrollIndex * itemSize`, but for large lists requiring virtual space compression, this position didn't account for the compression ratio. The rendering feature uses compressed space, causing a mismatch between scroll position and item positioning.
+
+**Solution**: Added scroll position recalculation when `totalItems` arrives from the API and compression is detected. The fix uses the same compression-aware formula as `scrollToIndex()`:
+
+```typescript
+const ratio = initialScrollIndex / totalItems;
+const compressedPosition = ratio * MAX_VIRTUAL_SIZE;
+```
+
+**Why Auto-Detect Worked**: With `autoDetectItemSize: true`, the item size detection phase triggers a scroll position recalculation, inadvertently providing a second chance to calculate the correct position.
+
+See [Virtual Feature Documentation](./features/virtual.md#initialscrollindex-with-compression) for technical details.
+
+### v1.3.1 - selectId Not Working for First Item
+
+**Problem**: When selecting the first item in the list (index 0), the `selectId` feature would not trigger selection because the initialization code only checked for `initialScrollIndex > 0`.
+
+**Solution**: Changed the condition to also trigger the selection flow when `selectId` is provided, regardless of `initialScrollIndex` value:
+
+```typescript
+// Before: if (initialScrollIndex > 0)
+// After: if (initialScrollIndex > 0 || selectId !== undefined)
+```
