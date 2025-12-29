@@ -1,5 +1,8 @@
 # Viewport Constants Reference
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 This document provides a complete reference of all constants used in the viewport system. These constants control various aspects of viewport behavior and can be modified globally.
 
 ## Overview
@@ -15,7 +18,7 @@ To override constants globally:
 ```typescript
 // Override specific constants
 VIEWPORT_CONSTANTS.MOMENTUM.ENABLED = false;
-VIEWPORT_CONSTANTS.LOADING.CANCEL_THRESHOLD = 0.5;
+VIEWPORT_CONSTANTS.LOADING.CANCEL_THRESHOLD = 50; // Very permissive for admin apps
 ```
 
 ## Virtual Scrolling Constants
@@ -70,7 +73,7 @@ Controls progressive data loading behavior.
 
 ```typescript
 LOADING: {
-  CANCEL_THRESHOLD: 1,          // px/ms - velocity above which loads are cancelled
+  CANCEL_THRESHOLD: 20,         // px/ms - velocity above which loads are cancelled (default: 20)
   MAX_CONCURRENT_REQUESTS: 1,   // Parallel data requests allowed
   DEFAULT_RANGE_SIZE: 20,       // Items to load per request
   DEBOUNCE_LOADING: 150,        // Debounce delay for load requests (ms)
@@ -84,7 +87,7 @@ LOADING: {
 
 ### Critical Settings
 
-- `CANCEL_THRESHOLD`: Lower values load data during slower scrolling
+- `CANCEL_THRESHOLD`: Default is 20 px/ms. Lower values show placeholders earlier (preserve bandwidth). Higher values load data even during faster scrolling.
 - `MAX_CONCURRENT_REQUESTS`: Higher values can overwhelm slow servers
 - `DEFAULT_RANGE_SIZE`: Balance between request count and response size
 
@@ -104,6 +107,20 @@ REQUEST_QUEUE: {
 
 - `MAX_QUEUE_SIZE`: Prevents memory buildup from too many queued requests
 - `MAX_ACTIVE_REQUESTS`: Should match server capacity
+
+## Selection Settings
+
+Controls selection state management.
+
+```typescript
+SELECTION: {
+  SELECTED_CLASS: "viewport-item--selected"  // CSS class for selected items
+}
+```
+
+### Usage Notes
+
+- `SELECTED_CLASS`: Applied to items that are currently selected
 
 ## Placeholder Settings
 
@@ -211,7 +228,7 @@ VIEWPORT_CONSTANTS.LOADING.MAX_CONCURRENT_REQUESTS = 3;
 
 ```typescript
 // Optimize for slow networks
-VIEWPORT_CONSTANTS.LOADING.CANCEL_THRESHOLD = 0.5; // Load during slower scrolls
+VIEWPORT_CONSTANTS.LOADING.CANCEL_THRESHOLD = 10; // Lower threshold - show placeholders earlier
 VIEWPORT_CONSTANTS.LOADING.DEFAULT_RANGE_SIZE = 10; // Smaller chunks
 VIEWPORT_CONSTANTS.LOADING.REQUEST_TIMEOUT = 10000; // Longer timeout
 VIEWPORT_CONSTANTS.REQUEST_QUEUE.MAX_QUEUE_SIZE = 3; // More queued requests

@@ -1,5 +1,8 @@
 # Viewport Styling Guide
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 This document provides comprehensive documentation for styling the viewport and its various implementations (lists, maps, sheets, etc.), including CSS architecture, theming, customization, and performance considerations.
 
 ## Overview

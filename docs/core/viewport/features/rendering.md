@@ -1,5 +1,8 @@
 # Rendering Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025 (v0.2.2 - item update/remove support)
+
 The rendering feature is responsible for efficiently updating the DOM with visible items. It manages element creation, recycling, positioning, and content updates while maintaining optimal performance.
 
 ## Overview
@@ -12,6 +15,8 @@ The rendering feature provides:
 - **Content Updates** - Updates item content using templates
 - **Placeholder Replacement** - Seamlessly replaces placeholders with real data
 - **Batch Rendering** - Groups updates for better performance
+- **Item Updates** - In-place re-rendering of updated items
+- **Item Removal** - Handles item removal with index shifting
 
 ## Core Concepts
 
@@ -173,6 +178,70 @@ const getRecycledElement = (): HTMLElement | null => {
 
   return element;
 };
+```
+
+## Item Updates and Removal
+
+### In-Place Item Updates
+
+The rendering feature listens for `item:update-request` events to re-render items in place:
+
+```typescript
+// Event flow for item updates
+vlist.updateItemById('user-123', { name: 'New Name' });
+// 1. API layer updates collectionItems
+// 2. Emits 'item:update-request' event
+// 3. Rendering feature:
+//    - Finds existing element by index
+//    - Re-renders with new data
+//    - Preserves position and selection state
+//    - Adds animation class 'viewport-item--updated'
+// 4. Emits 'item:updated' event
+```
+
+The update preserves:
+- Element position (transform)
+- Selection state (selected class)
+- Adds transition animation for visual feedback
+
+### Item Removal
+
+Item removal is more complex due to index shifting:
+
+```typescript
+// Event flow for item removal
+vlist.removeItemById('user-123');
+// 1. API layer splices item from collection.items
+// 2. Emits 'item:remove-request' event
+// 3. Rendering feature:
+//    - Shifts collectionItems cache indices down
+//    - Shifts renderedElements indices down
+//    - Updates data-index attributes on DOM elements
+//    - Decrements totalItems
+//    - Clears loadedRanges to force reload
+//    - Triggers re-render
+// 4. Emits 'item:removed' event
+// 5. API layer calls setTotalItems() to update virtual size
+```
+
+The removal process handles:
+- Index shifting in all caches
+- DOM attribute updates (`data-index`)
+- Selection state cleanup
+- Virtual size recalculation
+
+### Empty List Handling
+
+When all items are removed, the rendering feature clears all rendered elements:
+
+```typescript
+// If totalItems is 0, clear all rendered elements
+if (totalItems <= 0 && renderedElements.size > 0) {
+  Array.from(renderedElements.entries()).forEach(([index, element]) => {
+    if (element.parentNode) releaseElement(element);
+    renderedElements.delete(index);
+  });
+}
 ```
 
 ## Content Updates

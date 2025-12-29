@@ -1,5 +1,8 @@
 # Base Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The base feature provides the foundation for all viewport functionality. It creates the DOM structure, manages the component lifecycle, and establishes the infrastructure that other features build upon.
 
 ## Overview

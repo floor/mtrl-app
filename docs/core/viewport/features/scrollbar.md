@@ -1,5 +1,8 @@
 # Scrollbar Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The Scrollbar feature provides a custom, performant scrollbar for the viewport with support for dragging, clicking, and visual feedback.
 
 ## Overview

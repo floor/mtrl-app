@@ -1,5 +1,8 @@
 # Viewport Enhancement Roadmap
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 This document outlines potential enhancements for the viewport module, organized by priority and complexity.
 
 ## Overview

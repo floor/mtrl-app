@@ -1,5 +1,8 @@
 # Loading Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The Loading feature provides progressive data loading capabilities for the viewport, managing asynchronous data fetching, request coordination, and loading states.
 
 ## Overview

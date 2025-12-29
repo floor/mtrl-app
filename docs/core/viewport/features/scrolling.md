@@ -1,5 +1,8 @@
 # Scrolling Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The scrolling feature handles all scroll interactions, velocity tracking, and idle detection for the viewport. It's a core feature that other features depend on for scroll state and velocity information.
 
 ## Overview

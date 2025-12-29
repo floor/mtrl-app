@@ -1,5 +1,8 @@
 # Virtual Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The virtual feature is the mathematical brain of the viewport. It calculates which items should be visible, manages the virtual scrollable space, and handles space compression for extremely large datasets.
 
 ## Overview

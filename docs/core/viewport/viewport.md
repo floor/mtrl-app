@@ -1,5 +1,8 @@
 # Viewport
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The viewport is the core virtual scrolling engine in mtrl-addons. It serves as a flexible foundation for virtualized components including lists, maps, sheets, and other scrollable containers. It provides high-performance rendering of large datasets by only rendering visible items, with support for dynamic item sizes, smooth scrolling, placeholders, and progressive data loading.
 
 ## Table of Contents
@@ -82,7 +85,7 @@ interface ViewportConfig {
   performance?: {
     maxConcurrentRequests?: number; // Parallel data requests
     enableRequestQueue?: boolean; // Queue overflow requests
-    cancelLoadThreshold?: number; // Velocity to cancel loads (px/ms)
+    cancelLoadThreshold?: number; // Velocity to cancel loads (px/ms), default: 20
   };
 
   // Placeholder configuration
@@ -510,7 +513,7 @@ const viewport = createViewport({
   performance: {
     maxConcurrentRequests: 2,
     enableRequestQueue: true,
-    cancelLoadThreshold: 1.0,
+    cancelLoadThreshold: 20, // Default threshold - allows normal scrolling without placeholders
   },
 
   // Template using layout system
@@ -556,7 +559,7 @@ const mapViewport = createViewport({
 
   performance: {
     maxConcurrentRequests: 4, // Load multiple tiles in parallel
-    cancelLoadThreshold: 2.0, // Higher threshold for maps
+    cancelLoadThreshold: 30, // Higher threshold for maps
   },
 
   template: (tile) => `<img class="map-tile" src="${tile.url}" />`,
@@ -654,7 +657,7 @@ const viewport = createViewport({
   performance: {
     maxConcurrentRequests: 1,
     enableRequestQueue: true,
-    cancelLoadThreshold: 0.5,
+    cancelLoadThreshold: 10, // Lower threshold for mobile to preserve bandwidth
   },
 
   // Smart placeholders

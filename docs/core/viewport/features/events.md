@@ -1,5 +1,8 @@
 # Events Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The events feature provides a robust event system that enables communication between viewport features without creating tight coupling. It implements a publish-subscribe pattern that allows features to coordinate their actions.
 
 ## Overview

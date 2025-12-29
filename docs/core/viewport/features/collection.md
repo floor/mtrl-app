@@ -1,5 +1,8 @@
 # Collection Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025 (v0.2.2 - empty list handling fix)
+
 The collection feature manages data loading, request queuing, and placeholder replacement for the viewport. It integrates with the data adapter to fetch items on demand and coordinates with other features to optimize loading behavior.
 
 ## Overview

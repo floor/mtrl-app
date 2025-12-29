@@ -1,5 +1,8 @@
 # Placeholders Feature
 
+> **Created:** June 2025
+> **Updated:** December 29, 2025
+
 The placeholders feature generates temporary items to display while real data is loading. It analyzes data structure patterns to create realistic placeholders that match your content format.
 
 ## Overview
