@@ -15,6 +15,41 @@ The viewport module is already a sophisticated virtual scrolling solution. These
 4. **Increase Accessibility** - Support for all users
 5. **Add Intelligence** - Predictive and adaptive behaviors
 
+## Known Limitations & Areas for Improvement
+
+### Complexity
+
+The feature composition pattern is powerful but has trade-offs:
+
+- **Deep Call Stacks** - Debugging can be tricky due to the pipe composition pattern creating nested function calls
+- **Scattered State** - Events and state are distributed across features, making data flow harder to trace
+- **Event Chains** - Understanding which feature emits/listens to which event requires documentation review
+
+### Documentation Gaps
+
+- **Inline Examples** - Would benefit from more code examples within the source files
+- **Component Relationship** - The relationship between viewport core and VList component could be clearer
+- **Event Flow Diagrams** - Visual documentation of event chains would help debugging
+
+### Missing Features
+
+Features that would expand use cases significantly:
+
+| Feature | Description | Complexity | Priority |
+|---------|-------------|------------|----------|
+| **Sticky Headers/Sections** | Group items with headers that stick to top while scrolling | High | Medium |
+| **Variable Item Heights** | Support dynamic heights without fixed itemSize | High | High |
+| **Horizontal Lists** | First-class horizontal scrolling support | Medium | Medium |
+| **Keyboard Navigation** | Arrow key navigation with focus management | Medium | High |
+| **Multi-Select Drag** | Drag to select multiple items | Medium | Low |
+| **Nested Lists** | Lists within lists (tree structures) | Very High | Low |
+
+### Performance Considerations
+
+- **Large Datasets (1M+ items)** - Virtual space compression works but could be optimized further
+- **Rapid Updates** - Frequent item updates can cause render thrashing
+- **Memory on Mobile** - Element pool size may need tuning for memory-constrained devices
+
 ## Priority 1: High-Impact Enhancements
 
 ### 1.1 Component Implementations
