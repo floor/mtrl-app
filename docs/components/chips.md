@@ -176,9 +176,21 @@ interface ChipsConfig {
 | Method | Description |
 |--------|-------------|
 | `getSelectedChips()` | Gets currently selected chip instances |
-| `getSelectedValues()` | Gets values of selected chips |
+| `getSelectedValues()` | Gets values of selected chips as array |
 | `selectByValue(values, triggerEvent?)` | Selects chips by their values |
 | `clearSelection()` | Clears all selections |
+
+### Form Field Compatibility
+
+| Method | Description |
+|--------|-------------|
+| `getValue()` | Gets current value - returns `string \| null` for single-select, `string[]` for multi-select |
+| `setValue(values)` | Sets selection by value(s) - accepts `string`, `string[]`, or `null` |
+
+**Note:** The `getValue()` and `setValue()` methods provide form field compatibility, allowing chips to work seamlessly with form libraries. The return type of `getValue()` depends on the `multiSelect` configuration:
+
+- **Single-select mode** (`multiSelect: false`, default): Returns `string | null`
+- **Multi-select mode** (`multiSelect: true`): Returns `string[]`
 
 ### Layout Management
 
@@ -350,6 +362,46 @@ function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
 }
+```
+
+### Using Chips in Forms
+
+```typescript
+import { createChips } from 'mtrl';
+
+// Single-select role selector (getValue returns string)
+const roleChips = createChips({
+  multiSelect: false,
+  label: 'User Role:',
+  chips: [
+    { text: 'Admin', variant: 'filter', value: 'admin' },
+    { text: 'Editor', variant: 'filter', value: 'editor' },
+    { text: 'Viewer', variant: 'filter', value: 'viewer' }
+  ]
+});
+
+// Get value returns string | null for single-select
+const role = roleChips.getValue(); // e.g., "admin" or null
+
+// Set value accepts string
+roleChips.setValue('editor');
+
+// Multi-select permissions (getValue returns string[])
+const permissionChips = createChips({
+  multiSelect: true,
+  label: 'Permissions:',
+  chips: [
+    { text: 'Read', variant: 'filter', value: 'read' },
+    { text: 'Write', variant: 'filter', value: 'write' },
+    { text: 'Delete', variant: 'filter', value: 'delete' }
+  ]
+});
+
+// Get value returns string[] for multi-select
+const permissions = permissionChips.getValue(); // e.g., ["read", "write"]
+
+// Set value accepts string[]
+permissionChips.setValue(['read', 'write']);
 ```
 
 ### Vertical Layout with Category Groups
