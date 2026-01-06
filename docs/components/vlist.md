@@ -1,7 +1,7 @@
 # VList Component
 
 > **Created:** December 29, 2025
-> **Updated:** December 29, 2025 (v0.2.2 - item update/remove, async selection)
+> **Updated:** January 6, 2026 (v0.2.3 - stopOnClick scrolling option)
 
 The VList component is a high-performance virtual scrolling list built on top of the viewport core engine. It's designed specifically for rendering large datasets efficiently while providing a seamless user experience through intelligent placeholders, velocity-based loading strategies, and flexible configuration options.
 
@@ -122,6 +122,7 @@ The VList component accepts the following configuration options:
 | `scrolling.orientation` | `string` | `'vertical'` | Scroll direction (`vertical` or `horizontal`) |
 | `scrolling.animation` | `boolean` | `true` | Enable smooth scrolling |
 | `scrolling.measureItems` | `boolean` | `false` | Measure actual item sizes |
+| `scrolling.stopOnClick` | `boolean` | `true` | Stop scrolling momentum when clicking on the viewport |
 
 ### Performance Options
 

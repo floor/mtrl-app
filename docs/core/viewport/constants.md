@@ -1,7 +1,7 @@
 # Viewport Constants Reference
 
 > **Created:** June 2025
-> **Updated:** December 29, 2025
+> **Updated:** January 6, 2026
 
 This document provides a complete reference of all constants used in the viewport system. These constants control various aspects of viewport behavior and can be modified globally.
 
@@ -49,9 +49,28 @@ Controls scroll behavior and performance.
 
 ```typescript
 SCROLLING: {
-  OVERSCAN: 1; // Items to render outside viewport
+  OVERSCAN: 1,                    // Items to render outside viewport
+  STOP_ON_CLICK: true,            // Stop scrolling momentum on click (default: true)
+  IDLE_TIMEOUT: 100,              // Idle detection timeout in ms
+  SENSITIVITY: 0.2                // Scroll sensitivity multiplier
 }
 ```
+
+### Stop on Click (Anchor-Based Stopping)
+
+The `STOP_ON_CLICK` feature uses an anchor-based approach to stop scroll momentum when clicking. This is particularly useful for mouse wheels with physical inertia (like Logitech free-spin wheels).
+
+When enabled and user clicks:
+1. Current scroll position is anchored
+2. Wheel events are analyzed to detect intent
+3. Inertia events are blocked, intentional scrolling is allowed
+
+**Inertia Detection Thresholds:**
+- Wheel gap > 200ms → New scroll detected
+- 3+ consecutive delta increases → User started scrolling
+- 5+ events at 5%+ above minimum delta → Sustained intentional scroll
+- Delta < 30 → Gentle intentional scroll
+- Delta < 30% of initial → Inertia has decayed
 
 ## Rendering Settings
 

@@ -1,7 +1,7 @@
 # Viewport
 
 > **Created:** June 2025
-> **Updated:** December 29, 2025
+> **Updated:** January 6, 2026 (v1.4.0 - stopOnClick scrolling option)
 
 The viewport is the core virtual scrolling engine in mtrl-addons. It serves as a flexible foundation for virtualized components including lists, maps, sheets, and other scrollable containers. It provides high-performance rendering of large datasets by only rendering visible items, with support for dynamic item sizes, smooth scrolling, placeholders, and progressive data loading.
 
@@ -73,6 +73,7 @@ interface ViewportConfig {
     orientation?: "vertical" | "horizontal";
     sensitivity?: number; // Scroll speed multiplier
     animation?: boolean; // Enable smooth scrolling
+    stopOnClick?: boolean; // Stop momentum on click (default: true)
   };
 
   // Pagination
@@ -411,6 +412,7 @@ Each feature is documented in detail in its own file:
    - Idle detection
    - Programmatic scrolling
    - Sequential loading for cursor pagination
+   - Click-to-stop with anchor-based inertia detection
 
 4. **[Collection Feature](./features/collection.md)** - Data management
    - Progressive loading

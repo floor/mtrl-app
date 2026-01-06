@@ -1,7 +1,7 @@
 # Scrolling Feature
 
 > **Created:** June 2025
-> **Updated:** December 29, 2025
+> **Updated:** January 6, 2026 (v1.4.0 - stopOnClick option with anchor-based stopping)
 
 The scrolling feature handles all scroll interactions, velocity tracking, and idle detection for the viewport. It's a core feature that other features depend on for scroll state and velocity information.
 
@@ -15,6 +15,7 @@ The scrolling feature provides:
 - **Idle detection** for triggering data loads
 - **Programmatic scrolling** with smooth animations
 - **Scroll position management** with bounds checking
+- **Click-to-stop** with intelligent inertia detection for mouse wheels with physical momentum
 
 ## Configuration
 
@@ -27,9 +28,19 @@ interface ViewportConfig {
     orientation?: "vertical" | "horizontal"; // Default: 'vertical'
     sensitivity?: number; // Default: 1.0
     animation?: boolean; // Default: false
+    stopOnClick?: boolean; // Default: true - Stop scrolling when clicking
   };
 }
 ```
+
+### Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `orientation` | `"vertical" \| "horizontal"` | `"vertical"` | Scroll direction |
+| `sensitivity` | `number` | `1.0` | Mouse wheel sensitivity multiplier |
+| `animation` | `boolean` | `false` | Enable smooth scroll animations |
+| `stopOnClick` | `boolean` | `true` | Stop scrolling momentum when clicking on the viewport |
 
 ### Example Configuration
 
@@ -40,11 +51,25 @@ const viewport = createViewport({
     orientation: "vertical",
     sensitivity: 1.2, // Slightly faster scrolling
     animation: true, // Enable smooth animations
+    stopOnClick: true, // Stop momentum on click (default)
   },
 
   // Other features...
   virtual: {
     overscan: 2,
+  },
+});
+```
+
+### Disabling Click-to-Stop
+
+For lists where you don't want clicking to interrupt scrolling:
+
+```typescript
+const viewport = createViewport({
+  scrolling: {
+    orientation: "vertical",
+    stopOnClick: false, // Allow scrolling to continue after clicks
   },
 });
 ```
@@ -58,6 +83,7 @@ withScrolling({
   orientation: config.scrolling?.orientation,
   sensitivity: config.scrolling?.sensitivity,
   smoothing: config.scrolling?.animation,
+  stopOnClick: config.scrolling?.stopOnClick,
 });
 ```
 
@@ -196,6 +222,47 @@ Fired when scrolling stops (no activity for idle threshold).
 }
 ```
 
+## Click-to-Stop (Anchor-Based Stopping)
+
+When `stopOnClick` is enabled (default), clicking on the viewport will stop any ongoing scroll momentum. This is particularly important for mouse wheels with physical inertia (like Logitech free-spin wheels) that continue sending wheel events after the user stops scrolling.
+
+### How It Works
+
+The feature uses an **anchor-based approach** to distinguish between:
+1. **Residual wheel inertia** - Physical momentum from the mouse wheel
+2. **Intentional new scrolling** - User deliberately starting to scroll again
+
+When the user clicks:
+1. The current scroll position is **anchored**
+2. Subsequent wheel events are analyzed for intent
+3. If detected as inertia, the viewport stays at the anchor position
+4. If detected as new scrolling, the anchor is released
+
+### Inertia Detection Criteria
+
+The anchor is released (scrolling resumes) when any of these are detected:
+
+| Criterion | Threshold | Description |
+|-----------|-----------|-------------|
+| **Wheel gap** | > 200ms | Time gap between wheel events |
+| **Delta increasing** | 3+ consecutive | User started scrolling again |
+| **Sustained high delta** | 5+ events at 5%+ above minimum | Continuous intentional scroll |
+| **Significant increase** | 15% above minimum | Sharp acceleration |
+| **Low delta** | < 30 | Gentle intentional scroll |
+| **Delta decayed** | < 30% of initial | Inertia has wound down |
+
+### Integration with Momentum
+
+The `stopOnClick` feature also stops any momentum animation from the momentum feature:
+
+```typescript
+// When mousedown is detected with stopOnClick enabled:
+const momentumState = component.viewport.momentumState;
+if (momentumState?.stopMomentum) {
+  momentumState.stopMomentum();
+}
+```
+
 ## Idle Detection
 
 The feature implements sophisticated idle detection:
@@ -286,6 +353,18 @@ Different features use velocity for different purposes:
 4. **Velocity Smoothing** - Prevents jittery velocity readings
 
 ## Troubleshooting
+
+### Click-to-Stop Not Working
+
+- Verify `stopOnClick` is not explicitly set to `false`
+- Check that the mousedown event listener is attached to the viewport element
+- Ensure the viewport element exists when `initialize()` is called
+
+### Scroll Continues After Click (with stopOnClick: true)
+
+- The inertia detection may be releasing the anchor too early
+- Check if your mouse wheel has physical inertia (free-spin)
+- The delta thresholds may need adjustment for your hardware
 
 ### Velocity Always Zero
 
