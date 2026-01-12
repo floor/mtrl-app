@@ -47,6 +47,7 @@ The styling follows BEM (Block Element Modifier) methodology:
 // Component-specific classes
 .mtrl-vlist                    // Block: Virtual list component
 .mtrl-vlist--selection         // Modifier: Selection mode
+.mtrl-vlist--scrolled          // Modifier: List is scrolled (shows top shadow indicator)
 .mtrl-vmap                     // Block: Virtual map component
 .mtrl-vsheet                   // Block: Virtual sheet component
 .mtrl-vgallery                 // Block: Virtual gallery component
@@ -97,6 +98,32 @@ The main virtual list container with Material Design styling:
   pointer-events: none;
   opacity: 0.38;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+```
+
+**Scrolled State**
+
+When the list is scrolled away from the top, the `--scrolled` modifier is automatically added. This displays a subtle top shadow to indicate there is content above that can be scrolled to.
+
+```scss
+// The shadow is created via a ::before pseudo-element
+.mtrl-vlist::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to bottom, var(--mtrl-sys-color-shadow, rgba(0, 0, 0, 0.2)) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+// When scrolled, the shadow becomes visible
+.mtrl-vlist--scrolled::before {
+  opacity: 1;
 }
 ```
 

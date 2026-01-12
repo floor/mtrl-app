@@ -765,6 +765,28 @@ console.log({
 }
 ```
 
+### Scroll Indicator
+
+When the list is scrolled away from the top, a subtle shadow appears at the top edge to indicate that there is content above. This is handled automatically via the `--scrolled` modifier class.
+
+```scss
+// The --scrolled class is added automatically when the list is not at the top
+.mtrl-vlist--scrolled::before {
+  // A subtle top shadow gradient is shown
+  opacity: 1;
+}
+
+// Customize the scroll indicator shadow
+.mtrl-vlist::before {
+  height: 6px; // Increase shadow height (default: 3px)
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    transparent 100%
+  );
+}
+```
+
 ### Custom Scrollbar
 
 ```scss
