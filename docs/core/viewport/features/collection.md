@@ -1,7 +1,7 @@
 # Collection Feature
 
 > **Created:** June 2025
-> **Updated:** December 29, 2025 (v0.2.2 - empty list handling fix)
+> **Updated:** January 12, 2026 (v0.3.3 - priority request handling fix for slow networks)
 
 The collection feature manages data loading, request queuing, and placeholder replacement for the viewport. It integrates with the data adapter to fetch items on demand and coordinates with other features to optimize loading behavior.
 
@@ -358,160 +358,240 @@ Returns the total number of items in the collection.
 
 ## Troubleshooting
 
-### Critical Bug Fix: Stale Request Queue Blocking (v1.2.0+)
+### Critical Bug Fix: Priority Request Handling (v1.3.0+)
 
 #### The Problem
 
-A critical bug was discovered where placeholders would not be replaced on slow networks, particularly when users scrolled quickly through the viewport. The issue manifested as:
+A critical bug was discovered where placeholders would not be replaced on slow networks (3G and slower), particularly when users scrolled quickly through the viewport. The issue manifested as:
 
-- Placeholders remaining visible even after data loaded
-- New visible ranges not loading despite being idle
-- Queue getting "stuck" with old requests
-- Users waiting at a position but seeing only placeholders
+- Placeholders remaining visible even after scrolling stopped
+- New visible ranges not loading despite velocity being zero
+- Queue getting "full" and dropping critical requests
+- Users waiting at a position but seeing only placeholders indefinitely
 
 #### Root Cause Analysis
 
-The bug was caused by a queue blocking issue in the request management system:
+The bug had multiple contributing factors:
 
-1. **Sequential Loading**: With `maxConcurrentRequests: 1`, only one request could be active at a time
-2. **Queue Accumulation**: When users scrolled quickly, multiple range requests would queue up
-3. **Stale Requests**: By the time old requests completed, the user had scrolled far away
-4. **Queue Blocking**: Old, irrelevant requests in the queue would block new, relevant requests for the current visible range
+1. **Queue Size Limitation**: With `MAX_QUEUE_SIZE: 1`, only one request could be queued
+2. **Request Dropping**: When queue was full, new requests were silently dropped - including critical `viewport:idle` and `viewport:range-changed` requests
+3. **Stale Pending State**: When items were evicted during slow network loads, `pendingRanges` wasn't cleared, blocking future loads
+4. **Race Conditions**: Async loads could complete after eviction, re-adding ranges to `loadedRanges` even though data was gone
 
-Example scenario:
+Example scenario on 3G (2+ second latency):
 
 ```
 1. User at position 0-20 (loads immediately)
-2. User scrolls quickly to 200-220 (queued - request 1)
-3. User scrolls to 400-420 (queued - request 2)
-4. User stops at 600-620 (queued - request 3)
-5. Request 1 completes, loads 200-220 (user no longer there)
-6. Request 2 starts loading 400-420 (user no longer there)
-7. User waits at 600-620 but sees placeholders because request 3 is stuck in queue
+2. User scrolls quickly - velocity > threshold, loads skipped
+3. User scrolls to 600-620, request queued
+4. User stops at 700-720 (velocity=0)
+5. viewport:idle fires, tries to load 700-720
+6. Queue is full (has request for 600-620)
+7. Request for 700-720 is DROPPED!
+8. User sees placeholders indefinitely
 ```
 
-#### The Solution
+#### The Solution (v1.3.0)
 
-The fix implements intelligent queue management that prioritizes the current visible range:
+The fix implements multiple defensive mechanisms:
+
+##### 1. Priority Request Handling
+
+Critical requests from `viewport:idle` and `viewport:range-changed` are never dropped. Instead, they clear stale requests and take priority:
 
 ```typescript
-// When idle is detected, clear stale requests from the queue
-const buffer = rangeSize * 2; // Allow some buffer
-loadRequestQueue = loadRequestQueue.filter((request) => {
-  const requestEnd = request.range.end;
-  const requestStart = request.range.start;
-  const isRelevant =
-    requestEnd >= visibleRange.start - buffer &&
-    requestStart <= visibleRange.end + buffer;
+if (caller === "viewport:idle" || caller === "viewport:range-changed") {
+  // Clear old queued requests - they're for ranges user scrolled past
+  loadRequestQueue.forEach((r) => {
+    r.resolve(); // Clean resolution
+  });
+  loadRequestQueue.length = 0;
+  
+  // Queue this priority request
+  loadRequestQueue.push({
+    range,
+    priority: "high",
+    timestamp: Date.now(),
+    resolve,
+    reject,
+    caller,
+  });
+}
+```
 
-  if (!isRelevant) {
-    console.log(
-      `[Collection] Removing stale queued request: ${requestStart}-${requestEnd}`
-    );
-    request.resolve(); // Resolve to avoid hanging promises
+##### 2. Eviction Cleanup
+
+When items are evicted, all related state is properly cleaned up:
+
+```typescript
+rangesToRemove.forEach((rangeId) => {
+  loadedRanges.delete(rangeId);
+  pendingRanges.delete(rangeId);      // Clear pending state
+  activeRequests.delete(rangeId);     // Clear tracking
+  
+  // Abort in-flight requests to free network resources
+  const controller = abortControllers.get(rangeId);
+  if (controller) {
+    controller.abort();
+    abortControllers.delete(rangeId);
   }
-  return isRelevant;
 });
+```
+
+##### 3. Load Completion Verification
+
+Before marking a range as "loaded", verify items actually exist (handles race with eviction):
+
+```typescript
+const itemsActuallyStored = transformedItems.every(
+  (_, idx) => items[offset + idx] !== undefined
+);
+
+if (itemsActuallyStored) {
+  loadedRanges.add(rangeId);
+}
+// If items were evicted during load, don't mark as loaded
+```
+
+##### 4. Defensive Data Verification
+
+When checking if ranges need loading, verify data actually exists:
+
+```typescript
+if (loadedRanges.has(rangeId)) {
+  const rangeStart = rangeId * rangeSize;
+  const hasData = items
+    .slice(rangeStart, rangeStart + rangeSize)
+    .some((item) => item !== undefined);
+  if (!hasData) {
+    // Range marked loaded but no data - force reload
+    loadedRanges.delete(rangeId);
+    rangesToLoad.push(rangeId);
+  }
+}
+```
+
+##### 5. Render Trigger for Skipped Items
+
+When data arrives but DOM elements don't exist, trigger a re-render:
+
+```typescript
+// In rendering.ts collection:range-loaded handler
+if (skippedCount > 0 && viewportState?.visibleRange) {
+  const { start, end } = viewportState.visibleRange;
+  const loadedStart = data.offset;
+  const loadedEnd = data.offset + data.items.length - 1;
+  
+  if (loadedStart <= end && loadedEnd >= start) {
+    renderItems(); // Re-render to show the data
+  }
+}
 ```
 
 #### How It Works
 
-1. **Idle Detection**: When scrolling stops and idle is detected
-2. **Queue Cleanup**: Remove any queued requests that are far from the current visible range
-3. **Buffer Zone**: Keep requests within 2x range size of the visible area (for smooth scrolling)
-4. **Clean Resolution**: Resolve removed requests to prevent hanging promises
-5. **Priority Loading**: Current visible range can now load immediately
+1. **User Scrolls Fast**: Requests skipped due to velocity threshold
+2. **User Stops**: `viewport:idle` fires with velocity=0
+3. **Priority Handling**: Idle request clears stale queue and takes priority
+4. **Data Loads**: Request proceeds immediately
+5. **Verification**: Items verified before marking loaded
+6. **Render Update**: DOM updated with real data
 
 #### Benefits
 
-- **Immediate Response**: Current visible range loads as soon as user stops scrolling
-- **Memory Efficiency**: Old requests don't accumulate in the queue
-- **Better UX**: Users see data for their current position, not old positions
-- **Network Efficiency**: Prevents loading data for areas the user has scrolled past
+- **Guaranteed Loading**: Current visible range always loads when user stops
+- **No Silent Drops**: Critical requests never silently dropped
+- **Clean State**: Eviction properly cleans all tracking state
+- **Race Condition Safe**: Verification prevents stale loaded state
+- **Network Efficient**: Aborts unnecessary in-flight requests
 
 #### Configuration for Slow Networks
 
-For extremely slow networks (GPRS, 2G), consider:
+For extremely slow networks (GPRS, 2G, 3G), consider:
 
 ```typescript
 const viewport = withCollection({
   maxConcurrentRequests: 2, // Allow 2 concurrent requests
   enableRequestQueue: true,
-  maxQueueSize: 5, // Limit queue size
-  cancelLoadThreshold: 0.5, // Lower threshold for slow scrolling
-  rangeSize: 10, // Smaller ranges for faster loads
+  maxQueueSize: 3, // Small queue - priority handling will manage it
+  cancelLoadThreshold: 50, // Lower threshold for slow scrolling
+  rangeSize: 20, // Smaller ranges for faster loads
 });
 ```
 
-### Placeholders Not Replaced (Other Causes)
+### Legacy Fix: Stale Request Queue Cleanup (v1.2.0)
 
-This is the critical issue on slow networks. Other possible causes:
+The v1.2.0 fix added queue cleanup on idle, which is still active:
 
-1. **Queue Not Processing**
+```typescript
+// When idle is detected, clear stale requests from the queue
+const buffer = rangeSize * 2;
+loadRequestQueue = loadRequestQueue.filter((request) => {
+  const isRelevant =
+    request.range.end >= visibleRange.start - buffer &&
+    request.range.start <= visibleRange.end + buffer;
+  
+  if (!isRelevant) {
+    request.resolve();
+  }
+  return isRelevant;
+});
+```
 
-   ```typescript
-   // Check if queue is stuck
-   console.log("Queue length:", requestQueue.length);
-   console.log("Active requests:", activeRequests.size);
-   console.log("Current velocity:", currentVelocity);
-   ```
+This works alongside v1.3.0's priority handling for defense in depth.
 
-2. **Idle Detection Failing**
-   - Verify `viewport:idle` event is firing
-   - Check idle threshold settings
-   - Look for continuous micro-movements
+### Placeholders Not Replaced (Debugging)
 
-3. **Velocity Threshold Too Low**
-   - On slow networks, loading takes longer
-   - User might scroll again before load completes
-   - Consider adjusting `CANCEL_THRESHOLD`
+If placeholders are still not being replaced after v1.3.0, check:
 
-4. **Event Chain Broken**
-   - Ensure `collection:range-loaded` is emitted
-   - Verify rendering feature is listening
-   - Check for errors in event handlers
+1. **Verify Priority Handling**
 
-### Recommended Fixes
-
-1. **Force Queue Processing on Network Complete**
+   The fix should prevent request dropping. If you see issues, enable debug logging:
 
    ```typescript
-   // Add to loadRange success handler
-   if (requestQueue.length > 0 && currentVelocity <= cancelLoadThreshold) {
-     setTimeout(() => processQueue(), 0);
-   }
+   // In loadMissingRanges wrapper, temporarily add:
+   console.log(`Request: range=${range.start}-${range.end}, caller=${caller}`);
+   console.log(`Queue: length=${loadRequestQueue.length}, active=${activeLoadCount}`);
    ```
 
-2. **Add Fallback Timer**
+2. **Check Eviction State**
+
+   Verify eviction is cleaning up properly:
 
    ```typescript
-   // Process queue periodically as safety net
-   setInterval(() => {
-     if (!isDragging && currentVelocity <= cancelLoadThreshold) {
-       processQueue();
-     }
-   }, 1000);
+   // Check state after scrolling
+   console.log("loadedRanges:", Array.from(loadedRanges));
+   console.log("pendingRanges:", Array.from(pendingRanges));
+   console.log("items with data:", items.filter(Boolean).length);
    ```
 
-3. **Improve Idle Detection**
-   ```typescript
-   // Also process queue on drag end
-   component.on?.("viewport:drag-end", () => {
-     isDragging = false;
-     setTimeout(() => processQueue(), 100);
-   });
-   ```
+3. **Verify Idle Detection**
+   - Ensure `viewport:idle` event is firing when scrolling stops
+   - Check that `currentVelocity` reaches 0
+   - Look for continuous micro-movements preventing idle
 
-### Fixed Issues (v1.1.0+)
+4. **Check Render Trigger**
+   - Verify `collection:range-loaded` event is emitted
+   - Ensure rendering feature's handler is called
+   - Check `skippedCount` in the handler
 
-The following fixes have been implemented to resolve the placeholder replacement issue on slow networks:
+### Fixed Issues Summary
 
-1. **Automatic Queue Processing** - The queue is now processed automatically after each successful data load
-2. **Periodic Safety Check** - A fallback timer checks the queue every second
-3. **Enhanced Drag End Handling** - The visible range is checked and loaded after drag gestures
-4. **Improved Idle Detection** - Multiple mechanisms ensure data loads when scrolling stops
+#### v1.3.0 (Current)
+- **Priority Request Handling** - Critical requests (`viewport:idle`, `viewport:range-changed`) never dropped
+- **Complete Eviction Cleanup** - Clears `pendingRanges`, `activeRequests`, aborts in-flight requests
+- **Load Verification** - Checks items exist before marking range as loaded
+- **Defensive Data Check** - Verifies data exists when ranges marked as loaded
+- **Render Trigger** - Re-renders when data arrives for visible range without DOM elements
 
-These fixes ensure that placeholders are always replaced with real data, even on very slow network connections.
+#### v1.2.0
+- **Queue Cleanup on Idle** - Removes stale requests far from visible range
+- **Buffer Zone** - Keeps requests within 2x range size of visible area
+
+#### v1.1.0
+- **Automatic Queue Processing** - Queue processed after each successful load
+- **Enhanced Drag End Handling** - Visible range loaded after drag gestures
+- **Improved Idle Detection** - Multiple mechanisms ensure data loads when scrolling stops
 
 ## Performance Considerations
 
