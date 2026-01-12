@@ -1,7 +1,7 @@
 # Form Component
 
 > **Created:** January 3, 2025
-> **Updated:** January 4, 2025
+> **Updated:** January 27, 2025
 > **Package:** mtrl-addons
 
 The Form component is a functional form builder that uses the mtrl composition pattern to create forms from schema definitions. It provides built-in data management, validation, state tracking, and submission handling.
@@ -148,6 +148,7 @@ The Form component accepts the following configuration options:
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `validation` | `array` | `[]` | Array of validation rules |
+| `showFieldErrorMessages` | `boolean` | `true` | Show error messages in field helper text |
 
 ## Layout Schema
 
@@ -380,7 +381,12 @@ const form = createForm({
 
 | Method | Returns | Description |
 |--------|---------|-------------|
-| `validate()` | `{ valid, errors }` | Validate form data |
+| `validate()` | `{ valid, errors }` | Validate form data (auto-shows errors on fields) |
+| `validateField(name)` | `string \| undefined` | Validate a single field |
+| `clearErrors()` | `Form` | Clear all validation errors |
+| `clearFieldError(name)` | `Form` | Clear error for a specific field |
+| `setFieldError(name, msg)` | `Form` | Set error for a specific field |
+| `getFieldError(name)` | `string \| undefined` | Get error for a specific field |
 
 ### Submission Methods
 
@@ -499,6 +505,41 @@ const form = createForm({
 });
 ```
 
+### Automatic Field Error Display
+
+When validation fails, the form automatically:
+
+1. **Shows errors on fields** - Calls `field.setError(true, message)` on each invalid field
+2. **Clears errors when valid** - When a field with an error changes and becomes valid, the error is automatically cleared
+3. **Clears on reset/cancel** - All errors are cleared when the form is reset or cancelled
+
+```javascript
+// Errors are shown automatically on fields when validate() is called
+const result = form.validate();
+
+// If email is invalid, the email textfield will show error state
+// with the message in its helper text
+```
+
+### Controlling Error Message Display
+
+By default, error messages are shown in the field's helper/supporting text. To show only the error state (red border) without the message:
+
+```javascript
+const form = createForm({
+  showFieldErrorMessages: false, // Only show error state, not message text
+  validation: [
+    { field: 'email', validate: (v) => !!v, message: 'Email is required' }
+  ],
+  on: {
+    'validation:error': (errors) => {
+      // Show errors in a snackbar instead
+      createSnackbar({ message: Object.values(errors).join('. ') }).show();
+    }
+  }
+});
+```
+
 ### Manual Validation
 
 ```javascript
@@ -510,6 +551,21 @@ if (result.valid) {
   console.log('Validation errors:', result.errors);
   // { email: 'Invalid email format', password: 'Password is required' }
 }
+
+// Validate a single field
+const emailError = form.validateField('email');
+if (emailError) {
+  console.log('Email error:', emailError);
+}
+
+// Clear all errors manually
+form.clearErrors();
+
+// Clear a specific field's error
+form.clearFieldError('email');
+
+// Set an error manually
+form.setFieldError('email', 'This email is already taken');
 ```
 
 ## Submission
@@ -1025,6 +1081,39 @@ If upgrading from an older version that used `FORM_MODES`:
 | `getMode()` | `getDataState()` |
 | `setMode(mode)` | Removed (state is automatic) |
 | `mode:change` event | `state:change` event |
+
+## Roadmap
+
+The following improvements are planned for future versions:
+
+### Validation Refactor
+
+The current validation implementation works but has some architectural concerns that will be addressed:
+
+| Current | Planned |
+|---------|---------|
+| Module-level field value tracker | Instance-level tracker per form |
+| Validation split between `submit.ts` and `data.ts` | Unified `ValidationManager` |
+| Implicit coupling via events for error clearing | Direct error management in reset |
+| `showFieldErrorMessages` only affects automatic behavior | Consistent behavior for manual `setFieldError` calls |
+
+### Planned Features
+
+- **Built-in Validators**: Optional common validators (`required`, `email`, `minLength`, `pattern`, etc.) as composable functions
+- **Async Validation**: Support for async validators (e.g., checking username availability)
+- **Field-Level Validation Timing**: Configure validation per field (`onBlur`, `onChange`, `onSubmit`)
+- **Touched State Tracking**: Track which fields have been interacted with for smarter error display
+- **Form Arrays**: Support for dynamic field arrays (add/remove rows)
+- **Nested Forms**: Support for nested form groups
+
+### Non-Goals (Staying Lightweight)
+
+To maintain the "less is more" philosophy, these will NOT be added:
+
+- Heavy validation libraries as dependencies
+- Complex form state machines
+- Two-way data binding magic
+- Framework-specific integrations
 
 ## Related Documentation
 
