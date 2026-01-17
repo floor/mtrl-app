@@ -1,7 +1,7 @@
 # VList Component
 
 > **Created:** December 29, 2025
-> **Updated:** January 6, 2026 (v0.2.3 - stopOnClick scrolling option)
+> **Updated:** January 17, 2026 (v0.2.4 - MD3 keyboard navigation and accessibility)
 
 The VList component is a high-performance virtual scrolling list built on top of the viewport core engine. It's designed specifically for rendering large datasets efficiently while providing a seamless user experience through intelligent placeholders, velocity-based loading strategies, and flexible configuration options.
 
@@ -14,6 +14,8 @@ VList is part of the `mtrl-addons` package and provides:
 - **Placeholder System**: Shows realistic placeholders while data loads, analyzed from actual content
 - **Flexible Templates**: Supports multiple template formats (HTML strings, DOM elements, layout schema)
 - **Selection Support**: Built-in single and multiple selection modes
+- **Keyboard Navigation**: MD3-compliant keyboard navigation with arrow keys, Home/End, PageUp/Down
+- **Accessibility**: Full ARIA support with proper roles, states, and focus management
 - **Pagination Strategies**: Page, offset, and cursor-based pagination
 - **Custom Scrollbar**: Cross-browser consistent scrollbar with auto-hide support
 
@@ -154,6 +156,39 @@ The VList component accepts the following configuration options:
 |--------|------|---------|-------------|
 | `selection.enabled` | `boolean` | `false` | Enable item selection |
 | `selection.mode` | `string` | `'single'` | Selection mode (`single` or `multiple`) |
+| `selection.autoSelectFirst` | `boolean` | `false` | Automatically select first item after load |
+
+### Keyboard Options
+
+When selection is enabled, keyboard navigation is automatically enabled. You can configure it with these options:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `keyboard.enabled` | `boolean` | `true` (when selection enabled) | Enable keyboard navigation |
+| `keyboard.homeEnd` | `boolean` | `true` | Enable Home/End keys to jump to first/last item |
+| `keyboard.pageUpDown` | `boolean` | `true` | Enable PageUp/PageDown keys |
+| `keyboard.pageSize` | `number` | `10` | Number of items to skip with PageUp/PageDown |
+| `keyboard.wrap` | `boolean` | `true` | Wrap around when reaching start/end (MD3 default) |
+| `keyboard.typeAhead` | `boolean` | `false` | Enable type-ahead search |
+| `keyboard.typeAheadTimeout` | `number` | `500` | Type-ahead buffer clear timeout in ms |
+
+```javascript
+const vlist = createVList({
+  container: '#my-list',
+  selection: {
+    enabled: true,
+    mode: 'single'
+  },
+  keyboard: {
+    enabled: true,
+    homeEnd: true,
+    pageUpDown: true,
+    pageSize: 10,
+    wrap: false  // Disable wrapping at list boundaries
+  },
+  // ... other options
+});
+```
 
 ## Template Function
 
@@ -325,6 +360,12 @@ vlist.updateItemById('user-123', newUserData, { replace: true }); // Full replac
 | `selectAtIndex(index)` | Select item at index (async, handles virtual scrolling) |
 | `selectNext()` | Select next item relative to current selection (async) |
 | `selectPrevious()` | Select previous item relative to current selection (async) |
+| `selectFirst()` | Select first item (async) |
+| `selectLast()` | Select last item (async) |
+| `isItemFullyVisible(index)` | Check if item at index is fully visible in viewport |
+| `focus()` | Focus the list for keyboard navigation |
+| `blur()` | Remove focus from the list |
+| `hasFocus()` | Check if list has focus |
 
 #### Async Selection Methods
 
@@ -345,6 +386,56 @@ await vlist.selectPrevious(); // Move selection up
 |--------|-------------|
 | `destroy()` | Clean up and remove the list |
 
+## Keyboard Navigation
+
+VList implements Material Design 3 accessibility guidelines for list keyboard navigation.
+
+### Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `ArrowDown` / `ArrowRight` | Move to next item (wraps to top if at end) |
+| `ArrowUp` / `ArrowLeft` | Move to previous item (wraps to bottom if at start) |
+| `Home` | Jump to first item |
+| `End` | Jump to last item |
+| `PageDown` | Skip forward by `pageSize` items (default: 10) |
+| `PageUp` | Skip backward by `pageSize` items |
+| `Space` / `Enter` | Select/activate the focused item |
+| `Escape` | Clear selection |
+| `Ctrl+A` / `Cmd+A` | Select all items (multiple selection mode only) |
+
+### Focus Behavior
+
+- Click on the list to focus it for keyboard navigation
+- Tab key moves focus to/from the list
+- When focused via Tab (keyboard), a focus outline is shown
+- When focused via mouse click, no outline is shown (cleaner UX)
+- If the list has a selected item, focus goes to that item
+- If no item is selected, focus goes to the first item
+
+> **Note:** Focus styling uses a class-based approach (`mtrl-vlist--keyboard-focus`) for reliable cross-browser behavior, rather than relying on `:focus-visible` which can be inconsistent.
+
+### Smart Scrolling
+
+When navigating with keyboard:
+- If the target item is already fully visible, no scrolling occurs
+- When navigating down and item is below viewport, it scrolls to show item at bottom
+- When navigating up and item is above viewport, it scrolls to show item at top
+- This provides smooth, natural navigation without jarring jumps
+
+### Accessibility (ARIA)
+
+VList automatically applies proper ARIA attributes:
+
+| Attribute | Element | Value |
+|-----------|---------|-------|
+| `role` | Container | `listbox` |
+| `role` | Items | `option` |
+| `aria-selected` | Items | `true` / `false` |
+| `aria-activedescendant` | Container | ID of focused item |
+| `aria-multiselectable` | Container | `true` (multiple mode only) |
+| `tabindex` | Container | `0` (focusable) |
+
 ## Events
 
 VList emits various events that you can listen to:
@@ -357,6 +448,15 @@ vlist.on('selection:change', (data) => {
   console.log('Selected indices:', data.selectedIndices);
 });
 ```
+
+### Keyboard Events
+
+| Event | Data | Description |
+|-------|------|-------------|
+| `keyboard:navigate` | `{ key, index, shiftKey, ctrlKey, metaKey }` | Keyboard navigation occurred |
+| `keyboard:focus` | - | List received focus |
+| `keyboard:blur` | - | List lost focus |
+| `item:activate` | `{ index, item }` | Item activated via Enter/Space |
 
 ### Data Events
 
