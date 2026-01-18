@@ -1,7 +1,7 @@
 # Form Component
 
 > **Created:** January 3, 2025
-> **Updated:** January 27, 2025
+> **Updated:** January 18, 2026
 > **Package:** mtrl-addons
 
 The Form component is a functional form builder that uses the mtrl composition pattern to create forms from schema definitions. It provides built-in data management, validation, state tracking, and submission handling.
@@ -150,6 +150,14 @@ The Form component accepts the following configuration options:
 | `validation` | `array` | `[]` | Array of validation rules |
 | `showFieldErrorMessages` | `boolean` | `true` | Show error messages in field helper text |
 
+### Protection Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `protectChanges` | `boolean \| object` | `false` | Enable change protection (see [Change Protection](#change-protection)) |
+| `protectChanges.beforeUnload` | `boolean` | `false` | Warn when closing browser tab with unsaved changes |
+| `protectChanges.onDataOverwrite` | `boolean` | `false` | Show blocking overlay when form has unsaved changes |
+
 ## Layout Schema
 
 ### Schema Format
@@ -278,6 +286,139 @@ The form element receives state-specific CSS classes:
 ```css
 .mtrl-form--modified { } /* Applied when form is dirty */
 .mtrl-form--submitting { } /* Applied during submission */
+```
+
+## Change Protection
+
+The form can protect against accidental loss of unsaved changes with blocking overlays and browser warnings.
+
+### Configuration
+
+```javascript
+import { createForm } from 'mtrl-addons';
+
+const form = createForm({
+  protectChanges: {
+    beforeUnload: true,      // Warn when closing browser tab
+    onDataOverwrite: true    // Show blocking overlay when form has unsaved changes
+  },
+  // ... other config
+});
+
+// Or enable both with shorthand:
+const form = createForm({
+  protectChanges: true,  // Enables both beforeUnload and onDataOverwrite
+  // ...
+});
+```
+
+### Protection Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `beforeUnload` | `boolean` | `false` | Shows browser's native "unsaved changes" dialog when user tries to close/refresh the tab |
+| `onDataOverwrite` | `boolean` | `false` | Shows blocking overlays around the form, preventing clicks outside until changes are saved or discarded |
+
+### Blocking Overlay Behavior
+
+When `onDataOverwrite` is enabled:
+
+1. **User edits a field** → Form becomes dirty → Blocking overlays appear around the form
+2. **User clicks outside form** → Click is blocked, dialog can be shown via `data:conflict` event
+3. **User saves or cancels** → Form becomes pristine → Overlays disappear
+4. **User can interact normally** with the rest of the UI
+
+The overlay creates four invisible panels (top, bottom, left, right) around the form that block mouse clicks. The form itself remains fully interactive.
+
+### Handling the data:conflict Event
+
+When the user clicks on the blocking overlay, a `data:conflict` event is emitted. You can handle this to show a confirmation dialog:
+
+```javascript
+import { createForm } from 'mtrl-addons';
+import { createDialog } from 'mtrl';
+
+// Create a reusable handler (recommended)
+const createUnsavedChangesHandler = (options = {}) => {
+  const {
+    title = 'Unsaved Changes',
+    content = 'You have unsaved changes. Do you want to discard them?',
+    keepEditingText = 'Keep Editing',
+    discardText = 'Discard Changes'
+  } = options;
+
+  let isDialogOpen = false;
+
+  return (event) => {
+    event.cancel(); // Prevent default behavior
+
+    if (isDialogOpen) return; // Prevent duplicate dialogs
+    isDialogOpen = true;
+
+    const dialog = createDialog({
+      title,
+      content,
+      size: 'small',
+      closeOnOverlayClick: false,
+      buttons: [
+        {
+          text: keepEditingText,
+          variant: 'text',
+          closeDialog: true
+        },
+        {
+          text: discardText,
+          variant: 'filled',
+          color: 'primary',
+          closeDialog: true,
+          onClick: () => event.proceed() // Discard changes and reset form
+        }
+      ]
+    });
+
+    dialog.on('close', () => { isDialogOpen = false; });
+    dialog.open();
+  };
+};
+
+// Use in form config
+const form = createForm({
+  protectChanges: {
+    beforeUnload: true,
+    onDataOverwrite: true
+  },
+  on: {
+    'data:conflict': createUnsavedChangesHandler()
+  },
+  // ...
+});
+```
+
+### The data:conflict Event Object
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `currentData` | `object` | The current form data (with unsaved changes) |
+| `newData` | `object` | The data that would replace current data (empty for overlay clicks) |
+| `cancelled` | `boolean` | Whether the operation has been cancelled |
+| `cancel()` | `function` | Call to cancel the operation (keep editing) |
+| `proceed()` | `function` | Call to proceed (resets form to initial data) |
+
+### CSS Classes
+
+```css
+/* Blocking overlay panels */
+.mtrl-form-blocking-overlay {
+  position: fixed;
+  background: transparent;
+  z-index: 999;
+  cursor: not-allowed;
+}
+
+/* Optional: subtle visual feedback on hover */
+.mtrl-form-blocking-overlay:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
 ```
 
 ## Auto-Wired Controls
@@ -460,6 +601,22 @@ form.on('submit:success', (response) => {
 
 form.on('submit:error', (error) => {
   console.error('Submit failed:', error);
+});
+```
+
+### Protection Events
+
+```javascript
+// Emitted when blocking overlay is clicked (requires protectChanges.onDataOverwrite: true)
+form.on('data:conflict', (event) => {
+  console.log('Current data:', event.currentData);
+  console.log('New data:', event.newData);
+  
+  // Cancel the operation (keep editing)
+  event.cancel();
+  
+  // Or proceed (discard changes and reset form)
+  // event.proceed();
 });
 ```
 
@@ -998,6 +1155,7 @@ FORM_EVENTS.VALIDATION_ERROR // 'validation:error'
 FORM_EVENTS.SUBMIT_SUCCESS   // 'submit:success'
 FORM_EVENTS.SUBMIT_ERROR     // 'submit:error'
 FORM_EVENTS.RESET            // 'reset'
+FORM_EVENTS.DATA_CONFLICT    // 'data:conflict' - Emitted when protection overlay is clicked
 ```
 
 ## Troubleshooting
@@ -1105,6 +1263,12 @@ The current validation implementation works but has some architectural concerns 
 - **Touched State Tracking**: Track which fields have been interacted with for smarter error display
 - **Form Arrays**: Support for dynamic field arrays (add/remove rows)
 - **Nested Forms**: Support for nested form groups
+
+### Recently Added (January 2026)
+
+- ✅ **Change Protection**: `protectChanges` config with `beforeUnload` and `onDataOverwrite` options
+- ✅ **Blocking Overlay**: Visual protection preventing clicks outside form when unsaved changes exist
+- ✅ **data:conflict Event**: Event emitted when protection is triggered, allowing custom dialog handling
 
 ### Non-Goals (Staying Lightweight)
 
