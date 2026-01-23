@@ -314,6 +314,31 @@ pagination: {
 | `getVisibleItems()` | Get currently visible items |
 | `isLoading()` | Check if data is loading |
 | `hasNext()` | Check if more items available |
+| `reload()` | Clear all data and fetch fresh from the adapter |
+| `clear()` | Clear all data without reloading |
+
+#### Reload and Clear Methods
+
+The `reload()` and `clear()` methods are useful when you need to refresh the list data without destroying and recreating the component:
+
+```javascript
+// Reload with fresh data (e.g., after filter change)
+await vlist.reload();
+
+// Clear the list without fetching new data
+vlist.clear();
+```
+
+**When to use `reload()`:**
+- User changes a filter or search query
+- Data source has been updated externally
+- Switching context (e.g., showing activities for a different user)
+
+**When to use `clear()`:**
+- Resetting the UI to an empty state
+- Preparing for a context switch before new data is ready
+
+Both methods are much more efficient than destroying and recreating the VList component, as they reuse the existing DOM structure and event listeners.
 
 ### Item Update Methods
 
@@ -384,6 +409,8 @@ await vlist.selectPrevious(); // Move selection up
 
 | Method | Description |
 |--------|-------------|
+| `reload()` | Clear all data and reinitialize to fetch fresh data |
+| `clear()` | Clear all data and rendered elements without reloading |
 | `destroy()` | Clean up and remove the list |
 
 ## Keyboard Navigation
