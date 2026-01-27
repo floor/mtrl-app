@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes the proposed enhancement to VList that integrates layout management directly into the component. The goal is to **simplify VList integration** by providing a complete, batteries-included list component that handles layout, virtual scrolling, and state management in one cohesive API.
+This document describes the `withLayout` feature for VList that integrates layout management directly into the component. The goal is to **simplify VList integration** by providing a complete, batteries-included list component that handles layout and virtual scrolling in one cohesive API.
 
 ## Motivation
 
@@ -52,28 +52,33 @@ Make VList integration **simple** for common use cases:
 // Proposed approach - one component, one config
 const userList = createVList({
   container: document.getElementById('app'),
+  class: 'users',
   
   layout: [
     ['head', { class: 'head' },
-      ['title', { text: 'Users' }]
+      ['title', { class: 'title', text: 'Users' }]
     ],
     ['viewport'],
-    ['foot', { class: 'foot' }]
+    ['foot', { class: 'foot' },
+      ['count', { class: 'count', text: '0' }]
+    ]
   ],
   
   template: userTemplate,
-  itemSize: 100,
-  
-  collection: {
-    adapter: { read: fetchUsers }
-  }
+  virtual: { itemSize: 100 },
+  collection: { adapter: { read: fetchUsers } }
 })
 
-// Access layout elements
-userList.layout.head.title.textContent = 'Users (1,245)'
+// Access layout elements (flat map)
+userList.layout.title.textContent = 'Users (1,245)'
+userList.layout.count.textContent = '1,245'
 ```
 
 ## Design
+
+### The `withLayout` Feature
+
+`withLayout` is a feature that enhances VList, consistent with the existing composition pattern in mtrl-addons. It processes a `layout` configuration to build the complete UI structure around the virtual scrolling viewport.
 
 ### The `layout` Option
 
@@ -92,35 +97,70 @@ layout: [
     [Button, 'clear', { icon: iconCancel }]
   ],
   [SearchBar, 'search-bar', { placeholder: 'Search...' }],
-  ['viewport'],  // ← Virtual scrolling area goes here
+  ['viewport'],  // ← Virtual scrolling area
   ['foot', { class: 'foot' },
-    ['position', { text: '0' }],
-    ['count', { text: '0' }]
+    ['progress', { class: 'progress', text: '0%' }],
+    ['count', { class: 'count', text: '0' }]
   ]
 ]
 ```
 
 ### The `viewport` Placeholder
 
-The `'viewport'` entry in the layout schema is a reserved keyword that tells VList where to create the virtual scrolling container. It can be:
+The `'viewport'` entry in the layout schema is a reserved keyword. The first element in each array item is the component key/name. So `['viewport']` creates an element accessible as `layout.viewport`.
 
 ```javascript
-// Minimal - just the keyword
+// Minimal
 ['viewport']
 
 // With options
-['viewport', { class: 'custom-body', ariaLabel: 'User list' }]
+['viewport', { class: 'body', ariaLabel: 'User list' }]
 ```
 
 VList will:
-1. Process the layout schema
-2. Find the `viewport` placeholder
-3. Create the virtual scrolling container at that position
-4. Build the rest of the layout around it
+1. Process the layout schema using `createLayout`
+2. Find the `viewport` element
+3. Render the virtual scrolling content inside it
+
+### DOM Structure
+
+**Current structure (with wrapper):**
+```html
+<div class="users list premium">           <!-- Wrapper creates -->
+  <div class="mtrl-head">...</div>         <!-- Layout -->
+  <div class="mtrl-filter-input">...</div> <!-- Layout -->
+  <div class="mtrl-search">...</div>       <!-- Layout -->
+  <div class="mtrl-body">                  <!-- Layout -->
+    <div class="mtrl-vlist">               <!-- VList creates -->
+      <div class="mtrl-viewport">...</div> <!-- VList internal -->
+    </div>
+  </div>
+  <div class="mtrl-foot">...</div>         <!-- Layout -->
+</div>
+```
+
+**Proposed structure (VList with layout):**
+```html
+<div class="mtrl-vlist mtrl-vlist-users">       <!-- VList creates root -->
+  <div class="mtrl-head">...</div>              <!-- withLayout builds -->
+  <div class="mtrl-filter-input">...</div>      <!-- withLayout builds -->
+  <div class="mtrl-search">...</div>            <!-- withLayout builds -->
+  <div class="mtrl-viewport-container">         <!-- withLayout builds from 'viewport' -->
+    <div class="mtrl-viewport">...</div>        <!-- VList renders here -->
+  </div>
+  <div class="mtrl-foot">...</div>              <!-- withLayout builds -->
+</div>
+```
+
+Key differences:
+- VList creates its own root element (`mtrl-vlist`)
+- No separate wrapper needed
+- Layout is built inside VList's element
+- `viewport` in schema becomes the container for virtual scrolling
 
 ### Accessing Layout Elements
 
-After creation, all named layout elements are accessible via `vlist.layout` as a **flat map**. The mtrl-addons layout system returns all components in a flattened structure, regardless of nesting in the schema:
+The mtrl-addons layout system returns a **flat map** of all named elements. After creation, all layout elements are accessible via `vlist.layout`:
 
 ```javascript
 const vlist = createVList({
@@ -131,6 +171,7 @@ const vlist = createVList({
     ],
     ['viewport'],
     ['foot', { class: 'foot' },
+      ['progress', { text: '0%' }],
       ['count', { text: '0' }]
     ]
   ],
@@ -138,29 +179,30 @@ const vlist = createVList({
 })
 
 // Access elements directly by their key (flat map)
-vlist.layout.head              // The head container element
-vlist.layout.title             // The title element (not head.title)
-vlist.layout.search            // The search IconButton instance (not head.search)
-vlist.layout.foot              // The foot container element
-vlist.layout.count             // The count element (not foot.count)
-vlist.layout.viewport          // The virtual scrolling container
+vlist.layout.head       // The head container element
+vlist.layout.title      // The title element
+vlist.layout.search     // The search IconButton instance
+vlist.layout.viewport   // The virtual scrolling container
+vlist.layout.foot       // The footer container element
+vlist.layout.progress   // The progress element
+vlist.layout.count      // The count element
 
 // Update dynamically
 vlist.layout.title.textContent = 'Users (1,245)'
 vlist.layout.count.textContent = '1,245'
+vlist.layout.progress.textContent = '100%'
 
 // Toggle visibility
 vlist.layout.head.classList.add('hidden')
 ```
 
-> **Note:** The layout system flattens all named elements into a single map. This means element keys must be unique across the entire layout schema.
+> **Note:** The layout system flattens all named elements into a single map. Element keys must be unique across the entire layout schema.
 
 ### Default Behavior
 
 | Configuration | Result |
 |---------------|--------|
 | No `layout` option | Backward compatible - just virtual scrolling, no wrapper layout |
-| `layout: true` | Default minimal layout: `[['viewport']]` |
 | `layout: [...]` | Custom layout schema with viewport placeholder |
 
 ### Backward Compatibility
@@ -176,50 +218,68 @@ const vlist = createVList({
 })
 ```
 
-## API Reference
+## Implementation
 
-### VList Options (Extended)
+### The `withLayout` Feature
 
-```typescript
-interface VListOptions {
-  // Existing options
-  container: HTMLElement
-  template: TemplateFunction
-  collection: CollectionConfig
-  virtual?: VirtualConfig
-  selection?: SelectionConfig
-  keyboard?: KeyboardConfig
-  // ...
+```javascript
+// In mtrl-addons/src/components/vlist/features/layout.ts
+
+import { createLayout } from '../../../core/layout'
+
+export const withLayout = (config) => (vlist) => {
+  // Skip if no layout provided
+  if (!config.layout) return vlist
   
-  // New layout option
-  layout?: LayoutSchema | boolean
+  // Build layout inside vlist.element
+  const { component } = createLayout(config.layout, vlist.element)
+  
+  // The viewport element is where VList renders
+  const viewport = component.viewport
+  if (!viewport) {
+    console.warn('[VList] Layout schema must include a viewport element')
+    return vlist
+  }
+  
+  // Configure VList to use viewport as its rendering container
+  vlist.setViewportContainer(viewport)
+  
+  return {
+    ...vlist,
+    layout: component  // Flat map of all layout elements
+  }
 }
-
-type LayoutSchema = Array<LayoutItem>
-
-type LayoutItem = 
-  | string                           // Element tag or 'viewport'
-  | [string, object?, ...LayoutItem[]] // [tag, options?, children...]
-  | [ComponentClass, string?, object?] // [Component, key?, props?]
 ```
 
-### VList Instance (Extended)
+### Integration with VList
 
-```typescript
-interface VList {
-  // Existing properties and methods
-  element: HTMLElement
-  getItems(): Item[]
-  getSelectedItems(): Item[]
-  scrollToIndex(index: number): void
-  // ...
+```javascript
+// In mtrl-addons/src/components/vlist/vlist.ts
+
+import { withLayout } from './features/layout'
+
+export function createVList(options) {
+  // Create root element
+  const element = document.createElement('div')
+  element.classList.add('mtrl-vlist')
+  if (options.class) {
+    element.classList.add(`mtrl-vlist-${options.class}`)
+  }
   
-  // New layout property (when layout option is used)
-  layout: LayoutElements
-}
-
-interface LayoutElements {
-  [key: string]: HTMLElement | ComponentInstance | LayoutElements
+  // Append to container
+  if (options.container) {
+    options.container.appendChild(element)
+  }
+  
+  // Create base VList instance
+  let vlist = createBaseVList({ ...options, element })
+  
+  // Apply layout feature if layout provided
+  if (options.layout) {
+    vlist = withLayout(options)(vlist)
+  }
+  
+  return vlist
 }
 ```
 
@@ -232,9 +292,7 @@ const list = createVList({
   container: document.getElementById('app'),
   layout: [['viewport']],
   template: (item) => `<div class="item">${item.name}</div>`,
-  collection: {
-    adapter: { read: fetchItems }
-  }
+  collection: { adapter: { read: fetchItems } }
 })
 ```
 
@@ -243,14 +301,15 @@ const list = createVList({
 ```javascript
 const list = createVList({
   container: document.getElementById('app'),
+  class: 'items',
   
   layout: [
-    ['header', { class: 'list-header' },
-      ['h2', 'title', { text: 'My Items' }]
+    ['header', { class: 'header' },
+      ['title', { tag: 'h2', text: 'My Items' }]
     ],
     ['viewport'],
-    ['footer', { class: 'list-footer' },
-      ['span', 'count', { text: '0 items' }]
+    ['footer', { class: 'footer' },
+      ['count', { text: '0 items' }]
     ]
   ],
   
@@ -268,7 +327,7 @@ const list = createVList({
 })
 ```
 
-### Full-Featured List (Search, Filter, Footer)
+### Full-Featured List
 
 ```javascript
 import { createIconButton, createSelect, createSearch } from 'mtrl'
@@ -276,6 +335,7 @@ import { createVList } from 'mtrl-addons'
 
 const userList = createVList({
   container: document.getElementById('users'),
+  class: 'users',
   
   layout: [
     // Header with title and action buttons
@@ -301,10 +361,7 @@ const userList = createVList({
       [createSelect, 'country', {
         variant: 'outlined',
         density: 'compact',
-        options: [
-          { id: '', text: 'All' },
-          ...countries
-        ]
+        options: [{ id: '', text: 'All' }, ...countries]
       }],
       [{ class: 'divider' }],
       [Button, 'clear', { class: 'clear', icon: iconCancel }]
@@ -319,7 +376,7 @@ const userList = createVList({
     }],
     
     // Virtual scrolling viewport
-    ['viewport', { class: 'body' }],
+    ['viewport'],
     
     // Footer with progress and count
     ['foot', { class: 'foot' },
@@ -339,23 +396,20 @@ const userList = createVList({
   selection: { enabled: true, mode: 'single' },
   
   collection: {
-    adapter: {
-      read: fetchUsers
-    }
+    adapter: { read: fetchUsers }
   }
 })
 
 // Wire up events
-userList.layout.head.search.on('click', () => {
+userList.layout.search.on('click', () => {
   userList.layout['search-bar'].element.classList.toggle('show')
 })
 
-userList.layout.head.filter.on('click', () => {
+userList.layout.filter.on('click', () => {
   userList.layout['filter-input'].classList.toggle('show')
 })
 
-userList.layout['filter-input'].country.on('change', (e) => {
-  // Reload with filter
+userList.layout.country.on('change', (e) => {
   userList.reload({ country: e.value })
 })
 
@@ -369,73 +423,6 @@ userList.on('viewport:range-changed', ({ visibleRange }) => {
   userList.layout.position.textContent = position
   userList.layout.count.textContent = count
 })
-```
-
-## Implementation Notes
-
-### Layout Processing
-
-1. VList receives the `layout` option
-2. If `layout` is falsy, skip layout processing (backward compatible)
-3. Parse the layout schema to find the `viewport` entry
-4. Create the container element for VList
-5. Use `createLayout` from mtrl-addons to build the layout
-6. Replace the `viewport` placeholder with the virtual scrolling container
-7. Store references to all named elements in `vlist.layout`
-
-### Element Reference Collection
-
-When processing the layout, VList uses mtrl-addons `createLayout` which collects references to all elements that have:
-- A string key (second position in array): `[Component, 'key', { props }]`
-- A name in the first position: `['head', { class: 'head' }]`
-
-These are stored in a **flat map** (not nested):
-```javascript
-vlist.layout = {
-  head: HTMLElement,           // The head container
-  title: HTMLElement,          // Title element
-  search: IconButton,          // Component instance
-  filter: IconButton,          // Component instance
-  'filter-input': HTMLElement, // Filter panel container
-  country: Select,             // Select component
-  clear: Button,               // Clear button
-  'search-bar': Search,        // Search component instance
-  viewport: HTMLElement,       // The virtual scrolling container
-  foot: HTMLElement,           // Footer container
-  progress: HTMLElement,       // Progress element
-  position: HTMLElement,       // Position element
-  count: HTMLElement,          // Count element
-  // etc.
-}
-```
-
-> **Important:** Since the layout is flat, all element keys must be unique across the entire schema. Choose descriptive, non-conflicting names.
-
-### CSS Considerations
-
-The layout container element receives:
-- The `class` from VList options (e.g., `'users'`)
-- A base `'vlist'` class for common styling
-
-```css
-.vlist {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.vlist > .head {
-  flex: none;
-}
-
-.vlist > .viewport {
-  flex: 1;
-  overflow: auto;
-}
-
-.vlist > .foot {
-  flex: none;
-}
 ```
 
 ## Migration Guide
@@ -473,6 +460,7 @@ const createUserList = (options) => {
 // Just use VList directly
 const userList = createVList({
   container: parentElement,
+  class: 'users',
   layout: [
     ['head', { class: 'head' }, ...],
     ['viewport'],
@@ -485,61 +473,16 @@ const userList = createVList({
 
 ### Gradual Migration
 
-The wrapper pattern can still be used for advanced cases. The `layout` option is purely additive - existing code continues to work.
-
-## Future Considerations
-
-### Built-in Event Handling
-
-Consider adding common event handling directly to VList:
-
-```javascript
-const list = createVList({
-  layout: [...],
-  
-  // Built-in search handling
-  search: {
-    key: 'search-bar',        // Layout element key
-    minChars: 3,
-    debounce: 300,
-    onSearch: (query) => list.reload({ search: query })
-  },
-  
-  // Built-in filter handling  
-  filter: {
-    key: 'filter-input',
-    fields: ['country'],
-    onFilter: (filters) => list.reload(filters)
-  }
-})
-```
-
-### Layout Presets
-
-Common layout patterns as presets:
-
-```javascript
-import { layouts } from 'mtrl-addons'
-
-const list = createVList({
-  layout: layouts.standard({
-    title: 'Users',
-    search: true,
-    filter: true,
-    footer: true
-  }),
-  // ...
-})
-```
+The wrapper pattern can still be used for advanced cases requiring custom state management or complex event wiring. The `layout` option is purely additive - existing code continues to work.
 
 ## Summary
 
-The VList layout enhancement provides:
+The `withLayout` feature provides:
 
 1. **Simplicity** - One component, one config, complete list UI
 2. **Flexibility** - Custom layouts via schema, or no layout at all
-3. **Accessibility** - Layout elements accessible via `vlist.layout`
-4. **Backward Compatibility** - Existing code continues to work
-5. **Progressive Enhancement** - Start simple, add complexity as needed
+3. **Consistency** - Uses existing `createLayout` system, follows `withFeature` pattern
+4. **Accessibility** - Layout elements accessible via flat `vlist.layout` map
+5. **Backward Compatibility** - Existing code continues to work
 
 This makes VList a **production-ready, batteries-included** virtual list component while maintaining its core strength in handling massive datasets efficiently.
