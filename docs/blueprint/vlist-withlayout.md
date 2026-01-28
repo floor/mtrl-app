@@ -2,7 +2,34 @@
 
 ## Overview
 
-This document describes the `withLayout` feature for VList that integrates layout management directly into the component. The goal is to **simplify VList integration** by providing a complete, batteries-included list component that handles layout and virtual scrolling in one cohesive API.
+This document describes the `withLayout` feature for VList that integrates layout management directly into the component. The goal is to **simplify VList integration** by providing a complete, batteries-included list component that handles layout, search, filter, and virtual scrolling in one cohesive API.
+
+## Status
+
+### ✅ Completed
+
+- **`withLayout` feature** - Processes layout schema, finds viewport, exposes `vlist.layout` flat map
+- **`withViewport` integration** - Uses layout's viewport container when available
+- **VList types updated** - `layout` option in config, `layout` property on component
+- **Tests** - 13 tests covering layout functionality
+- **Styles** - Support for both wrapper pattern and withLayout pattern in desk styles
+- **Proof of concept** - `list-with-layout.js` demonstrates the approach works
+- **`withSearch` feature** - Generic, layout-agnostic search integration with debounce, events, and API
+- **`withFilter` feature** - Generic, layout-agnostic filter integration with controls mapping, events, and API
+- **Search tests** - 24 tests covering search functionality
+- **Filter tests** - 33 tests covering filter functionality
+- **Types updated** - `SearchConfig` and `FilterConfig` added to `VListConfig`, API methods added to `VListComponent`
+- **VList styles** - Search bar and filter panel styles added to `_vlist.scss` in mtrl-addons
+- **Keyboard fix** - Fixed click handler to not steal focus from search/filter inputs
+- **list-with-layout.js integration** - Updated to use `withSearch` and `withFilter` features
+- **Collection adapter enhancement** - Search/filters automatically passed to adapter read function (11 tests)
+
+### 📋 Planned
+
+- Remove `list-with-layout.js` wrapper after full migration complete
+- Use VList directly in `accounts/layout.js`
+
+---
 
 ## Motivation
 
@@ -49,38 +76,59 @@ This approach is **powerful but complex**. It requires developers to understand:
 Make VList integration **simple** for common use cases:
 
 ```javascript
-// Proposed approach - one component, one config
+// Target approach - one component, one config
 const userList = createVList({
   container: document.getElementById('app'),
   class: 'users',
   
   layout: [
     ['head', { class: 'head' },
-      ['title', { class: 'title', text: 'Users' }]
+      ['title', { text: 'Users' }],
+      [createIconButton, 'search', { icon: iconSearch, toggle: true }],
+      [createIconButton, 'filter', { icon: iconFilter, toggle: true }]
     ],
+    ['filter-input', { class: 'filter-input' },
+      [createSelect, 'country', { options: countries }],
+      [Button, 'clear', { icon: iconCancel }]
+    ],
+    [createSearch, 'search-bar', { placeholder: 'Search...' }],
     ['viewport'],
     ['foot', { class: 'foot' },
-      ['count', { class: 'count', text: '0' }]
+      ['count', { text: '0' }]
     ]
   ],
+  
+  // Generic search feature
+  search: {
+    toggleButton: 'search',
+    searchBar: 'search-bar',
+  },
+  
+  // Generic filter feature
+  filter: {
+    toggleButton: 'filter',
+    panel: 'filter-input',
+    clearButton: 'clear',
+    controls: {
+      country: 'country',
+    },
+  },
   
   template: userTemplate,
   virtual: { itemSize: 100 },
   collection: { adapter: { read: fetchUsers } }
 })
-
-// Access layout elements (flat map)
-userList.layout.title.textContent = 'Users (1,245)'
-userList.layout.count.textContent = '1,245'
 ```
+
+---
 
 ## Design
 
-### The `withLayout` Feature
+### The `withLayout` Feature ✅ Implemented
 
 `withLayout` is a feature that enhances VList, consistent with the existing composition pattern in mtrl-addons. It processes a `layout` configuration to build the complete UI structure around the virtual scrolling viewport.
 
-### The `layout` Option
+### The `layout` Option ✅ Implemented
 
 VList accepts an optional `layout` configuration that defines the complete UI structure. The layout is an array schema (compatible with mtrl-addons `createLayout`) with a special `'viewport'` placeholder that marks where the virtual scrolling area will be created.
 
@@ -88,7 +136,6 @@ VList accepts an optional `layout` configuration that defines the complete UI st
 layout: [
   ['head', { class: 'head' },
     ['title', { class: 'title', text: 'List' }],
-    ['divider', { class: 'divider' }],
     [IconButton, 'search', { icon: iconSearch }],
     [IconButton, 'filter', { icon: iconFilter }]
   ],
@@ -105,9 +152,12 @@ layout: [
 ]
 ```
 
-### The `viewport` Placeholder
+### The `viewport` Placeholder ✅ Implemented
 
-The `'viewport'` entry in the layout schema is a reserved keyword. The first element in each array item is the component key/name. So `['viewport']` creates an element accessible as `layout.viewport`.
+The `'viewport'` entry in the layout schema is a reserved keyword. VList will:
+1. Process the layout schema using `createLayout`
+2. Find the `viewport` element
+3. Render the virtual scrolling content inside it
 
 ```javascript
 // Minimal
@@ -117,29 +167,9 @@ The `'viewport'` entry in the layout schema is a reserved keyword. The first ele
 ['viewport', { class: 'body', ariaLabel: 'User list' }]
 ```
 
-VList will:
-1. Process the layout schema using `createLayout`
-2. Find the `viewport` element
-3. Render the virtual scrolling content inside it
+### DOM Structure ✅ Implemented
 
-### DOM Structure
-
-**Current structure (with wrapper):**
-```html
-<div class="users list premium">           <!-- Wrapper creates -->
-  <div class="mtrl-head">...</div>         <!-- Layout -->
-  <div class="mtrl-filter-input">...</div> <!-- Layout -->
-  <div class="mtrl-search">...</div>       <!-- Layout -->
-  <div class="mtrl-body">                  <!-- Layout -->
-    <div class="mtrl-vlist">               <!-- VList creates -->
-      <div class="mtrl-viewport">...</div> <!-- VList internal -->
-    </div>
-  </div>
-  <div class="mtrl-foot">...</div>         <!-- Layout -->
-</div>
-```
-
-**Proposed structure (VList with layout):**
+**New structure (VList with layout):**
 ```html
 <div class="mtrl-vlist mtrl-vlist-users">       <!-- VList creates root -->
   <div class="mtrl-head">...</div>              <!-- withLayout builds -->
@@ -152,337 +182,406 @@ VList will:
 </div>
 ```
 
-Key differences:
-- VList creates its own root element (`mtrl-vlist`)
-- No separate wrapper needed
-- Layout is built inside VList's element
-- `viewport` in schema becomes the container for virtual scrolling
+### Accessing Layout Elements ✅ Implemented
 
-### Accessing Layout Elements
-
-The mtrl-addons layout system returns a **flat map** of all named elements. After creation, all layout elements are accessible via `vlist.layout`:
+All layout elements are accessible via `vlist.layout`:
 
 ```javascript
-const vlist = createVList({
-  layout: [
-    ['head', { class: 'head' },
-      ['title', { text: 'Users' }],
-      [IconButton, 'search', { icon: iconSearch }]
-    ],
-    ['viewport'],
-    ['foot', { class: 'foot' },
-      ['progress', { text: '0%' }],
-      ['count', { text: '0' }]
-    ]
-  ],
-  // ...
-})
-
 // Access elements directly by their key (flat map)
 vlist.layout.head       // The head container element
 vlist.layout.title      // The title element
 vlist.layout.search     // The search IconButton instance
 vlist.layout.viewport   // The virtual scrolling container
 vlist.layout.foot       // The footer container element
-vlist.layout.progress   // The progress element
-vlist.layout.count      // The count element
 
 // Update dynamically
 vlist.layout.title.textContent = 'Users (1,245)'
 vlist.layout.count.textContent = '1,245'
-vlist.layout.progress.textContent = '100%'
-
-// Toggle visibility
-vlist.layout.head.classList.add('hidden')
 ```
 
-> **Note:** The layout system flattens all named elements into a single map. Element keys must be unique across the entire layout schema.
+---
 
-### Default Behavior
+## Features
 
-| Configuration | Result |
-|---------------|--------|
-| No `layout` option | Backward compatible - just virtual scrolling, no wrapper layout |
-| `layout: [...]` | Custom layout schema with viewport placeholder |
+### The `withSearch` Feature ✅ Implemented
 
-### Backward Compatibility
+A generic, layout-agnostic search feature that works with any layout structure.
 
-Existing code without the `layout` option continues to work exactly as before:
+#### Configuration
+
+```typescript
+interface SearchConfig {
+  // Layout element names (references to elements in layout)
+  toggleButton?: string      // IconButton that toggles search visibility
+  searchBar?: string         // Search input component name
+  
+  // Behavior
+  autoReload?: boolean       // Reload on search change (default: true)
+  debounce?: number          // Debounce input in ms (default: 300)
+  minLength?: number         // Minimum query length to trigger search (default: 1)
+}
+```
+
+#### Search Component Options
+
+When using `createSearch` from mtrl, use these options to keep it as a simple inline bar:
 
 ```javascript
-// This still works - no layout, just virtual scrolling
+[createSearch, 'search-bar', {
+  placeholder: 'Search users...',
+  expandOnFocus: false,    // Don't expand to view mode with suggestions
+  collapseOnBlur: false,   // Don't collapse when losing focus
+  fullWidth: true          // Fill available width
+}]
+```
+
+#### Example Usage
+
+```javascript
 const vlist = createVList({
-  container: element,
-  template: itemTemplate,
-  collection: { adapter: { read: fetchData } }
-})
-```
-
-## Implementation
-
-### The `withLayout` Feature
-
-```javascript
-// In mtrl-addons/src/components/vlist/features/layout.ts
-
-import { createLayout } from '../../../core/layout'
-
-export const withLayout = (config) => (vlist) => {
-  // Skip if no layout provided
-  if (!config.layout) return vlist
-  
-  // Build layout inside vlist.element
-  const { component } = createLayout(config.layout, vlist.element)
-  
-  // The viewport element is where VList renders
-  const viewport = component.viewport
-  if (!viewport) {
-    console.warn('[VList] Layout schema must include a viewport element')
-    return vlist
-  }
-  
-  // Configure VList to use viewport as its rendering container
-  vlist.setViewportContainer(viewport)
-  
-  return {
-    ...vlist,
-    layout: component  // Flat map of all layout elements
-  }
-}
-```
-
-### Integration with VList
-
-```javascript
-// In mtrl-addons/src/components/vlist/vlist.ts
-
-import { withLayout } from './features/layout'
-
-export function createVList(options) {
-  // Create root element
-  const element = document.createElement('div')
-  element.classList.add('mtrl-vlist')
-  if (options.class) {
-    element.classList.add(`mtrl-vlist-${options.class}`)
-  }
-  
-  // Append to container
-  if (options.container) {
-    options.container.appendChild(element)
-  }
-  
-  // Create base VList instance
-  let vlist = createBaseVList({ ...options, element })
-  
-  // Apply layout feature if layout provided
-  if (options.layout) {
-    vlist = withLayout(options)(vlist)
-  }
-  
-  return vlist
-}
-```
-
-## Examples
-
-### Minimal List
-
-```javascript
-const list = createVList({
-  container: document.getElementById('app'),
-  layout: [['viewport']],
-  template: (item) => `<div class="item">${item.name}</div>`,
-  collection: { adapter: { read: fetchItems } }
-})
-```
-
-### List with Header and Footer
-
-```javascript
-const list = createVList({
-  container: document.getElementById('app'),
-  class: 'items',
-  
   layout: [
-    ['header', { class: 'header' },
-      ['title', { tag: 'h2', text: 'My Items' }]
+    ['head', { class: 'head' },
+      [createIconButton, 'search-toggle', { icon: iconSearch, toggle: true }]
     ],
+    [createSearch, 'search-input', { 
+      placeholder: 'Search...', 
+      expandOnFocus: false,
+      collapseOnBlur: false,
+      fullWidth: true
+    }],
     ['viewport'],
-    ['footer', { class: 'footer' },
-      ['count', { text: '0 items' }]
-    ]
   ],
   
-  template: itemTemplate,
-  virtual: { itemSize: 50 },
+  search: {
+    toggleButton: 'search-toggle',  // References layout element
+    searchBar: 'search-input',      // References layout element
+    debounce: 300,
+    autoReload: false,              // Handle reload manually via events
+  },
+  
   collection: {
     adapter: {
       read: async ({ page, limit }) => {
-        const data = await fetchItems(page, limit)
-        list.layout.count.textContent = `${data.total} items`
-        return data
+        // Access search via vlist.getSearchQuery()
       }
     }
   }
 })
+
+// Listen to search events
+vlist.on('search:change', ({ query }) => {
+  // Handle search change
+})
 ```
 
-### Full-Featured List
+#### Events Emitted
+
+| Event | Data | Description |
+|-------|------|-------------|
+| `search:open` | `{}` | Search bar shown |
+| `search:close` | `{}` | Search bar hidden |
+| `search:change` | `{ query: string, previousQuery: string }` | Search query changed |
+| `search:clear` | `{}` | Search cleared |
+
+#### API Added
+
+```typescript
+vlist.search(query: string): void      // Set search query programmatically
+vlist.clearSearch(): void              // Clear search
+vlist.getSearchQuery(): string         // Get current query
+vlist.isSearching(): boolean           // Check if in search mode (has query)
+vlist.isSearchOpen(): boolean          // Check if search bar is visible
+vlist.openSearch(): void               // Show search bar
+vlist.closeSearch(): void              // Hide search bar
+vlist.toggleSearch(): void             // Toggle search bar visibility
+```
+
+---
+
+### The `withFilter` Feature ✅ Implemented
+
+A generic, layout-agnostic filter feature that works with any layout structure and any filter controls.
+
+#### Configuration
+
+```typescript
+interface FilterConfig {
+  // Layout element names (references to elements in layout)
+  toggleButton?: string       // IconButton that toggles filter panel
+  panel?: string              // Filter panel container name
+  clearButton?: string        // Clear all filters button (optional)
+  
+  // Filter controls - map of filter name → layout element name
+  controls?: Record<string, string>
+  
+  // Behavior
+  autoReload?: boolean        // Reload on filter change (default: true)
+}
+```
+
+#### Example Usage
 
 ```javascript
-import { createIconButton, createSelect, createSearch } from 'mtrl'
-import { createVList } from 'mtrl-addons'
-
-const userList = createVList({
-  container: document.getElementById('users'),
-  class: 'users',
-  
+const vlist = createVList({
   layout: [
-    // Header with title and action buttons
     ['head', { class: 'head' },
-      ['title', { class: 'title', text: 'Users' }],
-      ['divider', { class: 'divider' }],
-      [createIconButton, 'search', { 
-        variant: 'standard', 
-        icon: iconSearch, 
-        toggle: true 
-      }],
-      [createIconButton, 'filter', { 
-        variant: 'standard', 
-        icon: iconFilter, 
-        toggle: true 
-      }]
+      [createIconButton, 'filter-toggle', { icon: iconFilter, toggle: true }]
     ],
-    
-    // Filter panel (initially hidden)
-    ['filter-input', { class: 'filter-input' },
-      [Icon, { src: iconFilter }],
-      [{ class: 'label', text: 'Country' }],
-      [createSelect, 'country', {
-        variant: 'outlined',
-        density: 'compact',
-        options: [{ id: '', text: 'All' }, ...countries]
-      }],
-      [{ class: 'divider' }],
-      [Button, 'clear', { class: 'clear', icon: iconCancel }]
+    ['filters', { class: 'filter-panel' },
+      [createSelect, 'country-select', { options: countries }],
+      [createSelect, 'decade-select', { options: decades }],
+      [Button, 'clear-btn', { icon: iconCancel }]
     ],
-    
-    // Search bar (initially hidden)
-    [createSearch, 'search-bar', {
-      class: 'search-bar',
-      placeholder: 'Search users...',
-      leadingIcon: iconSearch,
-      showClearButton: true
-    }],
-    
-    // Virtual scrolling viewport
     ['viewport'],
-    
-    // Footer with progress and count
-    ['foot', { class: 'foot' },
-      ['progress', { class: 'progress', text: '0%' }],
-      ['divider', { class: 'divider' }],
-      ['info', { class: 'info' },
-        ['position', { class: 'position', text: '0' }],
-        ['slash', { text: '/' }],
-        ['count', { class: 'count', text: '0' }],
-        ['label', { text: 'items' }]
-      ]
-    ]
   ],
   
-  template: userTemplate,
-  virtual: { itemSize: 100, overscan: 2 },
-  selection: { enabled: true, mode: 'single' },
-  
-  collection: {
-    adapter: { read: fetchUsers }
+  filter: {
+    toggleButton: 'filter-toggle',  // References layout element
+    panel: 'filters',               // References layout element
+    clearButton: 'clear-btn',       // References layout element
+    controls: {
+      country: 'country-select',    // Filter name → layout element
+      decade: 'decade-select',
+    },
+    autoReload: false,              // Handle reload manually via events
+  },
+})
+
+// Listen to filter events
+vlist.on('filter:change', ({ name, value, filters }) => {
+  // Handle filter change
+})
+```
+
+#### Events Emitted
+
+| Event | Data | Description |
+|-------|------|-------------|
+| `filter:open` | `{}` | Filter panel shown |
+| `filter:close` | `{}` | Filter panel hidden |
+| `filter:change` | `{ name: string, value: any, previousValue: any, filters: Record<string, any> }` | Single filter changed |
+| `filter:clear` | `{}` | All filters cleared |
+
+#### API Added
+
+```typescript
+vlist.setFilter(name: string, value: any): void   // Set single filter
+vlist.setFilters(filters: Record<string, any>): void  // Set multiple filters
+vlist.clearFilters(): void                         // Clear all filters
+vlist.getFilters(): Record<string, any>            // Get current filters
+vlist.getFilter(name: string): any                 // Get single filter value
+vlist.isFiltered(): boolean                        // Check if any filter active
+vlist.isFilterOpen(): boolean                      // Check if filter panel is visible
+vlist.openFilter(): void                           // Show filter panel
+vlist.closeFilter(): void                          // Hide filter panel
+vlist.toggleFilter(): void                         // Toggle filter panel visibility
+```
+
+---
+
+## Styles ✅ Implemented
+
+### VList Styles (`mtrl-addons/src/styles/components/_vlist.scss`)
+
+The search bar and filter panel styles are now included in the VList component styles:
+
+#### Search Bar
+
+```scss
+.#{$component} {
+  > .#{$prefix}-search {
+    display: none;           // Hidden by default
+    // ... styling for inline search bar
+    
+    &.show {
+      display: flex;         // Shown when withSearch opens it
+    }
+    
+    &.hide {
+      display: none;
+    }
   }
-})
+}
+```
 
-// Wire up events
-userList.layout.search.on('click', () => {
-  userList.layout['search-bar'].element.classList.toggle('show')
-})
+#### Filter Panel
 
-userList.layout.filter.on('click', () => {
-  userList.layout['filter-input'].classList.toggle('show')
-})
+```scss
+.#{$component} {
+  > [class*="filter"] {
+    display: none;           // Hidden by default
+    // ... styling for filter panel
+    
+    &.show {
+      display: flex;         // Shown when withFilter opens it
+    }
+    
+    &.hide {
+      display: none;
+    }
+  }
+}
+```
 
-userList.layout.country.on('change', (e) => {
-  userList.reload({ country: e.value })
-})
+---
 
-// Update footer on data load
-userList.on('viewport:range-changed', ({ visibleRange }) => {
-  const count = userList.getItemCount()
-  const position = Math.min(visibleRange.end + 1, count)
-  const percent = Math.round((position / count) * 100)
+## Bug Fixes
+
+### Keyboard Focus Stealing ✅ Fixed
+
+**Issue:** Clicking on search input or filter controls would immediately lose focus because the VList's keyboard navigation click handler was calling `component.element.focus()` on every click.
+
+**Fix:** Updated `mtrl-addons/src/components/vlist/features/keyboard.ts` to skip focus stealing when clicking on interactive elements:
+
+```javascript
+component.element.addEventListener("click", (e: MouseEvent) => {
+  const target = e.target as HTMLElement;
   
-  userList.layout.progress.textContent = `${percent}%`
-  userList.layout.position.textContent = position
-  userList.layout.count.textContent = count
+  // Don't focus the list if clicking on interactive elements
+  if (target.closest(
+    'input, button, select, textarea, [contenteditable], ' +
+    '.mtrl-search, .mtrl-textfield, .mtrl-select, [class*="filter"]'
+  )) {
+    return;
+  }
+  
+  component.element?.focus();
+});
+```
+
+---
+
+## Implementation Files
+
+### Completed Files
+
+| File | Description |
+|------|-------------|
+| `mtrl-addons/src/components/vlist/features/layout.ts` | `withLayout` feature |
+| `mtrl-addons/src/components/vlist/features/viewport.ts` | Updated for layout support |
+| `mtrl-addons/src/components/vlist/features/search.ts` | `withSearch` feature - debounced search with events and API |
+| `mtrl-addons/src/components/vlist/features/filter.ts` | `withFilter` feature - filter controls mapping with events and API |
+| `mtrl-addons/src/components/vlist/features/keyboard.ts` | Fixed focus stealing bug |
+| `mtrl-addons/src/components/vlist/features/index.ts` | Exports all features |
+| `mtrl-addons/src/components/vlist/vlist.ts` | Applies withLayout, withSearch, withFilter when configured |
+| `mtrl-addons/src/components/vlist/types.ts` | Added layout, search, filter types and API methods |
+| `mtrl-addons/src/components/vlist/index.ts` | Exports all types and features |
+| `mtrl-addons/src/styles/components/_vlist.scss` | Search bar and filter panel styles |
+| `mtrl-addons/test/components/vlist-layout.test.ts` | 13 layout feature tests |
+| `mtrl-addons/test/components/vlist-search.test.ts` | 24 search feature tests |
+| `mtrl-addons/test/components/vlist-filter.test.ts` | 33 filter feature tests |
+| `mtrl-addons/test/components/vlist-collection-integration.test.ts` | 11 collection adapter integration tests |
+| `mtrl-addons/src/core/viewport/features/collection.ts` | Updated to pass search/filters to adapter automatically |
+| `monorepo/.../users/list-with-layout.js` | Updated to use withSearch and withFilter |
+
+---
+
+## Migration Path
+
+### Phase 1: withLayout ✅ Complete
+
+VList can now manage its own layout. Applications can use:
+```javascript
+const vlist = createVList({
+  layout: [...],
+  // ...
 })
 ```
 
-## Migration Guide
+### Phase 2: withSearch + withFilter ✅ Complete
 
-### From Wrapper Pattern to Layout Option
-
-**Before (wrapper with composition):**
+Generic search and filter features added. Applications can use:
 ```javascript
-// config.js
-export function createMainLayout() {
-  return [
-    ['head', { class: 'head' }, ...],
-    ['body', { class: 'body' }],
-    ['foot', { class: 'foot' }, ...]
-  ]
-}
-
-// list.js
-const createUserList = (options) => {
-  const config = createConfig(options)
-  return pipe(
-    createBase,
-    withRefs(),
-    withStore(config),
-    withEmitter(),
-    withElement(config),
-    withVList(config),
-    // ... many more features
-  )(config)
-}
+const vlist = createVList({
+  layout: [...],
+  search: { toggleButton: 'search', searchBar: 'search-bar' },
+  filter: { toggleButton: 'filter', panel: 'filter-input', controls: {...} },
+  // ...
+})
 ```
 
-**After (layout option):**
+### Phase 3: list-with-layout.js Integration ✅ Complete
+
+The `list-with-layout.js` wrapper has been updated to use `withSearch` and `withFilter` features:
+
 ```javascript
-// Just use VList directly
-const userList = createVList({
-  container: parentElement,
+const vlist = createVList({
+  // ...
+  
+  search: {
+    toggleButton: 'search',
+    searchBar: 'search-bar',
+    debounce: 300,
+    autoReload: false
+  },
+  
+  filter: {
+    toggleButton: 'filter',
+    panel: 'filter-input',
+    clearButton: 'filter-clear',
+    controls: {
+      country: 'filter-country'
+    },
+    autoReload: false
+  },
+})
+
+// Event-driven handling
+vlist.on('search:change', ({ query }) => {
+  searchQuery = query
+  mode = query ? 'search' : 'list'
+  doReload()
+})
+
+vlist.on('filter:change', ({ filters: newFilters }) => {
+  filter = newFilters
+  doReload()
+})
+```
+
+### Phase 4: Direct Usage 📋 Next
+
+Replace wrapper pattern entirely. In `accounts/layout.js`:
+```javascript
+// Before: wrapper with complex composition
+[createUserList, 'users', {}]
+
+// After: direct VList with config
+[createVList, 'users', {
   class: 'users',
-  layout: [
-    ['head', { class: 'head' }, ...],
-    ['viewport'],
-    ['foot', { class: 'foot' }, ...]
-  ],
+  layout: createUserListLayout(),
+  search: {...},
+  filter: {...},
   template: userTemplate,
   collection: { adapter: { read: fetchUsers } }
-})
+}]
 ```
 
-### Gradual Migration
+Application-specific logic (role switching, pending scroll, etc.) moves to event handlers in the app.
 
-The wrapper pattern can still be used for advanced cases requiring custom state management or complex event wiring. The `layout` option is purely additive - existing code continues to work.
+---
+
+## Design Principles
+
+1. **Layout-agnostic** - Features work with any layout structure
+2. **Configurable** - Specify which layout elements to use by name
+3. **Event-driven** - Emit events for app-specific handling
+4. **Optional** - Features only active when configured
+5. **Backward compatible** - Existing code continues to work
+
+---
 
 ## Summary
 
-The `withLayout` feature provides:
+The VList enhancement provides:
 
-1. **Simplicity** - One component, one config, complete list UI
-2. **Flexibility** - Custom layouts via schema, or no layout at all
-3. **Consistency** - Uses existing `createLayout` system, follows `withFeature` pattern
-4. **Accessibility** - Layout elements accessible via flat `vlist.layout` map
-5. **Backward Compatibility** - Existing code continues to work
+1. **`withLayout`** ✅ - Complete UI in a single component
+2. **`withSearch`** ✅ - Generic search with any layout (24 tests)
+3. **`withFilter`** ✅ - Generic filter with any layout (33 tests)
+4. **VList Styles** ✅ - Search bar and filter panel CSS in `_vlist.scss`
+5. **Keyboard Fix** ✅ - Focus not stolen from search/filter inputs
+6. **list-with-layout.js** ✅ - Updated to use new features
+7. **Adapter enhancement** ✅ - Search/filter passed to read function automatically (11 tests)
+8. **Backward Compatibility** ✅ - Existing code continues to work
 
-This makes VList a **production-ready, batteries-included** virtual list component while maintaining its core strength in handling massive datasets efficiently.
+This makes VList a **production-ready, batteries-included** virtual list component while maintaining flexibility and the core strength in handling massive datasets efficiently.
