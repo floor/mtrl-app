@@ -1,25 +1,25 @@
 // src/client/styles/app.scss
-@use 'mtrl/src/styles/abstract/base' as b;
-@use 'mtrl/src/styles/abstract/variables' as v;
-@use 'mtrl/src/styles/abstract/functions' as f;
-@use 'mtrl/src/styles/abstract/mixins' as m;
-@use 'mtrl/src/styles/abstract/theme' as t;
-@use 'mtrl/src/styles/abstract/config' as c;
+@use "mtrl/src/styles/abstract/base" as b;
+@use "mtrl/src/styles/abstract/variables" as v;
+@use "mtrl/src/styles/abstract/functions" as f;
+@use "mtrl/src/styles/abstract/mixins" as m;
+@use "mtrl/src/styles/abstract/theme" as t;
+@use "mtrl/src/styles/abstract/config" as c;
 
-$app: '#{b.$prefix}-app';
+$app: "#{b.$prefix}-app";
 
 .#{$app} {
-  @include c.typography('body-medium');
+  @include c.typography("body-medium");
   display: flex;
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: t.color('surface');
-  color: t.color('on-surface');
+  background-color: t.color("surface");
+  color: t.color("on-surface");
   position: relative;
 
-  &[data-theme-mode=dark] {
-    background-color: t.color('surface');
+  &[data-theme-mode="dark"] {
+    background-color: t.color("surface");
   }
 
   // Fixed rail navigation - mobile dimensions first
@@ -29,13 +29,13 @@ $app: '#{b.$prefix}-app';
     height: 100vh;
     width: 70px; // Mobile width
     .#{b.$prefix}-nav-item-label {
-      font-size: .8em;
+      font-size: 0.8em;
     }
-    
+
     // Add hover effect
     .#{b.$prefix}-nav-item {
       &:hover {
-        background-color: rgba(t.color('on-surface'), 0.05);
+        background-color: rgba(t.color("on-surface"), 0.05);
       }
     }
   }
@@ -49,23 +49,25 @@ $app: '#{b.$prefix}-app';
     height: 100vh;
     width: 70%; // Mobile width as percentage
     max-width: 280px;
-    border-left: 1px solid rgba(0,0,0,.05);
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
     border-bottom-right-radius: 16px;
     border-top-right-radius: 16px;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-    
+
     // Smooth transition
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transition:
+      transform 0.3s ease-out,
+      opacity 0.3s ease-out;
     transform: translateX(0);
     opacity: 1;
-    
+
     // Hidden state
     &.#{b.$prefix}-nav--hidden {
       transform: translateX(-100%);
       opacity: 0;
       pointer-events: none;
     }
-    
+
     // Close button - visible by default on mobile
     .drawer-close-btn {
       display: flex;
@@ -76,16 +78,16 @@ $app: '#{b.$prefix}-app';
       right: 12px;
       background-color: transparent;
       border: none;
-      color: t.color('on-surface');
+      color: t.color("on-surface");
       font-size: 24px;
       width: 36px;
       height: 36px;
       border-radius: 50%;
       cursor: pointer;
       z-index: 10;
-      
+
       &:hover {
-        background-color: rgba(t.color('on-surface'), 0.05);
+        background-color: rgba(t.color("on-surface"), 0.05);
       }
     }
   }
@@ -99,14 +101,14 @@ $app: '#{b.$prefix}-app';
   }
 
   // Global toggle/menu buttons - mobile positioning first
-  .#{b.$prefix}-button.#{b.$prefix}-toggle-darkmode {
+  .#{b.$prefix}-icon-button.#{b.$prefix}-toggle-darkmode {
     z-index: 110;
     position: fixed;
     left: 15px;
     bottom: 15px;
   }
 
-  .#{b.$prefix}-button.#{b.$prefix}-more-menu {
+  .#{b.$prefix}-icon-button.#{b.$prefix}-more-menu {
     z-index: 111;
     position: fixed;
     left: 15px;
@@ -146,49 +148,47 @@ $app: '#{b.$prefix}-app';
     .#{b.$prefix}-nav--rail {
       width: 88px; // Wider on desktop
     }
-    
+
     .#{b.$prefix}-nav--drawer {
       left: 88px; // Position after wider rail
     }
-    
+
     .#{b.$prefix}-content {
       width: 100%;
-      margin-left: 88px
+      margin-left: 88px;
     }
 
     // Hide close button on desktop
     .#{b.$prefix}-nav--drawer .drawer-close-btn {
       display: none;
     }
-    
+
     // Show components on desktop
     .#{b.$prefix}-components__navi {
       display: block;
     }
-    
+
     .#{b.$prefix}-components__box.visual,
     .#{b.$prefix}-content__box.visual {
       display: block;
     }
-    
+
     // Grid layout for desktop
     &__grid {
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 
-    .#{b.$prefix}-button.#{b.$prefix}-toggle-darkmode {
+    .#{b.$prefix}-icon-button.#{b.$prefix}-toggle-darkmode {
       left: 23px;
     }
 
-    .#{b.$prefix}-button.#{b.$prefix}-more-menu {
+    .#{b.$prefix}-icon-button.#{b.$prefix}-more-menu {
       left: 23px;
     }
   }
 
-
-
   @media (min-width: 1280px) {
-    background-color: t.color('surface');
+    background-color: t.color("surface");
 
     .#{b.$prefix}-content {
       margin: 0 auto 100px;

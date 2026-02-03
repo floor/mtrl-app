@@ -49,8 +49,9 @@
 .#{b.$prefix}-list--users {
   height: 640px;
   width: 340px;
+  border: 1px solid t.color("outline-variant");
+  border-radius: 0px;
 }
-
 
 // users
 .#{b.$prefix}-list--static {
