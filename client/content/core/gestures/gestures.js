@@ -1,7 +1,11 @@
 import {
-  createElement,
-  createGestureManager
+  createElement
 } from 'mtrl'
+
+import {
+  createLayout,
+  createGestureManager
+} from 'mtrl-addons'
 
 import createGestureCard from './gesture-card'
 
@@ -31,42 +35,6 @@ export const initGestures = (body) => {
   const touchExample = createElement({
     tag: 'div',
     class: 'gesture-example'
-  })
-
-  const exampleTitle = createElement({
-    tag: 'h3',
-    class: 'gesture-example__title',
-    text: 'Gesture Recognition System'
-  })
-
-  const exampleCode = createElement({
-    tag: 'pre',
-    class: 'gesture-example__code',
-    text: `import { withGesture, pipe, createBase } from 'mtrl';
-
-import { createLayout } from 'mtrl-addons'
-// Add gesture recognition to any component
-const component = pipe(
-  createBase,
-  withElement({ ... }),
-  withGesture({
-    swipeThreshold: 30,
-    longPressTime: 500,
-    
-    // Initial gesture handlers
-    gestureHandlers: {
-      'tap': (e) => console.log('Tapped!', e.count),
-      'swipeleft': (e) => navigateForward(),
-      'swiperight': (e) => navigateBack(),
-      'longpress': (e) => showContextMenu()
-    }
-  })
-)(config);
-
-// Or use the gesture manager directly
-const gestures = createGestureManager(element);
-gestures.on('swipe', handleSwipe);
-gestures.on('pinch', handlePinch);`
   })
 
   // Demo section with tabs
