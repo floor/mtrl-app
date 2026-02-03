@@ -98,7 +98,7 @@ const createUserList = (parent) => {
 
     // Virtual scrolling configuration
     virtual: {
-      itemSize: 84, // will be automatically calculated based on the first loaded range
+      // itemSize: 100, // will be automatically calculated based on the first loaded range
       overscan: 2
     },
 

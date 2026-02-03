@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VList Selection Test</title>
+    <link rel="stylesheet" href="/dist/mtrl/styles/main.css" />
+    <link rel="stylesheet" href="/dist/mtrl-addons/styles/index.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+
+      #list-container {
+        height: 400px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 20px 0;
+      }
+
+      .user-item {
+        padding: 12px 16px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+
+      .user-item:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+      }
+
+      .user-item.mtrl-list-item--selected {
+        background-color: #e3f2fd;
+        border-left: 4px solid #1976d2;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      button {
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #f5f5f5;
+      }
+
+      #info {
+        padding: 10px;
+        background: #f5f5f5;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>VList Selection Test</h1>
+
+    <div class="controls">
+      <button onclick="selectFirst()">Select First</button>
+      <button onclick="selectAll()">Select All</button>
+      <button onclick="clearSelection()">Clear Selection</button>
+      <button onclick="logState()">Log State</button>
+    </div>
+
+    <div id="list-container"></div>
+
+    <div id="info">Selection info will appear here...</div>
+
+    <script type="module">
+      import { createVList } from "/dist/mtrl-addons/index.mjs";
+
+      // Generate test data
+      const users = Array.from({ length: 100 }, (_, i) => ({
+        id: `user-${i}`,
+        name: `User ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+      }));
+
+      // Create VList with selection
+      const vlist = createVList({
+        container: "#list-container",
+        items: users,
+        selection: {
+          enabled: true,
+          mode: "multiple",
+          onSelectionChange: (selectedItems, selectedIndices) => {
+            console.log("Selection changed:", {
+              selectedItems,
+              selectedIndices,
+            });
+            updateInfo(selectedItems, selectedIndices);
+          },
+        },
+        template: (user) => {
+          const div = document.createElement("div");
+          div.className = "user-item";
+          div.innerHTML = `
+          <strong>${user.name}</strong><br>
+          <small>${user.email}</small>
+        `;
+          return div;
+        },
+        estimatedItemSize: 64,
+        overscan: 3,
+      });
+
+      // Make vlist global for button functions
+      window.vlist = vlist;
+
+      // Update info display
+      function updateInfo(selectedItems, selectedIndices) {
+        const info = document.getElementById("info");
+        info.innerHTML = `
+        <strong>Selected:</strong> ${selectedItems.length} items<br>
+        <strong>Indices:</strong> ${selectedIndices.slice(0, 10).join(", ")}${selectedIndices.length > 10 ? "..." : ""}<br>
+        <strong>First selected:</strong> ${selectedItems[0]?.name || "None"}
+      `;
+      }
+
+      // Button functions
+      window.selectFirst = () => {
+        console.log("Selecting first item...");
+        vlist.selectItems([0]);
+      };
+
+      window.selectAll = () => {
+        console.log("Selecting all items...");
+        const indices = users.map((_, i) => i);
+        vlist.selectItems(indices);
+      };
+
+      window.clearSelection = () => {
+        console.log("Clearing selection...");
+        vlist.clearSelection();
+      };
+
+      window.logState = () => {
+        console.log("VList state:", {
+          hasSelectItems: typeof vlist.selectItems === "function",
+          hasGetSelectedItems: typeof vlist.getSelectedItems === "function",
+          selectedItems: vlist.getSelectedItems
+            ? vlist.getSelectedItems()
+            : "N/A",
+          selectedIndices: vlist.getSelectedIndices
+            ? vlist.getSelectedIndices()
+            : "N/A",
+          element: vlist.element,
+          viewport: vlist.viewport,
+        });
+      };
+
+      // Initial update
+      updateInfo([], []);
+
+      console.log("VList created:", vlist);
+    </script>
+  </body>
+</html>

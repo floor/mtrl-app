@@ -52,16 +52,16 @@ class VListTester extends PuppeteerTester {
     // await testMouseWheelScrollingWithContentCheck(page); // Disabled - focusing on scrollToIndex
 
     // Debug viewport structure
-    // await debugViewportStructure(page); // Disabled - focusing on scrollToIndex
+    await debugViewportStructure(page);
 
     // Test mouse wheel scrolling behavior
-    // await testMouseWheelScrolling(page); // Disabled - focusing on scrollToIndex
+    // await testMouseWheelScrolling(page);
 
     // Debug deferred cleanup behavior
-    // await debugDeferredCleanup(page); // Disabled - focusing on scrollToIndex
+    // await debugDeferredCleanup(page);
 
     // Test backward scrolling for overlaps
-    // await testBackwardScrolling(page); // Disabled - not focusing on overlaps now
+    // await testBackwardScrolling(page);
 
     // Test server stop/start scenario
     // await testServerStopStartScenario(page); // Disabled - stops/starts server
@@ -70,27 +70,27 @@ class VListTester extends PuppeteerTester {
     // await testGapIssue(page); // Disabled - stops/starts server
 
     // Test scroll functions
-    // await testScrollFunctions(page); // Disabled - focusing on scrollToIndex
+    // await testScrollFunctions(page);
 
     // Test index chips clicking - FOCUS ON THIS
-    await testIndexChipsClick(page);
-    await testPlaceholderSystem(page);
-    await testScrollToPageAPI(page);
+    // await testIndexChipsClick(page);
+    // await testPlaceholderSystem(page);
+    // await testScrollToPageAPI(page);
 
-    // Test selection feature
-    await testSelectionFeature(page);
+    // // Test selection feature
+    // await testSelectionFeature(page);
 
     // Debug loaded ranges
-    // await debugLoadedRanges(page); // Disabled - focusing on scrollToIndex
+    // await debugLoadedRanges(page);
 
     // Test fast scrolling
     // await testFastScrolling(page); // Disabled - focusing on other issues
 
     // Performance tests (optional - can be enabled for performance testing)
     if (process.env.PERF_TEST === "true") {
-      // await testMemoryPerformance(page); // Disabled - focusing on scrollToIndex
-      // await testRenderingPerformance(page); // Disabled - focusing on scrollToIndex
-      // await testElementRecycling(page); // Disabled - focusing on scrollToIndex
+      // await testMemoryPerformance(page);
+      // await testRenderingPerformance(page);
+      // await testElementRecycling(page);
     }
   }
 }
