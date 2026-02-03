@@ -7,9 +7,9 @@ import {
 import {
   createElement,
   createSnackbar,
-  createButton,
-  SNACKBAR_POSITIONS
+  createButton
 } from 'mtrl'
+import { SNACKBAR_POSITIONS } from 'mtrl/components/snackbar/constants'
 
 export const createSnackbarsContent = (container, components) => {
   const info = {

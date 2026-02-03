@@ -12,8 +12,9 @@ import {
   createCardContent,
   createCardMedia,
   createCardActions,
-  CARD_VARIANTS
+  
 } from 'mtrl'
+import { CARD_VARIANTS } from 'mtrl/components/card/constants'
 import { artworks, getPlaceholderUrl } from './artwork-data'
 
 import { createLayout } from 'mtrl-addons'

@@ -7,17 +7,16 @@ import {
 
 import {
   createSearch,
-  createElement,
-  SEARCH_VARIANTS,
-  SEARCH_VIEW_MODES
+  createElement
 } from 'mtrl'
+import { SEARCH_STATES, SEARCH_VIEW_MODES } from 'mtrl/components/search/constants'
 
 export const initFullscreenView = (container) => {
   const title = 'Search View (Fullscreen Mode)'
   const layout = createLayout(createComponentSection({ title }), container).component
 
   const searchView = createSearch({
-    variant: SEARCH_VARIANTS.VIEW,
+    initialState: SEARCH_STATES.VIEW,
     viewMode: SEARCH_VIEW_MODES.FULLSCREEN,
     placeholder: 'Search products',
     showClearButton: true,

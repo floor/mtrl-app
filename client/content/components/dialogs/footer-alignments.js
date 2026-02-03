@@ -6,8 +6,9 @@ import {
 import {
   createButton,
   createDialog,
-  DIALOG_FOOTER_ALIGNMENTS
+  
 } from 'mtrl'
+import { DIALOG_FOOTER_ALIGNMENTS } from 'mtrl/components/dialog/constants'
 
 export const initFooterAlignments = (container) => {
   const title = 'Footer Alignments'

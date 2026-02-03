@@ -4,9 +4,9 @@ import {
 } from '../../../layout'
 
 import {
-  createDatePicker,
-  DATEPICKER_SELECTION_MODES
+  createDatePicker
 } from 'mtrl'
+import { DATEPICKER_SELECTION_MODES } from 'mtrl/components/datepicker/constants'
 
 export const initRange = (container) => {
   const title = 'Date Range Selection'

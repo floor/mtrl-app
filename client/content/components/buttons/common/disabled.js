@@ -8,9 +8,9 @@ import {
 } from '../../../../layout'
 
 import {
-  createButton,
-  BUTTON_SHAPES
+  createButton
 } from 'mtrl'
+import { BUTTON_SHAPES } from 'mtrl/components/button/constants'
 
 export const initDisabled = (container) => {
   const title = 'Buttons Disabled'

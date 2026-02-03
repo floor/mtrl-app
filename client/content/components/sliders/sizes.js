@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  createSlider,
-  SLIDER_SIZES
+  createSlider
 } from 'mtrl'
+import { SLIDER_SIZES } from 'mtrl/components/slider/constants'
 import { createLayout } from 'mtrl-addons'
 
 export const initSizes = (container) => {

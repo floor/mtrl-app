@@ -5,9 +5,9 @@ import {
 } from '../../../layout'
 
 import {
-  createElement, createBadge,
-  BADGE_COLORS
+  createElement, createBadge
 } from 'mtrl'
+import { BADGE_COLORS } from 'mtrl/components/badge/constants'
 import { createLayout } from 'mtrl-addons'
 
 export const initStandard = (container) => {

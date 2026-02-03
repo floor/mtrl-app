@@ -7,17 +7,16 @@ import {
 
 import {
   createSearch,
-  createElement,
-  SEARCH_VIEW_MODES,
-  SEARCH_VARIANTS
+  createElement
 } from 'mtrl'
+import { SEARCH_VIEW_MODES, SEARCH_STATES } from 'mtrl/components/search/constants'
 
 export const initDockedView = (container) => {
   const title = 'Search View (Docked Mode)'
   const layout = createLayout(createComponentSection({ title }), container).component
 
   const searchView = createSearch({
-    variant: SEARCH_VARIANTS.VIEW,
+    initialState: SEARCH_STATES.VIEW,
     viewMode: SEARCH_VIEW_MODES.DOCKED,
     placeholder: 'Search in documents',
     showClearButton: true,

@@ -7,9 +7,9 @@ import {
   createProgress,
   createElement,
   createTextfield,
-  createButton,
-  PROGRESS_VARIANTS
+  createButton
 } from 'mtrl'
+import { PROGRESS_VARIANTS } from 'mtrl/components/progress/constants'
 
 /**
  * Initializes the interactive progress section

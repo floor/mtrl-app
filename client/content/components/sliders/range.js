@@ -5,8 +5,7 @@ import {
 
 import {
   createSlider,
-  createSnackbar,
-  SLIDER_COLORS
+  createSnackbar
 } from 'mtrl'
 import { createLayout } from 'mtrl-addons'
 

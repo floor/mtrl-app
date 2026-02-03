@@ -6,9 +6,9 @@ import {
 } from '../../../layout'
 
 import {
-  createSearch,
-  SEARCH_VARIANTS
+  createSearch
 } from 'mtrl'
+import { SEARCH_STATES } from 'mtrl/components/search/constants'
 
 export const initWithSuggestions = (container) => {
   const title = 'Search with Suggestions'
@@ -35,7 +35,7 @@ export const initWithSuggestions = (container) => {
 
   // Create search with suggestions
   const searchWithSuggestions = createSearch({
-    variant: SEARCH_VARIANTS.VIEW,
+    initialState: SEARCH_STATES.VIEW,
     placeholder: 'Search with suggestions',
     showClearButton: true,
     suggestions: suggestionList,

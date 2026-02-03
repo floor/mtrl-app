@@ -7,10 +7,9 @@ import {
 
 import {
   createSearch,
-  createElement,
-  SEARCH_VIEW_MODES,
-  SEARCH_EVENTS
+  createElement
 } from 'mtrl'
+import { SEARCH_VIEW_MODES, SEARCH_EVENTS } from 'mtrl/components/search/constants'
 
 import {
 

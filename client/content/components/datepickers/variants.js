@@ -5,9 +5,9 @@ import {
 
 import {
   createButton,
-  createDatePicker,
-  DATEPICKER_VARIANTS
+  createDatePicker
 } from 'mtrl'
+import { DATEPICKER_VARIANTS } from 'mtrl/components/datepicker/constants'
 
 export const initVariants = (container) => {
   const title = 'DatePicker Variants'

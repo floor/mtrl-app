@@ -6,9 +6,9 @@ import {
 
 import {
   createButton,
-  createSegmentedButton,
-  SelectionMode
+  createSegmentedButton
 } from 'mtrl'
+import { SelectionMode } from 'mtrl/components/segmented-button'
 
 export const initFormIntegration = (container) => {
   const title = 'Form Integration'

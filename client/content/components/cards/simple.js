@@ -8,8 +8,9 @@ import {
   createCard,
   createCardHeader,
   createCardContent,
-  CARD_VARIANTS
+  
 } from 'mtrl'
+import { CARD_VARIANTS } from 'mtrl/components/card/constants'
 
 import { artworks } from './artwork-data'
 

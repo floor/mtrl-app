@@ -4,9 +4,9 @@ import {
 } from '../../../layout'
 
 import {
-  createProgress,
-  PROGRESS_VARIANTS
+  createProgress
 } from 'mtrl'
+import { PROGRESS_VARIANTS } from 'mtrl/components/progress/constants'
 
 /**
  * Initializes the indeterminate progress section

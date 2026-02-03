@@ -2,9 +2,18 @@ import { createComponentSection } from "../../../layout";
 import { createLayout } from 'mtrl-addons'
 import {
   createList,
-  createButton,
-  COLLECTION_EVENTS
+  createButton
 } from 'mtrl';
+
+// Define collection events locally (not yet exported from mtrl)
+const COLLECTION_EVENTS = {
+  CHANGE: 'change',
+  ADD: 'add',
+  UPDATE: 'update',
+  REMOVE: 'remove',
+  LOADING: 'loading',
+  ERROR: 'error'
+};
 
 export const initCollectionEvents = (container) => {
   const title = "Collection Change Events";
@@ -178,7 +187,7 @@ export const initCollectionEvents = (container) => {
     }
 
     logEntry.innerHTML = `
-      <strong style="color: ${color};">[${timestamp}]</strong> 
+      <strong style="color: ${color};">[${timestamp}]</strong>
       <strong>${eventType.toUpperCase()}</strong>: ${dataInfo}
     `;
 
@@ -321,11 +330,11 @@ export const initCollectionEvents = (container) => {
   infoSection.innerHTML = `
     <h4 style="margin: 0 0 12px 0;">Collection Events Demo</h4>
     <p style="margin: 0 0 8px 0;">
-      This demo shows all collection events that fire when data changes. 
+      This demo shows all collection events that fire when data changes.
       Try adding, updating, or removing items to see the events in action.
     </p>
     <p style="margin: 0; font-size: 14px; opacity: 0.8;">
-      <strong>Available Events:</strong> 
+      <strong>Available Events:</strong>
       ${Object.values(COLLECTION_EVENTS).join(", ")}
     </p>
   `;

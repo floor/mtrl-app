@@ -7,10 +7,9 @@ import {
   createProgress,
   createChips,
   createSlider,
-  createSwitch,
-  PROGRESS_VARIANTS,
-  PROGRESS_SHAPES
+  createSwitch
 } from 'mtrl'
+import { PROGRESS_VARIANTS, PROGRESS_SHAPES } from 'mtrl/components/progress/constants'
 import { createLayout } from 'mtrl-addons'
 
 /**

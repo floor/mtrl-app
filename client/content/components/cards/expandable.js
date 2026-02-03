@@ -8,10 +8,10 @@ import {
   createElement,
   createCardHeader,
   createCardContent,
-  createCard,
-  CARD_VARIANTS,
-  withExpandable
+  createCard
 } from 'mtrl'
+import { CARD_VARIANTS } from 'mtrl/components/card/constants'
+import { withExpandable } from 'mtrl/components/card'
 
 import { artworks } from './artwork-data'
 

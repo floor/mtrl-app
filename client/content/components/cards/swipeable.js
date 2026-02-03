@@ -10,10 +10,10 @@ import {
   createCard,
   createCardHeader,
   createCardContent,
-  createCardMedia,
-  CARD_VARIANTS,
-  withSwipeable
+  createCardMedia
 } from 'mtrl'
+import { CARD_VARIANTS } from 'mtrl/components/card/constants'
+import { withSwipeable } from 'mtrl/components/card'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 

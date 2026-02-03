@@ -8,9 +8,9 @@ import {
   createBottomAppBar,
   createButton,
   createSnackbar,
-  createFab,
-  FAB_VARIANTS
+  createFab
 } from 'mtrl'
+import { FAB_VARIANTS } from 'mtrl/components/fab/constants'
 
 export const initProgrammaticBottomAppBar = (container) => {
   const title = 'Programmatic Control'

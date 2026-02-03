@@ -8,9 +8,9 @@ import {
 import {
   createSearch,
   createButton,
-  createElement,
-  SEARCH_EVENTS
+  createElement
 } from 'mtrl'
+import { SEARCH_EVENTS } from 'mtrl/components/search/constants'
 
 export const initEventsAPI = (container) => {
   const title = 'Using Events and API'

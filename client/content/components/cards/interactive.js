@@ -10,8 +10,9 @@ import {
   createCardHeader,
   createCardContent,
   createCardMedia,
-  CARD_VARIANTS
+  
 } from 'mtrl'
+import { CARD_VARIANTS } from 'mtrl/components/card/constants'
 
 import { artworks, getPlaceholderUrl } from './artwork-data'
 

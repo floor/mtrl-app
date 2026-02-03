@@ -3,10 +3,9 @@ import {
 } from '../../../../layout'
 
 import {
-  createButton,
-  BUTTON_SIZES,
-  BUTTON_SHAPES
+  createButton
 } from 'mtrl'
+import { BUTTON_SIZES, BUTTON_SHAPES } from 'mtrl/components/button/constants'
 
 import { editIcon } from '../../../../icons'
 

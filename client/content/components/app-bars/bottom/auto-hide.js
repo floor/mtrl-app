@@ -12,9 +12,9 @@ import {
 
 import {
   createElement,
-  createBottomAppBar, createButton, createFab,
-  FAB_VARIANTS
+  createBottomAppBar, createButton, createFab
 } from 'mtrl'
+import { FAB_VARIANTS } from 'mtrl/components/fab/constants'
 import { createLayout } from 'mtrl-addons'
 
 export const initAutoHideBottomAppBar = (container) => {

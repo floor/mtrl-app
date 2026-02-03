@@ -7,9 +7,9 @@ import {
 import {
   createBottomAppBar,
   createButton,
-  createFab,
-  FAB_VARIANTS
+  createFab
 } from 'mtrl'
+import { FAB_VARIANTS } from 'mtrl/components/fab/constants'
 
 export const initEventsApiBottomAppBar = (container) => {
   const title = 'Events & API Methods'

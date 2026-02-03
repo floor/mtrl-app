@@ -6,9 +6,9 @@ import {
 
 import {
   createBadge, createSlider,
-  createSelect, createChips, createSwitch,
-  BADGE_COLORS, BADGE_VARIANTS
+  createSelect, createChips, createSwitch
 } from 'mtrl'
+import { BADGE_COLORS, BADGE_VARIANTS } from 'mtrl/components/badge/constants'
 import { createLayout } from 'mtrl-addons'
 
 export const createBadgeContent = (container) => {

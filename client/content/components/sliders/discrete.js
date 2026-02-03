@@ -3,9 +3,9 @@ import {
 } from '../../../layout'
 
 import {
-  createSlider,
-  SLIDER_COLORS
+  createSlider
 } from 'mtrl'
+import { SLIDER_COLORS } from 'mtrl/components/slider/constants'
 import { createLayout } from 'mtrl-addons'
 
 export const initDiscrete = (container) => {

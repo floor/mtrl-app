@@ -1,9 +1,8 @@
 import {
   createButton,
-  createChips, createSwitch, createTextfield,
-  BUTTON_VARIANTS,
-  BUTTON_SIZES
+  createChips, createSwitch, createTextfield
 } from 'mtrl'
+import { BUTTON_VARIANTS, BUTTON_SIZES } from 'mtrl/components/button/constants'
 
 import { createLayout } from 'mtrl-addons'
 

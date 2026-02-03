@@ -5,11 +5,9 @@ import {
   createChips,
   createSlider,
   createSwitch,
-  createSnackbar,
-  // In real word, you do not need this or maybe (will affect the bundle size, not that much)
-  PROGRESS_VARIANTS,
-  PROGRESS_SHAPES
+  createSnackbar
 } from 'mtrl'
+import { PROGRESS_VARIANTS, PROGRESS_SHAPES } from 'mtrl/components/progress/constants'
 import { createLayout } from 'mtrl-addons'
 
 /**

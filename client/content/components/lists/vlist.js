@@ -1,6 +1,7 @@
 import { createComponentSection } from '../../../layout'
 import {
   createButton,
+  createIconButton,
   createChips,
   createSlider,
   createTextfield,
@@ -42,7 +43,7 @@ const createUserList = (parent) => {
 
     // Virtual scrolling configuration
     virtual: {
-      // itemSize: 84, // will be automatically calculated based on the first loaded range
+      itemSize: 84, // will be automatically calculated based on the first loaded range
       overscan: 2
     },
 
@@ -341,9 +342,9 @@ export const createVlistComponent = (container) => {
     [createChips, 'pages', { scrollable: false, label: 'Scroll to' }],
     [createSlider, 'index', { label: 'Scroll to', min: 0, max: 1000000, page, step: 1, size: 'XS', variant: 'discrete' }],
     [{ layout: { type: 'row', column: 3, gap: 1 } },
-      [createButton, 'prev', { icon: leftIcon, size: 'XS', variant: 'outlined' }],
+      [createIconButton, 'prev', { icon: leftIcon, size: 'XS', variant: 'outlined' }],
       [createTextfield, 'page', { label: 'Page', density: 'compact', value: page, variant: 'outlined' }],
-      [createButton, 'next', { icon: rightIcon, size: 'XS', variant: 'outlined' }]
+      [createIconButton, 'next', { icon: rightIcon, size: 'XS', variant: 'outlined' }]
     ],
     [{ layout: { type: 'row', column: 2, gap: 1 } },
       [createTextfield, 'itemId', { label: 'Item ID', density: 'compact', placeholder: 'e.g. user-123', variant: 'outlined' }],
@@ -439,7 +440,7 @@ export const createVlistComponent = (container) => {
 
     // Show metrics in a simple alert for now
     alert(`Performance Metrics:
-    
+
 Renders: ${metrics.renderCount}
 Scrolls: ${metrics.scrollCount}
 Total Time: ${metrics.totalTime}ms
@@ -472,7 +473,7 @@ Avg Render Time: ${metrics.avgRenderTime.toFixed(2)}ms`)
             <strong>Has Next Page:</strong> ${hasNext}<br>
             <strong>Selected Items:</strong> ${selectedItems.length}<br>
           </div>
-          
+
           <div class="mtrl-addons-debug__section-title">⚡ List Performance</div>
           <div class="mtrl-addons-debug__section">
             <strong>List Renders:</strong> ${listMetrics.renderCount || 0}<br>
@@ -482,7 +483,7 @@ Avg Render Time: ${metrics.avgRenderTime.toFixed(2)}ms`)
             <strong>Memory Usage:</strong> ${Math.round((listMetrics.memoryUsage || 0) / 1024 / 1024)}MB<br>
             <strong>Recycled Elements:</strong> ${listMetrics.recycledElements || 0}<br>
           </div>
-          
+
           <div class="mtrl-addons-debug__section-title">🔧 System Info</div>
           <div class="mtrl-addons-debug__section">
             <strong>Engine:</strong> mtrl-addons List<br>
@@ -491,7 +492,7 @@ Avg Render Time: ${metrics.avgRenderTime.toFixed(2)}ms`)
             <strong>Selection:</strong> Multi-select enabled<br>
             <strong>Styling:</strong> Hoverable + Striped<br>
           </div>
-          
+
           <div class="mtrl-addons-debug__section-title">📈 Showcase Metrics</div>
           <div class="mtrl-addons-debug__section">
             <strong>UI Renders:</strong> ${performanceMetrics.renderCount}<br>

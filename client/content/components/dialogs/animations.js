@@ -6,8 +6,9 @@ import {
 import {
   createButton,
   createDialog,
-  DIALOG_ANIMATIONS
+  
 } from 'mtrl'
+import { DIALOG_ANIMATIONS } from 'mtrl/components/dialog/constants'
 
 const createAnimationsDialog = (animation) => {
   const dialog = createDialog({

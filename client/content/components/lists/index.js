@@ -8,12 +8,12 @@ import { createVlistComponent } from './vlist'
 import { initBasicList } from './basic'
 import { initLongStaticList } from './long-static'
 import { initCursorList } from './cursor'
-import { initCollectionEvents } from './collection-events'
-import { initNavigationDebug } from './debug-navigation'
-import { virtualPositioningTest } from './virtual-positioning-test'
+// import { initCollectionEvents } from './collection-events'
+// import { initNavigationDebug } from './debug-navigation'
+// import { virtualPositioningTest } from './virtual-positioning-test'
 
-import { initSectionedList } from './sectioned'
-import { initVerticalLayout } from './vertical'
+// import { initSectionedList } from './sectioned'
+// import { initVerticalLayout } from './vertical'
 
 export const createListsContent = (container, components) => {
   const info = {
@@ -28,7 +28,7 @@ export const createListsContent = (container, components) => {
 
   initBasicList(layout.body)
 
-  createListComponent(layout.body)
+  // createListComponent(layout.body)
   createVlistComponent(layout.body)
 
   // initCollectionEvents(layout.body)

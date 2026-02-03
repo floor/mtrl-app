@@ -10,8 +10,8 @@ import {
 console.log('countries', countries)
 
 export const initLongStaticList = (container) => {
-  const title = 'Long static list'
-  const description = 'List without list manager'
+  const title = 'Long static VLIST'
+  const description = 'Virtual List without collection'
   const layout = createLayout(createComponentSection({ title, description }), container).component
 
   // Create a multi-select list with proper template

@@ -4,10 +4,9 @@ import {
 
 import {
   createTextfield, createChips,
-  createSwitch,
-  TEXTFIELD_VARIANTS,
-  TEXTFIELD_DENSITY
+  createSwitch
 } from 'mtrl'
+import { TEXTFIELD_VARIANTS, TEXTFIELD_DENSITY } from 'mtrl/components/textfield/constants'
 import { createLayout } from 'mtrl-addons'
 
 export const createTextfieldShowcase = (container) => {

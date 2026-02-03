@@ -2,9 +2,9 @@
 import { createContentLayout, createDocs } from '../../layout'
 import {
   createElement,
-  createCard,
-  CARD_VARIANTS
+  createCard
 } from 'mtrl'
+import { CARD_VARIANTS } from 'mtrl/components/card/constants'
 import { createLayout } from 'mtrl-addons'
 // import { createLayout } from 'mtrl/src/core/structure'
 import { createAppRouter } from '../../core/router'
