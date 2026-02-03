@@ -1,7 +1,7 @@
 # Form Component
 
 > **Created:** January 3, 2026
-> **Updated:** January 18, 2026
+> **Updated:** January 24, 2026
 > **Package:** mtrl-addons
 
 The Form component is a functional form builder that uses the mtrl composition pattern to create forms from schema definitions. It provides built-in data management, validation, state tracking, and submission handling.
@@ -249,8 +249,10 @@ The form tracks whether data has been modified from its initial state:
 When `useChanges: true` (default):
 1. **Field changes** → Form becomes dirty → Controls enabled
 2. **Revert to initial values** → Form becomes pristine → Controls disabled
-3. **Submit success** → New snapshot taken → Form becomes pristine
-4. **Cancel/Reset** → Data reverted → Form becomes pristine
+3. **Submit starts** → Controls immediately disabled (prevents double-clicks)
+4. **Submit success** → New snapshot taken → Form stays pristine → Protection overlay removed
+5. **Submit error** → Controls re-enabled (user can retry)
+6. **Cancel/Reset** → Data reverted → Form becomes pristine
 
 **Event Deduplication:** The form automatically deduplicates change events. For components that emit both `input` and `change` events (like textfields), the form tracks the last emitted value and only triggers state updates when the value actually changes. This prevents duplicate processing and ensures accurate dirty state tracking.
 
@@ -285,8 +287,25 @@ The form element receives state-specific CSS classes:
 
 ```css
 .mtrl-form--modified { } /* Applied when form is dirty */
-.mtrl-form--submitting { } /* Applied during submission */
+.mtrl-form--submitting { } /* Applied during submission (controls are disabled) */
 ```
+
+### Submit Behavior
+
+When `form.submit()` is called:
+
+1. **Immediate**: Control buttons (submit/cancel) are disabled to prevent double-clicks
+2. **During**: The `.mtrl-form--submitting` class is added for visual feedback
+3. **On Success**: 
+   - A snapshot is taken (new baseline for change detection)
+   - Controls remain disabled (form is pristine)
+   - Protection overlay is removed (if enabled)
+   - `submit:success` event is emitted
+4. **On Error**:
+   - Controls are re-enabled so user can retry
+   - `submit:error` event is emitted
+
+This ensures users cannot accidentally submit twice, even with slow API responses.
 
 ## Change Protection
 
@@ -1269,6 +1288,9 @@ The current validation implementation works but has some architectural concerns 
 - ✅ **Change Protection**: `protectChanges` config with `beforeUnload` and `onDataOverwrite` options
 - ✅ **Blocking Overlay**: Visual protection preventing clicks outside form when unsaved changes exist
 - ✅ **data:conflict Event**: Event emitted when protection is triggered, allowing custom dialog handling
+- ✅ **Submit Double-Click Prevention**: Controls are immediately disabled when submit starts (v0.4.1)
+- ✅ **Submit Error Recovery**: Controls re-enabled on submit error so user can retry (v0.4.1)
+- ✅ **Protection Overlay Fix**: Overlay now correctly removed after successful submit (v0.4.1)
 
 ### Non-Goals (Staying Lightweight)
 
