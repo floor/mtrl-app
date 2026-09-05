@@ -41,6 +41,15 @@ export const componentsList = [
         path: "components/buttons/extended-fab",
       },
       {
+        id: "button-group",
+        title: "Button Group",
+        description:
+          "Organize related buttons in a row: standard or connected.",
+        features: ["Standard", "Connected", "Single and multi selection", "Labels on selected", "Sizes xs to xl"],
+        examples: "Use connected groups for one choice among a few modes.",
+        path: "components/buttons/button-groups",
+      },
+      {
         id: "segmented-button",
         title: "Segmented Button",
         description:

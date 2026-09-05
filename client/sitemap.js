@@ -276,6 +276,15 @@ export const sitemap = {
               'Extended Floating Action Buttons include both an icon and a text label.'
           },
           {
+            id: 'button-groups',
+            label: 'Button Groups',
+            path: '/components/buttons/button-groups',
+            lastModified: '2026-09-05',
+            createdDate: '2026-09-05',
+            description:
+              'Button groups organize related buttons: standard (round, spaced) or connected (joined, 2dp apart).'
+          },
+          {
             id: 'segmented-buttons',
             label: 'Segmented Buttons',
             path: '/components/buttons/segmented-buttons',

@@ -42,6 +42,7 @@ const ROUTE_MODULE_MAP = {
   'components/buttons/fab': () => import('../../content/components/buttons/fab'),
   // 'components/buttons/icon-buttons': () => import('../../content/components/buttons/icon-buttons'),
   'components/buttons/segmented-buttons': () => import('../../content/components/buttons/segmented-buttons'),
+  'components/buttons/button-groups': () => import('../../content/components/buttons/button-groups'),
   'components/app-bars/bottom': () => import('../../content/components/app-bars/bottom'),
   'components/app-bars/top': () => import('../../content/components/app-bars/top'),
   'components/badges': () => import('../../content/components/badges'),
