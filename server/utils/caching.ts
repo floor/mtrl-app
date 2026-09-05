@@ -11,6 +11,18 @@ const { isProduction, cache } = config;
  */
 export function getCacheControl(path: string): string {
   const ext = extname(path);
+
+  // Content-hashed build output (dist/chunks/name.<hash>.js) never changes
+  // under a given name: cache it for good. The unhashed entry files (app.js,
+  // the stylesheet) are rewritten by every build and point at new hashes, so
+  // they must revalidate on every load (Last-Modified makes that a 304),
+  // otherwise a stale app.js requests chunks the build has deleted.
+  if (/\/chunks\//.test(path) || /\.[a-z0-9]{8}\.(js|css)$/.test(path)) {
+    return "public, max-age=31536000, immutable";
+  }
+  if (ext === ".js" || ext === ".mjs" || ext === ".css") {
+    return "no-cache";
+  }
   
   // CSS files
   if (ext === ".css") {

@@ -3,6 +3,7 @@
 import { readFile, stat, writeFile, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import { extname, dirname } from "path";
+import { getCacheControl } from "../utils/caching.js";
 
 // MIME type mapping for static files
 const MIME_TYPES: Record<string, string> = {
@@ -98,7 +99,8 @@ export async function serveStaticFile(
       "Content-Type": contentType,
       "Content-Length": fileStats.size.toString(),
       "Last-Modified": lastModified,
-      "Cache-Control": "max-age=3600",
+      // entry files revalidate on every load, hashed chunks are immutable (utils/caching)
+      "Cache-Control": getCacheControl(filePath),
       ...customHeaders,
     };
 
