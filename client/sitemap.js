@@ -285,6 +285,15 @@ export const sitemap = {
               'Button groups organize related buttons: standard (round, spaced) or connected (joined, 2dp apart).'
           },
           {
+            id: 'split-button',
+            label: 'Split Button',
+            path: '/components/buttons/split-button',
+            lastModified: '2026-09-08',
+            createdDate: '2026-09-08',
+            description:
+              'A split button pairs one action with a button that opens more choices.'
+          },
+          {
             id: 'segmented-buttons',
             label: 'Segmented Buttons',
             path: '/components/buttons/segmented-buttons',
@@ -304,15 +313,15 @@ export const sitemap = {
         description:
           'Cards contain content and actions about a single subject.'
       },
-      // {
-      //   id: "caoursel",
-      //   label: "Carousel",
-      //   path: "/components/carousel",
-      //   lastModified: "2025-04-30",
-      //   createdDate: "2025-03-19",
-      //   description:
-      //     "Carousels display multiple content items in a navigable sequence.",
-      // },
+      {
+        id: 'carousel',
+        label: 'Carousel',
+        path: '/components/carousel',
+        lastModified: '2026-06-09',
+        createdDate: '2025-03-19',
+        description:
+          'Carousels display multiple content items in a navigable sequence.',
+      },
       {
         id: 'checkboxes',
         label: 'Checkboxes',
@@ -381,13 +390,56 @@ export const sitemap = {
         description: 'Menus display a list of choices on temporary surfaces.'
       },
       {
-        id: 'progress',
-        label: 'Progress',
-        path: '/components/progress',
-        lastModified: '2025-04-30',
-        createdDate: '2025-03-19',
+        id: 'sheets',
+        label: 'Sheets',
         description:
-          'Progress indicators express an unspecified wait time or display the length of a process.'
+          'Sheets show content on a surface anchored to an edge of the screen, supporting the page behind them.',
+        items: [
+          {
+            id: 'bottom-sheets',
+            label: 'Bottom sheets',
+            path: '/components/sheets/bottom',
+            lastModified: '2026-09-09',
+            createdDate: '2026-09-09',
+            description:
+              'Bottom sheets show content anchored to the bottom of the screen, secondary to the page behind them.'
+          },
+          {
+            id: 'side-sheets',
+            label: 'Side sheets',
+            path: '/components/sheets/side',
+            lastModified: '2026-09-09',
+            createdDate: '2026-09-09',
+            description:
+              'Side sheets show content docked to a vertical edge, supporting the page rather than replacing it.'
+          }
+        ]
+      },
+      {
+        id: 'loading',
+        label: 'Loading & progress',
+        description:
+          'Loading and progress indicators show that something is on its way.',
+        items: [
+          {
+            id: 'loading-indicator',
+            label: 'Loading indicator',
+            path: '/components/loading/loading-indicator',
+            lastModified: '2026-09-07',
+            createdDate: '2026-09-07',
+            description:
+              'Loading indicators show that content is on its way for waits of a few seconds, with a looping shape morph.'
+          },
+          {
+            id: 'progress',
+            label: 'Progress indicators',
+            path: '/components/loading/progress',
+            lastModified: '2025-04-30',
+            createdDate: '2025-03-19',
+            description:
+              'Progress indicators express an unspecified wait time or display the length of a process.'
+          }
+        ]
       },
       {
         id: 'radios',
