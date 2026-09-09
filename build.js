@@ -151,8 +151,27 @@ const buildApp = async () => {
 
     // Fix: Use a unique outfile rather than relying on naming configuration
     // This avoids the "Multiple files share the same output path" error
+    // mtrl is linked from its checkout and its exports map names only the
+    // built entry, so the showcase's imports of its source (`mtrl`,
+    // `mtrl/components/<name>`, `mtrl/components/<name>/constants`,
+    // `mtrl/core/<name>`) are resolved here, straight into `src/`.
+    const mtrlSource = {
+      name: 'mtrl-source',
+      setup (build) {
+        const root = join(__dirname, 'node_modules/mtrl/src')
+        build.onResolve({ filter: /^mtrl(\/.*)?$/ }, ({ path }) => {
+          const subpath = path.slice('mtrl'.length + 1)
+          if (subpath === 'styles' || subpath.startsWith('styles/')) return undefined
+          if (!subpath) return { path: join(root, 'index.ts') }
+          const file = join(root, subpath)
+          return { path: existsSync(`${file}.ts`) ? `${file}.ts` : join(file, 'index.ts') }
+        })
+      }
+    }
+
     const jsResult = await Bun.build({
       entrypoints: [join(__dirname, 'client/app.js')],
+      plugins: [mtrlSource],
       outdir: DIST_DIR,
       minify: isProduction, // Only minify in production
       sourcemap: isProduction ? 'none' : 'inline', // No sourcemaps in production

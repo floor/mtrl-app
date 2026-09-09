@@ -50,6 +50,14 @@ export const componentsList = [
         path: "components/buttons/button-groups",
       },
       {
+        id: "split-button",
+        title: "Split Button",
+        description:
+          "Pair one action with a button that opens more choices.",
+        features: ["Leading action", "Menu", "5 sizes", "4 colours"],
+        path: "components/buttons/split-button",
+      },
+      {
         id: "segmented-button",
         title: "Segmented Button",
         description:
@@ -93,12 +101,20 @@ export const componentsList = [
         path: "components/badges",
       },
       {
+        id: "loading-indicator",
+        title: "Loading Indicator",
+        description:
+          "Show that content is on its way for waits of a few seconds, with a looping shape morph.",
+        features: ["Shape morph", "Contained", "Determinate", "24 to 240dp"],
+        path: "components/loading/loading-indicator",
+      },
+      {
         id: "progress",
         title: "Progress Indicators",
         description:
           "Express an unspecified wait time or display the length of a process.",
         features: ["Linear", "Circular", "Determinate", "Indeterminate"],
-        path: "components/progress",
+        path: "components/loading/progress",
       },
       {
         id: "snackbars",
@@ -158,13 +174,13 @@ export const componentsList = [
           "Cards are surfaces that display content and actions on a single topic. They should be easy to scan for relevant and actionable information.",
         path: "components/cards",
       },
-      // {
-      //   id: 'carousel',
-      //   title: 'Carousel',
-      //   description: 'Display a collection of items that can be scrolled horizontally.',
-      //   features: ['Multi-browse', 'Hero layout', 'Snap scrolling', 'Controls'],
-      //   path: 'components/carousel'
-      // },
+      {
+        id: 'carousel',
+        title: 'Carousel',
+        description: 'Display a collection of items that can be scrolled horizontally.',
+        features: ['Multi-browse', 'Hero layout', 'Snap scrolling', 'Controls'],
+        path: 'components/carousel'
+      },
       {
         id: "dialogs",
         title: "Dialogs",
