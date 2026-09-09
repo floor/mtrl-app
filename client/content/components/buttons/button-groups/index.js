@@ -1,6 +1,6 @@
 // client/content/components/buttons/button-groups/index.js
 
-import { createComponentsLayout } from '../../../../layout'
+import { createComponentsLayout, createDocs } from '../../../../layout'
 import { createLayout } from 'mtrl-addons'
 
 import { initVariants } from './variants'
@@ -22,6 +22,8 @@ export const createButtonGroupsContent = (container) => {
   initLabels(layout.body)
   initSizes(layout.body)
   initColors(layout.body)
+
+  createDocs(layout.body, 'components/button-group.md')
 }
 
 export default createButtonGroupsContent

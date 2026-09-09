@@ -37,7 +37,7 @@ export const createListsContent = (container, components) => {
 
   initLongStaticList(layout.body)
   initCursorList(layout.body)
-  // createDocs(layout.body, 'components/list.md')
+  createDocs(layout.body, 'components/list.md')
 
   // initSectionedList(layout.body)
   // initVerticalLayout(layout.body)

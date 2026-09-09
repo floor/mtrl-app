@@ -1,7 +1,5 @@
 // src/client/content/components/checkboxes/index.js
-import {
-  createComponentsLayout
-} from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 
 import { initBasicCheckboxes } from './basic'
 import { initLabelPositions } from './label'
@@ -19,4 +17,6 @@ export const createCheckboxesContent = (container) => {
   initBasicCheckboxes(layout.body)
   // initLabelPositions(layout.body)
   initIndeterminateCheckboxes(layout.body)
+
+  createDocs(layout.body, 'components/checkbox.md')
 }

@@ -1,6 +1,6 @@
 // src/client/content/components/tabs/index.js
 
-import { createComponentsLayout } from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { initBasicTabs } from './basic'
 import { initSecondaryTabs } from './secondary'
@@ -29,4 +29,6 @@ export const createTabsContent = (container) => {
   initProgrammaticTabs(layout.body)
   initDynamicContent(layout.body)
   initEventsAPI(layout.body)
+
+  createDocs(layout.body, 'components/tabs.md')
 }

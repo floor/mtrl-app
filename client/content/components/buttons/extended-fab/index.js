@@ -1,8 +1,6 @@
 // src/client/content/components/extended-fab/index.js
 
-import {
-  createComponentsLayout
-} from '../../../../layout'
+import { createComponentsLayout, createDocs } from '../../../../layout'
 
 import { initVariants } from './variants'
 import { initWidthOptions } from './width'
@@ -28,4 +26,6 @@ export const createExtendedFabContent = (container) => {
   initAnimation(layout.body)
   initInteraction(layout.body)
   initCollapse(layout.body)
+
+  createDocs(layout.body, 'components/extended-fab.md')
 }

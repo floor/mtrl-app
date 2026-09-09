@@ -3,7 +3,8 @@ import { createLayout } from 'mtrl-addons'
 
 import {
   createComponentsLayout,
-  createComponentSection
+  createComponentSection,
+  createDocs
 } from '../../../layout'
 
 import {
@@ -19,6 +20,7 @@ export const createRadiosContent = (container) => {
   const layout = createLayout(createComponentsLayout(info), container).getAll()
 
   initRadios(layout.body)
+  createDocs(layout.body, 'components/radios.md')
 }
 
 export const initRadios = (container) => {

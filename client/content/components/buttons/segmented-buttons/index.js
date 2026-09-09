@@ -1,8 +1,6 @@
 // src/client/content/components/segmented-button/index.js
 
-import {
-  createComponentsLayout
-} from '../../../../layout'
+import { createComponentsLayout, createDocs } from '../../../../layout'
 
 import { initVariants } from './variants'
 import { initSelectionModes } from './selection-modes'
@@ -26,4 +24,6 @@ export const createSegmentedButtonsContent = (container) => {
   initIconsOptions(layout.body)
   initInteraction(layout.body)
   initFormIntegration(layout.body)
+
+  createDocs(layout.body, 'components/segmented-button.md')
 }

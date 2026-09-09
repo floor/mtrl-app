@@ -1,6 +1,6 @@
 // src/client/content/components/datepickers/index.js
 
-import { createComponentsLayout } from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { initBasic } from './basic'
 import { initRange } from './range'
@@ -24,4 +24,6 @@ export const createDatePickersContent = (container) => {
   initFormatting(layout.body)
   initConstraints(layout.body)
   // initProgramming(layout.body)
+
+  createDocs(layout.body, 'components/datepicker.md')
 }

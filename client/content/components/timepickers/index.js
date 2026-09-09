@@ -1,6 +1,6 @@
 // src/client/content/components/timepickers/index.js
 
-import { createComponentsLayout } from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { initBasic } from './basic'
 import { initVariants } from './variants'
@@ -24,4 +24,6 @@ export const createTimePickersContent = (container) => {
   initConstraints(layout.body)
   initProgramming(layout.body)
   initCustomization(layout.body)
+
+  createDocs(layout.body, 'components/timepicker.md')
 }

@@ -1,6 +1,6 @@
 // src/client/content/components/dialogs/index.js
 
-import { createComponentsLayout } from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { initBasic } from './basic'
 import { initSizes } from './sizes'
@@ -27,4 +27,6 @@ export const createDialogsContent = (container) => {
   initFullscreen(layout.body)
   initAnimations(layout.body)
   // initFooterAlignments(layout.body)
+
+  createDocs(layout.body, 'components/dialog.md')
 }

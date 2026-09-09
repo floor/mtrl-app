@@ -1,6 +1,6 @@
 // src/client/content/components/search/index.js
 
-import { createComponentsLayout } from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { initBasicBar } from './basic-bar'
 import { initBasicView } from './basic-view'
@@ -29,4 +29,6 @@ export const createSearchContent = (container) => {
   initWithSuggestions(layout.body)
   initDisabled(layout.body)
   initEventsAPI(layout.body)
+
+  createDocs(layout.body, 'components/search.md')
 }

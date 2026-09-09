@@ -1,8 +1,8 @@
 // src/client/content/components/button/index.js
 
 import {
-  createContentLayout
-  // createDocs
+  createContentLayout,
+  createDocs
 } from '../../../../layout'
 
 import { createIconButtonComponent } from './icon-button'
@@ -33,5 +33,5 @@ export const createButtonsContent = (container) => {
   // initIcons(layout.body)
   // initProgressButton(layout.body)
   // initDisabled(layout.body)
-  // createDocs(layout.body, 'components/button.md')
+  createDocs(layout.body, 'components/icon-button.md')
 }

@@ -1,8 +1,6 @@
 // src/client/content/components/textfields/index.js
 
-import {
-  createComponentsLayout
-} from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 
 import { initBasicSelect } from './basic'
 import { initDensitySelect } from './density'
@@ -23,4 +21,6 @@ export const createTextfieldsContent = (container) => {
   initDensitySelect(layout.body)
   initSubmenu(layout.body)
   initLongMenu(layout.body)
+
+  createDocs(layout.body, 'components/select.md')
 }

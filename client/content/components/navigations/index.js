@@ -1,9 +1,7 @@
 import { createLayout } from 'mtrl-addons'
 // src/client/content/components/menu.js
 
-import {
-  createComponentsLayout
-} from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 
 import {
   createElement,
@@ -22,6 +20,8 @@ export const createNavigationsContent = (container, components) => {
   console.log('layout', layout)
 
   const ui = createLayout(createMenusLayout(components), layout.body).component
+
+  createDocs(layout.body, 'components/navigation.md')
 }
 
 export const createMenusLayout = (components) => [

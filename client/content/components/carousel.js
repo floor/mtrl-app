@@ -1,10 +1,9 @@
 // src/client/content/components/carousel.js
 
-import { CAROUSEL_LAYOUTS, CAROUSEL_SCROLL_BEHAVIORS } from 'mtrl/src/components/carousel'
-
 import {
   createComponentsLayout,
-  createComponentSection
+  createComponentSection,
+  createDocs
 } from '../../layout'
 
 import {
@@ -12,168 +11,90 @@ import {
 } from 'mtrl'
 import { createLayout } from 'mtrl-addons'
 
-// Sample slide data for examples
 const sampleSlides = [
-  {
-    image: 'https://example.com/image1.jpg',
-    title: 'Recent highlights',
-    description: 'Check out our latest collection',
-    accent: '#3C4043'
-  },
-  {
-    image: 'https://example.com/image2.jpg',
-    title: 'La Familia',
-    description: 'Family-friendly options',
-    accent: '#7E5260',
-    buttonText: 'View options',
-    buttonUrl: '/family'
-  },
-  {
-    image: 'https://example.com/image3.jpg',
-    title: 'New Arrivals',
-    description: 'See what\'s new this season',
-    accent: '#4F6F52',
-    buttonText: 'Explore',
-    buttonUrl: '/new'
-  },
-  {
-    image: 'https://example.com/image4.jpg',
-    title: 'Limited Edition',
-    description: 'Get it before it\'s gone',
-    accent: '#5C374C',
-    buttonText: 'Buy now',
-    buttonUrl: '/limited'
-  },
-  {
-    image: 'https://example.com/image5.jpg',
-    title: 'Seasonal Collection',
-    description: 'Perfect for this time of year',
-    accent: '#4A55A2',
-    buttonText: 'See collection',
-    buttonUrl: '/seasonal'
-  },
-  {
-    image: 'https://example.com/image1.jpg',
-    title: 'Recent highlights',
-    description: 'Check out our latest collection',
-    accent: '#3C4043',
-    buttonText: 'Shop now',
-    buttonUrl: '/shop'
-  },
-  {
-    image: 'https://example.com/image2.jpg',
-    title: 'La Familia',
-    description: 'Family-friendly options',
-    accent: '#7E5260',
-    buttonText: 'View options',
-    buttonUrl: '/family'
-  },
-  {
-    image: 'https://example.com/image3.jpg',
-    title: 'New Arrivals',
-    description: 'See what\'s new this season',
-    accent: '#4F6F52',
-    buttonText: 'Explore',
-    buttonUrl: '/new'
-  },
-  {
-    image: 'https://example.com/image4.jpg',
-    title: 'Limited Edition',
-    description: 'Get it before it\'s gone',
-    accent: '#5C374C',
-    buttonText: 'Buy now',
-    buttonUrl: '/limited'
-  },
-  {
-    image: 'https://example.com/image5.jpg',
-    title: 'Seasonal Collection',
-    description: 'Perfect for this time of year',
-    accent: '#4A55A2',
-    buttonText: 'See collection',
-    buttonUrl: '/seasonal'
-  }
+  { image: 'https://picsum.photos/id/10/800/600', title: 'Forest Bridge', description: 'A wooden bridge through the trees' },
+  { image: 'https://picsum.photos/id/11/800/600', title: 'Dark Waters', description: 'Still lake at twilight' },
+  { image: 'https://picsum.photos/id/14/800/600', title: 'Autumn Path', description: 'Golden leaves on a country road' },
+  { image: 'https://picsum.photos/id/15/800/600', title: 'River Bend', description: 'Winding river from above' },
+  { image: 'https://picsum.photos/id/16/800/600', title: 'Island Surf', description: 'Waves crashing on the shore' },
+  { image: 'https://picsum.photos/id/17/800/600', title: 'Wooden Pier', description: 'Dock stretching into the lake' },
+  { image: 'https://picsum.photos/id/18/800/600', title: 'Coastal Rocks', description: 'Rocky shoreline at golden hour' },
+  { image: 'https://picsum.photos/id/19/800/600', title: 'Misty Falls', description: 'Waterfall hidden in the forest' },
 ]
 
 export const createCarouselContent = (container) => {
   const info = {
     title: 'Carousel',
-    description: 'Carousels show a collection of items that can be scrolled on and off the screen'
+    description: 'Carousels show a collection of items that can be scrolled on and off the screen. Items change size as they move through the layout and snap into place.'
   }
 
   const layout = createLayout(createComponentsLayout(info), container).component
 
   createMultiBrowseCarousel(layout.body)
-  createUncontainedCarousel(layout.body)
   createHeroCarousel(layout.body)
+  createHeroCenterCarousel(layout.body)
+  createUncontainedCarousel(layout.body)
+  createFullScreenCarousel(layout.body)
+  createDocs(layout.body, 'components/carousel.md')
 }
 
-export const createMultiBrowseCarousel = (container) => {
-  const title = 'Carousel'
-  const layout = createLayout(createComponentSection({ title }), container).component
-  // Sample slide content
-
-  // Create the carousel with configuration
-  const carousel = createCarousel({
-    layout: CAROUSEL_LAYOUTS.MULTI_BROWSE,
-    scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.SNAP,
-    slides: sampleSlides,
-    gap: 12,
-    showAllLink: true,
-    onShowAll: () => {
-      console.log('Show all items clicked')
-      // Typically would navigate to a page showing all items
-    }
-  })
-
-  // Add to container
-  container.appendChild(carousel.element)
-
+// Mounts a carousel in a section; the carousel fills the height it is given
+const section = (container, title, description, config, height) => {
+  const layout = createLayout(createComponentSection({ title, description }), container).component
+  const carousel = createCarousel({ slides: sampleSlides, ariaLabel: title, ...config })
+  carousel.element.style.height = height
   layout.body.appendChild(carousel.element)
-}
-
-export function createUncontainedCarousel (container) {
-  const title = 'Carousel'
-  const layout = createLayout(createComponentSection({ title }), container).component
-  // Create the carousel with uncontained layout and default scrolling
-  const carousel = createCarousel({
-    layout: CAROUSEL_LAYOUTS.UNCONTAINED,
-    scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.DEFAULT, // Standard scrolling
-    slides: sampleSlides.map(slide => ({
-      ...slide,
-      // Add longer descriptions for text-heavy example
-      description: `${slide.description}. This layout is perfect for more detailed content that requires more explanation and context.`
-    })),
-    gap: 16,
-    // We still show the "Show all" link for accessibility
-    showAllLink: true
-  })
-
-  // Add to container
-  layout.body.appendChild(carousel.element)
-
   return carousel
 }
 
-/**
- * Example 3: Hero Carousel
- * For spotlighting content that needs more attention, like featured media
- */
-export function createHeroCarousel (container, centered = false) {
-  const title = 'Hero carousel'
-  const layout = createLayout(createComponentSection({ title }), container).component
-  const carousel = createCarousel({
-    layout: CAROUSEL_LAYOUTS.HERO,
-    scrollBehavior: CAROUSEL_SCROLL_BEHAVIORS.SNAP, // Snap scrolling recommended
-    slides: sampleSlides,
-    gap: 8,
-    // Optional centered layout
-    centered,
-    // Adjust the large item width
-    largeItemMaxWidth: 320
-  })
+function createMultiBrowseCarousel(container) {
+  return section(
+    container,
+    'Multi-browse',
+    'At least one large, one medium and one small item. Small items stay between 40 and 56dp; more large items appear as the container grows.',
+    { variant: 'multi-browse', itemWidth: 280 },
+    '280px'
+  )
+}
 
-  // Add to container
+function createHeroCarousel(container) {
+  return section(
+    container,
+    'Hero',
+    'One large item with a small preview of the next one. The large item is as wide as the container unless itemWidth caps it.',
+    { variant: 'hero', itemWidth: 480 },
+    '320px'
+  )
+}
+
+function createHeroCenterCarousel(container) {
+  return section(
+    container,
+    'Center-aligned hero',
+    'The large item sits between two small ones once the list is scrolled off its start.',
+    { variant: 'hero-center', itemWidth: 480 },
+    '320px'
+  )
+}
+
+function createUncontainedCarousel(container) {
+  return section(
+    container,
+    'Uncontained',
+    'Items keep one size and run off the trailing edge. Default scrolling, no snapping.',
+    { variant: 'uncontained', itemWidth: 280 },
+    '240px'
+  )
+}
+
+function createFullScreenCarousel(container) {
+  const layout = createLayout(createComponentSection({
+    title: 'Full-screen',
+    description: 'One edge-to-edge item at a time, scrolling vertically. Shown here in a fixed-height frame.'
+  }), container).component
+  const carousel = createCarousel({ variant: 'full-screen', slides: sampleSlides, ariaLabel: 'Full-screen' })
+  carousel.element.style.height = '480px'
+  carousel.element.style.maxWidth = '360px'
   layout.body.appendChild(carousel.element)
-
   return carousel
 }

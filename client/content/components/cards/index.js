@@ -1,6 +1,6 @@
 // src/client/content/components/cards/index.js
 
-import { createComponentsLayout } from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { addCardStyles } from './styles'
 import { artworks } from './artwork-data'
@@ -53,6 +53,8 @@ export const createCardsContent = (container) => {
   initExpandableCards(layout.body)
   initSwipeableCard(layout.body)
   // initHorizontalCards(layout.body)
+
+  createDocs(layout.body, 'components/card.md')
 }
 
 export { artworks }

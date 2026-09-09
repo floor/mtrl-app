@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/top/index.js
 
-import { createComponentsLayout } from '../../../../layout'
+import { createComponentsLayout, createDocs } from '../../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { initBasicTopAppBar } from './basic'
 import { initTypesTopAppBar } from './types'
@@ -25,4 +25,6 @@ export const createTopAppBarsContent = (container) => {
   initResponsiveTopAppBar(layout.body)
   initCustomActionsTopAppBar(layout.body)
   initEventsApiTopAppBar(layout.body)
+
+  createDocs(layout.body, 'components/top-app-bar.md')
 }

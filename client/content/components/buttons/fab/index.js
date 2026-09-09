@@ -1,8 +1,6 @@
 // src/client/content/components/fab/index.js
 
-import {
-  createComponentsLayout
-} from '../../../../layout'
+import { createComponentsLayout, createDocs } from '../../../../layout'
 
 import { initVariants } from './variants'
 import { initSizes } from './sizes'
@@ -24,4 +22,6 @@ export const createFabContent = (container) => {
   initDisabled(layout.body)
   initPositions(layout.body)
   initInteraction(layout.body)
+
+  createDocs(layout.body, 'components/fab.md')
 }

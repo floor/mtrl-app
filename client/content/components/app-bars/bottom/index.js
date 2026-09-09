@@ -1,6 +1,6 @@
 // src/client/content/components/app-bars/bottom/index.js
 
-import { createComponentsLayout } from '../../../../layout'
+import { createComponentsLayout, createDocs } from '../../../../layout'
 import { createLayout } from 'mtrl-addons'
 import { initBasicBottomAppBar } from './basic'
 import { initWithFabBottomAppBar } from './with-fab'
@@ -25,4 +25,6 @@ export const createBottomAppBarsContent = (container) => {
   initCustomActionsBottomAppBar(layout.body)
   initProgrammaticBottomAppBar(layout.body)
   initEventsApiBottomAppBar(layout.body)
+
+  createDocs(layout.body, 'components/bottom-app-bar.md')
 }

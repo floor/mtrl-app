@@ -1,6 +1,6 @@
 // src/client/content/components/chips/index.js
 
-import { createComponentsLayout } from '../../../layout'
+import { createComponentsLayout, createDocs } from '../../../layout'
 import { createLayout } from 'mtrl-addons'
 
 import { initChipVariants } from './variants'
@@ -30,4 +30,6 @@ export const createChipsContent = (container) => {
   initFilterChipSet(layout.body)
   initInputChips(layout.body)
   initInteractiveChipExample(layout.body)
+
+  createDocs(layout.body, 'components/chips.md')
 }

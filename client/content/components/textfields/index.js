@@ -1,6 +1,6 @@
 // src/client/content/components/textfields/index.js
 
-import { createComponentsLayout } from "../../../layout";
+import { createComponentsLayout, createDocs } from "../../../layout";
 
 import { createLayout } from 'mtrl-addons';
 
@@ -40,4 +40,6 @@ export const createTextfieldsContent = (container) => {
   initSupportingText(layout.body);
   initCombinedFeatures(layout.body);
   initMultilineTextfield(layout.body);
+
+  createDocs(layout.body, 'components/textfield.md')
 };
