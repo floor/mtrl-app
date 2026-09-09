@@ -31,3 +31,5 @@ server/data/generated/
 *.swo
 Thumbs.db
 tree.txt
+# Screenshots from scripts/debug
+.debug/
