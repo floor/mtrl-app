@@ -32,7 +32,7 @@ document.querySelector('.settings-container').appendChild(mySwitch.element);
 
 // Listen for changes
 mySwitch.on('change', (event) => {
-  console.log('Switch toggled:', event.target.checked);
+  console.log('Switch toggled:', event.checked);
 });
 ```
 
@@ -54,7 +54,7 @@ The Switch component accepts the following configuration options:
 | `ariaLabel` | `string` | `undefined` | ARIA label for accessibility |
 | `prefix` | `string` | `"mtrl"` | Prefix for CSS class names |
 | `componentName` | `string` | `"switch"` | Component name used in CSS class generation |
-| `icon` | `string` | `undefined` | Icon HTML content for the switch |
+| `icon` | `string` | `undefined` | Declared in `SwitchConfig` but never read by the component — setting it has no effect |
 
 ## Component API
 
@@ -64,8 +64,10 @@ The Switch component provides the following methods:
 
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
-| `getValue()` | none | `string` | Gets the switch's current value attribute |
-| `setValue(value)` | `value: string` | `SwitchComponent` | Sets the switch's value attribute |
+| `getValue()` | none | `boolean` | Gets the checked state (not the `value` attribute), for form compatibility |
+| `setValue(value)` | `value: boolean \| string` | `SwitchComponent` | Sets the checked state. A string is read as checked when it is `'true'` or `'1'`, unchecked otherwise |
+| `getValueAttribute()` | none | `string` | Gets the input's `value` attribute |
+| `setValueAttribute(value)` | `value: string` | `SwitchComponent` | Sets the input's `value` attribute |
 
 ### State Methods
 
@@ -111,9 +113,15 @@ The Switch component emits the following events:
 
 | Event | Description | Data |
 |-------|-------------|------|
-| `change` | Fires when the switch state changes | `{ checked: boolean, value: string, nativeEvent: Event }` |
-| `focus` | Fires when the switch receives focus | `{ event: FocusEvent }` |
-| `blur` | Fires when the switch loses focus | `{ event: FocusEvent }` |
+| `change` | Fires when the switch state changes | `{ checked: boolean, value: string, nativeEvent?: Event }` |
+
+`nativeEvent` is present only when the change came from the user toggling the
+input. A change made through `check()`, `uncheck()`, `toggle()` or `setValue()`
+emits `{ checked, value }` with no `nativeEvent`.
+
+`change` is the only event the switch emits. `SWITCH_EVENTS` also lists `focus`
+and `blur`, but nothing in the component emits them, so listeners for those
+never fire; listen on `mySwitch.input` directly if you need focus changes.
 
 ## Examples
 
@@ -216,7 +224,7 @@ const passwordSwitch = createSwitch({
 });
 
 passwordSwitch.on('change', (event) => {
-  if (event.target.checked) {
+  if (event.checked) {
     passwordSwitch.setSupportingText('Password is now visible');
   } else {
     passwordSwitch.setSupportingText('Password is hidden');

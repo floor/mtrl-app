@@ -146,7 +146,7 @@ The Select component emits the following events:
 | Event | Description | Data |
 |-------|-------------|------|
 | `change` | Fires when the selection changes | `{ select, value, text, option, originalEvent?, preventDefault, defaultPrevented }` |
-| `open` | Fires when the dropdown opens | `{ select, originalEvent?, preventDefault, defaultPrevented }` |
+| `open` | Fires **only when the dropdown is opened from the keyboard** (Enter, Space or ArrowDown on the field). Opening by click, or by calling `open()`, emits nothing | `{ select, originalEvent?, preventDefault, defaultPrevented }` |
 | `close` | Fires when the dropdown closes | `{ select, originalEvent?, preventDefault, defaultPrevented }` |
 
 ## Examples
@@ -439,7 +439,7 @@ requiredSelect.on('change', () => {
 
 The Select component follows accessibility best practices:
 
-- Proper ARIA attributes (`role="combobox"`, `aria-expanded`, `aria-haspopup`)
+- `aria-haspopup`, `aria-expanded` and `aria-controls` on the field, linking it to the menu; the menu is `role="menu"` with `role="menuitem"` options (the component does not set `role="combobox"` or `role="listbox"`)
 - Keyboard navigation support
 - Focus management between textfield and menu
 - Screen reader announcements for selection changes
@@ -529,7 +529,7 @@ The Select component is designed to be lightweight and performant:
 - Event delegation for option selection
 - Proper cleanup on destroy to prevent memory leaks
 - CSS transforms for smooth animations (GPU accelerated)
-- Menu stays in DOM once created (no re-creation on open/close)
+- The menu element is built once and reused; it is inserted into the DOM on open and removed again shortly after close
 
 ## Browser Compatibility
 

@@ -53,12 +53,14 @@ The Progress component accepts the following configuration options:
 | `max` | `number` | `100` | Maximum progress value |
 | `buffer` | `number` | `0` | Buffer value for linear progress (e.g., video buffering) |
 | `indeterminate` | `boolean` | `false` | Whether progress shows animation without specific value |
-| `thickness` | `'thin' \| 'thick' \| number` | `'thin'` | Thickness of the progress track (thin=4px, thick=8px, or custom pixels) |
-| `shape` | `'line' \| 'wavy'` | `'line'` | Shape of progress animation (works for both linear and circular variants) |
-| `size` | `number` | `48` | Size of circular progress in pixels (24-240, circular variant only) |
+| `thickness` | `'thin' \| 'thick' \| number` | `'thin'` | Thickness of the progress track (thin=4dp, thick=8dp, or custom pixels) |
+| `shape` | `'flat' \| 'wavy'` | `'flat'` | Shape of progress animation (works for both linear and circular variants) |
+| `size` | `number` | `40` (`48` wavy) | Size of circular progress in pixels (24-240, circular variant only) |
 | `showLabel` | `boolean` | `false` | Whether to show percentage label |
 | `disabled` | `boolean` | `false` | Whether the progress indicator is initially disabled |
 | `class` | `string` | `undefined` | Additional CSS classes to add to the progress component |
+| `showStopIndicator` | `boolean` | `true` | Marks the end of a linear determinate track with a 4dp dot |
+| `ariaLabel` | `string` | `'Loading'` | Accessible name: what is loading |
 | `labelFormatter` | `function` | `undefined` | Custom label formatter function |
 | `prefix` | `string` | `'mtrl'` | Prefix for CSS class names |
 
@@ -71,7 +73,7 @@ The Progress component provides the following methods:
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
 | `getValue()` | none | `number` | Gets the current progress value |
-| `setValue(value, animate?)` | `value: number, animate?: boolean` | `ProgressComponent` | Sets the progress value. If `animate` is `true` (default), changes are animated over 300ms. If `false`, changes are immediate. |
+| `setValue(value, animate?)` | `value: number, animate?: boolean` | `ProgressComponent` | Sets the progress value. If `animate` is `true` (default), changes are animated over 500ms. If `false`, changes are immediate. |
 | `getMax()` | none | `number` | Gets the maximum progress value |
 
 ### Buffer Methods (Linear Only)
@@ -97,8 +99,8 @@ The Progress component provides the following methods:
 |--------|------------|---------|-------------|
 | `setThickness(thickness)` | `thickness: 'thin' \| 'thick' \| number` | `ProgressComponent` | Sets the thickness of the progress track |
 | `getThickness()` | none | `number` | Gets the current thickness value in pixels |
-| `setShape(shape)` | `shape: 'line' \| 'wavy'` | `ProgressComponent` | Sets the shape (works for both linear and circular variants) |
-| `getShape()` | none | `'line' \| 'wavy'` | Gets the current shape |
+| `setShape(shape)` | `shape: 'flat' \| 'wavy'` | `ProgressComponent` | Sets the shape (works for both linear and circular variants) |
+| `getShape()` | none | `'flat' \| 'wavy'` | Gets the current shape |
 
 ### Label Methods
 
@@ -129,12 +131,15 @@ The Progress component provides the following methods:
 
 ## Events
 
-The Progress component emits the following events:
+The Progress component emits the following events. They are native
+`CustomEvent`s dispatched on `progress.element`, and `on()`/`off()` are thin
+wrappers over `addEventListener`/`removeEventListener`, so the handler receives
+the event and the data is on `event.detail`:
 
-| Event | Description | Data |
+| Event | Description | `event.detail` |
 |-------|-------------|------|
 | `change` | Fires when progress value changes | `{ value: number, max: number }` |
-| `complete` | Fires when progress reaches 100%. **Note:** With animated value changes (default), this event fires after the animation completes (~300ms). With immediate value changes (`setValue(100, false)`), it fires immediately. | `{ value: number, max: number }` |
+| `complete` | Fires when progress reaches 100%. **Note:** With animated value changes (default), this event fires after the animation completes (~500ms). With immediate value changes (`setValue(100, false)`), it fires immediately. | `{ value: number, max: number }` |
 
 ## Examples
 
@@ -321,7 +326,7 @@ const progress = createProgress({
   showLabel: true
 });
 
-// Animated update (default) - smooth 300ms transition
+// Animated update (default) - smooth 500ms transition
 progress.setValue(50);  // Same as setValue(50, true)
 
 // Immediate update - no animation
@@ -475,81 +480,66 @@ The Progress component uses HTML5 Canvas for high-performance rendering:
 - **Wavy Animations**: Unique wavy progress shapes for enhanced visual appeal
 - **Responsive Sizing**: Automatic canvas scaling for different container sizes
 
-### Enhanced Indeterminate Animation
+### Indeterminate Animation
 
-The linear indeterminate progress now features Material Design 3 compliant two-segment animation:
+Both indeterminate animations are ported from the Compose Material 3
+implementation, keyframes and easing curves included.
 
 ```javascript
-// Linear indeterminate with two segments
-const loadingProgress = createProgress({
-  variant: 'linear',
-  indeterminate: true
-});
-
-// Wavy indeterminate with two segments
-const wavyLoading = createProgress({
-  variant: 'linear',
-  indeterminate: true,
-  shape: 'wavy'
-});
+const loading = createProgress({ variant: 'linear', indeterminate: true });
+const spinner = createProgress({ variant: 'circular', indeterminate: true });
 ```
 
-**Two-Segment Animation Details:**
-- **Primary Segment**: Starts immediately, expands from 8% to 66% width as it moves across
-- **Secondary Segment**: Enters at 50% of the cycle when the primary segment is exiting
-- **Continuous Flow**: The secondary segment maintains visual continuity as the primary exits
-- **2-Second Cycle**: Complete animation loops every 2 seconds
-- **MD3 Compliant**: Creates organic, fluid motion with proper overlap between segments
+**Linear**, over a 1750ms cycle: two bars cross the track, each defined by a
+head and a tail that start 250ms apart and ease on the emphasized accelerate
+curve. The leading bar's head starts at once and reaches the end at 1000ms;
+the trailing bar starts at 650ms. The track is drawn ahead of, between and
+behind them, with the same 4dp gap the determinate indicator uses.
+
+**Circular**, over a 6 second cycle: the arc turns 1080 degrees at a steady
+rate with four 90 degree kicks on top of it, one every 1500ms and each taking
+300ms on the emphasized decelerate curve, so it turns 1440 degrees a cycle.
+The arc itself grows from 10% of the circle to 87% by half way and shrinks
+back. A circular indeterminate indicator has no track.
 
 ## Visual Enhancements
 
-The Progress component includes several visual refinements for improved user experience:
+### The dot at low values
 
-### Minimal Arc at 0%
-Instead of showing a dot, circular progress indicators now display a minimal arc (0.1%) when the value is 0. This provides:
-- Visual continuity with other progress states
-- Clear indication that the process is ready to start
-- Better accessibility with a more visible indicator
+At 0 nothing is drawn. As soon as progress begins, the round cap of the active
+indicator reads as the dot the guidelines call for at low percentages.
 
-### Intelligent Wave Amplitude
-The wavy shape animation now scales intelligently based on:
-- **Component Size**: Smaller progress indicators have proportionally reduced wave amplitude
-- **Stroke Width**: Wave amplitude adapts to the thickness setting
-- **Progress Value**: Wave amplitude smoothly reduces from 97% to 100% for a clean finish
+### The wave
 
-### Wave Shape Features
-- **Material Design 3 Compliant**: Smooth, organic wave patterns
-- **Size-Aware Scaling**: 30% amplitude at minimum size (40px), 100% at maximum size (240px)
-- **Smooth Transitions**: Wave amplitude gracefully reduces as progress approaches completion
-- **Both Variants**: Wavy shape works for both linear and circular progress indicators
+The wave is 3dp tall on a 4dp linear track, which is the 10dp container height
+the tokens describe, and it keeps that relationship as the track thickens. On a
+circular indicator it is 1.6dp at the default 40dp size and scales with the
+size, so the waveform keeps its proportions. The wave travels one wavelength a
+second: 40dp for a determinate linear indicator, 20dp for an indeterminate one,
+15dp around a circle.
+
+A determinate wave flattens below 10% and above 95%, fading over 500ms on the
+standard curve as it appears and the emphasized accelerate curve as it goes, so
+the indicator finishes flat.
 
 ```javascript
-// Wavy progress with size-aware amplitude
-const smallWavy = createProgress({
-  variant: 'circular',
-  shape: 'wavy',
-  size: 40,  // Small size = reduced wave amplitude
-  value: 60
-});
-
-const largeWavy = createProgress({
-  variant: 'circular',
-  shape: 'wavy',
-  size: 240,  // Large size = full wave amplitude
-  value: 60
-});
+// Waves at any size and thickness
+const wavy = createProgress({ variant: 'circular', shape: 'wavy', size: 96, value: 60 });
+const thickWavy = createProgress({ shape: 'wavy', thickness: 'thick', value: 60 });
 ```
 
 ## Accessibility
 
 The Progress component follows accessibility best practices:
 
-- Proper semantic HTML with ARIA attributes
-- `role="progressbar"` for screen reader compatibility
-- `aria-valuemin`, `aria-valuemax`, and `aria-valuenow` attributes
+- `role="progressbar"` on the container, with an `aria-label` that says what is loading, such as `'Loading news article'` or `'Refreshing page'`
+- `aria-valuemin`, `aria-valuemax` and `aria-valuenow` attributes
 - `aria-valuenow` removed during indeterminate state
-- `aria-disabled` when component is disabled
-- Respects user preferences for reduced motion
+- `aria-disabled` when the component is disabled
+- The canvas is hidden from assistive technology with `aria-hidden="true"`
+- The stop indicator marks the end of a linear determinate track. It is required unless the track has a contrast of at least 3:1 with its container and the surface behind it, so it is drawn by default; turn it off with `showStopIndicator: false` when that contrast is met
+- Linear indicators are mirrored under `direction: rtl`
+- Under `prefers-reduced-motion: reduce` nothing animates: the indicator draws a still frame
 
 ### Screen Reader Support
 
@@ -557,13 +547,13 @@ The component provides appropriate information to assistive technologies:
 
 ```html
 <!-- Determinate progress -->
-<div role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42">
-  <!-- Canvas rendering -->
+<div role="progressbar" aria-label="Uploading photo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42">
+  <canvas class="mtrl-progress-canvas" aria-hidden="true"></canvas>
 </div>
 
 <!-- Indeterminate progress -->
-<div role="progressbar" aria-valuemin="0" aria-valuemax="100">
-  <!-- Canvas rendering -->
+<div role="progressbar" aria-label="Loading news article" aria-valuemin="0" aria-valuemax="100">
+  <canvas class="mtrl-progress-canvas" aria-hidden="true"></canvas>
 </div>
 ```
 
@@ -586,10 +576,6 @@ The Progress component uses BEM-style CSS classes for easy customization:
 /* Progress shapes */
 .mtrl-progress--wavy { /* ... */ }
 
-/* Progress thickness */
-.mtrl-progress--thin { /* ... */ }
-.mtrl-progress--thick { /* ... */ }
-
 /* Progress label */
 .mtrl-progress__label { /* ... */ }
 
@@ -603,12 +589,15 @@ The component supports CSS custom properties for theming:
 
 ```css
 :root {
-  --mtrl-primary: #6750A4;                    /* Progress indicator color */
-  --mtrl-primary-rgb: 103, 80, 164;          /* RGB values for alpha */
-  --mtrl-secondary-container: #E8DEF8;       /* Buffer indicator color */
-  --mtrl-outline-variant: rgba(0,0,0,0.12);  /* Track color */
+  --mtrl-sys-color-primary: #6750A4;             /* Active indicator and stop indicator */
+  --mtrl-sys-color-secondary-container: #E8DEF8; /* Track */
+  --mtrl-sys-color-primary-container: #EADDFF;   /* Buffer */
+  --mtrl-sys-color-on-surface-variant: #49454F;  /* Label */
 }
 ```
+
+The indicator is drawn on a canvas, which reads these from the element's
+computed style once and again whenever the theme changes.
 
 ## Performance Considerations
 

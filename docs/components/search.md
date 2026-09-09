@@ -60,7 +60,7 @@ The Search component accepts the following configuration options:
 |--------|------|---------|-------------|
 | `placeholder` | `string` | `'Search'` | Placeholder/supporting text |
 | `value` | `string` | `''` | Initial input value |
-| `leadingIcon` | `string` | Search icon | Custom leading icon HTML |
+| `leadingIcon` | `string` | `undefined` | Custom leading icon HTML |
 | `trailingItems` | `SearchTrailingItem[]` | `undefined` | Trailing icons or avatar |
 | `suggestions` | `SearchSuggestion[] \| string[]` | `undefined` | Suggestions to display |
 
@@ -88,8 +88,8 @@ The Search component accepts the following configuration options:
 | `onSubmit` | `(value: string) => void` | Called when search is submitted |
 | `onInput` | `(value: string) => void` | Called when input value changes |
 | `onClear` | `() => void` | Called when input is cleared |
-| `onExpand` | `() => void` | Called when view expands |
-| `onCollapse` | `() => void` | Called when view collapses |
+| `onExpand` | `() => void` | Declared in `SearchConfig` but never called — the `expand` event is emitted without invoking this handler. Use `search.on('expand', ...)` |
+| `onCollapse` | `() => void` | Declared in `SearchConfig` but never called — the `collapse` event is emitted without invoking this handler. Use `search.on('collapse', ...)` |
 | `onSuggestionSelect` | `(suggestion: SearchSuggestion) => void` | Called when a suggestion is selected |
 
 ## Search States
@@ -192,7 +192,7 @@ The Search component emits the following events:
 
 ### SearchEvent Object
 
-```javascript
+```text
 {
   component: SearchComponent,  // The search component instance
   value: string,               // Current search value
@@ -202,6 +202,11 @@ The Search component emits the following events:
   defaultPrevented: boolean    // Whether default was prevented
 }
 ```
+
+`expand` and `collapse` are the exception: they carry
+`{ component, state, viewMode }` only — no `value`, `originalEvent`,
+`preventDefault` or `defaultPrevented`.
+
 
 ## Examples
 
@@ -628,14 +633,14 @@ If you're upgrading from the previous search component implementation:
 
 ```javascript
 // Before
-const search = createSearch({
+const before = createSearch({
   variant: 'bar',
   trailingIcon: micIcon,
   trailingIcon2: avatarHtml
 });
 
 // After
-const search = createSearch({
+const after = createSearch({
   initialState: 'bar',
   trailingItems: [
     { id: 'mic', type: 'icon', content: micIcon },

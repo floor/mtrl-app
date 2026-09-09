@@ -47,6 +47,8 @@ The Menu component accepts the following configuration options:
 |--------|------|---------|-------------|
 | `opener` | `HTMLElement \| string \| object` | required | Element to which the menu is anchored |
 | `items` | `MenuContent[]` | `[]` | Array of menu items and dividers |
+| `variant` | `'baseline' \| 'vertical'` | `'baseline'` | `'vertical'` is the M3 expressive menu |
+| `color` | `'standard' \| 'vibrant'` | `'standard'` | Colour mapping for the vertical variant |
 | `position` | `string` | `'bottom-start'` | Position relative to opener |
 | `closeOnSelect` | `boolean` | `true` | Whether to close menu when an item is clicked |
 | `closeOnClickOutside` | `boolean` | `true` | Whether to close when clicking outside the menu |
@@ -55,10 +57,12 @@ The Menu component accepts the following configuration options:
 | `openSubmenuOnHover` | `boolean` | `true` | Whether submenus open on hover |
 | `width` | `string` | `undefined` | Optional width (e.g., '200px', '100%') |
 | `maxHeight` | `string` | `undefined` | Optional maximum height with scroll |
-| `offset` | `number` | `8` | Offset from opener in pixels |
+| `offset` | `number` | `0` | Offset from opener in pixels |
 | `autoFlip` | `boolean` | `true` | Whether to flip position to stay in viewport |
 | `visible` | `boolean` | `false` | Whether menu is initially visible |
 | `container` | `HTMLElement` | `document.body` | Container element to append menu to |
+| `dense` | `boolean` | `false` | Compact items and tighter spacing, for toolbars |
+| `manualOpen` | `boolean` | `false` | Use the opener only for positioning and call `open()` yourself |
 | `class` | `string` | `undefined` | Additional CSS classes |
 | `prefix` | `string` | `'mtrl'` | Prefix for CSS class names |
 
@@ -75,7 +79,16 @@ Each menu item can have the following properties:
 | `disabled` | `boolean` | Whether the item is disabled |
 | `hasSubmenu` | `boolean` | Whether the item has a submenu |
 | `submenu` | `MenuItem[]` | Array of submenu items |
+| `supportingText` | `string` | A second line under the label |
 | `data` | `any` | Additional data associated with the item |
+
+### Supporting text
+
+An item can carry a second line under its label, for a short explanation. Supporting text is part of the vertical menu's anatomy, though the two lines stack in either variant.
+
+```javascript
+{ id: 'share', text: 'Share', supportingText: 'Anyone with the link' }
+```
 
 ## Menu Positions
 
@@ -152,6 +165,19 @@ The Menu component emits the following events:
 | `open` | Fires when the menu opens | `{ menu, originalEvent?, preventDefault, defaultPrevented }` |
 | `close` | Fires when the menu closes | `{ menu, originalEvent?, preventDefault, defaultPrevented }` |
 | `select` | Fires when an item is selected | `{ menu, item, itemId, itemData?, originalEvent?, preventDefault, defaultPrevented }` |
+
+The `close` event also carries `restoreFocus`, saying whether focus was
+returned to the opener.
+
+### Only one menu at a time
+
+Opening a menu closes whichever menu was open before it, whether that one was
+opened by pointer, by key or by code: a menu button's menu is dismissed once
+the interaction moves outside it, and two open menus would leave two openers
+carrying `aria-expanded="true"`. The menu being closed emits its `close` event
+with `restoreFocus: false`, since the interaction has already moved to the new
+opener. Only root menus take part; a submenu belongs to its parent, which
+closes it.
 
 ## Examples
 
@@ -335,9 +361,20 @@ function updateMenuItems(context) {
 
 ### Context Menu (Right-Click)
 
+A menu is always positioned against its opener, and `open()` repositions it,
+so setting `left` and `top` on the menu element has no effect. To follow the
+cursor, give the menu a zero-sized opener and move that instead. Pass
+`manualOpen: true` so no click or blur handler is attached to the opener.
+
 ```javascript
+// A zero-sized anchor that follows the cursor
+const anchor = document.createElement('div');
+anchor.style.cssText = 'position:fixed;width:0;height:0';
+document.body.appendChild(anchor);
+
 const contextMenu = createMenu({
-  opener: document.body,
+  opener: anchor,
+  manualOpen: true,
   items: [
     { id: 'inspect', text: 'Inspect Element' },
     { id: 'viewSource', text: 'View Page Source' }
@@ -347,14 +384,91 @@ const contextMenu = createMenu({
 
 document.addEventListener('contextmenu', (event) => {
   event.preventDefault();
-  
-  // Position at mouse cursor
-  contextMenu.element.style.left = `${event.clientX}px`;
-  contextMenu.element.style.top = `${event.clientY}px`;
-  
-  contextMenu.open();
+
+  anchor.style.left = `${event.clientX}px`;
+  anchor.style.top = `${event.clientY}px`;
+
+  contextMenu.open(event);
 });
 ```
+
+## Variants
+
+### Baseline
+
+The original M3 menu, and the default: a `surface-container` panel with a 4dp corner holding 48dp items that fill its width. It is what every existing menu gets, so nothing changes for code already using this component.
+
+### Vertical (M3 expressive)
+
+The expressive menu, recommended for new designs. A 16dp container holds 44dp items that sit 2dp apart, and an item's shape is its state: a 4dp rectangle at rest that rounds to 12dp as it is hovered, focused, pressed or selected. The first and last items round outwards so the column reads as one block.
+
+```javascript
+const menu = createMenu({
+  opener: button,
+  variant: 'vertical',
+  items: [
+    { id: 'share', text: 'Share', icon: shareIcon, supportingText: 'Anyone with the link' },
+    { id: 'copy', text: 'Copy link', icon: copyIcon, shortcut: '⌘C' },
+    { type: 'divider' },
+    { id: 'delete', text: 'Delete', disabled: true }
+  ]
+});
+```
+
+**Colour mappings.** `standard` is surface-based and carries lower emphasis; `vibrant` is tertiary-based, is more prominent, and should be used sparingly.
+
+```javascript
+const vibrant = createMenu({ opener: button, items, variant: 'vertical', color: 'vibrant' });
+```
+
+| Role | Standard | Vibrant |
+|------|----------|---------|
+| Container | surface-container-low | tertiary-container |
+| Label | on-surface | on-tertiary-container |
+| Icons and supporting text | on-surface-variant | on-tertiary-container |
+| Selected container | tertiary-container | tertiary |
+| Selected label | on-tertiary-container | on-tertiary |
+
+**The active menu.** When a vertical menu opens a submenu, the menu that opened it steps back to an 8dp corner and the submenu takes a 24dp one, so the shape says which menu is live. Closing the submenu returns both. A submenu inherits its parent's variant and colour.
+
+**Grouping.** Runs of items are separated either way the spec shows.
+
+A divider draws a line across the one surface:
+
+```javascript
+items: [
+  { id: 'share', text: 'Share' },
+  { type: 'divider' },
+  { id: 'delete', text: 'Delete' }
+]
+```
+
+A gap splits the menu into separate surfaces, each with its own rounded container and shadow, so the page shows through between them:
+
+```javascript
+items: [
+  { id: 'share', text: 'Share' },
+  { type: 'gap' },
+  { id: 'delete', text: 'Delete' }
+]
+```
+
+The grouping is presentational. Items keep their `menuitem` role and the keyboard walks across a gap as if it were not there. A submenu is always one surface, so a gap inside one is simply space, as it is in the baseline menu.
+
+### Measurements
+
+| Attribute | Baseline | Vertical |
+|-----------|----------|----------|
+| Container corner | 4dp | 16dp |
+| Container padding | 8dp top and bottom | 4dp all round (`GroupPadding`) |
+| Item height | 48dp | 44dp |
+| Item corner | none | 4dp, 12dp when active |
+| Space between items | none | 2dp |
+| Item label | label-large | body-large |
+| Supporting text | body-medium | body-medium |
+| Trailing text | label-large (inherited from the item) | label-small |
+| Leading icon | 24dp | 20dp |
+| Item padding | 12dp | 8dp and 16dp |
 
 ## Accessibility
 
@@ -423,14 +537,14 @@ The `container` option is important for proper z-index stacking when the menu is
 // Default: menu appended to document.body
 const menu1 = createMenu({
   opener: button1,
-  items: [...]
+  items: [/* ... */]
 });
 
 // Custom container: menu appended to specified element
 const menu2 = createMenu({
   opener: button2,
   container: dialogElement, // Inherits dialog's stacking context
-  items: [...]
+  items: [/* ... */]
 });
 ```
 
@@ -455,8 +569,8 @@ When a `container` is specified:
 
 The Menu component is designed to be lightweight and performant:
 
-- Menu elements are created lazily on first open
-- Efficient event delegation for item clicks
+- The menu element is built once when the component is created, and inserted into the DOM only on the first open
+- One click handler per item; the menu does not use event delegation
 - Proper cleanup on destroy to prevent memory leaks
 - Submenus are rendered on demand
 - Uses CSS transforms for animations (GPU accelerated)

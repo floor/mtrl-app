@@ -50,7 +50,7 @@ The Button component accepts the following configuration options:
 | `disabled` | `boolean` | `false` | Whether the button is initially disabled |
 | `text` | `string` | `undefined` | Text content displayed inside the button |
 | `icon` | `string` | `undefined` | HTML content (typically SVG) for the button icon |
-| `iconSize` | `string` | `undefined` | Size of the icon (e.g., '18px') |
+| `iconSize` | `string` | `undefined` | Accepted but not applied. The value is appended to a CSS class (`mtrl-icon--<value>`) rather than used as a length, and the stylesheet defines no such modifier, so it has no effect. Size the icon from your own CSS, or size the SVG itself |
 | `class` | `string` | `undefined` | Additional CSS classes to add to the button |
 | `value` | `string` | `undefined` | Button value attribute |
 | `type` | `string` | `'button'` | Button type attribute (button, submit, reset) |
@@ -151,8 +151,8 @@ The Button component provides the following methods:
 | `setProgressSync(value)` | `value: number` | `ButtonComponent` | Sets progress value synchronously |
 | `setIndeterminate(indeterminate)` | `indeterminate: boolean` | `Promise<ButtonComponent>` | Sets indeterminate mode |
 | `setIndeterminateSync(indeterminate)` | `indeterminate: boolean` | `ButtonComponent` | Sets indeterminate mode synchronously |
-| `setLoading(loading, text?)` | `loading: boolean, text?: string` | `Promise<ButtonComponent>` | Sets loading state with optional text |
-| `setLoadingSync(loading, text?)` | `loading: boolean, text?: string` | `ButtonComponent` | Sets loading state synchronously |
+| `setLoading(loading, text?)` | `loading: boolean, text?: string` | `Promise<ButtonComponent>` | Shows progress and **disables** the button; restores the previous text on `false` unless new text is given |
+| `setLoadingSync(loading, text?)` | `loading: boolean, text?: string` | `ButtonComponent` | The same, without awaiting the lazy progress import |
 
 ### Event Methods
 
@@ -179,9 +179,11 @@ The Button component emits the following events:
 
 | Event | Description | Data |
 |-------|-------------|------|
-| `click` | Fires when the button is clicked | `{ event: MouseEvent }` |
-| `focus` | Fires when the button receives focus | `{ event: FocusEvent }` |
-| `blur` | Fires when the button loses focus | `{ event: FocusEvent }` |
+| `click` | Fires when the button is clicked | `{ event, element, originalEvent }` |
+| `focus` | Fires when the button receives focus | `{ event, element, originalEvent }` |
+| `blur` | Fires when the button loses focus | `{ event, element, originalEvent }` |
+
+`event` and `originalEvent` are the same DOM event; `element` is the button element. Handlers are not called while the button is disabled.
 
 ## Examples
 
@@ -482,11 +484,15 @@ const button = createButton({
     variant: 'circular',    // 'circular' or 'linear'
     size: 24,              // Size in pixels
     thickness: 3,          // Thickness of progress ring/bar
-    indeterminate: false,  // Whether to show indeterminate progress
-    color: 'primary'       // Color variant
+    indeterminate: false   // Whether to show indeterminate progress
   }
 });
 ```
+
+The progress config is passed straight to the progress component, so only that
+component's own options apply. There is no `color` option: the indicator draws
+in `currentColor` and so takes the button variant's content colour. A circular
+`size` below 24 is clamped up to 24 by the progress component.
 
 ### Progress Examples
 
@@ -580,15 +586,18 @@ The progress indicator automatically adapts to the button variant's color scheme
 - **Filled buttons**: Progress uses `on-primary` color
 - **Elevated buttons**: Progress uses `primary` color  
 - **Tonal buttons**: Progress uses `on-secondary-container` color
-- **Outlined buttons**: Progress uses `primary` color
+- **Outlined buttons**: Progress uses `on-surface-variant` color
 - **Text buttons**: Progress uses `primary` color
 
+These are not separate rules: the indicator's canvas is drawn in `currentColor`,
+so it simply inherits whatever colour the variant gives the button's label and
+icon.
+
 Additional styling features:
-- Progress smoothly fades in/out with transitions
-- Circular buttons show larger progress indicators (24px)
-- Linear progress is sized appropriately for buttons (48px × 3px)
-- Progress remains visible in disabled state with reduced opacity
-- Dark theme is fully supported with appropriate color adjustments
+- Progress smoothly fades in/out with an opacity transition
+- The indicator takes the icon slot and is sized with it, so it grows with the button size rather than with the shape
+- Progress remains visible in disabled state at reduced opacity
+- Dark theme is inherited along with the variant colours
 
 ## Functional Composition
 
@@ -604,6 +613,7 @@ The Button component is built using functional composition, combining multiple f
 - **Variant Styling (`withVariant`)**: Applies visual styling variants like filled, outlined, etc.
 - **Size Styling (`withSize`)**: Applies size variants (xs, s, m, l, xl).
 - **Disabled State (`withDisabled`)**: Manages the disabled state of the button.
+- **Toggle State (`withToggle`)**: Manages the selected state used by `setSelected()`/`isSelected()`.
 - **Progress Indicators (`withProgress`)**: Adds lazily-loaded progress functionality.
 - **Ripple Effect (`withRipple`)**: Adds Material Design ripple feedback effect.
 - **Lifecycle Management (`withLifecycle`)**: Handles component lifecycle including destruction.
@@ -623,6 +633,7 @@ const button = pipe(
   withText(config),         // Add text content
   withIcon(config),         // Add icon support
   withDisabled(config),     // Add disabled state
+  withToggle(config),       // Add selected/unselected state
   withProgress(config),     // Add progress functionality
   withRipple(config),       // Add ripple effect
   withLifecycle(),          // Add lifecycle management

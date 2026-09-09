@@ -1,20 +1,6 @@
-Here's the complete `badge.md` file with all the updates:
-
 # Badge Component
 
-The Badge component provides a Material Design 3 compliant indicator that can display counts, status information, or simply draw attention to UI elements. It's designed to be lightweight, accessible, and flexible for various notification scenarios.
-
-## Overview
-
-Badges are commonly used for:
-
-- Displaying notification counts
-- Indicating unread items or messages
-- Highlighting new features or content
-- Showing status information
-- Drawing attention to elements requiring user action
-
-The component follows Material Design 3 guidelines with support for various sizes (small dot or larger numbered), colors, and positioning options.
+A badge is a small marker that sits on the corner of something else and says there is something new there. Reach for one to carry an unread count, flag a change, or draw the eye to a control that needs attention. It comes in two sizes: a 6dp dot that only says "something", and a 16dp pill that can hold up to four characters, which is enough for a count or a very short word. A badge never takes focus and is never the thing a user clicks — it decorates whatever it is attached to, and the target stays the control.
 
 ## Import
 
@@ -25,346 +11,202 @@ import { createBadge } from 'mtrl';
 ## Basic Usage
 
 ```javascript
-// Create a notification badge attached to an icon
-const notificationBadge = createBadge({
-  variant: 'large',
+const unread = createBadge({
   label: 5,
   color: 'error',
   target: document.querySelector('.notification-icon')
 });
 
-// Update the badge programmatically
-function updateNotifications(count) {
-  notificationBadge.setLabel(count);
-  
-  // Hide badge when count is zero
-  if (count === 0) {
-    notificationBadge.hide();
-  } else {
-    notificationBadge.show();
-  }
+function setUnread(count) {
+  unread.setLabel(count);
 }
 ```
 
-## Configuration
+Passing a `target` wraps that element in a positioning container and drops the badge into its corner. Leave `target` out and the badge is a plain element you place yourself, through `badge.element`.
 
-The Badge component accepts the following configuration options:
+## Configuration
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `variant` | `string` | `BADGE_VARIANTS.LARGE` | Badge size variant (use `BADGE_VARIANTS.SMALL` or `BADGE_VARIANTS.LARGE`) |
-| `color` | `string` | `BADGE_COLORS.ERROR` | Badge color (use constants from `BADGE_COLORS`) |
-| `position` | `string` | `BADGE_POSITIONS.TOP_RIGHT` | Badge position (use constants from `BADGE_POSITIONS`) |
-| `label` | `string\|number` | `''` | Text or number displayed in the badge |
-| `max` | `number` | `undefined` | Maximum value to display before showing "{max}+" |
-| `visible` | `boolean` | `true` | Whether the badge is initially visible |
-| `target` | `HTMLElement` | `undefined` | Element to which the badge should be attached |
-| `class` | `string` | `undefined` | Additional CSS classes to add to the badge |
-| `prefix` | `string` | `'mtrl'` | Prefix for CSS class names |
+| `variant` | `'small' \| 'large'` | `'large'` | A 6dp dot, or a 16dp pill that can hold text |
+| `label` | `string \| number` | `''` | What the badge shows; ignored by the `small` variant |
+| `max` | `number` | `undefined` | Above this, the label becomes `"{max}+"` |
+| `color` | `'error' \| 'primary' \| 'secondary' \| 'tertiary' \| 'success' \| 'warning' \| 'info'` | `'error'` | Which theme colour the badge takes |
+| `position` | `'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | `'top-right'` | Which corner of the target it sits on |
+| `visible` | `boolean` | `true` | Whether the badge starts visible |
+| `target` | `HTMLElement` | `undefined` | The element to attach to |
+| `class` | `string` | `undefined` | Additional CSS classes |
+
+`position` is only meaningful with a target; a standalone badge is placed by whatever lays it out.
 
 ## Component API
 
-The Badge component provides the following methods:
-
-### Content Methods
+### Content
 
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
-| `setLabel(label)` | `label: string\|number` | `BadgeComponent` | Sets the badge's text label |
-| `getLabel()` | none | `string` | Gets the badge's current text label |
-| `setMax(max)` | `max: number` | `BadgeComponent` | Sets maximum value (after which badge shows max+) |
+| `setLabel(label)` | `label: string \| number` | `BadgeComponent` | Sets the label, applying `max` and the four-character limit, and shows or hides the badge to match |
+| `getLabel()` | none | `string` | The label as it is displayed, after formatting |
+| `setContent(content)` | `content: string \| number` | `BadgeComponent` | Alias for `setLabel` |
+| `getContent()` | none | `string` | Alias for `getLabel` |
+| `setMax(max)` | `max: number` | `BadgeComponent` | Sets the overflow threshold and reformats the current label |
 
-### Visibility Methods
+### Visibility
 
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
 | `show()` | none | `BadgeComponent` | Shows the badge |
-| `hide()` | none | `BadgeComponent` | Hides the badge |
-| `toggle(visible?)` | `visible?: boolean` | `BadgeComponent` | Toggles badge visibility |
-| `isVisible()` | none | `boolean` | Checks if the badge is visible |
+| `hide()` | none | `BadgeComponent` | Hides it |
+| `toggle(visible?)` | `visible?: boolean` | `BadgeComponent` | Flips visibility, or forces it when given an argument |
+| `isVisible()` | none | `boolean` | Whether it is visible |
 
-### Appearance Methods
-
-| Method | Parameters | Returns | Description |
-|--------|------------|---------|-------------|
-| `setColor(color)` | `color: string` | `BadgeComponent` | Sets badge color (recommend using `BADGE_COLORS`) |
-| `setVariant(variant)` | `variant: string` | `BadgeComponent` | Sets badge variant (recommend using `BADGE_VARIANTS`) |
-| `setPosition(position)` | `position: string` | `BadgeComponent` | Sets badge position (recommend using `BADGE_POSITIONS`) |
-
-### Attachment Methods
+### Appearance
 
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
-| `attachTo(target)` | `target: HTMLElement` | `BadgeComponent` | Attaches badge to a target element |
-| `detach()` | none | `BadgeComponent` | Makes badge standalone (removes from wrapper) |
+| `setColor(color)` | `color: string` | `BadgeComponent` | Swaps the colour |
+| `setVariant(variant)` | `variant: string` | `BadgeComponent` | Swaps between `small` and `large`, and rewrites the ARIA attributes to match |
+| `setPosition(position)` | `position: string` | `BadgeComponent` | Moves it to another corner |
 
-### Style Methods
-
-| Method | Parameters | Returns | Description |
-|--------|------------|---------|-------------|
-| `addClass(...classes)` | `...classes: string[]` | `BadgeComponent` | Adds CSS classes to the badge element |
-| `removeClass(...classes)` | `...classes: string[]` | `BadgeComponent` | Removes CSS classes from the badge element |
-
-### Event Methods
+### Attachment, styles and lifecycle
 
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
-| `on(event, handler)` | `event: string, handler: Function` | `BadgeComponent` | Adds an event listener |
-| `off(event, handler)` | `event: string, handler: Function` | `BadgeComponent` | Removes an event listener |
+| `attachTo(target)` | `target: HTMLElement` | `BadgeComponent` | Wraps a target and puts the badge on its corner |
+| `detach()` | none | `BadgeComponent` | Removes the badge from its wrapper; the element is moved to `document.body`, so place it yourself afterwards |
+| `addClass(...classes)` | `classes: string[]` | `BadgeComponent` | Adds CSS classes |
+| `removeClass(...classes)` | `classes: string[]` | `BadgeComponent` | Removes CSS classes |
+| `on(event, handler)` | `event: string`, `handler: Function` | `BadgeComponent` | Accepted but inert — see Events |
+| `off(event, handler)` | `event: string`, `handler: Function` | `BadgeComponent` | Removes one from the same inert registry |
+| `destroy()` | none | `void` | Takes it off the page and releases its listeners |
 
-### Lifecycle Methods
+| Property | Type | Description |
+|----------|------|-------------|
+| `element` | `HTMLElement` | The badge's own element |
+| `wrapper` | `HTMLElement` | The container holding the target and the badge, once attached |
 
-| Method | Parameters | Returns | Description |
-|--------|------------|---------|-------------|
-| `destroy()` | none | `void` | Destroys the badge component and cleans up resources |
+## Events
 
-## Constants
+The badge emits no events of its own, and `on()`/`off()` do **not** attach DOM listeners. They subscribe to an internal emitter that the badge never publishes to and that no DOM event is forwarded into, so a handler passed to `badge.on()` is never called. The methods are there for API symmetry with the other components; treat them as inert.
 
-The Badge component provides several constants for better type safety and code completion:
+If you genuinely need a listener on the badge, add it to the element yourself:
 
 ```javascript
-import { createBadge, BADGE_VARIANTS, BADGE_COLORS, BADGE_POSITIONS } from 'mtrl';
-
-// Use constants instead of string literals
-const badge = createBadge({
-  variant: BADGE_VARIANTS.SMALL,
-  color: BADGE_COLORS.ERROR,
-  position: BADGE_POSITIONS.TOP_RIGHT
-});
+badge.element.addEventListener('mouseenter', showDetail);
 ```
 
-This provides intellisense benefits and prevents typos in your IDE.
+A badge is decoration, though, and should not be the thing a user has to hit — put the interaction on the target underneath.
 
 ## Examples
 
-### Small Indicator Badge
+### A dot, for when the count does not matter
 
 ```javascript
-// Using constants for better type safety
-const dotBadge = createBadge({
-  variant: BADGE_VARIANTS.SMALL,
-  color: BADGE_COLORS.ERROR,
-  target: document.querySelector('#notification-icon')
+const hasUpdates = createBadge({
+  variant: 'small',
+  color: 'primary',
+  target: document.querySelector('#settings-icon')
 });
 ```
 
-### Numeric Badge with Max Value
+### A count that stops at 99
 
 ```javascript
-// Create a badge with count that maxes out at 99+
-const messagesBadge = createBadge({
-  variant: BADGE_VARIANTS.LARGE,
+const messages = createBadge({
   label: 125,
   max: 99,
-  color: BADGE_COLORS.PRIMARY,
+  color: 'error',
   target: document.querySelector('#messages-icon')
 });
+// shows "99+"
 ```
 
-### Different Badge Colors
+Labels are capped at four characters including the `+`. The cap is applied to the *formatted string*, not to the number, so `1250` with no `max` still shows as `"1250"` — four characters, nothing to trim. Only a number that formats to more than four characters is rewritten, and then as `"999+"`: `12500` becomes `"999+"`. A non-numeric label that is too long is truncated to four characters. Set a `max` that fits rather than letting the formatter choose.
+
+### Following a value that can reach zero
 
 ```javascript
-// Success badge using constants
-const successBadge = createBadge({
-  variant: BADGE_VARIANTS.LARGE,
-  label: 'OK',
-  color: BADGE_COLORS.SUCCESS,
-  target: document.querySelector('#status-indicator')
-});
-
-// Warning badge
-const warningBadge = createBadge({
-  variant: BADGE_VARIANTS.LARGE,
-  label: '!',
-  color: BADGE_COLORS.WARNING,
-  target: document.querySelector('#warning-icon')
-});
-
-// Info badge
-const infoBadge = createBadge({
-  variant: BADGE_VARIANTS.LARGE,
-  label: 'i',
-  color: BADGE_COLORS.INFO,
-  target: document.querySelector('#info-button')
-});
-```
-
-### Different Badge Positions
-
-```javascript
-// Top-right position (default)
-const topRightBadge = createBadge({
-  variant: BADGE_VARIANTS.SMALL,
-  position: BADGE_POSITIONS.TOP_RIGHT,
-  target: document.getElementById('element1')
-});
-
-// Bottom-left position
-const bottomLeftBadge = createBadge({
-  variant: BADGE_VARIANTS.SMALL,
-  position: BADGE_POSITIONS.BOTTOM_LEFT,
-  target: document.getElementById('element2')
-});
-```
-
-### Programmatically Updating Badge
-
-```javascript
-const cartBadge = createBadge({
-  variant: BADGE_VARIANTS.LARGE,
-  label: 0,
-  color: BADGE_COLORS.PRIMARY,
+const cart = createBadge({
+  label: 0, // note: renders a visible "0" at creation; see below
+  color: 'primary',
   target: document.querySelector('#cart-icon')
 });
 
-// Initially hide the badge since count is zero
-cartBadge.hide();
-
-// Update badge when item is added to cart
-function addToCart(item) {
-  // Add item to cart...
-  
-  // Get new cart count
-  const count = getCartItemCount();
-  
-  // Update badge
-  cartBadge.setLabel(count);
-  cartBadge.show();
-}
-
-// Reset badge when cart is emptied
-function emptyCart() {
-  // Empty cart logic...
-  
-  cartBadge.setLabel(0);
-  cartBadge.hide();
+function onCartChanged(count) {
+  cart.setLabel(count); // hides itself at 0, shows itself again above it
 }
 ```
 
-### Standalone Badge (Not Attached to Target)
+`setLabel()` manages visibility on its own: an empty label or `0` hides the badge, anything else shows it. Call `hide()` and `show()` directly only when you want the badge gone for a reason the label does not express.
+
+The constructor does not do this. A badge created with `label: 0` renders a visible `"0"`, because only `setLabel()` carries the zero rule. Start such a badge at `visible: false`, or call `setLabel(count)` once after creating it.
+
+### Moving a badge between targets
 
 ```javascript
-const statusBadge = createBadge({
-  variant: BADGE_VARIANTS.LARGE,
-  label: 'New',
-  color: BADGE_COLORS.SECONDARY
-});
+const marker = createBadge({ variant: 'small', color: 'primary' });
 
-// Add to a container
-document.querySelector('.status-container').appendChild(statusBadge.element);
+marker.attachTo(document.getElementById('step-1'));
+// later
+marker.detach();
+marker.attachTo(document.getElementById('step-2'));
 ```
-
-### Dynamically Attaching and Detaching
-
-```javascript
-const movableBadge = createBadge({
-  variant: BADGE_VARIANTS.SMALL,
-  color: BADGE_COLORS.PRIMARY
-});
-
-// Initially attach to first element
-movableBadge.attachTo(document.getElementById('element1'));
-
-// Later, move to another element
-function moveBadge() {
-  movableBadge.detach();
-  movableBadge.attachTo(document.getElementById('element2'));
-}
-```
-
-## Functional Composition
-
-The Badge component is built using functional composition, combining multiple features:
-
-### Core Features
-
-- **Base Component (`createBase`)**: Provides the foundation with component creation utilities.
-- **Element Creation (`withElement`)**: Creates the DOM element with proper attributes and classes.
-- **Event Handling (`withEvents`)**: Enables event listening and emission.
-- **Variant Feature (`withVariant`)**: Controls the badge size and appearance (small dot or larger).
-- **Color Feature (`withColor`)**: Applies Material Design color system to the badge.
-- **Position Feature (`withPosition`)**: Manages badge position relative to its target.
-- **Max Value Feature (`withMax`)**: Handles numerical truncation with "+" indicator.
-- **Visibility Feature (`withVisibility`)**: Controls badge showing/hiding.
-- **Attachment Feature (`withAttachment`)**: Handles target attachment and positioning.
-- **Lifecycle Management (`withLifecycle`)**: Handles component lifecycle including destruction.
-- **Public API (`withAPI`)**: Exposes a clean, chainable API for users.
-
-### How Composition Works
-
-The badge component is created by "piping" these features together:
-
-```javascript
-const badge = pipe(
-  createBase,               // Start with base component
-  withEvents(),             // Add event capability
-  withElement(config),      // Create DOM element
-  withVariant(config),      // Apply size variant (small/large)
-  withColor(config),        // Apply color
-  withPosition(config),     // Apply positioning
-  withMax(config),          // Add max value handling
-  withVisibility(),         // Add show/hide capability
-  withAttachment(config),   // Add target attachment
-  withLifecycle(),          // Add lifecycle management
-  comp => withAPI(config)(comp)  // Apply public API
-)(baseConfig);
-```
-
-This composition pattern allows for:
-- Modular, testable code
-- Clean separation of concerns
-- Lightweight bundles (only include what you need)
-- Easy extension and customization
 
 ## Accessibility
 
-The Badge component follows accessibility best practices:
+- A large badge carries `role="status"`, so a screen reader announces its text when it changes. This is set at creation, from the variant
+- A dot has no text to announce. Its meaning has to come from the control it decorates, so give that control a label that includes the state — "Notifications, 3 unread" rather than "Notifications". A small badge is marked `aria-hidden="true"` either way, whether it was created as `small` or switched to it by `setVariant()`, so it is skipped entirely and cannot be relied on to say anything
+- A badge is not focusable and takes no keyboard input. Everything interactive belongs to the target underneath
+- The badge sits outside the target's box by a few pixels at every corner, which keeps it clear of the target's own content but means the wrapper needs a little room around it
+- Hide a badge rather than showing a zero. `hide()` takes it out of the layout with `display: none`, so nothing is announced either, and `setLabel(0)` does the same on your behalf
 
-- Proper ARIA attributes for screen readers (`role="status"` for large badges)
-- Small dot badges use `aria-hidden="true"` when they're purely decorative
-- Color combinations maintain proper contrast ratios
-- Badge positioning doesn't obscure important content
-
-## CSS Customization
-
-The Badge component uses BEM-style CSS classes for easy customization:
+## Styling
 
 ```css
-/* Base badge styles */
+/* The badge */
 .mtrl-badge { /* ... */ }
 
-/* Badge variants */
+/* Variants */
 .mtrl-badge--small { /* ... */ }
 .mtrl-badge--large { /* ... */ }
 
-/* Badge colors */
-.mtrl-badge--error { /* ... */ }
-.mtrl-badge--primary { /* ... */ }
-.mtrl-badge--secondary { /* ... */ }
-.mtrl-badge--success { /* ... */ }
-/* etc. */
+/* Colours */
+.mtrl-badge--error { /* ... */ }      /* and --primary, --secondary, --tertiary,
+                                         --success, --warning, --info */
 
-/* Badge positions */
-.mtrl-badge--top-right { /* ... */ }
-.mtrl-badge--bottom-left { /* ... */ }
-/* etc. */
-
-/* Badge states */
-.mtrl-badge--invisible { /* ... */ }
-.mtrl-badge--overflow { /* ... */ }
+/* Position; the corner class is always applied, --positioned only with a target */
 .mtrl-badge--positioned { /* ... */ }
+.mtrl-badge--top-right { /* ... */ }  /* and --top-left, --bottom-right, --bottom-left */
 
-/* Badge wrapper */
+/* States */
+.mtrl-badge--invisible { /* ... */ }  /* what hide() adds */
+.mtrl-badge--overflow { /* ... */ }   /* when a numeric label went over max */
+
+/* The wrapper created by a target or attachTo() */
 .mtrl-badge-wrapper { /* ... */ }
 ```
 
+Colours come from the theme's `error`, `primary`, `secondary` and `tertiary` roles and their `on-` pairs, so a badge follows whatever the theme says.
+
+## Measurements
+
+Every value below is read off the declaration it drives in `src/styles/components/_badge.scss`, which names no M3 token for any of them, so none is quoted here. The specification comment at the top of that file is **not** a reliable source: it gives the small badge's offset as 6dp and the large one's as 14 × 12dp, where the rules themselves use 3px and 8px, and it does not mention the overflow width at all. The rules are what ships.
+
+| Attribute | Value | Source |
+|-----------|-------|--------|
+| Small badge diameter | 6dp | `_badge.scss` spec comment |
+| Small badge corner radius | 3dp | `_badge.scss`, `&--small` |
+| Small badge offset from the target's edge | 3dp | `_badge.scss`, `&--positioned.&--small` (the file's header comment says 6dp; the rule wins) |
+| Large badge height | 16dp | `_badge.scss`, `&--large` |
+| Large badge corner radius | 8dp | `_badge.scss`, `&--large` |
+| Large badge offset from the target's edge | 8dp | `_badge.scss`, `&--positioned.&--large` (the file's header comment says 14 × 12dp; the rule wins) |
+| Overflow badge maximum width | 34dp | `_badge.scss`, `&--overflow` |
+| Maximum label length | 4 characters | `BADGE_MAX_CHARACTERS` in `constants.ts` |
+
 ## Best Practices
 
-- Use small dot badges for simple notification indicators
-- Use large badges for counts or short labels
-- Keep badge text to a maximum of 4 characters
-- For numeric values, use the `max` property to prevent excessive width
-- Position badges where they won't obscure important content
-- Hide badges when count is zero or there's nothing to notify
-- Use appropriate colors to convey meaning (e.g., error, success)
-- Consider mobile devices when positioning badges (ensure they're visible at small screen sizes)
+- Use the dot when the presence of news is the whole message, and the pill only when the number is worth reading
+- Set `max` on anything user-generated. A count with no ceiling eventually pushes the badge past the 34dp it is allowed
+- Hide the badge at zero rather than showing "0", which reads as a value rather than as nothing
+- Keep the colour meaningful: `error` for something wrong or urgent, `primary` for a plain count, `success` and `warning` for status
+- Attach the badge to the control, not to a wrapper you built yourself; `target` and `attachTo()` create the positioning context they need

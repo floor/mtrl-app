@@ -56,10 +56,10 @@ The Slider component accepts the following configuration options:
 | `step` | `number` | `1` | Step size for discrete sliders |
 | `disabled` | `boolean` | `false` | Whether the slider is initially disabled |
 | `color` | `'primary' \| 'secondary' \| 'tertiary' \| 'error'` | `'primary'` | Color variant of the slider |
-| `size` | `'XS' \| 'S' \| 'M' \| 'L' \| 'XL' \| number` | `'XS'` | Size variant (XS=16px, S=24px, M=40px, L=56px, XL=80px, or custom pixels) |
+| `size` | `'XS' \| 'S' \| 'M' \| 'L' \| 'XL' \| number` | `'XS'` | Size variant (XS=16px, S=24px, M=40px, L=56px, XL=96px, or custom pixels) |
 | `ticks` | `boolean` | `false` | Whether to show tick marks |
 | `tickLabels` | `string[] \| Record<number, string>` | `undefined` | Custom labels for ticks |
-| `valueFormatter` | `function` | `undefined` | Custom value formatter function |
+| `valueFormatter` | `function` | `(value) => value.toString()` | Formats the value shown in the label |
 | `showValue` | `boolean` | `true` | Whether to show the current value while dragging |
 | `snapToSteps` | `boolean` | `true` | Whether to snap to steps while dragging |
 | `range` | `boolean` | `false` | Whether the slider is a range slider (two handles) |
@@ -144,10 +144,13 @@ The Slider component emits the following events:
 |-------|-------------|------|
 | `change` | Fires when slider value changes and interaction completes | `{ value: number, secondValue: number \| null }` |
 | `input` | Fires during dragging as value changes | `{ value: number, secondValue: number \| null }` |
-| `focus` | Fires when slider handle receives focus | `{ value: number }` |
-| `blur` | Fires when slider handle loses focus | `{ value: number }` |
-| `start` | Fires when interaction starts (mouse down, touch start) | `{ value: number }` |
-| `end` | Fires when interaction ends (mouse up, touch end) | `{ value: number }` |
+| `focus` | Fires when slider handle receives focus | `{ value: number, secondValue: number \| null }` |
+| `blur` | Fires when slider handle loses focus | `{ value: number, secondValue: number \| null }` |
+| `start` | Fires when interaction starts (mouse down, touch start) | `{ value: number, secondValue: number \| null }` |
+| `end` | Fires when interaction ends (mouse up, touch end) | `{ value: number, secondValue: number \| null }` |
+
+Every slider event carries the same object: `{ slider, value, secondValue,
+originalEvent, preventDefault, defaultPrevented }`.
 
 ## Examples
 
@@ -201,7 +204,7 @@ const mediumSlider = createSlider({
   label: 'Medium'
 });
 
-// Extra large (80px track height)
+// Extra large (96px track height)
 const largeSlider = createSlider({
   size: 'XL',
   value: 70,
@@ -663,7 +666,7 @@ The component provides appropriate information to assistive technologies:
 
 ```html
 <!-- Single handle slider -->
-<div role="none">
+<div class="mtrl-slider" tabindex="-1">
   <div role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="42"
        aria-orientation="horizontal" tabindex="0">
     <!-- Canvas rendering -->
@@ -671,7 +674,7 @@ The component provides appropriate information to assistive technologies:
 </div>
 
 <!-- Range slider -->
-<div role="none">
+<div class="mtrl-slider mtrl-slider--range" tabindex="-1">
   <div role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25"
        aria-orientation="horizontal" tabindex="0" data-handle-index="0">
     <!-- First handle -->
@@ -702,22 +705,25 @@ The Slider component uses BEM-style CSS classes for easy customization:
 
 /* Slider states */
 .mtrl-slider--disabled { /* ... */ }
-.mtrl-slider--focused { /* ... */ }
 .mtrl-slider--dragging { /* ... */ }
+.mtrl-slider--discrete { /* ... */ }  /* added when step marks are shown */
+
+/* Focus lands on a handle, so the focus class goes on the handle */
+.mtrl-slider-handle--focused { /* ... */ }
 
 /* Slider variants */
 .mtrl-slider--range { /* ... */ }
 .mtrl-slider--centered { /* ... */ }
 
-/* Size variants */
-.mtrl-slider--xs { /* ... */ }
+/* Size variants. The default size (XS) adds no class, so style the base
+   selector for it rather than .mtrl-slider--xs */
 .mtrl-slider--s { /* ... */ }
 .mtrl-slider--m { /* ... */ }
 .mtrl-slider--l { /* ... */ }
 .mtrl-slider--xl { /* ... */ }
 
-/* Color variants */
-.mtrl-slider--primary { /* ... */ }
+/* Color variants. The default colour (primary) adds no class, so style the
+   base selector for it rather than .mtrl-slider--primary */
 .mtrl-slider--secondary { /* ... */ }
 .mtrl-slider--tertiary { /* ... */ }
 .mtrl-slider--error { /* ... */ }

@@ -1,378 +1,228 @@
-# MTRL Chips Component
+# Chips Component
 
-## Overview
+Chips are compact elements that stand for one discrete thing: a filter, a selection, an attribute, or a piece of text the user typed. Reach for a chip when the thing it represents can be turned on and off, or removed, on its own. The module exports two factories: `createChip` builds a single chip, and `createChips` builds a set that manages selection, layout and keyboard navigation across the chips inside it. Use the set whenever the chips belong together; a lone chip is for the cases where nothing needs to be coordinated.
 
-The Chips component is a lightweight, composable UI element used to represent discrete information, such as attributes, selections, filters, or user input. This TypeScript implementation provides a comprehensive API with zero dependencies, focusing on performance, accessibility, and extensibility.
+## Import
 
-## Features
-
-- **Multiple Variants**: Filled, outlined, elevated, assist, filter, input, and suggestion chips
-- **Selection Support**: Single or multi-select modes with clear API for selection management
-- **Layout Options**: Horizontal or vertical arrangement with optional scrolling
-- **Icon Support**: Leading and trailing icons with customizable click handlers
-- **Keyboard Navigation**: Full accessibility support with keyboard controls
-- **Type Safety**: Comprehensive TypeScript interfaces for improved developer experience
-- **Zero Dependencies**: Built with vanilla TypeScript for minimal bundle size
-- **Composition-based Architecture**: Functional composition for extensibility
-- **Accessibility**: ARIA attributes and keyboard support built-in
-
-## Installation
-
-```bash
-# Using npm
-npm install mtrl
-
-# Using yarn
-yarn add mtrl
-
-# Using bun
-bun add mtrl
+```javascript
+import { createChip, createChips } from 'mtrl';
 ```
 
 ## Basic Usage
 
-### Single Chip
+A single chip:
 
-```typescript
-import { createChip } from 'mtrl';
-
-// Create a basic chip
-const basicChip = createChip({
-  text: 'Basic Chip',
-  variant: 'filled'
+```javascript
+const chip = createChip({
+  text: 'JavaScript',
+  variant: 'filled',
+  value: 'js'
 });
 
-// Add to DOM
-document.querySelector('.container').appendChild(basicChip.element);
+document.querySelector('.container').appendChild(chip.element);
 ```
 
-### Chips Container
+A set, which owns the selection:
 
-```typescript
-import { createChips } from 'mtrl';
-
-// Create a chips container with multiple chips
-const filterChips = createChips({
+```javascript
+const filters = createChips({
   multiSelect: true,
   label: 'Categories',
   chips: [
     { text: 'JavaScript', variant: 'filter', value: 'js' },
     { text: 'TypeScript', variant: 'filter', value: 'ts' },
-    { text: 'HTML', variant: 'filter', value: 'html' },
     { text: 'CSS', variant: 'filter', value: 'css' }
   ],
-  onChange: (selectedValues) => {
-    console.log('Selected categories:', selectedValues);
-  }
+  onChange: (selectedValues) => applyFilters(selectedValues)
 });
 
-// Add to DOM
-document.querySelector('.filters').appendChild(filterChips.element);
+document.querySelector('.filters').appendChild(filters.element);
 ```
+
+Chips given to `createChips` are `ChipConfig` objects, not chip instances. The set creates them and keeps the references.
+
+## Configuration
+
+The two components take different options. A chip's options describe one chip; the set's options describe the group and the chips it should build.
+
+### Chip options
+
+Passed to `createChip`, and to `addChip()` or the `chips` array of a set.
+
+A chip built by a set is put under the set's control: the set installs its own
+click handler and the chip's does not run. The `onSelect` and `onChange`
+callbacks below are therefore **accepted but never called** for a chip inside a
+set — listen to the set's `change` event, or pass the set an `onChange`, instead.
+`onTrailingIconClick` is unaffected and works either way.
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `variant` | `'filled' \| 'outlined' \| 'elevated' \| 'assist' \| 'filter' \| 'input' \| 'suggestion'` | `'filled'` | Visual style |
+| `text` | `string` | `undefined` | The chip's label |
+| `icon` | `string` | `undefined` | Leading icon as an HTML string; alias for `leadingIcon` |
+| `leadingIcon` | `string` | `undefined` | Leading icon as an HTML string |
+| `trailingIcon` | `string` | `undefined` | Trailing icon as an HTML string, usually a remove affordance |
+| `value` | `string` | `undefined` | Identifies the chip to the set; derived from the text if omitted |
+| `selected` | `boolean` | `false` | Whether the chip starts selected |
+| `selectable` | `boolean` | `false` | Makes any variant selectable, not only `filter` |
+| `disabled` | `boolean` | `false` | Whether the chip starts disabled |
+| `ripple` | `boolean` | `true` | Whether to run the ripple effect on press |
+| `rippleConfig` | `{ duration?, timing?, opacity? }` | `undefined` | Overrides for the ripple's duration, easing and start/end opacity |
+| `class` | `string` | `undefined` | Additional CSS classes |
+| `onSelect` | `(chip) => void` | `undefined` | Standalone chips only: called on every click, whether it selected or deselected the chip |
+| `onChange` | `(selected, chip) => void` | `null` | Standalone chips only: called when the selected state changes, either way |
+| `onTrailingIconClick` | `(chip) => void` | `undefined` | Called when the trailing icon is clicked |
+
+### Chips options
+
+Passed to `createChips`.
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `chips` | `ChipConfig[]` | `[]` | The chips to build and manage |
+| `multiSelect` | `boolean` | `false` | Whether more than one chip can be selected at a time |
+| `label` | `string` | `undefined` | Label rendered beside the set |
+| `labelPosition` | `'start' \| 'end'` | `'start'` | Which side the label sits on |
+| `scrollable` | `boolean` | `false` | Whether the set scrolls horizontally instead of wrapping |
+| `vertical` | `boolean` | `false` | Whether the chips stack vertically |
+| `class` | `string` | `undefined` | Additional CSS classes |
+| `onChange` | `(selectedValues, changedValue) => void` | `null` | Called with every selected value and the one that just changed |
+| `on` | `{ [event]: Function }` | `undefined` | Event handlers registered at creation, equivalent to calling `on()` |
 
 ## Component API
 
-### Chip Configuration
+### Chip
 
-```typescript
-interface ChipConfig {
-  variant?: 'filled' | 'outlined' | 'elevated' | 'assist' | 'filter' | 'input' | 'suggestion';
-  disabled?: boolean;
-  selected?: boolean;
-  text?: string;
-  icon?: string;
-  leadingIcon?: string;
-  trailingIcon?: string;
-  class?: string;
-  value?: string;
-  ripple?: boolean;
-  selectable?: boolean;
-  onTrailingIconClick?: (chip: ChipComponent) => void;
-  onSelect?: (chip: ChipComponent) => void;
-  onChange?: (selected: boolean, chip: ChipComponent) => void;
-}
-```
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `setText(content)` | `ChipComponent` | Sets the label |
+| `getText()` | `string` | The label |
+| `setIcon(icon)` | `ChipComponent` | Sets the leading icon; alias for `setLeadingIcon` |
+| `getIcon()` | `string` | The leading icon's HTML |
+| `setLeadingIcon(icon)` | `ChipComponent` | Sets the leading icon |
+| `setTrailingIcon(icon, onClick?)` | `ChipComponent` | Sets the trailing icon and, optionally, what clicking it does |
+| `setValue(value)` | `ChipComponent` | Sets the value |
+| `getValue()` | `string \| null` | The value |
+| `setSelected(selected)` | `ChipComponent` | Sets the selected state |
+| `isSelected()` | `boolean` | Whether it is selected |
+| `toggleSelected()` | `ChipComponent` | Flips the selected state |
+| `setVariant(variant)` | `ChipComponent` | Swaps the variant |
+| `getVariant()` | `ChipVariant \| null` | The current variant |
+| `enable()` / `disable()` | `ChipComponent` | Enables or disables the chip |
+| `isDisabled()` | `boolean` | Whether it is disabled |
+| `addClass(...classes)` | `ChipComponent` | Adds CSS classes |
+| `on(event, handler)` / `off(event, handler)` | `ChipComponent` | Event listeners |
+| `destroy()` | `void` | Takes it off the page and releases its listeners |
 
-### Chips Configuration
+| Property | Type | Description |
+|----------|------|-------------|
+| `element` | `HTMLElement` | The chip's DOM element |
 
-```typescript
-interface ChipsConfig {
-  chips?: ChipConfig[];
-  scrollable?: boolean;
-  vertical?: boolean;
-  class?: string;
-  selector?: string | null;
-  multiSelect?: boolean;
-  onChange?: (selectedValues: (string | null)[], changedValue: string | null) => void;
-  label?: string;
-  labelPosition?: 'start' | 'end';
-}
-```
+### Chips
 
-### Chip Variants
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `addChip(chipConfig)` | `ChipsComponent` | Builds a chip from a config and appends it |
+| `removeChip(chipOrIndex)` | `ChipsComponent` | Removes a chip, by instance or index |
+| `getChips()` | `ChipComponent[]` | Every chip in the set |
+| `getSelectedChips()` | `ChipComponent[]` | The selected chips |
+| `getSelectedValues()` | `(string \| null)[]` | The selected chips' values, always an array |
+| `selectByValue(values, triggerEvent?)` | `ChipsComponent` | Selects by value. `triggerEvent` is accepted but not applied: the set always fires `change` when the selection actually changed |
+| `clearSelection()` | `ChipsComponent` | Deselects everything |
+| `getValue()` | `string \| null \| string[]` | Form-field view of the selection: a single value in single-select, an array in multi-select |
+| `setValue(values)` | `ChipsComponent` | Replaces the selection with the given value or values. It clears first and then selects, so it can fire `change` twice |
+| `setScrollable(isScrollable)` | `ChipsComponent` | Turns horizontal scrolling on or off |
+| `setVertical(isVertical)` | `ChipsComponent` | Turns the vertical layout on or off |
+| `setLabel(text)` | `ChipsComponent` | Sets the label |
+| `getLabel()` | `string` | The label |
+| `setLabelPosition(position)` | `ChipsComponent` | Moves the label to `'start'` or `'end'` |
+| `getLabelPosition()` | `string` | Where the label sits |
+| `scrollToChip(chipOrIndex)` | `ChipsComponent` | Scrolls a chip into view |
+| `enableKeyboardNavigation()` | `ChipsComponent` | Re-attaches arrow-key navigation, which is already on by default |
+| `on(event, handler)` / `off(event, handler)` | `ChipsComponent` | Event listeners |
+| `destroy()` | `void` | Destroys the set and every chip in it |
 
-| Variant | Description |
-|---------|-------------|
-| `filled` | Standard chip with solid background color (default) |
-| `outlined` | Transparent background with outlined border |
-| `elevated` | Chip with subtle shadow effect |
-| `assist` | For suggesting actions to the user |
-| `filter` | For filtering content with selection behavior |
-| `input` | Represents user input in form fields |
-| `suggestion` | For presenting options and suggestions |
+| Property | Type | Description |
+|----------|------|-------------|
+| `element` | `HTMLElement` | The set's DOM element |
 
-## Chip API Methods
+`getValue()` and `setValue()` exist so a set can stand in for a form field. The shape of `getValue()` follows `multiSelect`: a `string` or `null` when it is false, an array when it is true. `getSelectedValues()` always returns an array, whichever mode the set is in.
 
-### Content Management
-
-| Method | Description |
-|--------|-------------|
-| `setText(content)` | Sets the chip's text content |
-| `getText()` | Gets the chip's text content |
-| `setIcon(html)` | Sets the chip's leading icon |
-| `getIcon()` | Gets the chip's leading icon HTML |
-| `setLeadingIcon(html)` | Sets the chip's leading icon |
-| `setTrailingIcon(html, onClick?)` | Sets the chip's trailing icon with optional click handler |
-
-### State Management
-
-| Method | Description |
-|--------|-------------|
-| `setValue(value)` | Sets the chip's value attribute |
-| `getValue()` | Gets the chip's value attribute |
-| `isSelected()` | Checks if the chip is selected |
-| `setSelected(selected)` | Sets the chip's selected state |
-| `toggleSelected()` | Toggles the chip's selected state |
-| `isDisabled()` | Checks if the chip is disabled |
-| `enable()` | Enables the chip |
-| `disable()` | Disables the chip |
-
-### Event Handling
-
-| Method | Description |
-|--------|-------------|
-| `on(event, handler)` | Adds an event listener |
-| `off(event, handler)` | Removes an event listener |
-
-### Lifecycle
-
-| Method | Description |
-|--------|-------------|
-| `destroy()` | Cleans up the chip and removes it from the DOM |
-
-## Chips Container API Methods
-
-### Chip Management
-
-| Method | Description |
-|--------|-------------|
-| `addChip(chipConfig)` | Adds a new chip to the container |
-| `removeChip(chipOrIndex)` | Removes a chip by instance or index |
-| `getChips()` | Gets all chip instances |
-| `scrollToChip(chipOrIndex)` | Scrolls to make a specific chip visible |
-
-### Selection Management
-
-| Method | Description |
-|--------|-------------|
-| `getSelectedChips()` | Gets currently selected chip instances |
-| `getSelectedValues()` | Gets values of selected chips as array |
-| `selectByValue(values, triggerEvent?)` | Selects chips by their values |
-| `clearSelection()` | Clears all selections |
-
-### Form Field Compatibility
-
-| Method | Description |
-|--------|-------------|
-| `getValue()` | Gets current value - returns `string \| null` for single-select, `string[]` for multi-select |
-| `setValue(values)` | Sets selection by value(s) - accepts `string`, `string[]`, or `null` |
-
-**Note:** The `getValue()` and `setValue()` methods provide form field compatibility, allowing chips to work seamlessly with form libraries. The return type of `getValue()` depends on the `multiSelect` configuration:
-
-- **Single-select mode** (`multiSelect: false`, default): Returns `string | null`
-- **Multi-select mode** (`multiSelect: true`): Returns `string[]`
-
-### Layout Management
-
-| Method | Description |
-|--------|-------------|
-| `setScrollable(isScrollable)` | Sets the scrollable state |
-| `setVertical(isVertical)` | Sets the vertical layout state |
-
-### Label Management
-
-| Method | Description |
-|--------|-------------|
-| `setLabel(text)` | Sets the label text |
-| `getLabel()` | Gets the label text |
-| `setLabelPosition(position)` | Sets the label position ('start' or 'end') |
-| `getLabelPosition()` | Gets the label position |
-
-### Other Methods
-
-| Method | Description |
-|--------|-------------|
-| `enableKeyboardNavigation()` | Enables keyboard navigation between chips |
-| `on(event, handler)` | Adds an event listener |
-| `off(event, handler)` | Removes an event listener |
-| `destroy()` | Destroys the chips container and all contained chips |
+Neither `selectByValue()` nor `setValue()` can currently select quietly. The
+`triggerEvent` argument is dropped before it reaches the set's controller, so
+every programmatic selection that changes something emits `change`. If you are
+rehydrating saved state, register your `change` handler after restoring it, or
+guard the handler with a flag of your own. The `onChange` **config** callback is
+a separate path and is only called by user interaction, so it does not fire here.
 
 ## Events
 
-### Chip Events
+The set emits its own events. Listen with `on()`, or register handlers up front through the `on` config option.
 
-| Event | Description |
-|-------|-------------|
-| `change` | Fired when chip selection state changes |
-| `select` | Fired when a chip is selected |
-| `deselect` | Fired when a chip is deselected |
-| `remove` | Fired when a chip is about to be removed |
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `change` | `(selectedValues, changedValue)` | The selection changed; `changedValue` is `null` when several changed at once |
+| `add` | `(chip)` | A chip was added |
+| `remove` | `(chip)` | A chip was removed |
 
-### Chips Container Events
+A single chip does not emit selection events of its own. `chip.on()` listens to the DOM events the chip forwards — `click`, `focus`, `blur` and `keydown` — and selection is reported through the `onChange`, `onSelect` and `onTrailingIconClick` callbacks instead.
 
-| Event | Description |
-|-------|-------------|
-| `change` | Fired when any chip selection changes |
-| `add` | Fired when a chip is added to the container |
-| `remove` | Fired when a chip is removed from the container |
+## Examples
 
-## Advanced Examples
+### Filter chips
 
-### Filter Chips with Icons
+Filter chips are the selectable variant, and the set decides how many can be on at once. A selected filter chip grows a checkmark.
 
-```typescript
-import { createChips } from 'mtrl';
-
-const filterChips = createChips({
+```javascript
+const filters = createChips({
   multiSelect: true,
   scrollable: true,
   label: 'Filter by:',
   chips: [
-    { 
-      text: 'Completed', 
-      variant: 'filter',
-      value: 'completed',
-      leadingIcon: '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>'
-    },
-    { 
-      text: 'In Progress', 
-      variant: 'filter',
-      value: 'in-progress',
-      leadingIcon: '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path fill="currentColor" d="M12 5v7l5 5-1.41 1.41L10.59 13H7V11h3.59l3-3H12z"/></svg>'
-    },
-    { 
-      text: 'Pending', 
-      variant: 'filter',
-      value: 'pending',
-      leadingIcon: '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path fill="currentColor" d="M7 12h10v2H7z"/></svg>'
-    }
+    { text: 'Completed', variant: 'filter', value: 'completed' },
+    { text: 'In progress', variant: 'filter', value: 'in-progress' },
+    { text: 'Pending', variant: 'filter', value: 'pending' }
   ],
-  onChange: (selectedValues) => {
-    console.log('Selected filters:', selectedValues);
-    updateTaskList(selectedValues);
-  }
+  onChange: (selectedValues) => updateTaskList(selectedValues)
 });
 
-document.querySelector('.filters-container').appendChild(filterChips.element);
-
-// Pre-select certain values
-filterChips.selectByValue(['completed', 'in-progress']);
+// Restore a saved selection. The set's `onChange` config callback is only
+// called by user interaction, so it stays quiet here — but a handler added
+// with `on('change', ...)` will still be called, whatever the second argument.
+filters.selectByValue(['completed', 'in-progress'], false);
 ```
 
-### Input Chips for Email Tags
+### Input chips the user can remove
 
-```typescript
-import { createChips } from 'mtrl';
+Input chips represent something the user entered, so each one carries a trailing icon that takes it away.
 
-const emailChips = createChips({
-  chips: [],
-  label: 'Recipients:',
-  onChange: (values) => {
-    document.querySelector('#recipients-input').value = values.join(',');
-  }
+```javascript
+const recipients = createChips({ label: 'Recipients:' });
+const removeIcon = '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+
+input.addEventListener('keydown', (event) => {
+  if (event.key !== 'Enter') return;
+  event.preventDefault();
+
+  const email = input.value.trim();
+  if (!isValidEmail(email)) return;
+
+  recipients.addChip({
+    text: email,
+    variant: 'input',
+    value: email,
+    trailingIcon: removeIcon,
+    onTrailingIconClick: (chip) => recipients.removeChip(chip)
+  });
+  input.value = '';
 });
-
-// Add to form
-const emailForm = document.querySelector('.email-form');
-emailForm.insertBefore(emailChips.element, emailForm.firstChild);
-
-// Handle input for adding emails
-const input = document.querySelector('#email-input');
-input.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ',') {
-    e.preventDefault();
-    
-    const email = input.value.trim().replace(',', '');
-    if (validateEmail(email)) {
-      emailChips.addChip({
-        text: email,
-        variant: 'input',
-        value: email,
-        trailingIcon: '<svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>',
-        onTrailingIconClick: (chip) => {
-          emailChips.removeChip(chip);
-        }
-      });
-      input.value = '';
-    }
-  }
-});
-
-function validateEmail(email) {
-  return /\S+@\S+\.\S+/.test(email);
-}
 ```
 
-### Theme Selector with Single Selection
+### A set as a form field
 
-```typescript
-import { createChips } from 'mtrl';
-
-const themeChips = createChips({
-  multiSelect: false, // Single selection mode
-  label: 'Select theme:',
-  chips: [
-    { 
-      text: 'Light Theme', 
-      variant: 'filter', 
-      value: 'light',
-      selected: true // Pre-select Light theme
-    },
-    { 
-      text: 'Dark Theme', 
-      variant: 'filter', 
-      value: 'dark' 
-    },
-    { 
-      text: 'System Theme', 
-      variant: 'filter', 
-      value: 'system' 
-    }
-  ],
-  onChange: (selectedValues) => {
-    if (selectedValues.length > 0) {
-      applyTheme(selectedValues[0]);
-    }
-  }
-});
-
-document.querySelector('.theme-settings').appendChild(themeChips.element);
-
-function applyTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-}
-```
-
-### Using Chips in Forms
-
-```typescript
-import { createChips } from 'mtrl';
-
-// Single-select role selector (getValue returns string)
-const roleChips = createChips({
-  multiSelect: false,
-  label: 'User Role:',
+```javascript
+const role = createChips({
+  label: 'User role:',
   chips: [
     { text: 'Admin', variant: 'filter', value: 'admin' },
     { text: 'Editor', variant: 'filter', value: 'editor' },
@@ -380,154 +230,74 @@ const roleChips = createChips({
   ]
 });
 
-// Get value returns string | null for single-select
-const role = roleChips.getValue(); // e.g., "admin" or null
-
-// Set value accepts string
-roleChips.setValue('editor');
-
-// Multi-select permissions (getValue returns string[])
-const permissionChips = createChips({
-  multiSelect: true,
-  label: 'Permissions:',
-  chips: [
-    { text: 'Read', variant: 'filter', value: 'read' },
-    { text: 'Write', variant: 'filter', value: 'write' },
-    { text: 'Delete', variant: 'filter', value: 'delete' }
-  ]
-});
-
-// Get value returns string[] for multi-select
-const permissions = permissionChips.getValue(); // e.g., ["read", "write"]
-
-// Set value accepts string[]
-permissionChips.setValue(['read', 'write']);
-```
-
-### Vertical Layout with Category Groups
-
-```typescript
-import { createChips } from 'mtrl';
-
-const categoryChips = createChips({
-  vertical: true,
-  multiSelect: true,
-  label: 'Categories:',
-  labelPosition: 'start',
-  chips: [
-    { text: 'Technology', variant: 'filter', value: 'tech' },
-    { text: 'Science', variant: 'filter', value: 'science' },
-    { text: 'Health', variant: 'filter', value: 'health' },
-    { text: 'Business', variant: 'filter', value: 'business' },
-    { text: 'Entertainment', variant: 'filter', value: 'entertainment' },
-    { text: 'Sports', variant: 'filter', value: 'sports' },
-    { text: 'Politics', variant: 'filter', value: 'politics' },
-    { text: 'Travel', variant: 'filter', value: 'travel' }
-  ],
-  onChange: (selectedValues) => {
-    updateArticlesList(selectedValues);
-  }
-});
-
-document.querySelector('.sidebar-filters').appendChild(categoryChips.element);
-```
-
-### Dynamic Chip Creation and Removal
-
-```typescript
-import { createChips } from 'mtrl';
-
-// Create empty chips container
-const dynamicChips = createChips({
-  scrollable: true,
-  label: 'Tags:',
-  onChange: (selectedValues) => {
-    console.log('Selected tags:', selectedValues);
-  }
-});
-
-document.querySelector('.tags-container').appendChild(dynamicChips.element);
-
-// Add new tag button
-document.querySelector('#add-tag').addEventListener('click', () => {
-  const tagInput = document.querySelector('#tag-input');
-  const tagText = tagInput.value.trim();
-  
-  if (tagText) {
-    dynamicChips.addChip({
-      text: tagText,
-      variant: 'input',
-      value: tagText.toLowerCase().replace(/\s+/g, '-'),
-      trailingIcon: '<svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>',
-      onTrailingIconClick: (chip) => {
-        if (confirm(`Remove tag "${chip.getText()}"?`)) {
-          dynamicChips.removeChip(chip);
-        }
-      }
-    });
-    
-    tagInput.value = '';
-  }
-});
+role.setValue('editor');
+role.getValue(); // 'editor', because the set is single-select
 ```
 
 ## Accessibility
 
-The MTRL Chips component is built with accessibility in mind:
+- The set is a `group` with `aria-multiselectable` reflecting `multiSelect`
+- Each chip is a `role="button"` in the tab order, and carries `aria-selected` once selection is in play and `aria-disabled` when disabled
+- Space and Enter activate the focused chip
+- Inside a set, the arrow keys move between chips: left and right when the set is horizontal, up and down when `vertical` is true. This is wired up automatically; `enableKeyboardNavigation()` is only there to restore it
+- `disable()` takes a chip out of the tab order with `tabindex="-1"`. A chip created with `disabled: true` is only marked `aria-disabled` and keeps `tabindex="0"`, so it stays focusable; call `disable()` after creating it if that matters
+- Give a trailing icon's chip a label that says what removing it does, since the icon itself has no text
 
-- **ARIA Attributes**: Proper `aria-selected`, `aria-disabled`, and `aria-multiselectable` attributes
-- **Keyboard Navigation**: Navigate between chips using arrow keys, select with Space/Enter
-- **Focus Management**: Visible focus indicators and proper focus handling
-- **Semantic Structure**: Appropriate roles and accessible names
-- **Screen Reader Support**: Meaningful announcements for selection changes
+## Styling
 
-## Technical Architecture
+```css
+/* One chip */
+.mtrl-chip { /* ... */ }
+.mtrl-chip--filled { /* ... */ }      /* and --outlined, --elevated, --assist,
+                                         --filter, --input, --suggestion */
+.mtrl-chip--selected { /* ... */ }
+.mtrl-chip--disabled { /* ... */ }
+.mtrl-chip--active { /* ... */ }      /* while the chip holds a surface open */
 
-The MTRL Chips component follows a functional composition pattern:
+.mtrl-chip-content { /* ... */ }
+.mtrl-chip-text { /* ... */ }
+.mtrl-chip-leading-icon { /* ... */ }
+.mtrl-chip-trailing-icon { /* ... */ }
 
-1. **Base Component**: Core structure with element creation
-2. **Feature Enhancement**: Functional mixins that add specific capabilities
-3. **DOM Generation**: Creates the actual DOM elements from the structure
-4. **Controller**: Manages state, events, and behavior
-5. **Lifecycle Management**: Handles component lifecycle events
-6. **Public API**: Exposes a clean, consistent interface
-
-This architecture enables:
-- Efficient code reuse and maintainability
-- Clear separation of concerns
-- Extensibility through composition
-- Predictable behavior and clean API surface
-
-## CSS Customization
-
-MTRL Chips use BEM-style class naming for easy styling. Primary classes:
-
-```
-.mtrl-chip               /* Base chip class */
-.mtrl-chip--{variant}    /* Variant classes */
-.mtrl-chip--selected     /* Selected state */
-.mtrl-chip--disabled     /* Disabled state */
-.mtrl-chip-content       /* Content container */
-.mtrl-chip-text          /* Text element */
-.mtrl-chip-leading-icon  /* Leading icon */
-.mtrl-chip-trailing-icon /* Trailing icon */
-
-.mtrl-chips             /* Chips container */
-.mtrl-chips--scrollable /* Scrollable state */
-.mtrl-chips--vertical   /* Vertical layout */
-.mtrl-chips-container   /* Inner container */
-.mtrl-chips-label       /* Label element */
+/* The set */
+.mtrl-chips { /* ... */ }
+.mtrl-chips--scrollable { /* ... */ }
+.mtrl-chips--vertical { /* ... */ }
+.mtrl-chips--with-label { /* ... */ }
+.mtrl-chips--label-end { /* ... */ }
+.mtrl-chips-container { /* ... */ }
+.mtrl-chips-label { /* ... */ }
 ```
 
-## Browser Support
+A selected filter chip draws its checkmark with a masked pseudo-element whose colour comes from a `--checkmark-color` custom property, defaulting to the text colour. Override it to tint the checkmark on its own:
 
-This component supports all modern browsers that implement ES6+ standards:
+```css
+.mtrl-chip--filter.mtrl-chip--selected {
+  --checkmark-color: var(--my-accent);
+}
+```
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Colours otherwise come from the theme's `secondary-container` and `surface-container` roles, so a chip follows whatever the theme says.
 
-## License
+## Measurements
 
-MTRL is licensed under the MIT License.
+The chip's dimensions live in the `$chip-config` map in `src/styles/abstract/_variables.scss`, which says the values follow Material 3 but names no token for any of them. The source of each is given below so it can be checked; none is quoted as a token it does not cite.
+
+| Attribute | Value | Source |
+|-----------|-------|--------|
+| Height | 32px | `$chip-config: height` |
+| Corner radius | 8px | `$chip-config: border-radius` |
+| Horizontal padding | 12px | `$chip-config: padding-horizontal` |
+| Icon size | 18px | `$chip-config: icon-size` |
+| Suggestion chip height | 48px | `$chip-config: suggestion-height` |
+| Suggestion chip icon size | 24px | `$chip-config: suggestion-icon-size` |
+
+The outlined variant's border sits at 12% of the outline colour at rest and 38% on focus, and goes transparent once the chip is selected, where the filled background takes over.
+
+## Best Practices
+
+- Give every chip a `value`. Without one the set derives it from the text, which breaks the moment the label is translated or edited
+- Use `filter` for chips that select, `input` for chips the user typed, `assist` and `suggestion` for chips that act
+- Put a trailing icon only on chips the user is allowed to remove; a leading icon is for identity, not for actions
+- Prefer `scrollable` to `vertical` for a long row of filters, and set `vertical` only when the chips sit in a sidebar
+- Attach `on('change', ...)` after restoring a saved selection rather than before it. The second argument to `selectByValue()` does not suppress the event, so a handler already registered will see rehydration as a change
