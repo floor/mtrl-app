@@ -390,6 +390,32 @@ export const sitemap = {
         description: 'Menus display a list of choices on temporary surfaces.'
       },
       {
+        id: 'navigation',
+        label: 'Navigation',
+        description:
+          'Navigation components let people move between the top-level destinations of an app.',
+        items: [
+          {
+            id: 'drawer',
+            label: 'Navigation drawer',
+            path: '/components/navigation/drawer',
+            lastModified: '2026-09-13',
+            createdDate: '2026-09-13',
+            description:
+              'Navigation drawers hold the destinations of an app in a list along one edge.'
+          },
+          {
+            id: 'rail',
+            label: 'Navigation rail',
+            path: '/components/navigation/rail',
+            lastModified: '2026-09-13',
+            createdDate: '2026-09-13',
+            description:
+              'Navigation rails hold three to seven destinations in a narrow column along the side.'
+          }
+        ]
+      },
+      {
         id: 'sheets',
         label: 'Sheets',
         description:

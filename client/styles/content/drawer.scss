@@ -1,0 +1,54 @@
+// Drawer showcase frames
+@use "mtrl/src/styles/abstract/base" as b;
+@use "mtrl/src/styles/abstract/theme" as t;
+
+$demo: "#{b.$prefix}-drawer-demo";
+
+.#{$demo} {
+  display: flex;
+  width: 100%;
+  height: 560px;
+  overflow: hidden;
+  border: 1px solid t.color("outline-variant");
+  border-radius: 16px;
+  background-color: t.color("surface");
+
+  &--dense {
+    height: 420px;
+  }
+
+  &--rail {
+    height: 480px;
+  }
+
+  // The rail positions itself against the viewport; inside the frame it
+  // takes its place in the row instead
+  > .#{b.$prefix}-nav--rail {
+    position: static;
+    flex-shrink: 0;
+    height: 100%;
+    box-sizing: border-box;
+    border-right: 1px solid t.color("outline-variant");
+  }
+
+  &__page {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+    padding: 24px;
+    background-color: t.color("surface-container-low");
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  &__status {
+    margin: 0;
+    color: t.color("on-surface-variant");
+  }
+}

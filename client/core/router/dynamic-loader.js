@@ -55,6 +55,10 @@ const ROUTE_MODULE_MAP = {
   'components/dialogs': () => import('../../content/components/dialogs'),
   'components/lists': () => import('../../content/components/lists'),
   'components/menus': () => import('../../content/components/menus'),
+  'components/navigation/drawer': () => import('../../content/components/drawer'),
+  'components/navigation/rail': () => import('../../content/components/rail'),
+  // former address of the drawer page
+  'components/drawer': () => import('../../content/components/drawer'),
   'components/loading/loading-indicator': () => import('../../content/components/loading-indicator'),
   'components/loading/progress': () => import('../../content/components/progress'),
   // former addresses of the same pages

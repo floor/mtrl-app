@@ -49,6 +49,7 @@ document.body.appendChild(drawer.element);
 | `items` | `DrawerItemConfig[]` | `[]` | Destinations, dividers and section labels |
 | `width` | `string \| number` | `360` | Width; a number is pixels. Set as `--drawer-width` on the root |
 | `dense` | `boolean` | `false` | Smaller items and tighter spacing |
+| `ripple` | `boolean` | `true` | Press ripple on items, clipped to the item shape |
 | `class` | `string` | `undefined` | Extra CSS classes |
 | `prefix` | `string` | `'mtrl'` | Class-name prefix |
 | `componentName` | `string` | `'drawer'` | Component name used in class generation |
