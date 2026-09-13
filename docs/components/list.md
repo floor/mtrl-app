@@ -11,7 +11,7 @@ Lists are commonly used for:
 - Navigation indexes and search results
 - Any short, finite collection the user selects from
 
-The component renders every item it is given, once, into a document fragment. It does **not** virtualise: there is no windowing, no recycling, and no data loading. `isLoading()` and `hasNextPage()` exist for interface compatibility and always return `false`. If you need virtual scrolling, pagination, or a data source behind the list, use `createVList` from `mtrl-addons` instead — see [vlist](./vlist.md). Virtual scrolling is not a Material Design 3 concern, so it lives outside this component.
+The component renders every item it is given, once, into a document fragment. It does **not** virtualise: there is no windowing, no recycling, and no data loading. `isLoading()` and `hasNextPage()` exist for interface compatibility and always return `false`. If you need virtual scrolling, pagination, or a data source behind the list, use the standalone `vlist` package instead. Virtual scrolling is not a Material Design 3 concern, so it lives outside this component.
 
 ## Import
 
