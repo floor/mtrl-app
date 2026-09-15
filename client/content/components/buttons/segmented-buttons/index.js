@@ -12,8 +12,8 @@ import { initFormIntegration } from './form-integration'
 import { createLayout } from 'mtrl-addons'
 export const createSegmentedButtonsContent = (container) => {
   const info = {
-    title: 'Segmented Button',
-    description: 'Segmented buttons help people select options, switch views, or sort elements. They contain two to five segments, each functioning as a distinct action. Segmented buttons can be used as an alternative to tabs, radio buttons, or standalone buttons when the options are closely related.'
+    title: 'Segmented Button (deprecated)',
+    description: 'Deprecated in Material 3 expressive: use the connected button group, with kind connected and single or multi selection, for new work. The segmented button still ships and behaves as shown here, so existing code keeps working; the documentation below maps each option to its button group equivalent.'
   }
 
   const layout = createLayout(createComponentsLayout(info), container).component

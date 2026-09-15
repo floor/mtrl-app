@@ -295,12 +295,12 @@ export const sitemap = {
           },
           {
             id: 'segmented-buttons',
-            label: 'Segmented Buttons',
+            label: 'Segmented buttons (deprecated)',
             path: '/components/buttons/segmented-buttons',
-            lastModified: '2025-04-30',
+            lastModified: '2026-09-15',
             createdDate: '2025-03-19',
             description:
-              'Segmented buttons allow users to select one option from a group of related choices.'
+              'Deprecated in M3 expressive in favour of the connected button group; still available for existing code.'
           }
         ]
       },
