@@ -2,6 +2,10 @@
 
 The core library provides the fundamental building blocks for creating efficient, composable UI components with the mtrl design system. This documentation covers the main modules, utilities, and composition patterns that serve as the foundation for all components.
 
+## Implementation notes
+
+See [Core lifecycle and setup optimization](../optimization/core-lifecycle.md) for the September 2026 cleanup changes, measured package impact, validation results, and release status.
+
 ## Overview
 
 The mtrl core library is designed around principles of functional composition, immutability, and minimal dependencies. Instead of relying on class inheritance, components are built through a pipeline of composable functions, each adding a specific capability or feature.
