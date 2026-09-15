@@ -1,37 +1,30 @@
-// src/client/content/components/button/index.js
+// src/client/content/components/buttons/icon-buttons/index.js
 
-import {
-  createContentLayout,
-  createDocs
-} from '../../../../layout'
-
-import { createIconButtonComponent } from './icon-button'
-import { initVariants } from './variants'
-import { createToggleButtons } from './toggle'
-import { initDisabled } from './disabled'
-import { createButtonSizes } from './sizes'
-
-import { initProgressButton } from './progress'
-import { initIcons } from './icons'
-
+import { createComponentsLayout, createDocs } from '../../../../layout'
 import { createLayout } from 'mtrl-addons'
-export const createButtonsContent = (container) => {
-  // Set global defaults for all buttons in this section
 
+import { initColorStyles } from './colors'
+import { initSizes } from './sizes'
+import { initShapes } from './shapes'
+import { initWidths } from './widths'
+import { initDisabled } from './disabled'
+
+export const createIconButtonsContent = (container) => {
   const info = {
-    title: 'Buttons',
-    description: 'Let users take action and make choices with one tap'
+    title: 'Icon buttons',
+    description:
+      'Compact actions that need no label: four colour styles, each as a plain action or a toggle, in five sizes, two resting shapes and three widths. Pressing morphs the corners; a toggle also swaps its resting shape when selected.'
   }
 
-  const layout = createLayout(createContentLayout(info), container).component
+  const layout = createLayout(createComponentsLayout(info), container).component
 
-  createIconButtonComponent(layout.body)
-  // initVariants(layout.body)
-  // createToggleButtons(layout.body)
-  // createButtonSizes(layout.body)
+  initColorStyles(layout.body)
+  initSizes(layout.body)
+  initShapes(layout.body)
+  initWidths(layout.body)
+  initDisabled(layout.body)
 
-  // initIcons(layout.body)
-  // initProgressButton(layout.body)
-  // initDisabled(layout.body)
   createDocs(layout.body, 'components/icon-button.md')
 }
+
+export default createIconButtonsContent

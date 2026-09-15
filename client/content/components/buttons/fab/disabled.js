@@ -13,13 +13,13 @@ import {
  * FAB variants for styling
  */
 export const FAB_VARIANTS = {
-  /** Primary container color with on-primary-container icons */
+  PRIMARY_CONTAINER: 'primary-container',
+  SECONDARY_CONTAINER: 'secondary-container',
+  TERTIARY_CONTAINER: 'tertiary-container',
   PRIMARY: 'primary',
-  /** Secondary container color with on-secondary-container icons */
   SECONDARY: 'secondary',
-  /** Tertiary container color with on-tertiary-container icons */
   TERTIARY: 'tertiary',
-  /** Surface color with primary color icons */
+  /** Deprecated */
   SURFACE: 'surface'
 }
 
@@ -27,11 +27,10 @@ export const FAB_VARIANTS = {
  * FAB size variants
  */
 export const FAB_SIZES = {
-  /** Standard FAB size (56dp) */
-  DEFAULT: 'default',
-  /** Small FAB size (40dp) */
+  /** Deprecated in M3 expressive */
   SMALL: 'small',
-  /** Large FAB size (96dp) */
+  DEFAULT: 'default',
+  MEDIUM: 'medium',
   LARGE: 'large'
 }
 

@@ -1,7 +1,7 @@
 # Extended FAB Component
 
 An extended FAB is a floating action button that says what it does. It holds an
-icon and a label in a 56dp-high rounded container, and it is for the primary
+icon and a label in a rounded container 56, 80 or 96dp high, and it is for the primary
 action on a screen where an icon alone would be a guess: "Create", "Add to
 cart", "Compose". Where the icon is unambiguous, use the plain
 [FAB](./fab.md) instead.
@@ -11,21 +11,23 @@ cart", "Compose". Where the icon is unambiguous, use the plain
 It is a single `<button>` containing an icon element and a text element. The
 things that vary:
 
-- **variant** — `primary`, `secondary`, `tertiary` and `surface`, in falling
-  order of emphasis, each taking a container colour and its matching `on-`
-  colour from the theme.
+- **variant** — the colour styles of the [FAB](./fab.md): `primary-container`
+  (the default), `secondary-container` and `tertiary-container`, and the tone
+  styles `primary`, `secondary` and `tertiary`. `surface` is deprecated.
+- **size** — `small` (56dp, the default), `medium` (80dp) and `large` (96dp),
+  each with its own icon, spacing and label type style.
 - **width** — `fixed` sizes the button to its content; `fluid` stretches it to
   the full width of its container, which suits a bottom sheet or a narrow
   column.
 - **position** — the four corners. Setting `position` makes the element
   `position: fixed`, pinned 16dp from both edges. Leave it unset to place the
   button yourself.
-- **collapse** — an extended FAB can shrink to a 56dp circle, hiding its label,
+- **collapse** — an extended FAB can shrink to the FAB of its size, hiding its label,
   and expand again. Do it yourself with `collapse()` and `expand()`, or hand it
   to `collapseOnScroll`.
 
-Elevation works as it does on the FAB: elevated at rest, one level lower while
-pressed, and `lower()` / `raise()` on demand.
+Elevation works as it does on the FAB: level 3 at rest, 4 on hover, 3 focused and
+pressed, and `lower()` / `raise()` switch to and from the lowered ladder.
 
 ## Import
 
@@ -53,11 +55,12 @@ document.body.appendChild(fab.element);
 |--------|------|---------|-------------|
 | `text` | `string` | — | The label |
 | `icon` | `string` | — | Icon as an HTML string, usually an SVG |
-| `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'surface'` | `'primary'` | Colour and emphasis |
+| `variant` | `'primary-container' \| 'secondary-container' \| 'tertiary-container' \| 'primary' \| 'secondary' \| 'tertiary' \| 'surface'` | `'primary-container'` | Colour style; `surface` is deprecated |
+| `size` | `'small' \| 'medium' \| 'large'` | `'small'` | Height, icon, spacing and label type style |
 | `width` | `'fixed' \| 'fluid'` | `'fixed'` | Sized by its content, or by its container |
 | `position` | `'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | — | Fixes it to a corner of the viewport |
 | `collapseOnScroll` | `boolean` | `false` | Collapses on scroll down, expands on scroll up and at the top |
-| `iconPosition` | `'start' \| 'end'` | `'start'` | Adds a position class to the icon element |
+| `iconPosition` | `'start' \| 'end'` | `'start'` | Puts the icon before or after the label |
 | `ariaLabel` | `string` | the `text` | Accessible name |
 | `disabled` | `boolean` | `false` | Creates it disabled |
 | `iconSize` | `string` | — | Adds an `mtrl-icon--<value>` class to the icon element. You supply the rule |
@@ -70,10 +73,10 @@ document.body.appendChild(fab.element);
 | `prefix` | `string` | `'mtrl'` | Class-name prefix |
 | `componentName` | `string` | `'extended-fab'` | Name used in class generation |
 
-Two of these are hooks rather than behaviour. `iconPosition: 'end'` adds
-`mtrl-extended-fab-icon--end` to the icon element but the stylesheet ships no
-rule for it, so the icon stays before the label until you write one. `iconSize`
-works the same way, appending `mtrl-icon--<value>` and nothing more.
+`iconPosition: 'end'` places the label before the icon in the DOM, so the icon
+follows it in reading order as well as on screen, and adds
+`mtrl-extended-fab--icon-end` to the root. `iconSize` is a hook rather than
+behaviour: it appends `mtrl-icon--<value>` and nothing more.
 
 ## Component API
 
@@ -90,12 +93,12 @@ works the same way, appending `mtrl-icon--<value>` and nothing more.
 
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
-| `collapse()` | — | `ExtendedFabComponent` | Shrinks to a 56dp circle and dispatches a `collapse` DOM event on the element |
+| `collapse()` | — | `ExtendedFabComponent` | Shrinks to the FAB of its size and dispatches a `collapse` DOM event on the element |
 | `expand()` | — | `ExtendedFabComponent` | Reveals the label again and dispatches `expand` the same way |
 | `setPosition(position)` | `position: string` | `ExtendedFabComponent` | Moves it to another corner |
 | `getPosition()` | — | `string \| null` | The current corner, or `null` when unpositioned |
-| `lower()` | — | `ExtendedFabComponent` | Drops it to the pressed elevation |
-| `raise()` | — | `ExtendedFabComponent` | Restores the resting elevation |
+| `lower()` | — | `ExtendedFabComponent` | Moves it to the lowered elevation ladder |
+| `raise()` | — | `ExtendedFabComponent` | Restores the normal elevation ladder |
 
 ### State and lifecycle
 
@@ -207,10 +210,17 @@ fab.element.addEventListener('collapse', () => track('fab-collapsed'));
 
 ```css
 .mtrl-extended-fab { }
+.mtrl-extended-fab--primary-container { }
+.mtrl-extended-fab--secondary-container { }
+.mtrl-extended-fab--tertiary-container { }
 .mtrl-extended-fab--primary { }
 .mtrl-extended-fab--secondary { }
 .mtrl-extended-fab--tertiary { }
 .mtrl-extended-fab--surface { }
+.mtrl-extended-fab--small { }
+.mtrl-extended-fab--medium { }
+.mtrl-extended-fab--large { }
+.mtrl-extended-fab--icon-end { }
 .mtrl-extended-fab--fixed { }
 .mtrl-extended-fab--fluid { }
 .mtrl-extended-fab--collapsed { }
@@ -227,28 +237,28 @@ fab.element.addEventListener('collapse', () => track('fab-collapsed'));
 .mtrl-extended-fab-text { }
 ```
 
-Colours come from the theme, not from component properties:
-`primary-container` on `on-primary-container` for the primary variant, the
-matching pair for secondary and tertiary, and `surface` with a `primary` icon
-and label for the surface variant.
+Colours come from the theme, not from component properties: each style is the
+role it is named after on its `on-` role, and `surface` takes a `primary` icon
+and label. The state layer uses the label colour.
 
 ## Measurements
 
-Neither `_extended-fab.scss` nor the component's TypeScript names an M3 token
-for these, so the source column points at the declaration instead of at a token.
+Values follow the Compose M3 token files named in the source column; the label
+type styles come from Android, where Compose leaves them as a TODO.
 
 | Attribute | Value | Source |
 |-----------|-------|--------|
-| Container height | 56dp | commented "Extended FAB dimensions (56dp height, min-width 80dp)" in `_extended-fab.scss` |
-| Minimum width | 80dp | the same comment |
-| Horizontal padding | 16dp | `_extended-fab.scss` |
-| Corner | `get-shape('large')`, commented "16px corners" | `_extended-fab.scss` |
-| Icon | 24dp | `_extended-fab.scss` |
-| Label typography | `label-large` | the typography mixin in `_extended-fab.scss` |
+| Height, small / medium / large | 56 / 80 / 96dp | `ExtendedFabSmallTokens`, `ExtendedFabMediumTokens`, `ExtendedFabLargeTokens` |
+| Minimum width | the height | `_extended-fab.scss` |
+| Leading and trailing space | 16 / 26 / 28dp | the same token files |
+| Icon to label | 8 / 16 / 20dp | the same token files; Android says 8 / 12 / 16 |
+| Corner | 16 / 20 / 28dp (`large`, `large-increased`, `extra-large`) | the token files; medium from Android `efab_tokens.xml` |
+| Icon | 24 / 28 / 32dp | the token files; Android says 36dp at large |
+| Label typography | `title-medium` / `title-large` / `headline-small` | Android `efab_tokens.xml` |
 | Label maximum width | 280dp | `max-width` on the text element |
-| Collapsed width | 56dp | the `--collapsed` rule in `_extended-fab.scss` |
-| Resting elevation | level 2 | `elevation(2)` in `_extended-fab.scss` |
-| Pressed and lowered elevation | level 1 | `elevation(1)` in `_extended-fab.scss` |
+| Collapsed size | the FAB of the same size, 56 / 80 / 96dp | `_extended-fab.scss` |
+| Elevation, rest / hover / focus / pressed | levels 3 / 4 / 3 / 3 | `ExtendedFabPrimaryTokens` |
+| Lowered elevation, rest / hover / focus / pressed | levels 1 / 2 / 1 / 1 | `ExtendedFabPrimaryTokens` |
 | Offset from the corner | 16dp | the position rules in `_extended-fab.scss` |
 | Collapse and expand | 0.3s and 0.25s | the transitions on the text element |
 | Entrance animation | 0.3s, emphasized decelerate | the `extended-fab-enter` keyframes |

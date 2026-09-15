@@ -1,0 +1,18 @@
+// Icon button showcase rows
+@use "mtrl/src/styles/abstract/base" as b;
+
+.#{b.$prefix}-icon-buttons-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding-block: 8px;
+}
+
+.#{b.$prefix}-fab-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  padding-block: 12px;
+}

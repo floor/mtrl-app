@@ -3,6 +3,7 @@
 import { createComponentsLayout, createDocs } from '../../../../layout'
 
 import { initVariants } from './variants'
+import { initSizes } from './sizes'
 import { initWidthOptions } from './width'
 import { initDisabled } from './disabled'
 import { initPositions } from './positions'
@@ -20,6 +21,7 @@ export const createExtendedFabContent = (container) => {
   const layout = createLayout(createComponentsLayout(info), container).component
 
   initVariants(layout.body)
+  initSizes(layout.body)
   initWidthOptions(layout.body)
   initDisabled(layout.body)
   initPositions(layout.body)

@@ -248,15 +248,15 @@ export const sitemap = {
             description:
               'Standard buttons for common actions in your interface.'
           },
-          // {
-          //   id: "icon-buttons",
-          //   label: "Icon Buttons",
-          //   path: "/components/buttons/icon-buttons",
-          //   lastModified: "2025-01-15",
-          //   createdDate: "2025-01-15",
-          //   description:
-          //     "Icon buttons provide compact actions with clear visual cues.",
-          // },
+          {
+            id: 'icon-buttons',
+            label: 'Icon buttons',
+            path: '/components/buttons/icon-buttons',
+            lastModified: '2026-09-14',
+            createdDate: '2025-01-15',
+            description:
+              'Icon buttons provide compact actions with clear visual cues.'
+          },
           {
             id: 'fab',
             label: 'FAB',

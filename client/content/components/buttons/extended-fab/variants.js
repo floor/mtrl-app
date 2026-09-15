@@ -1,79 +1,44 @@
 // src/client/content/components/extended-fab/variants.js
-import { capitalize } from '../../../../core/utils'
 
 import { createLayout } from 'mtrl-addons'
-import {
-  createComponentSection
-} from '../../../../layout'
+import { createComponentSection } from '../../../../layout'
+import { createExtendedFab } from 'mtrl'
 
-import {
-  createExtendedFab
-} from 'mtrl'
+// M3 expressive colour styles, shared with the FAB. Surface is deprecated.
+const styles = [
+  ['primary-container', 'Primary container (default)'],
+  ['secondary-container', 'Secondary container'],
+  ['tertiary-container', 'Tertiary container'],
+  ['primary', 'Primary'],
+  ['secondary', 'Secondary'],
+  ['tertiary', 'Tertiary'],
+  ['surface', 'Surface (deprecated)']
+]
 
-const FAB_VARIANTS = {
-  /** Primary container color with on-primary-container icons */
-  PRIMARY: 'primary',
-  /** Secondary container color with on-secondary-container icons */
-  SECONDARY: 'secondary',
-  /** Tertiary container color with on-tertiary-container icons */
-  TERTIARY: 'tertiary',
-  /** Surface color with primary color icons */
-  SURFACE: 'surface'
-}
-
-// Icon for the Extended FABs
-const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M12 5v14M5 12h14"/>
 </svg>`
 
 export const initVariants = (container) => {
-  const title = 'Extended FAB Variants'
-  const layout = createLayout(createComponentSection({
-    title,
-    description: 'Extended FABs are available in different color variants, each suitable for different contexts.'
-  }), container).component
+  const title = 'Colour styles'
+  const description =
+    'The same six styles as the FAB, container and tone, plus the deprecated surface style. Elevation level 3 at rest, 4 on hover. The second row puts the icon after the label.'
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
-  // Convert the enum to an array of strings
-  const variants = Object.values(FAB_VARIANTS)
+  const rows = createLayout(
+    [
+      ['start', { class: 'fab-row' }],
+      ['end', { class: 'fab-row' }]
+    ],
+    layout.showcase
+  ).component
 
-  variants.forEach(variant => {
-    const text = capitalize(variant)
-    const extendedFab = createExtendedFab({
-      icon: addIcon,
-      text: 'Create',
-      variant,
-      ariaLabel: `${text} action`
-    })
+  styles.forEach(([variant, label]) => {
+    const start = createExtendedFab({ icon: addIcon, text: 'Create', variant, ariaLabel: label })
+    start.on('click', () => log.info(`${variant} extended FAB clicked`))
+    rows.start.appendChild(start.element)
 
-    extendedFab.element.addEventListener('click', () => log.info(`native ${variant} Extended FAB clicked`))
-    extendedFab.on('click', () => log.info(`component ${variant} Extended FAB clicked`))
-
-    layout.showcase.appendChild(extendedFab.element)
-
-    // Add some spacing between the items
-    layout.showcase.appendChild(document.createElement('br'))
-    layout.showcase.appendChild(document.createElement('br'))
+    const end = createExtendedFab({ icon: addIcon, text: 'Create', variant, iconPosition: 'end', ariaLabel: `${label}, icon after the label` })
+    rows.end.appendChild(end.element)
   })
-
-  // // Also show variants with icon at the end
-  // const iconEndTitle = document.createElement('h3')
-  // iconEndTitle.textContent = 'Icon Position - End'
-  // layout.showcase.appendChild(iconEndTitle)
-
-  // variants.forEach(variant => {
-  //   const text = capitalize(variant)
-  //   const extendedFab = createExtendedFab({
-  //     icon: addIcon,
-  //     text: 'Create',
-  //     variant,
-  //     iconPosition: 'end',
-  //     ariaLabel: `${text} action with end icon`
-  //   })
-
-  //   layout.showcase.appendChild(extendedFab.element)
-
-  //   // Add some spacing between the items
-  //   layout.showcase.appendChild(document.createElement('br'))
-  //   layout.showcase.appendChild(document.createElement('br'))
-  // })
 }

@@ -1,54 +1,30 @@
 // src/client/content/components/fab/sizes.js
-import { capitalize } from '../../../../core/utils'
 
 import { createLayout } from 'mtrl-addons'
-import {
-  createComponentSection
-} from '../../../../layout'
+import { createComponentSection } from '../../../../layout'
+import { createFab } from 'mtrl'
 
-import {
-  createFab
-} from 'mtrl'
-
+// Container, icon and corner per size; small is deprecated in M3 expressive.
 export const FAB_SIZES = {
-  /** Standard FAB size (56dp) */
-  DEFAULT: 'default',
-  /** Small FAB size (40dp) */
   SMALL: 'small',
-  /** Large FAB size (96dp) */
+  DEFAULT: 'default',
+  MEDIUM: 'medium',
   LARGE: 'large'
 }
 
-// Icon for the FABs
-const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M12 5v14M5 12h14"/>
-</svg>`
-
-// Large icon for large FAB
-const largeAddIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+const addIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <path d="M12 5v14M5 12h14"/>
 </svg>`
 
 export const initSizes = (container) => {
-  const title = 'FAB Sizes'
-  const layout = createLayout(createComponentSection({ title }), container).component
+  const title = 'Sizes'
+  const description =
+    'Default 56dp with a 24dp icon, medium 80dp with a 28dp icon on the 20dp corner, large 96dp with a 32dp icon on the 28dp corner. The icon scales with the size, so one SVG serves all of them. Small, 40dp, is no longer recommended.'
+  const layout = createLayout(createComponentSection({ title, description }), container).component
 
-  // Convert the enum to an array of strings
-  const sizes = Object.values(FAB_SIZES)
-
-  sizes.forEach(size => {
-    const text = capitalize(size)
-    // Use the large icon for the large FAB
-    const icon = size === FAB_SIZES.LARGE ? largeAddIcon : addIcon
-
-    const fab = createFab({
-      icon,
-      size,
-      ariaLabel: `${text} size action`
-    })
-
+  Object.values(FAB_SIZES).forEach((size) => {
+    const fab = createFab({ icon: addIcon, size, ariaLabel: `${size} size action` })
     fab.on('click', () => log.info(`${size} FAB clicked`))
-
     layout.showcase.appendChild(fab.element)
   })
 }
