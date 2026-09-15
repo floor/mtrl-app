@@ -104,7 +104,7 @@ segment that is not disabled is selected when the component is created.
 | `disable()` | — | `SegmentedButtonComponent` | Disables all of them |
 | `enableSegment(value)` | `value: string` | `SegmentedButtonComponent` | One segment, by value |
 | `disableSegment(value)` | `value: string` | `SegmentedButtonComponent` | One segment, by value |
-| `setDensity(density)` | `density: Density \| string` | `SegmentedButtonComponent` | Recomputes height and padding |
+| `setDensity(density)` | `density: Density \| string` | `SegmentedButtonComponent` | Swaps the density class, which sets height and padding |
 | `getDensity()` | — | `string` | Current density |
 | `on(event, handler)` | `event: 'change', handler: Function` | `SegmentedButtonComponent` | Adds a listener |
 | `off(event, handler)` | `event: 'change', handler: Function` | `SegmentedButtonComponent` | Removes one |
@@ -131,9 +131,10 @@ component's `select()` and `deselect()`.
 selection really differs, whether the change came from a click or from
 `select()` / `deselect()`.
 
-Note that the exported `SegmentedButtonEvent` type describes a richer payload
-(`segmentedButton`, `values`, `originalEvent`, `preventDefault`) than what is
-emitted. Read the three fields above; do not rely on the others.
+The exported `SegmentedButtonEvent` type declares exactly these three fields.
+Before 0.8.0-next.49 it described a richer payload than the component sent. When
+migrating to the [button group](./button-group.md), note that its change event
+names the values `values`.
 
 ## Examples
 
@@ -232,8 +233,8 @@ check.
 The container also carries `data-mode` and `data-density` attributes, which are
 convenient selectors when you want to style one configuration only.
 
-Sizing runs through custom properties. The stylesheet declares them per density,
-and the component writes `--segment-height` onto the element inline, which wins:
+Sizing runs through custom properties that the stylesheet declares per density
+class; the component writes none of them inline, so the class decides:
 
 ```css
 .mtrl-segmented-button {
@@ -254,24 +255,21 @@ round off; a lone segment rounds on both ends.
 
 ## Measurements
 
-Neither the component's TypeScript nor `_segmented-button.scss` names an M3
-token for any of these, so the source column points at the declaration instead
-of at a token. Take the numbers as this library's, not as spec values.
+Heights follow M3: `OutlinedSegmentedButtonTokens` gives a 40dp container, and
+the segmented button specs take 4dp off per density step. The rest are this
+library's values, and the source column points at the declaration.
 
 | Attribute | Value | Source |
 |-----------|-------|--------|
-| Segment height, default density | 36dp | `getDensityStyles` in `config.ts` (inline `--segment-height`) |
-| Segment height, comfortable | 32dp | `getDensityStyles` in `config.ts` |
-| Segment height, compact | 28dp | `getDensityStyles` in `config.ts` |
-| Container corner, default density | half the height, so 18dp | `border-radius: calc(var(--segment-height) / 2)` in the SCSS |
-| Container corner, comfortable and compact | 18dp and 16dp, not half the height | `--segment-border-radius` overrides the `calc` in those two rules |
+| Container height, default density | 40dp | `--segment-height` in the SCSS; `OutlinedSegmentedButtonTokens` |
+| Container height, comfortable | 36dp | `--comfortable` in the SCSS |
+| Container height, compact | 32dp | `--compact` in the SCSS |
+| Container corner | half the height: 20, 18 and 16dp | `calc(var(--segment-height) / 2)` by default, `--segment-border-radius` in the two density rules |
 | Minimum segment width | 48dp | `min-width` on the segment in the SCSS |
 | Horizontal padding, default density | 24dp | `--segment-padding-x` in the SCSS |
 | Hover state layer | 8% `on-surface` | commented as the MD3 state layer in the SCSS |
 | Pressed state layer | 12% `on-surface` | commented as the MD3 state layer in the SCSS |
 
-The stylesheet's own `--segment-height` defaults (40, 36 and 32dp) are shadowed
-by the inline values above, which is why a default-density segmented button
-measures 36dp rather than the 40dp the SCSS declares. The component also writes
-`--segment-padding` and `--segment-font-size`, which the stylesheet does not
-read.
+Until 0.8.0-next.49 the component wrote 36, 32 and 28dp heights inline, which
+overrode these rules, so segmented buttons measured 4dp shorter than they do
+now.
